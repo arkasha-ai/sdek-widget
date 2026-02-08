@@ -12,10 +12,42 @@ Before doing anything else:
 
 1. Read `SOUL.md` — this is who you are
 2. Read `USER.md` — this is who you're helping
-3. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
-4. **If in MAIN SESSION** (direct chat with your human): Also read `MEMORY.md`
+3. **Check event log for this session** - fast state recovery:
+   ```python
+   from event_logger import get_session_state, get_incomplete_tasks
+   state = get_session_state(current_session)
+   if state['active_tasks']:
+       # Resume incomplete work
+   ```
+4. Read `memory/YYYY-MM-DD.md` (today + yesterday) for recent context
+5. **If in MAIN SESSION** (direct chat with your human): Also read `MEMORY.md`
 
 Don't ask permission. Just do it.
+
+### Event Log Recovery (Fast Bootstrap)
+
+**When starting a session:**
+```python
+from scripts.event_helpers import get_session_id
+from scripts.event_logger import get_session_state, get_incomplete_tasks, get_recent_events
+
+# 1. Quick state check
+state = get_session_state(get_session_id())
+print(f"Session: {state['event_count']} events")
+print(f"Active tasks: {state['active_tasks']}")
+print(f"Last action: {state['last_action']}")
+
+# 2. Resume incomplete work
+incomplete = get_incomplete_tasks(get_session_id())
+if incomplete:
+    print(f"⚠️  Need to resume: {[t['data']['task'] for t in incomplete]}")
+
+# 3. Quick context (last 10 events)
+recent = get_recent_events(get_session_id(), limit=10)
+# Skim through to understand what was happening
+```
+
+**This replaces reading 30KB+ markdown logs → instant recovery!**
 
 ## Memory
 
@@ -48,6 +80,36 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 - When you learn a lesson → update AGENTS.md, TOOLS.md, or the relevant skill
 - When you make a mistake → document it so future-you doesn't repeat it
 - **Text > Brain** 📝
+
+### 📊 Event Logging - Structured Memory
+
+**Use event log for machine-readable state:**
+
+```python
+from scripts.event_helpers import task_context, log_decision, log_file_change
+
+# Automatic task tracking
+with task_context("github_profile_upgrade", {"phase": "adding_badges"}):
+    # Do work...
+    log_file_change("README.md", "modified", "Added badges")
+    # Task automatically logged as completed
+
+# Log important decisions
+@log_decision("Chose SQLite over PostgreSQL for simplicity")
+def choose_database():
+    return "sqlite"
+
+# Quick shortcuts
+log_command("git commit -m 'Update'", "success", 0)
+log_api_call("github", "/repos/create", "success")
+```
+
+**When to use event log vs markdown:**
+- **Event log:** Tasks, actions, state changes (machine recovery)
+- **Markdown log:** Conversations, reasoning, context (human reading)
+- **Use both!** They complement each other.
+
+**See:** [memory/events/README.md](memory/events/README.md) for full documentation.
 
 ## Safety
 

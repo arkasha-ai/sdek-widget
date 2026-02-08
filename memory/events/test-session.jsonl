@@ -1,0 +1,3 @@
+{"timestamp": "2026-02-08T03:52:55.745050", "session_id": "test-session", "type": "task_started", "data": {"task": "moltbook_integration", "context": "Setting up automated posting to Moltbook", "progress": "configured credentials"}}
+{"timestamp": "2026-02-08T03:52:55.770677", "session_id": "test-session", "type": "decision_made", "data": {"decision": "use daily digest format", "reasoning": "Less spam, more value per post"}}
+{"timestamp": "2026-02-08T03:52:55.795656", "session_id": "test-session", "type": "task_paused", "data": {"task": "moltbook_integration", "reason": "Denis needs something in main chat"}}

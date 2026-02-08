@@ -199,7 +199,7 @@ def get_collection_info():
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: qdrant_indexer.py [status|index-emails|search|index-memory|index-sessions]")
+        print("Usage: qdrant_indexer.py [status|index-emails|search|index-memory|index-sessions|index-events]")
         sys.exit(1)
     
     command = sys.argv[1]
@@ -356,5 +356,66 @@ def main():
         
         print(f"\nIndexed {total} session messages", file=sys.stderr)
 
+
+    elif command == "index-events":
+        # Index event logs
+        session_id = sys.argv[2] if len(sys.argv) > 2 else None
+        index_events(session_id)
+
 if __name__ == "__main__":
     main()
+
+def index_events(session_id=None):
+    """Index event logs in Qdrant for semantic search"""
+    from pathlib import Path
+    events_dir = Path.home() / ".openclaw" / "workspace" / "memory" / "events"
+    
+    if not events_dir.exists():
+        print("No events directory", file=sys.stderr)
+        return
+    
+    total = 0
+    session_files = [events_dir / f"{session_id}.jsonl"] if session_id else events_dir.glob("*.jsonl")
+    
+    for jsonl_file in session_files:
+        if not jsonl_file.exists():
+            continue
+            
+        session = jsonl_file.stem
+        print(f"Indexing events: {session}...", file=sys.stderr)
+        
+        with open(jsonl_file, 'r') as f:
+            for line in f:
+                try:
+                    event = json.loads(line.strip())
+                    
+                    # Build searchable text
+                    etype = event.get('type', '')
+                    data = event.get('data', {})
+                    timestamp = event.get('timestamp', '')
+                    
+                    text_parts = [f"Event: {etype}"]
+                    for key, value in data.items():
+                        text_parts.append(f"{key}: {value}")
+                    
+                    text = "\n".join(text_parts)
+                    
+                    # Generate unique ID
+                    event_id = hashlib.md5(f"{session}:{timestamp}".encode()).hexdigest()[:8]
+                    point_id = int(event_id, 16)
+                    
+                    # Index
+                    index_point(point_id, text, {
+                        "type": "event",
+                        "session_id": session,
+                        "event_type": etype,
+                        "timestamp": timestamp,
+                        "data": data
+                    })
+                    
+                    total += 1
+                    
+                except Exception as e:
+                    print(f"Error indexing event: {e}", file=sys.stderr)
+    
+    print(f"\nIndexed {total} events", file=sys.stderr)

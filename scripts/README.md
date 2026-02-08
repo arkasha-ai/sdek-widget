@@ -211,7 +211,72 @@ python3 ~/.openclaw/workspace/scripts/event_logger.py sessions
 
 **Storage:** `memory/events/<session>.jsonl` (one file per session)
 
+**Python API:** Import helpers for easy logging
+```python
+from event_helpers import task_context, log_decision, log_file_change
+
+with task_context("my_task"):
+    # Work automatically logged
+    log_file_change("file.py", "modified")
+```
+
+**Recovery:** Fast session state reconstruction
+```bash
+# Show recovery report
+python3 ~/.openclaw/workspace/scripts/recover_session.py main
+
+# List all sessions
+python3 ~/.openclaw/workspace/scripts/recover_session.py
+```
+
+**Visualization:** Timeline view
+```bash
+python3 ~/.openclaw/workspace/scripts/event_timeline.py main 20
+```
+
 **See also:** [memory/events/README.md](../memory/events/README.md) for detailed documentation
+
+---
+
+### event_helpers.py
+
+**Purpose:** Python decorators and helpers for easy event logging.
+
+**Features:**
+- `@log_task(name)` decorator - auto-log task lifecycle
+- `@log_decision(reasoning)` decorator - log decisions
+- `task_context(name)` context manager - automatic task tracking
+- Quick shortcuts: log_file_change, log_command, log_api_call
+
+**See:** event_logger.py section above for usage
+
+---
+
+### recover_session.py
+
+**Purpose:** Session recovery helper with actionable recommendations.
+
+**Features:**
+- Session state summary (events, active tasks, last activity)
+- Time-aware analysis (events today, last hour)
+- Incomplete task detection with context
+- Actionable recommendations
+
+**Usage:** See event_logger.py section above
+
+---
+
+### event_timeline.py
+
+**Purpose:** Visual timeline of session events.
+
+**Features:**
+- Chronological event display with icons
+- Hour separators for readability
+- Event type highlighting
+- Configurable limit
+
+**Usage:** See event_logger.py section above
 
 ---
 
