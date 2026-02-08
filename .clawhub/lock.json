@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "himalaya": {
+      "version": "1.0.0",
+      "installedAt": 1770278570546
+    },
+    "ticktick-tasks": {
+      "version": "1.0.0",
+      "installedAt": 1770330963730
+    },
+    "phoenix-shield": {
+      "version": "1.0.4",
+      "installedAt": 1770374664082
+    }
+  }
+}

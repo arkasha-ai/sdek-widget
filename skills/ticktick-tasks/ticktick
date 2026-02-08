@@ -1,0 +1,192 @@
+#!/usr/bin/env python3
+"""
+TickTick CLI - Working with Open API v1
+"""
+import json
+import os
+import sys
+import urllib.request
+import urllib.parse
+from datetime import datetime, timezone
+
+TOKEN_FILE = os.path.expanduser("~/.openclaw/workspace/.ticktick_token.json")
+BASE_URL = "https://api.ticktick.com"
+
+def load_token():
+    """Load OAuth token"""
+    if not os.path.exists(TOKEN_FILE):
+        return None
+    with open(TOKEN_FILE) as f:
+        data = json.load(f)
+        return data.get('access_token')
+
+def api_request(endpoint, method='GET', data=None):
+    """Make API request"""
+    token = load_token()
+    if not token:
+        print(json.dumps({"error": "Not authenticated. Token file not found."}))
+        sys.exit(1)
+    
+    url = f"{BASE_URL}{endpoint}"
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json"
+    }
+    
+    req_data = json.dumps(data).encode() if data else None
+    request = urllib.request.Request(url, data=req_data, headers=headers, method=method)
+    
+    try:
+        with urllib.request.urlopen(request) as response:
+            body = response.read().decode()
+            if not body:
+                return {"success": True}
+            return json.loads(body)
+    except urllib.error.HTTPError as e:
+        error_body = e.read().decode()
+        try:
+            error_json = json.loads(error_body)
+            return {"error": error_json}
+        except:
+            return {"error": f"HTTP {e.code}: {error_body}"}
+    except Exception as e:
+        return {"error": str(e)}
+
+def cmd_projects():
+    """List all projects"""
+    result = api_request("/open/v1/project")
+    print(json.dumps(result, indent=2, ensure_ascii=False))
+
+def cmd_tasks(project_id=None):
+    """List tasks (all or from specific project)"""
+    if project_id:
+        result = api_request(f"/open/v1/project/{project_id}/data")
+        # Extract just tasks
+        if "tasks" in result:
+            print(json.dumps(result["tasks"], indent=2, ensure_ascii=False))
+        else:
+            print(json.dumps(result, indent=2, ensure_ascii=False))
+    else:
+        # Get all projects with tasks
+        projects = api_request("/open/v1/project")
+        if "error" in projects:
+            print(json.dumps(projects, indent=2))
+            return
+        
+        all_tasks = []
+        for proj in projects:
+            proj_data = api_request(f"/open/v1/project/{proj['id']}/data")
+            if "tasks" in proj_data:
+                for task in proj_data["tasks"]:
+                    task["projectName"] = proj.get("name", "Unknown")
+                    all_tasks.append(task)
+        
+        print(json.dumps(all_tasks, indent=2, ensure_ascii=False))
+
+def cmd_add(title, project_id=None, due=None, priority=0, content=None):
+    """Add a new task"""
+    task_data = {
+        "title": title,
+        "priority": int(priority),
+        "timeZone": "Europe/Moscow"
+    }
+    
+    if project_id:
+        task_data["projectId"] = project_id
+    
+    if content:
+        task_data["content"] = content
+    
+    if due:
+        # Parse due date (expects YYYY-MM-DD or ISO format)
+        try:
+            if 'T' in due:
+                dt = datetime.fromisoformat(due.replace('Z', '+00:00'))
+            else:
+                dt = datetime.strptime(due, "%Y-%m-%d").replace(tzinfo=timezone.utc)
+            task_data["dueDate"] = dt.isoformat()
+        except ValueError as e:
+            print(json.dumps({"error": f"Invalid date format: {e}"}))
+            sys.exit(1)
+    
+    # Use open/v1 API endpoint (supports content in create!)
+    result = api_request("/open/v1/task", method='POST', data=task_data)
+    print(json.dumps(result, indent=2, ensure_ascii=False))
+
+def cmd_complete(project_id, task_id):
+    """Complete a task"""
+    result = api_request(f"/open/v1/project/{project_id}/task/{task_id}/complete", method='POST')
+    print(json.dumps(result, indent=2, ensure_ascii=False))
+
+def cmd_delete(project_id, task_id):
+    """Delete a task"""
+    result = api_request(f"/open/v1/task/{project_id}/{task_id}", method='DELETE')
+    print(json.dumps(result, indent=2, ensure_ascii=False))
+
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: ticktick <command> [args...]")
+        print("\nCommands:")
+        print("  projects                      - List all projects")
+        print("  tasks [project_id]            - List all tasks or tasks from a project")
+        print("  add <title> [options]         - Add task")
+        print("    --project <id>              - Project ID")
+        print("    --due <YYYY-MM-DD>          - Due date")
+        print("    --priority <0-5>            - Priority (0=none, 1=low, 3=med, 5=high)")
+        print("    --content <text>            - Task description/notes")
+        print("  complete <project_id> <task_id> - Complete task")
+        print("  delete <project_id> <task_id>   - Delete task")
+        sys.exit(1)
+    
+    command = sys.argv[1]
+    
+    if command == "projects":
+        cmd_projects()
+    elif command == "tasks":
+        project_id = sys.argv[2] if len(sys.argv) > 2 else None
+        cmd_tasks(project_id)
+    elif command == "add":
+        if len(sys.argv) < 3:
+            print(json.dumps({"error": "Title required"}))
+            sys.exit(1)
+        
+        title = sys.argv[2]
+        project_id = None
+        due = None
+        priority = 0
+        content = None
+        
+        i = 3
+        while i < len(sys.argv):
+            if sys.argv[i] == "--project" and i + 1 < len(sys.argv):
+                project_id = sys.argv[i + 1]
+                i += 2
+            elif sys.argv[i] == "--due" and i + 1 < len(sys.argv):
+                due = sys.argv[i + 1]
+                i += 2
+            elif sys.argv[i] == "--priority" and i + 1 < len(sys.argv):
+                priority = sys.argv[i + 1]
+                i += 2
+            elif sys.argv[i] == "--content" and i + 1 < len(sys.argv):
+                content = sys.argv[i + 1]
+                i += 2
+            else:
+                i += 1
+        
+        cmd_add(title, project_id, due, priority, content)
+    elif command == "complete":
+        if len(sys.argv) < 4:
+            print(json.dumps({"error": "Project ID and Task ID required"}))
+            sys.exit(1)
+        cmd_complete(sys.argv[2], sys.argv[3])
+    elif command == "delete":
+        if len(sys.argv) < 4:
+            print(json.dumps({"error": "Project ID and Task ID required"}))
+            sys.exit(1)
+        cmd_delete(sys.argv[2], sys.argv[3])
+    else:
+        print(json.dumps({"error": f"Unknown command: {command}"}))
+        sys.exit(1)
+
+if __name__ == "__main__":
+    main()
