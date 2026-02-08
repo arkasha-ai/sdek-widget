@@ -297,7 +297,62 @@ message_received("User message", from_user="Denis", chat="main")
 message_sent("Reply", to="Denis")
 ```
 
-**Integration Guide:** See [memory/events/INTEGRATION.md](../memory/events/INTEGRATION.md) for usage
+**Integration Guide:** See [memory/events/INTEGRATION.md](../memory/events/INTEGRATION.md)
+
+---
+
+### event_viz.py
+
+**Purpose:** Advanced event visualization (Phase C).
+
+**Features:**
+- Task dependency graphs with file/decision/command tracking
+- Activity heatmaps (daily and hourly patterns)
+- Session comparison side-by-side
+- Event type breakdown with percentages
+
+**Usage:**
+```bash
+# Task dependency graph
+python3 scripts/event_viz.py graph --session main
+
+# Activity heatmap
+python3 scripts/event_viz.py heatmap --session main --days 7
+
+# Compare sessions
+python3 scripts/event_viz.py compare
+
+# Event type breakdown
+python3 scripts/event_viz.py breakdown --session main
+```
+
+---
+
+### event_search.py
+
+**Purpose:** Advanced event search and pattern detection (Phase D).
+
+**Features:**
+- Cross-session search (search all sessions at once)
+- Pattern detection (errors, task chains, time patterns, rapid switches)
+- Semantic search via Qdrant (when indexed)
+- Time-range filtering
+
+**Usage:**
+```bash
+# Search across all sessions
+python3 scripts/event_search.py search "task" --limit 10
+
+# Detect patterns
+python3 scripts/event_search.py patterns --session main
+
+# Semantic search (requires: ./scripts/qdrant index-events)
+python3 scripts/event_search.py semantic "GitHub workflow"
+
+# Time range search
+python3 scripts/event_search.py time-range --session main \
+  --start "2026-02-08T03:00:00" --end "2026-02-08T04:00:00"
+``` for usage
 
 ---
 
