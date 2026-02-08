@@ -70,17 +70,53 @@ def index_point(point_id, text, metadata):
         }
     )
 
-def search(query, limit=5):
-    """Семантический поиск"""
+def search(query, limit=5, filter_type=None, account=None):
+    """
+    Семантический поиск с фильтрами
+    
+    Args:
+        query: поисковый запрос
+        limit: макс. кол-во результатов
+        filter_type: фильтр по типу ("email", "memory", "session")
+        account: фильтр по email account ("dparmeev", "spam", etc.)
+    """
     # Получаем embedding запроса
     vector = get_embedding(query)
     
+    # Строим фильтры
+    filters = {}
+    must_conditions = []
+    
+    if filter_type:
+        must_conditions.append({
+            "key": "type",
+            "match": {"value": filter_type}
+        })
+    
+    if account:
+        must_conditions.append({
+            "key": "account",
+            "match": {"value": account}
+        })
+    
+    if must_conditions:
+        filters = {"must": must_conditions}
+    
     # Ищем в Qdrant
+    search_params = {
+        "vector": vector,
+        "limit": limit,
+        "with_payload": True
+    }
+    
+    if filters:
+        search_params["filter"] = filters
+    
     return http_request(
         f"{QDRANT_URL}/collections/{COLLECTION}/points/search",
         method="POST",
         headers={"api-key": QDRANT_KEY},
-        data={"vector": vector, "limit": limit, "with_payload": True}
+        data=search_params
     )['result']
 
 def index_email(email_id, account, subject, from_addr, date, body):
@@ -150,14 +186,43 @@ def get_himalaya_emails(account):
     except json.JSONDecodeError:
         return []
 
+def get_collection_info():
+    """Get collection statistics"""
+    try:
+        result = http_request(
+            f"{QDRANT_URL}/collections/{COLLECTION}",
+            headers={"api-key": QDRANT_KEY}
+        )
+        return result.get('result', {})
+    except Exception as e:
+        return {"error": str(e)}
+
 def main():
     if len(sys.argv) < 2:
-        print("Usage: qdrant_indexer.py [index-emails|search|index-memory|index-sessions]")
+        print("Usage: qdrant_indexer.py [status|index-emails|search|index-memory|index-sessions]")
         sys.exit(1)
     
     command = sys.argv[1]
     
-    if command == "index-emails":
+    if command == "status":
+        # Show collection statistics
+        info = get_collection_info()
+        if 'error' in info:
+            print(f"Error: {info['error']}", file=sys.stderr)
+            sys.exit(1)
+        
+        print(f"Collection: {COLLECTION}")
+        print(f"Points count: {info.get('points_count', 0)}")
+        print(f"Indexed segments: {info.get('segments_count', 0)}")
+        print(f"Vector size: {info.get('config', {}).get('params', {}).get('vectors', {}).get('size', 'unknown')}")
+        print(f"Distance: {info.get('config', {}).get('params', {}).get('vectors', {}).get('distance', 'unknown')}")
+        
+        # Try to estimate breakdown by type
+        print("\nEstimated breakdown (based on ID patterns):")
+        # This is approximate - would need to actually query
+        print("  Run search queries to explore indexed content")
+    
+    elif command == "index-emails":
         # Индексируем все почтовые ящики
         accounts = ['dparmeev', 'spam', 'contact', 'contact-lumines']
         total = 0
@@ -195,15 +260,29 @@ def main():
         print(f"\nIndexed {total} emails", file=sys.stderr)
     
     elif command == "search":
-        query = " ".join(sys.argv[2:])
-        results = search(query)
+        # Parse args: search [--type TYPE] [--account ACCOUNT] [--limit N] query
+        import argparse
+        parser = argparse.ArgumentParser()
+        parser.add_argument('--type', help='Filter by type (email/memory/session)')
+        parser.add_argument('--account', help='Filter by email account')
+        parser.add_argument('--limit', type=int, default=5, help='Max results')
+        parser.add_argument('query', nargs='+', help='Search query')
+        
+        args = parser.parse_args(sys.argv[2:])
+        query = " ".join(args.query)
+        
+        results = search(query, limit=args.limit, filter_type=args.type, account=args.account)
         
         print(json.dumps(results, indent=2, ensure_ascii=False))
     
     elif command == "index-memory":
         # Индексируем файлы памяти
         workspace = Path.home() / ".openclaw" / "workspace"
-        memory_files = list(workspace.glob("memory/*.md")) + [workspace / "MEMORY.md"]
+        memory_files = (
+            list(workspace.glob("memory/*.md")) + 
+            list(workspace.glob("memory/projects/*.md")) +
+            [workspace / "MEMORY.md"]
+        )
         
         total = 0
         for file_path in memory_files:

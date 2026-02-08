@@ -1,0 +1,13 @@
+#!/bin/bash
+# Wrapper for qdrant_indexer.py with secrets loaded
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SECRETS_FILE="$HOME/.openclaw/secrets.env"
+
+# Load secrets
+if [ -f "$SECRETS_FILE" ]; then
+    export $(grep -v '^#' "$SECRETS_FILE" | xargs)
+fi
+
+# Run qdrant_indexer
+python3 "$SCRIPT_DIR/qdrant_indexer.py" "$@"
