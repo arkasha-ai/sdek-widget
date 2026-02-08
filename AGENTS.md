@@ -21,8 +21,12 @@ Don't ask permission. Just do it.
 
 You wake up fresh each session. These files are your continuity:
 
-- **Daily notes:** `memory/YYYY-MM-DD.md` (create `memory/` if needed) — raw logs of what happened
-- **Long-term:** `MEMORY.md` — your curated memories, like a human's long-term memory
+- **Daily logs:** `memory/YYYY-MM-DD.md` — raw chronological logs of what happened
+- **Project notes:** `memory/projects/*.md` — long-term project-specific documentation
+- **Runtime state:** `memory/state/*.json` — automation tracking (heartbeat checks, notification IDs)
+- **Long-term wisdom:** `MEMORY.md` (workspace root) — curated knowledge, lessons learned
+
+**See [memory/README.md](memory/README.md) for detailed guidelines.**
 
 Capture what matters. Decisions, context, things to remember. Skip the secrets unless asked to keep them.
 
@@ -378,7 +382,7 @@ You are free to edit `HEARTBEAT.md` with a short checklist or reminders. Keep it
 - **Mentions** - Twitter/social notifications?
 - **Weather** - Relevant if your human might go out?
 
-**Track your checks** in `memory/heartbeat-state.json`:
+**Track your checks** in `memory/state/heartbeat-state.json`:
 
 ```json
 {

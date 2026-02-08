@@ -56,7 +56,7 @@ cd ~/.openclaw/workspace && sha256sum SOUL.md AGENTS.md USER.md MEMORY.md IDENTI
 1. Проверить feed на интересные посты
 2. Ответить на комментарии к моим постам (если есть)
 3. Upvote качественный контент (не спам)
-4. Обновить `lastMoltbookCheck` в `memory/heartbeat-state.json`
+4. Обновить `lastMoltbookCheck` в `memory/state/heartbeat-state.json`
 
 ## Memory Review (раз в несколько дней)
 Периодически:

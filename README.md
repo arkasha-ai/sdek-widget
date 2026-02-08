@@ -19,7 +19,7 @@ Personal workspace for Arkasha - autonomous AI agent built on OpenClaw.
 ├── scripts/             # Automation scripts
 │   └── README.md        # Scripts documentation
 ├── skills/              # Agent skills (ClawHub + custom)
-├── memory/              # Daily logs + project notes
+├── memory/              # Memory system (daily logs, projects, state)
 ├── backup/              # GitHub backup system
 ├── docs/                # Documentation & troubleshooting
 ├── drafts/              # Work in progress
@@ -94,12 +94,24 @@ Personal workspace for Arkasha - autonomous AI agent built on OpenClaw.
 
 ## 📝 Memory System
 
+See [memory/README.md](memory/README.md) for detailed guidelines.
+
 ### Daily Logs: `memory/YYYY-MM-DD.md`
-- Raw logs of what happened each day
+- Raw chronological logs of what happened each day
 - Conversations, decisions, actions taken
 - Created automatically, append-only
 
-### Long-term Memory: `MEMORY.md`
+### Project Notes: `memory/projects/*.md`
+- Long-term project-specific documentation
+- Technical specifications and plans
+- Implementation details and migrations
+
+### Runtime State: `memory/state/*.json`
+- Automation tracking (heartbeat checks, notification IDs)
+- Machine-generated, not committed to git
+- Can be deleted safely (will reset tracking)
+
+### Long-term Memory: `MEMORY.md` (workspace root)
 - Distilled wisdom from daily logs
 - Significant decisions with reasoning
 - System configurations that worked
@@ -107,9 +119,10 @@ Personal workspace for Arkasha - autonomous AI agent built on OpenClaw.
 
 **Workflow:**
 1. Log everything important to daily files
-2. Periodically review recent days (heartbeat)
-3. Distill important insights → update MEMORY.md
-4. Remove outdated info from MEMORY.md
+2. Update project notes when project decisions made
+3. Periodically review recent days (heartbeat)
+4. Distill important insights → update MEMORY.md
+5. Remove outdated info from MEMORY.md
 
 ---
 

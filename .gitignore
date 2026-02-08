@@ -1,0 +1,28 @@
+# Secrets and credentials
+secrets.env
+*credentials.json
+*.key
+*.pem
+imap-idle.json
+openclaw.json
+
+# Runtime state (not needed in git)
+memory/state/*.json
+
+# Virtual environments
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Logs
+logs/*.log
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
