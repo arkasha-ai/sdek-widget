@@ -176,6 +176,45 @@ python3 youtube_transcript.py "https://youtu.be/dQw4w9WgXcQ" en
 
 ---
 
+## 📊 Event Logging
+
+### event_logger.py
+
+**Purpose:** Multi-session structured event logging for fast state recovery.
+
+**What it does:**
+- Logs events to per-session streams (JSONL format)
+- Tracks tasks, actions, decisions, state changes
+- Enables fast recovery: "where did I stop?" without reading full history
+- Isolates parallel sessions (main, Discord, isolated)
+
+**Usage:**
+```bash
+# Log an event
+python3 ~/.openclaw/workspace/scripts/event_logger.py log main task_started '{"task": "xyz"}'
+
+# Get session state
+python3 ~/.openclaw/workspace/scripts/event_logger.py state main
+
+# Find incomplete tasks
+python3 ~/.openclaw/workspace/scripts/event_logger.py incomplete main
+
+# List all sessions
+python3 ~/.openclaw/workspace/scripts/event_logger.py sessions
+```
+
+**Event types:**
+- Task management: task_started, task_completed, task_failed
+- Actions: file_created, code_committed, command_executed
+- Decisions: decision_made, approach_changed
+- Communication: message_received, message_sent
+
+**Storage:** `memory/events/<session>.jsonl` (one file per session)
+
+**See also:** [memory/events/README.md](../memory/events/README.md) for detailed documentation
+
+---
+
 ## 🔄 Project Management
 
 ### update_logera_tasks.py

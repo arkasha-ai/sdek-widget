@@ -4901,3 +4901,78 @@
 2026-02-08 03:16:09,844 [INFO] 📨 contact@luminesfox.com: IDLE notification received
 2026-02-08 03:16:09,933 [INFO] 📨 a.parmeev@jakeberrimor.com: IDLE notification received
 2026-02-08 03:16:22,083 [INFO] 📨 dparmeev@luminesfox.com: IDLE notification received
+2026-02-08 03:18:09,290 [INFO] 📨 a.parmeev@jakeberrimor.com: IDLE notification received
+2026-02-08 03:18:09,363 [INFO] 📨 spam@jakeberrimor.com: IDLE notification received
+2026-02-08 03:18:09,458 [INFO] 📨 dparmeev@luminesfox.com: IDLE notification received
+2026-02-08 03:18:09,907 [INFO] 📨 contact@jakeberrimor.com: IDLE notification received
+2026-02-08 03:18:14,121 [INFO] 📨 contact@luminesfox.com: IDLE notification received
+2026-02-08 03:33:09,519 [INFO] 🔄 a.parmeev@jakeberrimor.com: Periodic reconnect
+2026-02-08 03:33:09,520 [ERROR] ❌ a.parmeev@jakeberrimor.com: Connection error: EOF occurred in violation of protocol (_ssl.c:2406)
+2026-02-08 03:33:09,520 [INFO] 🔁 a.parmeev@jakeberrimor.com: Reconnecting in 5s...
+2026-02-08 03:33:09,583 [INFO] 🔄 spam@jakeberrimor.com: Periodic reconnect
+2026-02-08 03:33:09,583 [ERROR] ❌ spam@jakeberrimor.com: Connection error: EOF occurred in violation of protocol (_ssl.c:2406)
+2026-02-08 03:33:09,583 [INFO] 🔁 spam@jakeberrimor.com: Reconnecting in 5s...
+2026-02-08 03:33:09,727 [INFO] 🔄 dparmeev@luminesfox.com: Periodic reconnect
+2026-02-08 03:33:09,727 [ERROR] ❌ dparmeev@luminesfox.com: Connection error: EOF occurred in violation of protocol (_ssl.c:2406)
+2026-02-08 03:33:09,727 [INFO] 🔁 dparmeev@luminesfox.com: Reconnecting in 5s...
+2026-02-08 03:33:10,147 [INFO] 🔄 contact@jakeberrimor.com: Periodic reconnect
+2026-02-08 03:33:10,148 [ERROR] ❌ contact@jakeberrimor.com: Connection error: EOF occurred in violation of protocol (_ssl.c:2406)
+2026-02-08 03:33:10,148 [INFO] 🔁 contact@jakeberrimor.com: Reconnecting in 5s...
+2026-02-08 03:33:14,349 [INFO] 🔄 contact@luminesfox.com: Periodic reconnect
+2026-02-08 03:33:14,350 [ERROR] ❌ contact@luminesfox.com: Connection error: EOF occurred in violation of protocol (_ssl.c:2406)
+2026-02-08 03:33:14,350 [INFO] 🔁 contact@luminesfox.com: Reconnecting in 5s...
+2026-02-08 03:33:14,520 [INFO] 🔌 Connecting to a.parmeev@jakeberrimor.com@mail.hosting.reg.ru...
+2026-02-08 03:33:14,583 [INFO] 🔌 Connecting to spam@jakeberrimor.com@mail.hosting.reg.ru...
+2026-02-08 03:33:14,727 [INFO] 🔌 Connecting to dparmeev@luminesfox.com@mail.hosting.reg.ru...
+2026-02-08 03:33:15,121 [INFO] 📬 a.parmeev@jakeberrimor.com: Starting from UID 16
+2026-02-08 03:33:15,148 [INFO] 🔌 Connecting to contact@jakeberrimor.com@mail.hosting.reg.ru...
+2026-02-08 03:33:15,166 [INFO] ✅ a.parmeev@jakeberrimor.com: IDLE monitoring active
+2026-02-08 03:33:15,956 [INFO] 📬 contact@jakeberrimor.com: Starting from UID 424
+2026-02-08 03:33:16,002 [INFO] ✅ contact@jakeberrimor.com: IDLE monitoring active
+2026-02-08 03:33:19,350 [INFO] 🔌 Connecting to contact@luminesfox.com@mail.hosting.reg.ru...
+2026-02-08 03:33:19,953 [INFO] 📬 contact@luminesfox.com: Starting from UID 72
+2026-02-08 03:33:20,000 [INFO] ✅ contact@luminesfox.com: IDLE monitoring active
+2026-02-08 03:33:34,716 [INFO] 📬 dparmeev@luminesfox.com: Starting from UID 2376
+2026-02-08 03:33:38,287 [INFO] ✅ dparmeev@luminesfox.com: IDLE monitoring active
+2026-02-08 03:34:01,447 [INFO] 📬 spam@jakeberrimor.com: Starting from UID 489
+2026-02-08 03:34:01,501 [INFO] ✅ spam@jakeberrimor.com: IDLE monitoring active
+2026-02-08 03:34:09,182 [INFO] 📨 a.parmeev@jakeberrimor.com: IDLE notification received
+2026-02-08 03:34:10,035 [INFO] 📨 contact@jakeberrimor.com: IDLE notification received
+2026-02-08 03:34:10,051 [INFO] 📨 contact@luminesfox.com: IDLE notification received
+2026-02-08 03:34:10,397 [INFO] 📨 dparmeev@luminesfox.com: IDLE notification received
+2026-02-08 03:34:35,196 [INFO] 📨 spam@jakeberrimor.com: IDLE notification received
+2026-02-08 03:36:09,362 [INFO] 📨 contact@jakeberrimor.com: IDLE notification received
+2026-02-08 03:36:09,370 [INFO] 📨 contact@luminesfox.com: IDLE notification received
+2026-02-08 03:36:16,127 [INFO] 📨 dparmeev@luminesfox.com: IDLE notification received
+2026-02-08 03:36:16,128 [INFO] 📨 spam@jakeberrimor.com: IDLE notification received
+2026-02-08 03:36:16,148 [INFO] 📨 a.parmeev@jakeberrimor.com: IDLE notification received
+2026-02-08 03:38:09,448 [INFO] 📨 a.parmeev@jakeberrimor.com: IDLE notification received
+2026-02-08 03:38:09,691 [INFO] 📨 contact@jakeberrimor.com: IDLE notification received
+2026-02-08 03:38:09,709 [INFO] 📨 contact@luminesfox.com: IDLE notification received
+2026-02-08 03:38:12,026 [INFO] 📨 dparmeev@luminesfox.com: IDLE notification received
+2026-02-08 03:38:20,356 [INFO] 📨 spam@jakeberrimor.com: IDLE notification received
+2026-02-08 03:40:09,756 [INFO] 📨 a.parmeev@jakeberrimor.com: IDLE notification received
+2026-02-08 03:40:10,003 [INFO] 📨 contact@jakeberrimor.com: IDLE notification received
+2026-02-08 03:40:10,333 [INFO] 📨 dparmeev@luminesfox.com: IDLE notification received
+2026-02-08 03:40:12,901 [INFO] 📨 spam@jakeberrimor.com: IDLE notification received
+2026-02-08 03:40:20,218 [INFO] 📨 contact@luminesfox.com: IDLE notification received
+2026-02-08 03:42:09,246 [INFO] 📨 spam@jakeberrimor.com: IDLE notification received
+2026-02-08 03:42:09,351 [INFO] 📨 contact@jakeberrimor.com: IDLE notification received
+2026-02-08 03:42:09,541 [INFO] 📨 contact@luminesfox.com: IDLE notification received
+2026-02-08 03:42:11,442 [INFO] 📨 dparmeev@luminesfox.com: IDLE notification received
+2026-02-08 03:42:13,295 [INFO] 📨 a.parmeev@jakeberrimor.com: IDLE notification received
+2026-02-08 03:44:09,606 [INFO] 📨 a.parmeev@jakeberrimor.com: IDLE notification received
+2026-02-08 03:44:09,671 [INFO] 📨 contact@jakeberrimor.com: IDLE notification received
+2026-02-08 03:44:09,848 [INFO] 📨 dparmeev@luminesfox.com: IDLE notification received
+2026-02-08 03:44:09,872 [INFO] 📨 contact@luminesfox.com: IDLE notification received
+2026-02-08 03:44:14,406 [INFO] 📨 spam@jakeberrimor.com: IDLE notification received
+2026-02-08 03:46:09,987 [INFO] 📨 contact@jakeberrimor.com: IDLE notification received
+2026-02-08 03:46:11,976 [INFO] 📨 dparmeev@luminesfox.com: IDLE notification received
+2026-02-08 03:46:17,100 [INFO] 📨 a.parmeev@jakeberrimor.com: IDLE notification received
+2026-02-08 03:46:21,103 [INFO] 📨 contact@luminesfox.com: IDLE notification received
+2026-02-08 03:46:31,146 [INFO] 📨 spam@jakeberrimor.com: IDLE notification received
+2026-02-08 03:48:09,238 [INFO] 📨 contact@jakeberrimor.com: IDLE notification received
+2026-02-08 03:48:09,424 [INFO] 📨 a.parmeev@jakeberrimor.com: IDLE notification received
+2026-02-08 03:48:10,498 [INFO] 📨 spam@jakeberrimor.com: IDLE notification received
+2026-02-08 03:48:13,499 [INFO] 📨 contact@luminesfox.com: IDLE notification received
+2026-02-08 03:48:24,535 [INFO] 📨 dparmeev@luminesfox.com: IDLE notification received

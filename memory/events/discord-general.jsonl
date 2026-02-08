@@ -1,0 +1,2 @@
+{"timestamp": "2026-02-08T03:47:59.247404", "session_id": "discord-general", "type": "message_received", "data": {"from": "user123", "content": "Hey, question about skills"}}
+{"timestamp": "2026-02-08T03:47:59.273260", "session_id": "discord-general", "type": "message_sent", "data": {"to": "user123", "content": "Sure, what do you need?"}}
