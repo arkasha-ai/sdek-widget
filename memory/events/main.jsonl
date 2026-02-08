@@ -15,3 +15,20 @@
 {"timestamp": "2026-02-08T03:59:35.412354", "session_id": "main", "type": "file_modified", "data": {"file": "test.py", "details": "Added function"}}
 {"timestamp": "2026-02-08T03:59:35.412370", "session_id": "main", "type": "command_executed", "data": {"command": "git commit", "result": "success", "exit_code": 0}}
 {"timestamp": "2026-02-08T03:59:35.412384", "session_id": "main", "type": "api_called", "data": {"api": "github", "endpoint": "/repos/arkasha-ai", "status": "success"}}
+{"timestamp": "2026-02-08T04:04:19.131743", "session_id": "main", "type": "message_received", "data": {"content": "Hey, can you help?", "length": 18, "from": "Denis", "chat": "main"}, "user_triggered": true}
+{"timestamp": "2026-02-08T04:04:19.131835", "session_id": "main", "type": "message_sent", "data": {"content": "Sure! What do you need?", "length": 23, "to": "Denis"}}
+{"timestamp": "2026-02-08T04:04:19.131864", "session_id": "main", "type": "file_modified", "data": {"file": "test.py", "details": "Added logging"}}
+{"timestamp": "2026-02-08T04:04:19.131882", "session_id": "main", "type": "command_executed", "data": {"command": "git commit -m 'Update'", "result": "executing", "exit_code": null}}
+{"timestamp": "2026-02-08T04:04:19.131899", "session_id": "main", "type": "api_called", "data": {"api": "github", "endpoint": "/repos/arkasha-ai", "status": "calling"}}
+{"timestamp": "2026-02-08T04:05:25.747356", "session_id": "main", "type": "message_received", "data": {"content": "Can you add search filters?", "length": 27, "from": "Denis", "chat": "main"}, "user_triggered": true}
+{"timestamp": "2026-02-08T04:05:25.747407", "session_id": "main", "type": "task_started", "data": {"task": "add_search_filters", "priority": "high"}}
+{"timestamp": "2026-02-08T04:05:25.747430", "session_id": "main", "type": "file_modified", "data": {"file": "scripts/qdrant_indexer.py", "details": "Added filters"}}
+{"timestamp": "2026-02-08T04:05:25.747454", "session_id": "main", "type": "command_executed", "data": {"command": "python3 scripts/qdrant_indexer.py --help", "result": "success", "exit_code": 0}}
+{"timestamp": "2026-02-08T04:05:25.747469", "session_id": "main", "type": "task_completed", "data": {"task": "add_search_filters", "outcome": "success"}}
+{"timestamp": "2026-02-08T04:05:25.747488", "session_id": "main", "type": "message_sent", "data": {"content": "Search filters added! Testing now...", "length": 36}}
+{"timestamp": "2026-02-08T04:05:25.747505", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "discord-general", "reason": "Temporary switch"}}
+{"timestamp": "2026-02-08T04:05:25.747590", "session_id": "main", "type": "session_resumed", "data": {"from": "discord-general"}}
+{"timestamp": "2026-02-08T04:05:25.747606", "session_id": "main", "type": "task_started", "data": {"task": "test_search_filters"}}
+{"timestamp": "2026-02-08T04:05:25.747618", "session_id": "main", "type": "command_executed", "data": {"command": "./scripts/qdrant search --type email 'test'", "result": "success", "exit_code": 0}}
+{"timestamp": "2026-02-08T04:05:25.747631", "session_id": "main", "type": "task_completed", "data": {"task": "test_search_filters", "outcome": "success"}}
+{"timestamp": "2026-02-08T04:05:25.747644", "session_id": "main", "type": "message_sent", "data": {"content": "Filters tested and working! ✅", "length": 29}}

@@ -342,5 +342,13 @@ python3 scripts/event_logger.py state main
 
 **Created:** 2026-02-08  
 **Inspired by:** [@Sirius's post on Moltbook](https://moltbook.com/u/Sirius)  
-**Status:** ✅ Production ready  
-**Next:** Integrate with AGENTS.md first-run workflow
+**Status:** ✅ Production ready (Phase A & B complete)  
+
+**Integration:** See [INTEGRATION.md](INTEGRATION.md) for practical usage guide
+
+**Quick links:**
+- [Integration Guide](INTEGRATION.md) - How to use in daily work
+- [Event Logger API](../../scripts/event_logger.py) - Core functions
+- [Event Helpers](../../scripts/event_helpers.py) - Decorators & shortcuts
+- [Session Manager](../../scripts/session_manager.py) - Auto-detection
+- [Recovery Tool](../../scripts/recover_session.py) - State reconstruction

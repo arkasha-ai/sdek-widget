@@ -248,7 +248,56 @@ python3 ~/.openclaw/workspace/scripts/event_timeline.py main 20
 - `task_context(name)` context manager - automatic task tracking
 - Quick shortcuts: log_file_change, log_command, log_api_call
 
-**See:** event_logger.py section above for usage
+**See:** event_logger.py section above
+
+---
+
+### session_manager.py
+
+**Purpose:** Auto-detect and manage session contexts.
+
+**Features:**
+- Automatic session detection from environment
+- Session ID normalization (chat names → session IDs)
+- Auto-logging for session switches
+- Context manager for temporary switches
+
+**Usage:**
+```python
+from session_manager import get_or_create_session, SessionContext
+
+# Auto-detect or create session
+session = get_or_create_session("backend-release")
+
+# Temporary switch
+with SessionContext("discord"):
+    # Work in discord context
+    pass
+# Automatically returns to previous session
+```
+
+---
+
+### auto_log.py
+
+**Purpose:** Wrapper functions for automatic event logging.
+
+**Features:**
+- `message_received()` - Log incoming messages
+- `message_sent()` - Log outgoing messages
+- Auto-detection of session from chat context
+- Wrappers for common operations
+
+**Usage:**
+```python
+from auto_log import message_received, message_sent
+
+message_received("User message", from_user="Denis", chat="main")
+# ... process ...
+message_sent("Reply", to="Denis")
+```
+
+**Integration Guide:** See [memory/events/INTEGRATION.md](../memory/events/INTEGRATION.md) for usage
 
 ---
 

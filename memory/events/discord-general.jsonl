@@ -1,2 +1,6 @@
 {"timestamp": "2026-02-08T03:47:59.247404", "session_id": "discord-general", "type": "message_received", "data": {"from": "user123", "content": "Hey, question about skills"}}
 {"timestamp": "2026-02-08T03:47:59.273260", "session_id": "discord-general", "type": "message_sent", "data": {"to": "user123", "content": "Sure, what do you need?"}}
+{"timestamp": "2026-02-08T04:05:25.747523", "session_id": "discord-general", "type": "session_resumed", "data": {"from": "main"}}
+{"timestamp": "2026-02-08T04:05:25.747545", "session_id": "discord-general", "type": "message_received", "data": {"content": "How do you handle sessions?", "length": 27, "from": "teammate"}, "user_triggered": true}
+{"timestamp": "2026-02-08T04:05:25.747561", "session_id": "discord-general", "type": "message_sent", "data": {"content": "Using event log with session isolation - works great!", "length": 53}}
+{"timestamp": "2026-02-08T04:05:25.747575", "session_id": "discord-general", "type": "context_switched", "data": {"from": "discord-general", "to": "main", "reason": "Returning from temporary switch"}}
