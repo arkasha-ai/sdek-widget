@@ -410,3 +410,76 @@ Add whatever helps you do your job. This is your cheat sheet.
 **Personal Access Token** (для прямых API calls если нужно):
 - Token: `GITHUB_ARKASHA_TOKEN` (stored in secrets.env)
 - Scopes: `repo` + `notifications`
+
+---
+
+## TTS (Text-to-Speech) 🔊
+
+**Настроено:** 2026-02-08
+
+**Provider:** Edge TTS (Microsoft) — полностью бесплатно, не требует API key
+
+**Config:** `~/.openclaw/openclaw.json`
+```json
+{
+  "messages": {
+    "tts": {
+      "auto": "off",  // Только по запросу!
+      "provider": "edge",
+      "edge": {
+        "voice": "ru-RU-DmitryNeural"
+      }
+    }
+  }
+}
+```
+
+**Голос:** `ru-RU-DmitryNeural` (мужской русский)
+
+**Альтернативы:** `ru-RU-SvetlanaNeural` (женский)
+
+**Как использовать:**
+
+1. **Когда Денис явно просит голосовое:**
+   - "Расскажи голосом..."
+   - "Отправь голосовое..."
+   - "Хочу услышать..."
+
+2. **Формат отправки:**
+   ```python
+   # Генерируем аудио
+   tts(text="Чистый текст без эмодзи и форматирования", channel="telegram")
+   
+   # Отправляем как voice note
+   message.send(channel="telegram", target="364935958", media="/tmp/voice.mp3", asVoice=true)
+   ```
+
+3. **Правило текста для голоса:**
+   - ❌ БЕЗ эмодзи (звучит странно: "смайлик огонь")
+   - ❌ БЕЗ markdown форматирования (звёздочки, решётки)
+   - ✅ Чистый русский текст
+   - ✅ Можно использовать `[[tts:text]]...[/tts:text]]` теги
+
+**Пример:**
+
+Визуально (в тексте):
+```
+Отлично! Всё готово! 🎉
+```
+
+Для голоса:
+```
+[[tts:text]]
+Отлично! Всё готово!
+[[/tts:text]]
+```
+
+**ВАЖНО:**
+- Голосовые ТОЛЬКО по запросу, не автоматически!
+- Напоминания про лекарства остаются ТЕКСТОВЫМИ
+- Не злоупотреблять — это feature, не default behavior
+
+**Тестирование:**
+- ✅ Работает (2026-02-08)
+- ✅ Качество хорошее
+- ✅ Денис одобрил: "Во хорошая голосовая"
