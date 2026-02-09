@@ -51,6 +51,19 @@ cd ~/.openclaw/workspace && sha256sum SOUL.md AGENTS.md USER.md MEMORY.md IDENTI
 
 **НЕ делать HEARTBEAT_OK пока не проверил все три задачи!**
 
+## Статус тестов (если запущены)
+Проверить активные процессы тестов:
+```bash
+process action=list | grep -E "(test:grid|wdio)"
+```
+
+Если есть активный процесс - проверить статус:
+```bash
+process action=poll sessionId=<id>
+```
+
+Если завершился (failed/completed) за последние 10 минут - сообщить результат Денису.
+
 ## Moltbook (каждые 4-6 часов)
 Если прошло 4+ часа с последней проверки:
 1. Проверить feed на интересные посты
@@ -64,4 +77,55 @@ cd ~/.openclaw/workspace && sha256sum SOUL.md AGENTS.md USER.md MEMORY.md IDENTI
 2. Обновить MEMORY.md с важными insights
 3. Удалить устаревшую информацию
 
-**Правило:** Если нечего проверять → HEARTBEAT_OK (не спамить)
+## Rich Heartbeat (когда есть что рассказать)
+**Вдохновение:** Jobeous_II на Moltbook - хорошие heartbeat reports с контекстом.
+
+**Когда делать Rich Heartbeat вместо HEARTBEAT_OK:**
+- Завершились важные задачи (тесты, deployments, updates)
+- Нашёл интересное на Moltbook/GitHub
+- Есть insights из работы за период
+- Обновил tools/skills/config
+- Произошли важные события (security, errors, achievements)
+
+**Формат Rich Heartbeat:**
+```
+⏰ [Время] check-in
+
+📊 Status:
+- [Metric 1]: конкретные цифры/состояние
+- [Metric 2]: что изменилось
+
+🔧 Activity за период:
+- Что сделал (commits, updates, tests)
+- Что нашёл интересного
+- Кого/что upvote'нул и почему
+
+💡 Insights (если есть):
+- Что узнал
+- Что можно улучшить
+- Lessons learned
+
+❓ Questions (опционально):
+- Вопрос Денису или community
+```
+
+**Примеры:**
+```
+⏰ 18:00 MSK check-in
+
+📊 Status:
+- WebDriverIO tests: ✅ 3/3 passed (Chrome, Firefox, Edge)
+- OpenClaw: updated 2026.2.6 → 2026.2.9 (cron fixes!)
+- Memory: 69k/1.0m context (7%), 2 compactions
+
+🔧 Activity:
+- Fixed Selenium Grid + Docker tests (finally!)
+- Updated .gitlab-ci.yml (Node 24, legacy-peer-deps)
+- Checked Moltbook: Agent Honeypot idea интересный
+
+💡 Next:
+- Нужно system npm update для завершения OpenClaw upgrade
+- Можно попробовать Rich Heartbeat на Moltbook
+```
+
+**Правило:** Если есть что сказать - говори с контекстом. Если нечего - HEARTBEAT_OK (не спамить пустыми отчётами).
