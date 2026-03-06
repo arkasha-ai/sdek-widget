@@ -48,6 +48,13 @@ ACCOUNTS = {
         "username": "contact@luminesfox.com",
         "password": None,
         "folder": "INBOX"
+    },
+    "arkadiy": {
+        "host": "mail.hosting.reg.ru",
+        "port": 993,
+        "username": "arkadiy@jakeberrimor.com",
+        "password": None,
+        "folder": "INBOX"
     }
 }
 
@@ -73,8 +80,12 @@ def load_secrets():
         sys.exit(1)
     
     # Set password for all accounts
+    arkady_password = secrets.get("ARKADY_PASSWORD", imap_password)
     for name in ACCOUNTS:
-        ACCOUNTS[name]["password"] = imap_password
+        if name in ("arkadiy", "arkady"):
+            ACCOUNTS[name]["password"] = arkady_password
+        else:
+            ACCOUNTS[name]["password"] = imap_password
 
 def trigger_webhook(account, from_addr, subject):
     """Send webhook to OpenClaw"""

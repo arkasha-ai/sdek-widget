@@ -260,6 +260,43 @@ def cmd_verify(args):
     result = make_request("POST", "/verify", data=data)
     print(json.dumps(result, indent=2))
 
+def cmd_check(args):
+    """Check for new comments and mentions"""
+    print("🔍 Checking for new comments and mentions...")
+    
+    # Get my profile
+    me = make_request("GET", "/agents/me")
+    if "error" in me:
+        print(json.dumps(me, indent=2))
+        return
+    
+    agent_name = me.get("agent", {}).get("name", "")
+    
+    # Search for mentions
+    search_result = make_request("GET", "/search", params={"q": f"@{agent_name}", "type": "comments", "limit": 50})
+    
+    # Get recent feed to check for comments
+    feed_result = make_request("GET", "/feed", params={"sort": "new", "limit": 25})
+    
+    print(f"✅ Check completed for @{agent_name}")
+    
+    # Check if there are any comments/mentions
+    mentions_count = 0
+    if "results" in search_result:
+        mentions_count = len(search_result["results"])
+    
+    print(f"📝 Found {mentions_count} recent mentions/comments")
+    
+    result = {
+        "status": "checked",
+        "agent_name": agent_name,
+        "mentions_found": mentions_count,
+        "search_results": search_result,
+        "feed_results": feed_result
+    }
+    
+    print(json.dumps(result, indent=2))
+
 def main():
     if len(sys.argv) < 2:
         print("Usage: moltbook.py <command> [args...]")
@@ -300,6 +337,7 @@ def main():
         "profile": cmd_profile,
         "follow": cmd_follow,
         "verify": cmd_verify,
+        "check": cmd_check,
     }
     
     if command in commands:

@@ -11,6 +11,16 @@ import subprocess
 from datetime import datetime
 from pathlib import Path
 
+# Загружаем secrets.env если он доступен
+secrets_path = Path.home() / ".openclaw" / "secrets.env"
+if secrets_path.exists():
+    with open(secrets_path) as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith('#') and '=' in line:
+                key, value = line.split('=', 1)
+                os.environ[key] = value
+
 # Конфиг из переменных окружения
 LITELLM_BASE = os.getenv('LITELLM_BASE_URL', 'https://litellm.jakeberrimor.com')
 LITELLM_KEY = os.getenv('LITELLM_API_KEY')
@@ -18,6 +28,9 @@ QDRANT_URL = os.getenv('QDRANT_URL', 'https://qdrant.jakeberrimor.com')
 QDRANT_KEY = os.getenv('QDRANT_API_KEY', 'sk-1234')
 COLLECTION = os.getenv('QDRANT_COLLECTION', 'arkasha')
 EMBEDDING_MODEL = os.getenv('EMBEDDING_MODEL', 'vl-Qwen/Qwen3-Embedding-0.6B')
+NEO4J_URL = os.getenv('NEO4J_URL', 'http://neo4j-arkasha-pojvu0-34b918-80-87-197-0.traefik.me')
+NEO4J_USER = os.getenv('NEO4J_USER', 'neo4j')
+NEO4J_PASS = os.getenv('NEO4J_PASS', 'arkasha-neo4j-2026')
 
 def http_request(url, method="GET", headers=None, data=None):
     """HTTP запрос через urllib"""
@@ -46,6 +59,21 @@ def get_embedding(text):
         headers={"Authorization": f"Bearer {LITELLM_KEY}"},
         data={"model": EMBEDDING_MODEL, "input": text}
     )['data'][0]['embedding']
+
+def points_exist(point_ids):
+    """Проверить какие point_id уже есть в Qdrant. Возвращает set существующих id."""
+    if not point_ids:
+        return set()
+    try:
+        result = http_request(
+            f"{QDRANT_URL}/collections/{COLLECTION}/points",
+            method="POST",
+            headers={"api-key": QDRANT_KEY},
+            data={"ids": list(point_ids), "with_payload": False, "with_vector": False}
+        )
+        return {p['id'] for p in result.get('result', [])}
+    except Exception:
+        return set()
 
 def index_point(point_id, text, metadata):
     """Добавить точку в Qdrant"""
@@ -151,6 +179,214 @@ def index_memory(file_path, content):
     }
     
     return index_point(point_id, content, metadata)
+
+def chunk_markdown(content, file_path, max_chunk_size=800, overlap=100):
+    """
+    Разбить markdown-файл на чанки по заголовкам (##, ###).
+    Большие секции дополнительно нарезаются с overlap.
+    Возвращает список dict: {text, section, parent_section, chunk_id}
+    """
+    import re
+    chunks = []
+    lines = content.split('\n')
+
+    current_h1 = ''
+    current_h2 = ''
+    current_h3 = ''
+    current_lines = []
+    current_level = 0
+
+    def split_large(text, section, parent, level):
+        """Нарезать большой текст на части с overlap"""
+        words = text.split()
+        if not words:
+            return []
+        result = []
+        step = max_chunk_size - overlap
+        # Работаем посимвольно: ищем куски по ~max_chunk_size символов
+        start = 0
+        part = 0
+        while start < len(text):
+            end = start + max_chunk_size
+            chunk_text = text[start:end]
+            # Обрезаем по слову чтобы не рвать на середине
+            if end < len(text):
+                last_space = chunk_text.rfind(' ')
+                if last_space > max_chunk_size // 2:
+                    chunk_text = chunk_text[:last_space]
+            label = f'{section} (часть {part+1})' if part > 0 else section
+            result.append((chunk_text.strip(), label, parent, level))
+            start += len(chunk_text) - overlap
+            if start < 0:
+                break
+            part += 1
+        return result
+
+    def flush(section, parent, level):
+        text = '\n'.join(current_lines).strip()
+        if len(text) < 30:
+            return  # слишком мало — скип
+
+        # Добавляем контекст родителя в начало чанка
+        prefix = f'[{parent}] ' if parent and parent != section else ''
+
+        if len(text) <= max_chunk_size:
+            full_text = f'{prefix}{section}\n\n{text}' if section else text
+            chunk_id = hashlib.md5(f'{file_path}:{section}:{text[:50]}'.encode()).hexdigest()[:12]
+            chunks.append({
+                'chunk_id': chunk_id,
+                'section': section,
+                'parent_section': parent,
+                'level': level,
+                'text': full_text,
+                'raw_text': text,
+            })
+        else:
+            # Большой раздел — нарезаем
+            parts = split_large(text, section, parent, level)
+            for raw_text, label, par, lv in parts:
+                full_text = f'{prefix}{label}\n\n{raw_text}' if label else raw_text
+                chunk_id = hashlib.md5(f'{file_path}:{label}:{raw_text[:50]}'.encode()).hexdigest()[:12]
+                chunks.append({
+                    'chunk_id': chunk_id,
+                    'section': label,
+                    'parent_section': par,
+                    'level': lv,
+                    'text': full_text,
+                    'raw_text': raw_text,
+                })
+
+    for line in lines:
+        h1 = re.match(r'^# (.+)', line)
+        h2 = re.match(r'^## (.+)', line)
+        h3 = re.match(r'^### (.+)', line)
+
+        if h1:
+            flush(current_h2 or current_h1, current_h1, current_level)
+            current_lines = []
+            current_h1 = h1.group(1).strip()
+            current_h2 = ''
+            current_h3 = ''
+            current_level = 1
+        elif h2:
+            flush(current_h2, current_h1, current_level)
+            current_lines = []
+            current_h2 = h2.group(1).strip()
+            current_h3 = ''
+            current_level = 2
+        elif h3:
+            flush(current_h3 or current_h2, current_h2, current_level)
+            current_lines = []
+            current_h3 = h3.group(1).strip()
+            current_level = 3
+        else:
+            current_lines.append(line)
+
+    # Последний чанк
+    section = current_h3 or current_h2 or current_h1 or file_path
+    parent = current_h2 or current_h1 or ''
+    flush(section, parent, current_level)
+
+    return chunks
+
+
+def neo4j_query(cypher, params=None):
+    """Выполнить Cypher запрос через HTTP API"""
+    import base64
+    token = base64.b64encode(f'{NEO4J_USER}:{NEO4J_PASS}'.encode()).decode()
+    return http_request(
+        f'{NEO4J_URL}/db/neo4j/tx/commit',
+        method='POST',
+        headers={'Authorization': f'Basic {token}'},
+        data={'statements': [{'statement': cypher, 'parameters': params or {}}]}
+    )
+
+
+def extract_and_index_entities(chunk, file_path):
+    """
+    Извлечь сущности из чанка через LLM и записать в Neo4j.
+    Сущности: Person, Project, Organization, Tool, Decision
+    """
+    prompt = f"""Извлеки именованные сущности из текста. Верни ТОЛЬКО JSON, без пояснений.
+
+Формат:
+{{
+  "persons": ["имя1", "имя2"],
+  "projects": ["проект1"],
+  "organizations": ["орг1"],
+  "tools": ["инструмент1"],
+  "decisions": ["ключевое решение (кратко, до 60 символов)"]
+}}
+
+Текст:
+{chunk['raw_text'][:800]}"""
+
+    try:
+        resp = http_request(
+            f'{LITELLM_BASE}/v1/chat/completions',
+            method='POST',
+            headers={'Authorization': f'Bearer {LITELLM_KEY}'},
+            data={
+                'model': 'anthropic/claude-sonnet-4-5',
+                'messages': [{'role': 'user', 'content': prompt}],
+                'max_tokens': 300,
+                'temperature': 0,
+            }
+        )
+        raw = resp['choices'][0]['message']['content'].strip()
+        # Убираем markdown блок если есть
+        if '```' in raw:
+            raw = raw.split('```')[1]
+            if raw.startswith('json'):
+                raw = raw[4:]
+        entities = json.loads(raw)
+    except Exception as e:
+        print(f'    ⚠ entity extraction failed: {e}', file=sys.stderr)
+        return
+
+    # Записываем в Neo4j
+    chunk_node_id = f'{file_path}:{chunk["chunk_id"]}'
+    try:
+        # Создаём Chunk узел
+        neo4j_query(
+            'MERGE (c:Chunk {id: $id}) SET c.file=$file, c.section=$section, c.parent=$parent, c.text=$text',
+            {'id': chunk_node_id, 'file': file_path, 'section': chunk['section'],
+             'parent': chunk['parent_section'], 'text': chunk['raw_text'][:500]}
+        )
+        # Связываем сущности
+        for person in entities.get('persons', []):
+            if person and len(person) > 1:
+                neo4j_query(
+                    'MERGE (p:Person {name: $name}) MERGE (c:Chunk {id: $cid}) MERGE (c)-[:MENTIONS]->(p)',
+                    {'name': person, 'cid': chunk_node_id}
+                )
+        for project in entities.get('projects', []):
+            if project and len(project) > 1:
+                neo4j_query(
+                    'MERGE (p:Project {name: $name}) MERGE (c:Chunk {id: $cid}) MERGE (c)-[:MENTIONS]->(p)',
+                    {'name': project, 'cid': chunk_node_id}
+                )
+        for org in entities.get('organizations', []):
+            if org and len(org) > 1:
+                neo4j_query(
+                    'MERGE (o:Organization {name: $name}) MERGE (c:Chunk {id: $cid}) MERGE (c)-[:MENTIONS]->(o)',
+                    {'name': org, 'cid': chunk_node_id}
+                )
+        for tool in entities.get('tools', []):
+            if tool and len(tool) > 1:
+                neo4j_query(
+                    'MERGE (t:Tool {name: $name}) MERGE (c:Chunk {id: $cid}) MERGE (c)-[:MENTIONS]->(t)',
+                    {'name': tool, 'cid': chunk_node_id}
+                )
+        for decision in entities.get('decisions', []):
+            if decision and len(decision) > 5:
+                neo4j_query(
+                    'MERGE (d:Decision {text: $text}) MERGE (c:Chunk {id: $cid}) MERGE (c)-[:CONTAINS]->(d)',
+                    {'text': decision, 'cid': chunk_node_id}
+                )
+    except Exception as e:
+        print(f'    ⚠ neo4j write failed: {e}', file=sys.stderr)
+
 
 def index_session_message(session_id, timestamp, role, text):
     """Индексировать сообщение из session history"""
@@ -272,31 +508,134 @@ def main():
         query = " ".join(args.query)
         
         results = search(query, limit=args.limit, filter_type=args.type, account=args.account)
-        
-        print(json.dumps(results, indent=2, ensure_ascii=False))
+
+        for r in results:
+            score = r.get('score', 0)
+            payload = r.get('payload', {})
+            file = payload.get('file', '')
+            section = payload.get('section', '')
+            text_snippet = payload.get('text', '')[:200].replace('\n', ' ')
+            print(f"[{score:.3f}] {file} › {section}")
+            print(f"  {text_snippet}")
+            print()
     
     elif command == "index-memory":
-        # Индексируем файлы памяти
+        # Индексируем файлы памяти — чанками по секциям
+        neo4j_flag = '--neo4j' in sys.argv
         workspace = Path.home() / ".openclaw" / "workspace"
         memory_files = (
-            list(workspace.glob("memory/*.md")) + 
+            list(workspace.glob("memory/*.md")) +
+            list(workspace.glob("memory/projects/*.md")) +
+            list(workspace.glob("memory/people/*.md")) +
+            list(workspace.glob("memory/tools/*.md")) +
+            list(workspace.glob("memory/rules/*.md")) +
+            [workspace / "MEMORY.md"]
+        )
+
+        total_files = 0
+        total_chunks = 0
+        for file_path in memory_files:
+            if not file_path.exists():
+                continue
+            try:
+                content = file_path.read_text()
+                rel_path = str(file_path.relative_to(workspace))
+                chunks = chunk_markdown(content, rel_path)
+
+                # Вычисляем все point_id для файла
+                chunk_map = {
+                    int(hashlib.md5(f'{rel_path}:{c["chunk_id"]}'.encode()).hexdigest()[:8], 16): c
+                    for c in chunks
+                }
+                # Батч-проверка — какие уже есть в Qdrant
+                existing = points_exist(list(chunk_map.keys()))
+                new_count = len(chunk_map) - len(existing)
+                print(f'📄 {file_path.name} → {len(chunks)} chunks ({len(existing)} skip, {new_count} new)', file=sys.stderr)
+
+                for point_id, chunk in chunk_map.items():
+                    if point_id in existing:
+                        continue  # уже проиндексирован — пропускаем
+                    try:
+                        metadata = {
+                            'type': 'memory',
+                            'file': rel_path,
+                            'section': chunk['section'],
+                            'parent_section': chunk['parent_section'],
+                            'chunk_id': chunk['chunk_id'],
+                        }
+                        index_point(point_id, chunk['text'], metadata)
+
+                        if neo4j_flag:
+                            extract_and_index_entities(chunk, rel_path)
+
+                        total_chunks += 1
+                        print(f'  ✓ {chunk["section"][:60]}', file=sys.stderr)
+                    except Exception as e:
+                        print(f'  ✗ {chunk["section"][:40]}: {e}', file=sys.stderr)
+
+                total_files += 1
+            except Exception as e:
+                print(f'✗ {file_path.name}: {e}', file=sys.stderr)
+
+        print(f'\n✅ Indexed {total_chunks} chunks from {total_files} files', file=sys.stderr)
+        if not neo4j_flag:
+            print('💡 Add --neo4j to also extract entities into Neo4j graph', file=sys.stderr)
+    
+    elif command == "index-memory-chunked":
+        # Индексируем файлы памяти с чанкингом по секциям + Neo4j entities
+        neo4j_flag = '--neo4j' in sys.argv
+        workspace = Path.home() / ".openclaw" / "workspace"
+        memory_files = (
+            list(workspace.glob("memory/*.md")) +
             list(workspace.glob("memory/projects/*.md")) +
             [workspace / "MEMORY.md"]
         )
-        
-        total = 0
+
+        total_files = 0
+        total_chunks = 0
         for file_path in memory_files:
-            if file_path.exists():
-                try:
-                    content = file_path.read_text()
-                    index_memory(str(file_path.relative_to(workspace)), content)
-                    print(f"✓ {file_path.name}", file=sys.stderr)
-                    total += 1
-                except Exception as e:
-                    print(f"✗ {file_path.name}: {e}", file=sys.stderr)
-        
-        print(f"\nIndexed {total} memory files", file=sys.stderr)
-    
+            if not file_path.exists():
+                continue
+            try:
+                content = file_path.read_text()
+                rel_path = str(file_path.relative_to(workspace))
+                chunks = chunk_markdown(content, rel_path)
+
+                print(f'📄 {file_path.name} → {len(chunks)} chunks', file=sys.stderr)
+
+                for i, chunk in enumerate(chunks):
+                    try:
+                        # Уникальный ID для Qdrant
+                        point_id = int(hashlib.md5(
+                            f'{rel_path}:{chunk["chunk_id"]}'.encode()
+                        ).hexdigest()[:8], 16)
+
+                        metadata = {
+                            'type': 'memory',
+                            'file': rel_path,
+                            'section': chunk['section'],
+                            'parent_section': chunk['parent_section'],
+                            'chunk_id': chunk['chunk_id'],
+                        }
+                        index_point(point_id, chunk['text'], metadata)
+
+                        # Neo4j (опционально, дороже — LLM вызов на каждый чанк)
+                        if neo4j_flag:
+                            extract_and_index_entities(chunk, rel_path)
+
+                        total_chunks += 1
+                        print(f'  ✓ [{i+1}/{len(chunks)}] {chunk["section"][:50]}', file=sys.stderr)
+                    except Exception as e:
+                        print(f'  ✗ chunk {i}: {e}', file=sys.stderr)
+
+                total_files += 1
+            except Exception as e:
+                print(f'✗ {file_path.name}: {e}', file=sys.stderr)
+
+        print(f'\n✅ Indexed {total_chunks} chunks from {total_files} files', file=sys.stderr)
+        if not neo4j_flag:
+            print('💡 Add --neo4j to also extract entities into Neo4j graph', file=sys.stderr)
+
     elif command == "index-sessions":
         # Индексируем историю сессий
         sessions_dir = Path.home() / ".openclaw" / "agents" / "main" / "sessions"

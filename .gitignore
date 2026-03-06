@@ -26,3 +26,30 @@ logs/*.log
 # OS files
 .DS_Store
 Thumbs.db
+
+# Session files (large, runtime)
+agents/
+media/inbound/
+*.ogg
+
+# Nested git repos (project clones)
+cloudapi/
+frontend-master/
+googleapis/
+imap-idle-review/
+sio-ui-tests/
+sio-wdio-tests/
+
+# Large binary/media files
+docs/*.mp3
+docs/*.docx
+docs/gravity_images/
+docs/*.txt
+agents/
+media/
+
+# Temp analysis scripts
+analyze_excel.py
+check_all_data.py
+check_seo.sh
+detailed_analysis.py

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "shadcn-studio-mcp": {
+      "command": "npx -y shadcn-studio-mcp",
+      "env": {
+        "API_KEY": "F3A391ED-2051-489F-94BE-CE8C9D5ED92B",
+        "EMAIL": "contact@jakeberrimor.com"
+      }
+    }
+  },
+  "imports": []
+}

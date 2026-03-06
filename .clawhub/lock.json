@@ -3,7 +3,7 @@
   "skills": {
     "himalaya": {
       "version": "1.0.0",
-      "installedAt": 1770278570546
+      "installedAt": 1770520832542
     },
     "ticktick-tasks": {
       "version": "1.0.0",
@@ -11,7 +11,35 @@
     },
     "phoenix-shield": {
       "version": "1.0.4",
-      "installedAt": 1770374664082
+      "installedAt": 1770520842560
+    },
+    "chart-image": {
+      "version": "2.2.0",
+      "installedAt": 1771080625247
+    },
+    "excalidraw": {
+      "version": "1.0.0",
+      "installedAt": 1771080629739
+    },
+    "fail2ban-reporter": {
+      "version": "1.0.0",
+      "installedAt": 1771080631573
+    },
+    "pre-mortem-analyst": {
+      "version": "1.0.0",
+      "installedAt": 1771080633024
+    },
+    "dokploy": {
+      "version": "1.0.0",
+      "installedAt": 1771080634672
+    },
+    "agent-analytics": {
+      "version": "2.1.0",
+      "installedAt": 1771083079091
+    },
+    "superdesign": {
+      "version": "1.0.0",
+      "installedAt": 1771083477399
     }
   }
 }
