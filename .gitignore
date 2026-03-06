@@ -53,3 +53,5 @@ analyze_excel.py
 check_all_data.py
 check_seo.sh
 detailed_analysis.py
+*.log
+memory/arkadiy_userbot.log
