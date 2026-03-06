@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1060px;
+    height: 760px;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Georgia', serif;
+  }
+
+  /* Outer frame — yellow border */
+  .frame {
+    width: 1000px;
+    height: 700px;
+    border: 10px solid #FFD700;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, #1a5c2a 0%, #2e8b3e 40%, #1e7a30 70%, #155224 100%);
+    box-shadow: 0 0 0 3px #c8972a, 0 8px 32px rgba(0,0,0,0.2);
+    flex-shrink: 0;
+  }
+
+  /* Decorative circles inside */
+  .circle {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  .dot {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+  .deco-star {
+    position: absolute;
+    color: rgba(255,215,0,0.6);
+    font-style: normal;
+    line-height: 1;
+  }
+
+  /* Main content */
+  .card {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 60px;
+  }
+
+  .icons-top {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 18px;
+    font-size: 34px;
+    filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3));
+  }
+
+  .date-badge {
+    background: linear-gradient(135deg, #e8930a, #FFD700, #f5c842, #FFD700, #e8930a);
+    color: #1a3a10;
+    font-size: 68px;
+    font-weight: bold;
+    padding: 10px 50px;
+    border-radius: 20px;
+    letter-spacing: 3px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.4);
+    margin-bottom: 8px;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+  }
+
+  .date-sub {
+    color: #c8f0b0;
+    font-size: 17px;
+    letter-spacing: 7px;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    font-family: 'Arial', sans-serif;
+    font-weight: 300;
+  }
+
+  .title {
+    color: #ffffff;
+    font-size: 40px;
+    text-align: center;
+    line-height: 1.35;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  }
+  .title span { color: #FFD700; }
+
+  .divider {
+    width: 460px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255,215,0,0.8), transparent);
+    margin: 0 auto 16px;
+  }
+
+  .subtitle {
+    color: #d4f0c0;
+    font-size: 18px;
+    text-align: center;
+    line-height: 1.65;
+    max-width: 680px;
+    margin-bottom: 22px;
+    font-style: italic;
+  }
+
+  .wishes {
+    display: flex;
+    gap: 36px;
+    margin-bottom: 20px;
+    background: rgba(0,0,0,0.15);
+    padding: 12px 36px;
+    border-radius: 50px;
+    border: 1px solid rgba(255,215,0,0.25);
+  }
+  .wish-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .wish-icon { font-size: 26px; }
+  .wish-text {
+    color: #FFD700;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+  }
+
+  /* Signature row with logo */
+  .signature-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .logo {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: 3px solid #FFD700;
+    object-fit: cover;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    flex-shrink: 0;
+  }
+  .signature {
+    color: rgba(255,255,255,0.72);
+    font-size: 15px;
+    font-style: italic;
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+<div class="frame">
+  <!-- Background decoration -->
+  <div class="circle" style="width:380px;height:380px;top:-100px;right:-80px;"></div>
+  <div class="circle" style="width:280px;height:280px;bottom:-80px;left:-60px;"></div>
+  <div class="circle" style="width:180px;height:180px;top:200px;left:40px;"></div>
+  <div class="circle" style="width:130px;height:130px;bottom:90px;right:100px;"></div>
+
+  <div class="dot" style="width:12px;height:12px;background:#FFD700;top:70px;left:100px;"></div>
+  <div class="dot" style="width:8px;height:8px;background:#fff;top:130px;left:190px;"></div>
+  <div class="dot" style="width:10px;height:10px;background:#FFD700;top:55px;right:150px;"></div>
+  <div class="dot" style="width:14px;height:14px;background:#FFD700;bottom:110px;right:120px;"></div>
+  <div class="dot" style="width:8px;height:8px;background:#fff;bottom:150px;left:150px;"></div>
+  <div class="dot" style="width:10px;height:10px;background:#FFD700;bottom:70px;left:280px;"></div>
+
+  <span class="deco-star" style="font-size:28px;top:60px;left:70px;">★</span>
+  <span class="deco-star" style="font-size:20px;top:45px;right:200px;">★</span>
+  <span class="deco-star" style="font-size:22px;bottom:80px;right:90px;">★</span>
+  <span class="deco-star" style="font-size:16px;bottom:100px;left:170px;">★</span>
+  <span class="deco-star" style="font-size:14px;top:170px;right:90px;opacity:0.4">★</span>
+  <span class="deco-star" style="font-size:16px;top:150px;left:80px;opacity:0.4">★</span>
+
+  <div class="card">
+    <div class="icons-top">
+      <span>⭐</span><span>🎖️</span><span>🏅</span><span>🎖️</span><span>⭐</span>
+    </div>
+
+    <div class="date-badge">23 февраля</div>
+    <div class="date-sub">День защитника отечества</div>
+
+    <div class="title">
+      Поздравляем всех <span>пап</span><br>
+      и наших <span>маленьких героев!</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="subtitle">
+      Вы наша сила, наша опора и наша гордость.<br>
+      Пусть в вашей жизни будет больше побед, смелых мечтаний<br>
+      и радостных моментов рядом с теми, кого любите!
+    </div>
+
+    <div class="wishes">
+      <div class="wish-item"><span class="wish-icon">💪</span><span class="wish-text">Силы</span></div>
+      <div class="wish-item"><span class="wish-icon">❤️</span><span class="wish-text">Любви</span></div>
+      <div class="wish-item"><span class="wish-icon">🏆</span><span class="wish-text">Побед</span></div>
+      <div class="wish-item"><span class="wish-icon">🌟</span><span class="wish-text">Успехов</span></div>
+      <div class="wish-item"><span class="wish-icon">😊</span><span class="wish-text">Радости</span></div>
+    </div>
+
+    <div class="signature-row">
+      <img class="logo"
+        src="https://sun1-30.vkuserphoto.ru/s/v1/ig2/RylqkSsSuSXEmL1k9GlbwMxdp9eLK07n-OoX1X90zxMKZgRlIE6mkMgptrisrS9lYdUDcYWUaCk8vjIF5nnoVFjO.jpg?quality=95&crop=0,0,1000,1000&as=32x32,48x48,72x72,108x108,160x160,240x240,360x360&ava=1&u=j4KHrd-5eyvIUgkAFSL-SopWcIxdo0FVMTwyOgURA4E&cs=200x200"
+        alt="Остров Успеха"
+        crossorigin="anonymous"
+      />
+      <div class="signature">— с любовью, детский центр «Остров Успеха» —</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

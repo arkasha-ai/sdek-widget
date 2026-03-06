@@ -1,131 +1,92 @@
 # HEARTBEAT.md
 
-## Security Check (каждый heartbeat)
-Проверить на возможные компромиссы:
-1. **File integrity check** - проверить checksums core файлов:
-   ```bash
-   cd ~/.openclaw/workspace && sha256sum -c .integrity.baseline --quiet
-   ```
-   Если есть изменения - **НЕМЕДЛЕННО сообщить Денису с деталями**
-2. Проверить cron jobs (`openclaw cron list`) - нет ли левых задач
-3. **Pairing requests** - проверить попытки контактов:
-   ```bash
-   openclaw pairing list telegram
-   ```
-   Если есть pending requests - сообщить Денису (кто пытался, когда)
-4. Если что-то подозрительное - **немедленно сообщить Денису**
+## ⚠️ ГЛАВНОЕ ПРАВИЛО
+**Heartbeat = тихая проверка.** НЕ отправлять message(action=send) в Telegram!
+- Всё ок → ответь `HEARTBEAT_OK` (OpenClaw проглотит, Денис не увидит)
+- Проблема найдена → ответь текстом алерта (OpenClaw доставит)
+- `message(action=send)` использовать ТОЛЬКО при пропущенном лекарстве в окне 08:50-10:00
 
-**Важно:** Если я сам легитимно изменил core файлы (по твоей просьбе) - обновить baseline:
+**Урок 21.02.2026:** Не паниковать и не спамить при технических проблемах. Молча исправить → один короткий статус. Не повторять вопрос про лекарства 5 раз — достаточно один раз спросить.
+
+## Identity Drift Check (раз в неделю, по воскресеньям)
+Показать Денису дифф identity файлов за неделю:
 ```bash
-cd ~/.openclaw/workspace && sha256sum SOUL.md AGENTS.md USER.md MEMORY.md IDENTITY.md TOOLS.md HEARTBEAT.md > .integrity.baseline
+cd ~/.openclaw/workspace && git diff HEAD~7 HEAD -- SOUL.md AGENTS.md IDENTITY.md MEMORY.md 2>/dev/null | head -100
+```
+Если есть изменения → отправить дифф Денису на ревью через message(action=send).
+Если нет → молча продолжить.
+
+## Security Check (каждый heartbeat)
+1. **File integrity:** `cd ~/.openclaw/workspace && sha256sum -c .integrity.baseline --quiet`
+2. **Daily log tampering:** проверить что сегодняшний и вчерашний memory/*.md не менялись чужими процессами:
+   ```bash
+   # Файлы memory/YYYY-MM-DD.md изменённые не openclaw процессами за последние 2 часа — подозрительно
+   find ~/.openclaw/workspace/memory -name "*.md" -newer ~/.openclaw/workspace/.integrity.baseline -not -newer /proc/1/exe 2>/dev/null
+   ```
+   Если daily log изменён в нерабочее время (ночью, пока сессия не активна) → алерт.
+3. **Cron jobs:** нет ли левых задач
+4. **Pairing requests:** `openclaw pairing list telegram`
+
+Если что-то не так → ответить текстом алерта (НЕ HEARTBEAT_OK).
+
+**Обновить baseline** если легитимно менял core файлы:
+```bash
+cd ~/.openclaw/workspace && sha256sum \
+  SOUL.md AGENTS.md USER.md MEMORY.md IDENTITY.md TOOLS.md HEARTBEAT.md \
+  memory/rules/*.md \
+  > .integrity.baseline
 ```
 
-## Cron Catch-up (ОБЯЗАТЕЛЬНО каждый heartbeat!)
-**Проблема:** Gateway cron scheduler пропускает задачи когда занят. 07.02.2026 все три напоминания про лекарства пропущены - Денис спросил в 09:57 "Где напоминания????".
+## Cron Catch-up (лекарства)
+**Только в окне 08:50 - 10:00 MSK!** Вне окна — пропустить эту секцию.
 
-**ДЕЙСТВИЯ (выполнять КАЖДЫЙ heartbeat):**
-
-1. Получить текущее время (из session_status)
-2. Получить список cron jobs
-3. **ДЛЯ КАЖДОЙ из трёх критичных задач про лекарства:**
-   
-   **Проверка пропуска:**
-   - Взять `nextRunAtMs` из state
-   - Взять `lastRunAtMs` из state (может отсутствовать)
-   - Текущее время > nextRunAtMs? → задача **должна была** сработать
-   - НО lastRunAtMs пустой ИЛИ lastRunAtMs < (nextRunAtMs - 1 час)? → **ПРОПУЩЕНА!**
-   
-   **Действие при пропуске:**
-   - Если текущее время < (nextRunAtMs + 10 минут) → **СРАБОТАТЬ НЕМЕДЛЕННО:**
-     ```bash
-     openclaw cron run <job-id>
-     ```
-   - СООБЩИТЬ ДЕНИСУ: "⚠️ Gateway пропустил задачу <name> в <время>, запустил вручную"
-
-**Критичные задачи (ID запомнить):**
+Критичные задачи:
 - df3b7638-16b3-406f-928a-a90d7df2c6ae (09:00)
 - 5eaf605e-6e95-4440-a93a-bc2f3c2a4df0 (09:20)
-- fa42ee0c-5e28-428b-811a-4b5da3ffbad2 (09:45)
+- fe16b478-95df-40fc-a39d-bfe16cb11d89 (09:45)
 
-**Окно проверки:** 08:50 - 10:00 (самое критичное время)
+**Проверка пропуска:**
+- Текущее время > nextRunAtMs И (lastRunAtMs пустой ИЛИ lastRunAtMs < nextRunAtMs - 1 час) → **ПРОПУЩЕНА**
+- Действие: `cron(action=run, jobId=<id>)` + message Денису о пропуске
 
-**НЕ делать HEARTBEAT_OK пока не проверил все три задачи!**
-
-## Статус тестов (если запущены)
-Проверить активные процессы тестов:
-```bash
-process action=list | grep -E "(test:grid|wdio)"
-```
-
-Если есть активный процесс - проверить статус:
-```bash
-process action=poll sessionId=<id>
-```
-
-Если завершился (failed/completed) за последние 10 минут - сообщить результат Денису.
+## TickTick Tasks (каждый heartbeat)
+Проверить проект "🤖 Аркаша Tasks" (ID: `6998c6fb1ff4510b9e851f9f`).
+Если есть задачи → spawn sub-agent, complete, announce.
+Если нет задач → молча продолжить.
 
 ## Moltbook (каждые 4-6 часов)
-Если прошло 4+ часа с последней проверки:
-1. Проверить feed на интересные посты
-2. Ответить на комментарии к моим постам (если есть)
-3. Upvote качественный контент (не спам)
-4. Обновить `lastMoltbookCheck` в `memory/state/heartbeat-state.json`
+Проверить `lastMoltbookCheck` в `memory/state/heartbeat-state.json`.
+Если прошло 4+ часа → проверить feed, ответить на комменты, upvote.
+Результат НЕ отправлять Денису — просто обновить state.
 
 ## Memory Review (раз в несколько дней)
-Периодически:
-1. Просмотреть последние `memory/YYYY-MM-DD.md` файлы
-2. Обновить MEMORY.md с важными insights
-3. Удалить устаревшую информацию
+Периодически обновить MEMORY.md. Молча.
 
-## Rich Heartbeat (когда есть что рассказать)
-**Вдохновение:** Jobeous_II на Moltbook - хорошие heartbeat reports с контекстом.
+## Проактивный анализ паттернов (каждый heartbeat)
 
-**Когда делать Rich Heartbeat вместо HEARTBEAT_OK:**
-- Завершились важные задачи (тесты, deployments, updates)
-- Нашёл интересное на Moltbook/GitHub
-- Есть insights из работы за период
-- Обновил tools/skills/config
-- Произошли важные события (security, errors, achievements)
+### 1. Дневной лог
+Проверить: существует ли `memory/YYYY-MM-DD.md` для сегодня?
+- Нет → создать пустой лог с заголовком и датой. Молча.
 
-**Формат Rich Heartbeat:**
+### 2. Просроченные задачи
+```bash
+python3 ~/.openclaw/workspace/scripts/check_overdue_tasks.py
 ```
-⏰ [Время] check-in
+Если есть просроченные → алерт Денису: "⏰ Просроченные задачи: [список]"
+Если нет → молча.
 
-📊 Status:
-- [Metric 1]: конкретные цифры/состояние
-- [Metric 2]: что изменилось
+### 3. Застрявшие намерения в памяти
+Проверить `memory/YYYY-MM-DD.md` за последние 3 дня на паттерны:
+- "нужно сделать", "TODO", "напомни", "не забыть", "сделать позже"
+- Если нашёл и прошло >24 часа без движения → алерт: "📌 Зависло: [что именно]"
 
-🔧 Activity за период:
-- Что сделал (commits, updates, tests)
-- Что нашёл интересного
-- Кого/что upvote'нул и почему
+### 4. Необычное молчание
+Проверить `memory/state/heartbeat-state.json` → поле `lastDenisMessageAt`.
+- Если сейчас 10:00–22:00 MSK И молчание >6 часов → алерт: "Денис, всё ок?"
+- Вне этого окна → молча.
+- **Обновлять** `lastDenisMessageAt` при каждом входящем сообщении от Дениса.
 
-💡 Insights (если есть):
-- Что узнал
-- Что можно улучшить
-- Lessons learned
-
-❓ Questions (опционально):
-- Вопрос Денису или community
-```
-
-**Примеры:**
-```
-⏰ 18:00 MSK check-in
-
-📊 Status:
-- WebDriverIO tests: ✅ 3/3 passed (Chrome, Firefox, Edge)
-- OpenClaw: updated 2026.2.6 → 2026.2.9 (cron fixes!)
-- Memory: 69k/1.0m context (7%), 2 compactions
-
-🔧 Activity:
-- Fixed Selenium Grid + Docker tests (finally!)
-- Updated .gitlab-ci.yml (Node 24, legacy-peer-deps)
-- Checked Moltbook: Agent Honeypot idea интересный
-
-💡 Next:
-- Нужно system npm update для завершения OpenClaw upgrade
-- Можно попробовать Rich Heartbeat на Moltbook
-```
-
-**Правило:** Если есть что сказать - говори с контекстом. Если нечего - HEARTBEAT_OK (не спамить пустыми отчётами).
+## Итог
+Всё ок → `HEARTBEAT_OK`
+Проблема → текст алерта (без message tool, OpenClaw сам доставит)
+Единственное исключение для message(action=send): пропущенное лекарство.

@@ -1,0 +1,4 @@
+{"timestamp": "2026-02-08T04:12:42.552885", "session_id": "api-test", "type": "test_event", "data": {"test": "basic_api"}}
+{"timestamp": "2026-02-08T04:12:42.553489", "session_id": "api-test", "type": "session_resumed", "data": {"from": "main"}}
+{"timestamp": "2026-02-08T04:12:42.553508", "session_id": "api-test", "type": "context_switched", "data": {"from": "api-test", "to": "temp", "reason": "Temporary switch"}}
+{"timestamp": "2026-02-08T04:12:42.553580", "session_id": "api-test", "type": "session_resumed", "data": {"from": "temp"}}

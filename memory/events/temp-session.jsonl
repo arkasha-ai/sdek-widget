@@ -1,0 +1,3 @@
+{"timestamp": "2026-02-08T04:12:03.496327", "session_id": "temp-session", "type": "session_resumed", "data": {"from": "test-integration"}}
+{"timestamp": "2026-02-08T04:12:03.496352", "session_id": "temp-session", "type": "test_event", "data": {"test": "temporary"}}
+{"timestamp": "2026-02-08T04:12:03.496365", "session_id": "temp-session", "type": "context_switched", "data": {"from": "temp-session", "to": "test-integration", "reason": "Returning from temporary switch"}}

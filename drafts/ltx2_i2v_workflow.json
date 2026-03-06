@@ -1,0 +1,1053 @@
+{
+  "id": "ltx2-i2v-workflow",
+  "revision": 0,
+  "last_node_id": 220,
+  "last_link_id": 250,
+  "nodes": [
+    {
+      "id": 101,
+      "type": "PrimitiveInt",
+      "pos": [
+        -2670,
+        7006
+      ],
+      "size": [
+        210,
+        82
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "title": "Video Length (frames)",
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            201
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveInt"
+      },
+      "widgets_values": [
+        97,
+        "fixed"
+      ]
+    },
+    {
+      "id": 102,
+      "type": "PrimitiveFloat",
+      "pos": [
+        -2670,
+        7141
+      ],
+      "size": [
+        210,
+        58
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "title": "Frame Rate",
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": [
+            202,
+            203,
+            204
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveFloat"
+      },
+      "widgets_values": [
+        24
+      ]
+    },
+    {
+      "id": 103,
+      "type": "CM_FloatToInt",
+      "pos": [
+        -2670,
+        7260
+      ],
+      "size": [
+        215,
+        58
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "a",
+          "type": "FLOAT",
+          "widget": {
+            "name": "a"
+          },
+          "link": 204
+        }
+      ],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            205
+          ]
+        }
+      ],
+      "title": "Frame Rate Int",
+      "properties": {
+        "Node name for S&R": "CM_FloatToInt"
+      },
+      "widgets_values": [
+        0
+      ]
+    },
+    {
+      "id": 104,
+      "type": "EmptyImage",
+      "pos": [
+        -2670,
+        6824
+      ],
+      "size": [
+        210,
+        130
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            206
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyImage"
+      },
+      "widgets_values": [
+        832,
+        480,
+        1,
+        0
+      ]
+    },
+    {
+      "id": 105,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        -3533,
+        6824
+      ],
+      "size": [
+        430,
+        115
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "slot_index": 0,
+          "links": [
+            207,
+            208
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "slot_index": 1,
+          "links": []
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "slot_index": 2,
+          "links": [
+            209
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "widgets_values": [
+        "ltx-2-19b-dev-fp8.safetensors"
+      ]
+    },
+    {
+      "id": 106,
+      "type": "LTXVAudioVAELoader",
+      "pos": [
+        -3523,
+        7303
+      ],
+      "size": [
+        424,
+        58
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "Audio VAE",
+          "type": "VAE",
+          "links": [
+            210
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LTXVAudioVAELoader"
+      },
+      "widgets_values": [
+        "ltx-2-19b-dev-fp8.safetensors"
+      ]
+    },
+    {
+      "id": 107,
+      "type": "LatentUpscaleModelLoader",
+      "pos": [
+        -3525,
+        7005
+      ],
+      "size": [
+        400,
+        58
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT_UPSCALE_MODEL",
+          "type": "LATENT_UPSCALE_MODEL",
+          "links": [
+            211
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LatentUpscaleModelLoader"
+      },
+      "widgets_values": [
+        "ltx-2-spatial-upscaler-x2-1.0.safetensors"
+      ]
+    },
+    {
+      "id": 108,
+      "type": "LTXVGemmaCLIPModelLoader",
+      "pos": [
+        -3530,
+        7128
+      ],
+      "size": [
+        422,
+        106
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "links": [
+            212,
+            213,
+            214
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LTXVGemmaCLIPModelLoader"
+      },
+      "widgets_values": [
+        "gemma_3_12B_it_fp4_mixed.safetensors",
+        "ltx-2-19b-dev-fp8.safetensors",
+        1024
+      ]
+    },
+    {
+      "id": 109,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        -3044,
+        6863
+      ],
+      "size": [
+        217,
+        138
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 208
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            215
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "ltx-2-19b-distilled-lora-384.safetensors",
+        0.6
+      ]
+    },
+    {
+      "id": 110,
+      "type": "LoadImage",
+      "pos": [
+        -2403,
+        6835
+      ],
+      "size": [
+        395,
+        433
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "slot_index": 0,
+          "links": [
+            216,
+            217
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "slot_index": 1,
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "example.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 111,
+      "type": "PrimitiveStringMultiline",
+      "pos": [
+        -1993,
+        6829
+      ],
+      "size": [
+        294,
+        280
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [],
+      "title": "Positive Prompt",
+      "outputs": [
+        {
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            218
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveStringMultiline"
+      },
+      "widgets_values": [
+        "The woman slowly starts to undress, revealing her beautiful body. Smooth cinematic motion, high quality, consistent lighting."
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 112,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -1662,
+        7165
+      ],
+      "size": [
+        307,
+        76
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 212
+        },
+        {
+          "name": "text",
+          "type": "STRING",
+          "widget": {
+            "name": "text"
+          },
+          "link": 219
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            220
+          ]
+        }
+      ],
+      "title": "Positive",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        ""
+      ],
+      "color": "#232",
+      "bgcolor": "#353"
+    },
+    {
+      "id": 113,
+      "type": "LTXVGemmaEnhancePrompt",
+      "pos": [
+        -1653,
+        7113
+      ],
+      "size": [
+        361,
+        200
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 213
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 217
+        },
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "widget": {
+            "name": "prompt"
+          },
+          "link": 218
+        }
+      ],
+      "outputs": [
+        {
+          "name": "enhanced_prompt",
+          "type": "STRING",
+          "links": [
+            219
+          ]
+        }
+      ],
+      "title": "Prompt Enhancer (Gemma)",
+      "properties": {
+        "Node name for S&R": "LTXVGemmaEnhancePrompt"
+      },
+      "widgets_values": [
+        "",
+        "",
+        512,
+        false,
+        42,
+        "randomize"
+      ]
+    },
+    {
+      "id": 114,
+      "type": "CLIPTextEncode",
+      "pos": [
+        -2000,
+        7205
+      ],
+      "size": [
+        314,
+        161
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 214
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            221
+          ]
+        }
+      ],
+      "title": "Negative",
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "blurry, low quality, still frame, watermark, text, bad anatomy, distorted face, deformed"
+      ],
+      "color": "#322",
+      "bgcolor": "#533"
+    },
+    {
+      "id": 115,
+      "type": "LTXVConditioning",
+      "pos": [
+        -1661,
+        7238
+      ],
+      "size": [
+        210,
+        94
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 220
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 221
+        },
+        {
+          "name": "frame_rate",
+          "type": "FLOAT",
+          "widget": {
+            "name": "frame_rate"
+          },
+          "link": 202
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "slot_index": 0,
+          "links": [
+            222
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "slot_index": 1,
+          "links": [
+            223
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LTXVConditioning"
+      },
+      "widgets_values": [
+        25
+      ]
+    },
+    {
+      "id": 116,
+      "type": "3eaa20c4-5842-4fe4-87df-c0a7e83a6a78",
+      "pos": [
+        -1380,
+        6769
+      ],
+      "size": [
+        210,
+        334
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "model stage 1",
+          "name": "model_1",
+          "type": "MODEL",
+          "link": 215
+        },
+        {
+          "label": "model stage 2",
+          "name": "model",
+          "type": "MODEL",
+          "link": 207
+        },
+        {
+          "label": "upscale model",
+          "name": "upscale_model_1",
+          "type": "LATENT_UPSCALE_MODEL",
+          "link": 211
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 222
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 223
+        },
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 216
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 209
+        },
+        {
+          "label": "audio vae",
+          "name": "audio_vae",
+          "type": "VAE",
+          "link": 210
+        },
+        {
+          "label": "empty latent",
+          "name": "image_1",
+          "type": "IMAGE",
+          "link": 206
+        },
+        {
+          "name": "length",
+          "type": "INT",
+          "widget": {
+            "name": "length"
+          },
+          "link": 201
+        },
+        {
+          "label": "frame rate",
+          "name": "frame_rate",
+          "type": "INT",
+          "widget": {
+            "name": "frame_rate"
+          },
+          "link": 205
+        },
+        {
+          "label": "image strength",
+          "name": "strength",
+          "type": "FLOAT",
+          "widget": {
+            "name": "strength"
+          },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            224
+          ]
+        },
+        {
+          "label": "audio",
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            225
+          ]
+        }
+      ],
+      "properties": {
+        "proxyWidgets": [
+          [
+            "-1",
+            "length"
+          ],
+          [
+            "-1",
+            "frame_rate"
+          ],
+          [
+            "-1",
+            "strength"
+          ],
+          [
+            "-1",
+            "noise_seed"
+          ]
+        ],
+        "cnr_id": "comfy-core",
+        "ver": "0.5.1"
+      },
+      "widgets_values": [
+        97,
+        24,
+        0.85,
+        42
+      ]
+    },
+    {
+      "id": 117,
+      "type": "CreateVideo",
+      "pos": [
+        -1151,
+        6768
+      ],
+      "size": [
+        210,
+        78
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 224
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 225
+        },
+        {
+          "name": "fps",
+          "type": "FLOAT",
+          "widget": {
+            "name": "fps"
+          },
+          "link": 203
+        }
+      ],
+      "outputs": [
+        {
+          "name": "VIDEO",
+          "type": "VIDEO",
+          "links": [
+            226
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CreateVideo"
+      },
+      "widgets_values": [
+        24
+      ]
+    },
+    {
+      "id": 118,
+      "type": "SaveVideo",
+      "pos": [
+        -908,
+        6766
+      ],
+      "size": [
+        430,
+        500
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "video",
+          "type": "VIDEO",
+          "link": 226
+        }
+      ],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "video/LTX-2",
+        "auto",
+        "auto"
+      ]
+    }
+  ],
+  "links": [
+    [
+      201,
+      101,
+      0,
+      116,
+      9,
+      "INT"
+    ],
+    [
+      202,
+      102,
+      0,
+      115,
+      2,
+      "FLOAT"
+    ],
+    [
+      203,
+      102,
+      0,
+      117,
+      2,
+      "FLOAT"
+    ],
+    [
+      204,
+      102,
+      0,
+      103,
+      0,
+      "FLOAT"
+    ],
+    [
+      205,
+      103,
+      0,
+      116,
+      10,
+      "INT"
+    ],
+    [
+      206,
+      104,
+      0,
+      116,
+      8,
+      "IMAGE"
+    ],
+    [
+      207,
+      105,
+      0,
+      116,
+      1,
+      "MODEL"
+    ],
+    [
+      208,
+      105,
+      0,
+      109,
+      0,
+      "MODEL"
+    ],
+    [
+      209,
+      105,
+      2,
+      116,
+      6,
+      "VAE"
+    ],
+    [
+      210,
+      106,
+      0,
+      116,
+      7,
+      "VAE"
+    ],
+    [
+      211,
+      107,
+      0,
+      116,
+      2,
+      "LATENT_UPSCALE_MODEL"
+    ],
+    [
+      212,
+      108,
+      0,
+      112,
+      0,
+      "CLIP"
+    ],
+    [
+      213,
+      108,
+      0,
+      113,
+      0,
+      "CLIP"
+    ],
+    [
+      214,
+      108,
+      0,
+      114,
+      0,
+      "CLIP"
+    ],
+    [
+      215,
+      109,
+      0,
+      116,
+      0,
+      "MODEL"
+    ],
+    [
+      216,
+      110,
+      0,
+      116,
+      5,
+      "IMAGE"
+    ],
+    [
+      217,
+      110,
+      0,
+      113,
+      1,
+      "IMAGE"
+    ],
+    [
+      218,
+      111,
+      0,
+      113,
+      2,
+      "STRING"
+    ],
+    [
+      219,
+      113,
+      0,
+      112,
+      1,
+      "STRING"
+    ],
+    [
+      220,
+      112,
+      0,
+      115,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      221,
+      114,
+      0,
+      115,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      222,
+      115,
+      0,
+      116,
+      3,
+      "CONDITIONING"
+    ],
+    [
+      223,
+      115,
+      1,
+      116,
+      4,
+      "CONDITIONING"
+    ],
+    [
+      224,
+      116,
+      0,
+      117,
+      0,
+      "IMAGE"
+    ],
+    [
+      225,
+      116,
+      1,
+      117,
+      1,
+      "AUDIO"
+    ],
+    [
+      226,
+      117,
+      0,
+      118,
+      0,
+      "VIDEO"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.5,
+      "offset": [
+        0,
+        0
+      ]
+    },
+    "frontendVersion": "1.39.19"
+  },
+  "version": 0.4
+}

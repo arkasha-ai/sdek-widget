@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Пармеев Денис — Резюме 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: #1a1a1a;
+    background: #fff;
+    padding: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  /* Header */
+  .header { margin-bottom: 28px; }
+  .name { font-size: 26px; font-weight: 700; color: #111; margin-bottom: 4px; }
+  .title { font-size: 16px; font-weight: 500; color: #e03e2d; margin-bottom: 12px; }
+  .contacts { display: flex; gap: 24px; flex-wrap: wrap; color: #444; font-size: 12.5px; }
+  .contacts span::before { content: ''; }
+  .contact-item { display: flex; align-items: center; gap: 5px; }
+
+  /* Sections */
+  .section { margin-bottom: 24px; }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #888;
+    border-bottom: 1px solid #e8e8e8;
+    padding-bottom: 6px;
+    margin-bottom: 14px;
+  }
+
+  /* Experience */
+  .job { margin-bottom: 20px; break-inside: avoid; }
+  .job-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2px; }
+  .job-company { font-weight: 700; font-size: 14px; color: #111; }
+  .job-period { font-size: 11.5px; color: #888; white-space: nowrap; margin-left: 16px; }
+  .job-title { font-size: 13px; color: #e03e2d; font-weight: 500; margin-bottom: 8px; }
+  .job-desc { color: #333; }
+  .job-desc ul { padding-left: 16px; }
+  .job-desc li { margin-bottom: 4px; }
+  .job-highlight {
+    background: #fafafa;
+    border-left: 3px solid #e03e2d;
+    padding: 8px 12px;
+    margin-top: 8px;
+    border-radius: 0 4px 4px 0;
+    font-size: 12.5px;
+    color: #444;
+  }
+
+  /* Skills */
+  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .skill-group { }
+  .skill-label { font-weight: 600; font-size: 12px; color: #555; margin-bottom: 4px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .tag {
+    background: #f0f0f0;
+    color: #333;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 11.5px;
+  }
+  .tag.hot { background: #fff0ee; color: #c0392b; }
+
+  /* Meta */
+  .meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .meta-item { }
+  .meta-label { font-size: 11px; color: #999; margin-bottom: 2px; }
+  .meta-value { font-size: 13px; font-weight: 500; }
+
+  @media print {
+    body { padding: 20px; }
+    .job { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="name">Пармеев Денис Владимирович</div>
+  <div class="title">Engineering Team Lead · AI/LLM Systems Architect · Senior Fullstack Developer</div>
+  <div class="contacts">
+    <span class="contact-item">📍 Пенза (готов к переезду: Москва, СПб, Нижний Новгород, Сочи; удалённо)</span>
+    <span class="contact-item">📞 +7 (999) 110-03-09</span>
+    <span class="contact-item">✉️ topitip@icloud.com</span>
+    <span class="contact-item">🇷🇺 Гражданство РФ</span>
+  </div>
+</div>
+
+<!-- О себе -->
+<div class="section">
+  <div class="section-title">О себе</div>
+  <div style="color:#333; line-height:1.6;">
+    Engineering Team Lead с 7+ годами опыта. Совмещаю управление командой и hands-on разработку в критически важных модулях. 
+    В последние 1,5 года фокус сместился в <strong>AI/LLM системы</strong>: проектирую и внедряю агентные решения на Python с учётом требований 152-ФЗ, строю on-premise инфраструктуру для enterprise-клиентов. 
+    Перевожу размытые бизнес-задачи в чёткий backlog, снижаю риски через PoC и прототипирование, выстраиваю инженерные практики.
+  </div>
+</div>
+
+<!-- Опыт -->
+<div class="section">
+  <div class="section-title">Опыт работы — 7 лет</div>
+
+  <div class="job">
+    <div class="job-header">
+      <div class="job-company">Gravity Group</div>
+      <div class="job-period">апр. 2025 — н.в. · 10 мес.</div>
+    </div>
+    <div class="job-title">Project Manager / Engineering Lead · AI/LLM Architect</div>
+    <div class="job-desc">
+      <ul>
+        <li>Спроектировал и внедрил корпоративную LLM-инфраструктуру с учётом <strong>152-ФЗ и NDA</strong>: on-premise развёртывание, изолированные агенты под каждого заказчика, тарификация и бюджетирование токенов.</li>
+        <li>Договорился со Сбером о предоставлении скидок на модели; подключил мониторинг usage по разработчикам и моделям через LiteLLM с выдачей индивидуальных API-ключей для IDE.</li>
+        <li>Развернул AI-ассистента в корпоративные Telegram-чаты и GitLab: агент берёт задачи из чатов и таск-трекеров, собирает документацию (DOCX, Excel), проводит браузерное тестирование и генерирует автотесты.</li>
+        <li>Разработал архитектуру системы синхронного перевода речи (RU/EN/HI/ZH) для фармацевтического enterprise-клиента: on-premise, без облаков, приоритет — качество перевода.</li>
+        <li>Вёл проекты end-to-end: система управления электровелосипедами (переговоры с китайскими поставщиками), факторинговая система (backend + формирование команды + интеграция с 1С).</li>
+        <li>3D-конструктор капсул/банок: предложил 3D-прототип вместо 2D, что увеличило чек проекта кратно.</li>
+      </ul>
+      <div class="job-highlight">
+        Стек: Python (FastAPI, LangChain, LangGraph), OpenClaw, LiteLLM, n8n, LangFlow, Docker, RabbitMQ, Redis, PostgreSQL, Qdrant, OpenSearch, Whisper AI, SvelteKit, Vue 3
+      </div>
+    </div>
+  </div>
+
+  <div class="job">
+    <div class="job-header">
+      <div class="job-company">Lumines Fox</div>
+      <div class="job-period">апр. 2021 — мар. 2024 · 3 года</div>
+    </div>
+    <div class="job-title">Founder / Head of Engineering</div>
+    <div class="job-desc">
+      <ul>
+        <li>Корпоративная платформа знаний с AI-ассистентом и транскрипцией встреч: микросервисная архитектура на FastAPI + RabbitMQ, ML-конвейер из 6 воркеров (ASR точность 95–97%, диаризация >90%). Ускорение ASR в 36–65 раз — с 13+ минут до 12–22 секунд на часовое видео.</li>
+        <li>OAuth2 Authorization Server (RFC 6749): PKCE, Refresh Token, Client Credentials; JWT с blacklist в Redis; полная офлайн-работа (152-ФЗ).</li>
+        <li>Технический аудит и стабилизация стартапов: устранял критические архитектурные проблемы, восстанавливал управляемость разработки.</li>
+        <li>Выстроил операционную модель стартапа с нуля: Kanban, база знаний, регламенты, целевая архитектура.</li>
+        <li>Приглашён в акселератор ВШЭ в роли эксперта.</li>
+        <li>2021: 8 проектов под руководством, официальные благодарственные письма от федерального заказчика.</li>
+      </ul>
+      <div class="job-highlight">
+        Стек: Python (FastAPI, PyTorch, Whisper), TypeScript (SvelteKit, Vue 3), PostgreSQL, Redis, RabbitMQ, Minio, OpenSearch, Qdrant, Docker, Three.js, React Cannon
+      </div>
+    </div>
+  </div>
+
+  <div class="job">
+    <div class="job-header">
+      <div class="job-company">Ренессанс Кредит</div>
+      <div class="job-period">янв. — апр. 2021 · 4 мес.</div>
+    </div>
+    <div class="job-title">FullStack Developer</div>
+    <div class="job-desc">
+      <ul>
+        <li>Доработка банковской CRM: UI, бизнес-логика, интеграции. Участие в миграции монолита на микросервисы.</li>
+        <li>Frontend: React/TypeScript + Redux Saga. Backend: C#, MediatR, Entity Framework Core, Microsoft Dynamics CRM.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="job">
+    <div class="job-header">
+      <div class="job-company">N1SPORT</div>
+      <div class="job-period">авг. — дек. 2020 · 5 мес.</div>
+    </div>
+    <div class="job-title">FullStack Developer</div>
+    <div class="job-desc">
+      <ul>
+        <li>Разработал 2D-движок для интерактивного редактора одежды (GSAP + Anime.js): развёртка элементов, слои, позиционирование принтов с реалистичным предпросмотром.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="job">
+    <div class="job-header">
+      <div class="job-company">MoonSolution</div>
+      <div class="job-period">сен. 2018 — авг. 2020 · 2 года</div>
+    </div>
+    <div class="job-title">Frontend Developer / Mobile Developer</div>
+    <div class="job-desc">
+      <ul>
+        <li>Веб-интерфейсы на Vue.js, мобильное приложение на NativeScript. Провёл PoC нескольких mobile-технологий, предложил и внедрил NativeScript с обучением команды.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Навыки -->
+<div class="section">
+  <div class="section-title">Ключевые навыки</div>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-label">AI / LLM</div>
+      <div class="skill-tags">
+        <span class="tag hot">LangChain</span>
+        <span class="tag hot">LangGraph</span>
+        <span class="tag hot">LiteLLM</span>
+        <span class="tag hot">OpenClaw</span>
+        <span class="tag hot">Whisper AI</span>
+        <span class="tag hot">PyTorch</span>
+        <span class="tag">n8n</span>
+        <span class="tag">LangFlow</span>
+        <span class="tag">Qdrant</span>
+        <span class="tag">RAG</span>
+        <span class="tag">Agents</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-label">Backend</div>
+      <div class="skill-tags">
+        <span class="tag">Python</span>
+        <span class="tag">FastAPI</span>
+        <span class="tag">Falcon</span>
+        <span class="tag">Node.js</span>
+        <span class="tag">Nest.js</span>
+        <span class="tag">C#</span>
+        <span class="tag">gRPC</span>
+        <span class="tag">RabbitMQ</span>
+        <span class="tag">Redis</span>
+        <span class="tag">PostgreSQL</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-label">Frontend</div>
+      <div class="skill-tags">
+        <span class="tag">Vue 2/3</span>
+        <span class="tag">React</span>
+        <span class="tag">SvelteKit</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">Nuxt</span>
+        <span class="tag">Three.js</span>
+        <span class="tag">Konva.js</span>
+        <span class="tag">Tailwind</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-label">Инфраструктура / Управление</div>
+      <div class="skill-tags">
+        <span class="tag">Docker</span>
+        <span class="tag">Linux</span>
+        <span class="tag">Nginx</span>
+        <span class="tag">Git / GitLab</span>
+        <span class="tag">152-ФЗ</span>
+        <span class="tag">OAuth2 / JWT</span>
+        <span class="tag">Agile / Kanban</span>
+        <span class="tag">Team Lead</span>
+        <span class="tag">Пресейл</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Мета -->
+<div class="section">
+  <div class="section-title">Дополнительно</div>
+  <div class="meta-grid">
+    <div class="meta-item">
+      <div class="meta-label">Образование</div>
+      <div class="meta-value">КТ ПензГТУ, Компьютерные сети, 2021</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Языки</div>
+      <div class="meta-value">Русский (родной) · Английский B2</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-label">Формат работы</div>
+      <div class="meta-value">Удалённо · Офис · Гибрид · Командировки</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

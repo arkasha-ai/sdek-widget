@@ -1,0 +1,130 @@
+{
+  "prompt": {
+    "12": {
+      "class_type": "WanVideoBlockSwap",
+      "inputs": {
+        "blocks_to_swap": 38,
+        "offload_img_emb": true,
+        "offload_txt_emb": true
+      }
+    },
+    "1": {
+      "class_type": "WanVideoModelLoader",
+      "inputs": {
+        "model": "Wan2.1-I2V-14B-480P/diffusion_pytorch_model-00001-of-00007.safetensors",
+        "base_precision": "bf16",
+        "quantization": "fp8_e4m3fn",
+        "load_device": "offload_device",
+        "attention_mode": "sdpa",
+        "block_swap_args": ["12", 0]
+      }
+    },
+    "2": {
+      "class_type": "WanVideoVAELoader",
+      "inputs": {
+        "model_name": "Wan2.1_VAE.pth",
+        "precision": "bf16"
+      }
+    },
+    "3": {
+      "class_type": "LoadWanVideoT5TextEncoder",
+      "inputs": {
+        "model_name": "umt5-xxl-enc-bf16.pth",
+        "precision": "bf16",
+        "load_device": "offload_device"
+      }
+    },
+    "4": {
+      "class_type": "LoadWanVideoClipTextEncoder",
+      "inputs": {
+        "model_name": "open-clip-xlm-roberta-large-vit-huge-14.pth",
+        "precision": "fp16",
+        "load_device": "offload_device"
+      }
+    },
+    "5": {
+      "class_type": "WanVideoTextEncode",
+      "inputs": {
+        "t5": ["3", 0],
+        "positive_prompt": "anime girl, blonde hair, blue eyes, smiling, undressing, nsfw, nude, beautiful body",
+        "negative_prompt": "worst quality, bad quality, blurry, watermark, text, deformed",
+        "force_offload": true
+      }
+    },
+    "6": {
+      "class_type": "LoadImage",
+      "inputs": {
+        "image": "file_202---26c4e650-121d-425a-9e8d-43b4e7b4fa22.jpg"
+      }
+    },
+    "11": {
+      "class_type": "WanVideoClipVisionEncode",
+      "inputs": {
+        "clip_vision": ["4", 0],
+        "image_1": ["6", 0],
+        "strength_1": 1.0,
+        "strength_2": 1.0,
+        "crop": "center",
+        "combine_embeds": "concat",
+        "force_offload": true
+      }
+    },
+    "7": {
+      "class_type": "WanVideoImageToVideoEncode",
+      "inputs": {
+        "vae": ["2", 0],
+        "clip_embeds": ["11", 0],
+        "start_image": ["6", 0],
+        "num_frames": 49,
+        "width": 832,
+        "height": 480,
+        "noise_aug_strength": 0.0,
+        "start_latent_strength": 1.0,
+        "end_latent_strength": 1.0,
+        "force_offload": true
+      }
+    },
+    "8": {
+      "class_type": "WanVideoSampler",
+      "inputs": {
+        "model": ["1", 0],
+        "text_embeds": ["5", 0],
+        "image_embeds": ["7", 0],
+        "steps": 30,
+        "cfg": 6.0,
+        "shift": 8.0,
+        "seed": 42,
+        "scheduler": "unipc",
+        "riflex_freq_index": 0,
+        "force_offload": true
+      }
+    },
+    "9": {
+      "class_type": "WanVideoDecode",
+      "inputs": {
+        "vae": ["2", 0],
+        "samples": ["8", 0],
+        "enable_vae_tiling": true,
+        "tile_x": 272,
+        "tile_y": 272,
+        "tile_stride_x": 144,
+        "tile_stride_y": 128
+      }
+    },
+    "10": {
+      "class_type": "VHS_VideoCombine",
+      "inputs": {
+        "images": ["9", 0],
+        "frame_rate": 16,
+        "loop_count": 0,
+        "filename_prefix": "wan_i2v_nsfw",
+        "format": "video/h264-mp4",
+        "pingpong": false,
+        "save_output": true,
+        "audio": null,
+        "meta_batch": null,
+        "vae": null
+      }
+    }
+  }
+}

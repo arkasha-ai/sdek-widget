@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>SyncVoice™ — Аппаратное обеспечение</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="" />
+  <style>
+    body { font-family: -apple-system, 'Segoe UI', Arial, sans-serif; max-width: 960px; margin: 40px auto; padding: 0 32px; color: #1a1a1a; font-size: 14px; }
+    h1 { font-size: 24px; color: #0f172a; border-bottom: 3px solid #3b82f6; padding-bottom: 12px; margin-bottom: 8px; }
+    h2 { font-size: 18px; color: #1e3a5f; margin-top: 32px; border-left: 4px solid #3b82f6; padding-left: 12px; }
+    h3 { font-size: 15px; color: #374151; margin-top: 24px; }
+    p { line-height: 1.6; margin: 8px 0; }
+    table { border-collapse: collapse; width: 100%; margin: 16px 0; font-size: 13px; }
+    th { background: #1e3a5f; color: white; padding: 8px 12px; text-align: left; }
+    td { padding: 7px 12px; border-bottom: 1px solid #e5e7eb; }
+    tr:nth-child(even) td { background: #f8fafc; }
+    tr:hover td { background: #eff6ff; }
+    blockquote { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 10px 16px; margin: 12px 0; border-radius: 0 4px 4px 0; }
+    blockquote p { margin: 0; color: #92400e; font-size: 13px; }
+    strong { color: #1e3a5f; }
+    hr { border: none; border-top: 1px solid #e5e7eb; margin: 28px 0; }
+    .subtitle { color: #6b7280; font-size: 13px; margin-top: -4px; margin-bottom: 24px; }
+    @media print { body { margin: 0; padding: 20px; } }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">SyncVoice™ — Аппаратное обеспечение</h1>
+</header>
+<h1 id="syncvoice-варианты-аппаратного-обеспечения">SyncVoice™ —
+Варианты аппаратного обеспечения</h1>
+<p><strong>Платформа синхронного речевого перевода</strong> Дата: 23
+февраля 2026</p>
+<hr />
+<h2 id="обзор">Обзор</h2>
+<p>Система поддерживает четыре конфигурации on-premise развёртывания.
+Клиент выбирает исходя из бюджета, доступности оборудования и требований
+к числу участников конференции.</p>
+<h2 id="сравнение-конфигураций">Сравнение конфигураций</h2>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 19%" />
+<col style="width: 25%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Параметр</th>
+<th style="text-align: center;">NVIDIA A100/A10</th>
+<th style="text-align: center;">NVIDIA RTX 4090/5090</th>
+<th style="text-align: center;">Apple Mac Studio</th>
+<th style="text-align: center;">NVIDIA DGX Spark</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>GPU</strong></td>
+<td style="text-align: center;">A10/A100 (CUDA)</td>
+<td style="text-align: center;">RTX 4090/5090 (CUDA)</td>
+<td style="text-align: center;">M2/M3/M4 Ultra (MPS)</td>
+<td style="text-align: center;">GB10 Blackwell (CUDA)</td>
+</tr>
+<tr class="even">
+<td><strong>Память</strong></td>
+<td style="text-align: center;">64–128 GB + VRAM</td>
+<td style="text-align: center;">32–128 GB + VRAM</td>
+<td style="text-align: center;">96–192 GB unified</td>
+<td style="text-align: center;">128 GB unified</td>
+</tr>
+<tr class="odd">
+<td><strong>Форм-фактор</strong></td>
+<td style="text-align: center;">Tower / Rack</td>
+<td style="text-align: center;">Tower / Rack</td>
+<td style="text-align: center;">Компактный</td>
+<td style="text-align: center;">Компактный</td>
+</tr>
+<tr class="even">
+<td><strong>Цена (РФ)</strong></td>
+<td style="text-align: center;">1.5M – 5M ₽</td>
+<td style="text-align: center;">500K – 2.2M ₽</td>
+<td style="text-align: center;">400K – 900K ₽</td>
+<td style="text-align: center;">~400K ₽</td>
+</tr>
+<tr class="odd">
+<td><strong>Max участников</strong></td>
+<td style="text-align: center;">10–30</td>
+<td style="text-align: center;">5–20</td>
+<td style="text-align: center;">5–10</td>
+<td style="text-align: center;">8–12</td>
+</tr>
+<tr class="even">
+<td><strong>Доступность в РФ</strong></td>
+<td style="text-align: center;">Серый рынок</td>
+<td style="text-align: center;">Доступны</td>
+<td style="text-align: center;">Доступны</td>
+<td style="text-align: center;">Серый рынок</td>
+</tr>
+<tr class="odd">
+<td><strong>Сложность настройки</strong></td>
+<td style="text-align: center;">Средняя</td>
+<td style="text-align: center;">Низкая</td>
+<td style="text-align: center;">Высокая</td>
+<td style="text-align: center;">Низкая</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="конфигурация-1-nvidia-сервер-a10-a100">Конфигурация 1:
+NVIDIA-сервер — A10 / A100</h2>
+<blockquote>
+<p>Датацентровые GPU NVIDIA (A10, A100) находятся под экспортными
+ограничениями и доступны в РФ только через серый рынок. Цены
+ориентировочные и могут существенно варьироваться.</p>
+</blockquote>
+<p>Для крупных инсталляций с максимальным числом участников и
+несколькими языками.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Параметр</th>
+<th>Минимум</th>
+<th>Рекомендуемое</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>GPU</strong></td>
+<td>1× NVIDIA A10 (24 GB)</td>
+<td>2× NVIDIA A100 (40/80 GB)</td>
+</tr>
+<tr class="even">
+<td><strong>CPU</strong></td>
+<td>8 ядер (x86_64)</td>
+<td>16+ ядер</td>
+</tr>
+<tr class="odd">
+<td><strong>RAM</strong></td>
+<td>32 GB</td>
+<td>64 GB</td>
+</tr>
+<tr class="even">
+<td><strong>SSD</strong></td>
+<td>256 GB</td>
+<td>1 TB</td>
+</tr>
+<tr class="odd">
+<td><strong>Сеть</strong></td>
+<td>1 Gbps</td>
+<td>10 Gbps</td>
+</tr>
+<tr class="even">
+<td><strong>OS</strong></td>
+<td>Ubuntu 22.04 LTS</td>
+<td>Ubuntu 22.04 LTS</td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 25%" />
+<col style="width: 29%" />
+<col style="width: 18%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Конфигурация GPU</th>
+<th style="text-align: center;">Max участников</th>
+<th style="text-align: center;">Цена сервера (РФ)</th>
+<th>Примечание</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1× A10 (24 GB)</td>
+<td style="text-align: center;">5–6</td>
+<td style="text-align: center;">1 000 000 – 2 000 000 ₽</td>
+<td>2 языка, без запаса</td>
+</tr>
+<tr class="even">
+<td>1× A100 (40 GB)</td>
+<td style="text-align: center;">8–10</td>
+<td style="text-align: center;">1 500 000 – 3 000 000 ₽</td>
+<td>3 языка, комфортно</td>
+</tr>
+<tr class="odd">
+<td>2× A100 (40 GB)</td>
+<td style="text-align: center;">15–20</td>
+<td style="text-align: center;">3 000 000 – 5 000 000 ₽</td>
+<td>3 языка, с запасом</td>
+</tr>
+<tr class="even">
+<td>2× A100 (80 GB)</td>
+<td style="text-align: center;">20–30</td>
+<td style="text-align: center;">4 000 000 – 6 000 000 ₽</td>
+<td>4+ языка, batch inference</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2
+id="конфигурация-2-nvidia-сервер-rtx-4090-5090-рекомендуется">Конфигурация
+2: NVIDIA-сервер — RTX 4090 / 5090 ⭐ Рекомендуется</h2>
+<p>Оптимальное соотношение цены и производительности для большинства
+инсталляций в РФ. Consumer/prosumer GPU без жёстких экспортных
+ограничений.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Параметр</th>
+<th style="text-align: center;">RTX 4090</th>
+<th style="text-align: center;">RTX 5090</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>VRAM</strong></td>
+<td style="text-align: center;">24 GB GDDR6X</td>
+<td style="text-align: center;">32 GB GDDR7</td>
+</tr>
+<tr class="even">
+<td><strong>Архитектура</strong></td>
+<td style="text-align: center;">Ada Lovelace</td>
+<td style="text-align: center;">Blackwell</td>
+</tr>
+<tr class="odd">
+<td><strong>FP16</strong></td>
+<td style="text-align: center;">~82 TFLOPS</td>
+<td style="text-align: center;">~220 TFLOPS</td>
+</tr>
+<tr class="even">
+<td><strong>RTF (SeamlessM4T)</strong></td>
+<td style="text-align: center;">~0.7–1.0</td>
+<td style="text-align: center;">~0.4–0.6</td>
+</tr>
+<tr class="odd">
+<td><strong>Цена карты (РФ)</strong></td>
+<td style="text-align: center;">300 000 – 400 000 ₽</td>
+<td style="text-align: center;">500 000 – 700 000 ₽</td>
+</tr>
+<tr class="even">
+<td><strong>Цена сервера (РФ)</strong></td>
+<td style="text-align: center;">500 000 – 700 000 ₽</td>
+<td style="text-align: center;">800 000 – 1 200 000 ₽</td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 26%" />
+<col style="width: 31%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Конфигурация</th>
+<th style="text-align: center;">Max участников</th>
+<th style="text-align: center;">Цена сервера (РФ)</th>
+<th>Примечание</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1× RTX 4090 (24 GB)</td>
+<td style="text-align: center;">5–8</td>
+<td style="text-align: center;">500 000 – 700 000 ₽</td>
+<td>3 языка, минимальный запас</td>
+</tr>
+<tr class="even">
+<td>2× RTX 4090 (24 GB)</td>
+<td style="text-align: center;">10–15</td>
+<td style="text-align: center;">900 000 – 1 300 000 ₽</td>
+<td>3 языка, с запасом</td>
+</tr>
+<tr class="odd">
+<td>1× RTX 5090 (32 GB)</td>
+<td style="text-align: center;">8–12</td>
+<td style="text-align: center;">800 000 – 1 200 000 ₽</td>
+<td>3 языка, комфортно</td>
+</tr>
+<tr class="even">
+<td>2× RTX 5090 (32 GB)</td>
+<td style="text-align: center;">15–20</td>
+<td style="text-align: center;">1 500 000 – 2 200 000 ₽</td>
+<td>4+ языка, batch inference</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2
+id="конфигурация-3-apple-mac-studio-рекомендуется-для-рф">Конфигурация
+3: Apple Mac Studio ⭐ Рекомендуется для РФ</h2>
+<p>Компактное решение с хорошей доступностью в России. Уникальная
+unified memory архитектура — модели загружаются полностью без
+ограничений VRAM.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Параметр</th>
+<th>Значение</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Чип</strong></td>
+<td>Apple M2 Ultra / M3 Ultra / M4 Ultra</td>
+</tr>
+<tr class="even">
+<td><strong>Память</strong></td>
+<td>96–192 GB unified memory</td>
+</tr>
+<tr class="odd">
+<td><strong>OS</strong></td>
+<td>macOS 14 Sonoma и выше</td>
+</tr>
+<tr class="even">
+<td><strong>Деплой</strong></td>
+<td>Гибридный: сервисы в Docker Desktop, ML-агент нативно через PyTorch
+MPS</td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 30%" />
+<col style="width: 21%" />
+<col style="width: 23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Конфигурация</th>
+<th style="text-align: center;">Max участников</th>
+<th style="text-align: center;">Цена (РФ)</th>
+<th>Примечание</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>M2 Ultra (192 GB)</td>
+<td style="text-align: center;">6–8</td>
+<td style="text-align: center;">400 000 – 600 000 ₽</td>
+<td>3 языка</td>
+</tr>
+<tr class="even">
+<td>M3/M4 Ultra (192 GB)</td>
+<td style="text-align: center;">8–10</td>
+<td style="text-align: center;">600 000 – 900 000 ₽</td>
+<td>3 языка, комфортно</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="конфигурация-4-nvidia-dgx-spark">Конфигурация 4: NVIDIA DGX
+Spark</h2>
+<p>Компактный AI-кирпич на базе Blackwell. Стандартный CUDA-стек —
+простой деплой, высокая производительность при минимальном размере.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Параметр</th>
+<th>Значение</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Чип</strong></td>
+<td>NVIDIA GB10 Grace Blackwell Superchip</td>
+</tr>
+<tr class="even">
+<td><strong>Память</strong></td>
+<td>128 GB unified (CPU + GPU, NVLink-C2C)</td>
+</tr>
+<tr class="odd">
+<td><strong>Производительность</strong></td>
+<td>1 PFLOP FP4</td>
+</tr>
+<tr class="even">
+<td><strong>OS</strong></td>
+<td>Ubuntu (DGX OS)</td>
+</tr>
+<tr class="odd">
+<td><strong>Деплой</strong></td>
+<td>Full Docker + NVIDIA Container Toolkit</td>
+</tr>
+<tr class="even">
+<td><strong>Форм-фактор</strong></td>
+<td>Компактный (размер Mac mini)</td>
+</tr>
+<tr class="odd">
+<td><strong>Цена (РФ)</strong></td>
+<td>~400 000 ₽ (серый рынок)</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>Конфигурация</th>
+<th style="text-align: center;">Max участников</th>
+<th>Примечание</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1× DGX Spark</td>
+<td style="text-align: center;">8–12</td>
+<td>3 языка, комфортно</td>
+</tr>
+<tr class="even">
+<td>2× DGX Spark (NVLink)</td>
+<td style="text-align: center;">15–20</td>
+<td>3–4 языка</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="рекомендации-по-выбору">Рекомендации по выбору</h2>
+<table>
+<colgroup>
+<col style="width: 43%" />
+<col style="width: 56%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Сценарий</th>
+<th>Рекомендация</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Бюджет до 500K ₽, до 8 участников</td>
+<td>RTX 4090 или Mac Studio M2 Ultra</td>
+</tr>
+<tr class="even">
+<td>Бюджет до 1M ₽, до 10 участников</td>
+<td>RTX 5090 или Mac Studio M3/M4 Ultra</td>
+</tr>
+<tr class="odd">
+<td>Компактность + простота + до 12 участников</td>
+<td>DGX Spark</td>
+</tr>
+<tr class="even">
+<td>Максимальное число участников (15+)</td>
+<td>2× RTX 5090 или 2× A100</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Цены ориентировочные, актуальны на февраль 2026. Цены на NVIDIA
+датацентровые GPU (A10, A100) могут существенно варьироваться ввиду
+поставок через серый рынок.</p>
+</blockquote>
+<hr />
+<p><em>SyncVoice™ — on-premise платформа синхронного речевого
+перевода</em></p>
+</body>
+</html>

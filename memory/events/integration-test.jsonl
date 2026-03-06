@@ -1,0 +1,6 @@
+{"timestamp": "2026-02-08T04:12:03.500218", "session_id": "integration-test", "type": "task_started", "data": {"task": "main_feature", "priority": "high"}}
+{"timestamp": "2026-02-08T04:12:03.500257", "session_id": "integration-test", "type": "file_created", "data": {"file": "main.py", "details": "Core implementation"}}
+{"timestamp": "2026-02-08T04:12:03.500276", "session_id": "integration-test", "type": "context_switched", "data": {"from": "integration-test", "to": "interruption", "reason": "Temporary switch"}}
+{"timestamp": "2026-02-08T04:12:03.500359", "session_id": "integration-test", "type": "session_resumed", "data": {"from": "interruption"}}
+{"timestamp": "2026-02-08T04:12:03.500371", "session_id": "integration-test", "type": "file_modified", "data": {"file": "main.py", "details": "Added tests"}}
+{"timestamp": "2026-02-08T04:12:03.500383", "session_id": "integration-test", "type": "task_completed", "data": {"task": "main_feature", "outcome": "success"}}

@@ -1,0 +1,3831 @@
+{
+  "sessions": [
+    {
+      "id": "0612e49e-1aff-4022-b4fa-80305adfd333",
+      "start": "2026-02-10T13:33:09.184Z",
+      "end": "2026-02-10T19:15:14.393Z",
+      "duration_seconds": 20525,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Agents",
+        "Cron",
+        "Database",
+        "TypeScript"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "3c5b9fb5-8a19-422e-8fcc-dfe71ad1cfff",
+      "start": "2026-02-19T06:00:00.196Z",
+      "end": "2026-02-19T06:00:08.889Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "17e9e9aa-0570-4f6f-a310-3acb3437e7c0",
+      "start": "2026-02-07T22:10:24.133Z",
+      "end": "2026-02-09T00:30:57.369Z",
+      "duration_seconds": 94833,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Health",
+        "Agents",
+        "Cron",
+        "Database"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "038c842a-f503-461e-ac42-3603f50208f8",
+      "start": "2026-02-17T06:00:00.074Z",
+      "end": "2026-02-17T06:00:04.234Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "b8dd41e5-0727-485c-985b-e37e2a2d4824",
+      "start": "2026-02-14T14:35:49.670Z",
+      "end": "2026-02-16T00:00:18.215Z",
+      "duration_seconds": 120268,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Agents",
+        "Cron",
+        "Database",
+        "TypeScript"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "d38281aa-ef91-4a8f-a607-1bdd729f761e",
+      "start": "2026-02-06T01:52:35.815Z",
+      "end": "2026-02-06T17:53:10.341Z",
+      "duration_seconds": 57634,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Health",
+        "Agents",
+        "Cron",
+        "Database"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "c03019df-e921-4afe-8d06-0df6f74407ca",
+      "start": "2026-02-05T07:49:35.262Z",
+      "end": "2026-02-05T15:53:17.629Z",
+      "duration_seconds": 29022,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Health",
+        "Agents",
+        "Cron",
+        "Database"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "875f29d8-a404-403d-95c3-17b8fc80779d",
+      "start": "2026-02-20T13:28:50.553Z",
+      "end": "2026-02-21T00:00:58.064Z",
+      "duration_seconds": 37927,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Health",
+        "Agents",
+        "Cron",
+        "Database"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "e561672e-e137-4c9a-886d-ed55c4f35963",
+      "start": "2026-02-22T01:00:00.673Z",
+      "end": "2026-02-22T17:12:22.578Z",
+      "duration_seconds": 58341,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Health",
+        "Agents",
+        "Cron",
+        "Database"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "49130f6b-86aa-43bc-976d-8d7141fa5127",
+      "start": "2026-02-10T06:00:00.113Z",
+      "end": "2026-02-10T06:00:10.611Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "6f53bca2-3d46-435b-a488-8b7bdff032eb",
+      "start": "2026-02-18T16:45:04.940Z",
+      "end": "2026-02-18T18:10:42.502Z",
+      "duration_seconds": 5137,
+      "channel": "telegram",
+      "topics": [
+        "GitHub",
+        "Docker",
+        "Tasks",
+        "Agents",
+        "API"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "4f3c5077-0e77-4db1-a62c-5e1cbefb5385",
+      "start": "2026-02-17T12:38:00.247Z",
+      "end": "2026-02-20T13:18:18.818Z",
+      "duration_seconds": 261618,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Tasks",
+        "Agents",
+        "Gateway",
+        "API"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "63a8ab44-8aef-4da0-bc6e-de410ff556e8",
+      "start": "2026-02-11T09:26:11.808Z",
+      "end": "2026-02-11T09:32:03.027Z",
+      "duration_seconds": 351,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Agents",
+        "Gateway",
+        "API",
+        "Cron"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "b8218f6c-0428-469a-9c4f-795a1e152f90",
+      "start": "2026-02-08T01:12:13.775Z",
+      "end": "2026-02-10T13:51:06.304Z",
+      "duration_seconds": 218332,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Health",
+        "Agents",
+        "Database",
+        "Python"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "78bba62c-bf2e-4fb3-94c3-9a49b6a9a3d8",
+      "start": "2026-02-06T18:24:00.085Z",
+      "end": "2026-02-06T18:24:17.328Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "GitHub",
+        "Tasks",
+        "Agents",
+        "Gateway",
+        "API"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "522260a9-54c3-4322-ba77-2256c1eccaee",
+      "start": "2026-02-20T06:45:00.201Z",
+      "end": "2026-02-20T06:45:09.946Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "932a288c-0fda-4811-8903-2ee058ba8878",
+      "start": "2026-02-16T06:45:00.095Z",
+      "end": "2026-02-16T06:45:09.477Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "f6e8102e-d9ba-4522-b627-37acd226ddbb",
+      "start": "2026-02-09T06:20:00.047Z",
+      "end": "2026-02-09T06:20:11.714Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "0ebff8d3-dba9-497a-82fc-58c35d98a3a7",
+      "start": "2026-02-18T01:00:00.605Z",
+      "end": "2026-02-19T00:00:07.820Z",
+      "duration_seconds": 82807,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Health",
+        "Agents",
+        "Cron",
+        "Database"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "c21ebe40-8451-4742-b796-4f302538fcd6",
+      "start": "2026-02-11T06:00:00.304Z",
+      "end": "2026-02-11T06:00:12.729Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "e0cc7e49-5e78-4111-bc17-aaf5c5c368a6",
+      "start": "2026-02-18T18:05:40.896Z",
+      "end": "2026-02-18T18:05:40.897Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "eeeb87af-3b3a-4292-87e1-a8a15ed4fc75",
+      "start": "2026-02-18T06:00:00.111Z",
+      "end": "2026-02-18T06:00:04.564Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "d5ed33ff-f60b-4cb7-812f-4a08b7e05bf4",
+      "start": "2026-02-16T06:20:00.093Z",
+      "end": "2026-02-16T06:20:08.372Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "c34be420-3e85-4f80-a26a-7741c8bb67e3",
+      "start": "2026-02-10T06:45:00.153Z",
+      "end": "2026-02-10T06:45:11.458Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "28951e26-5efe-4096-9b91-131558642574",
+      "start": "2026-02-17T10:28:17.412Z",
+      "end": "2026-02-17T10:28:17.413Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Analytics"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "a33bdef2-67b7-445f-ba8c-8d5a92757f4c",
+      "start": "2026-02-12T06:45:00.101Z",
+      "end": "2026-02-12T06:45:20.062Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "30b4a10b-a8ef-4878-a5ba-1bf21b4910e5",
+      "start": "2026-02-09T06:00:00.038Z",
+      "end": "2026-02-09T06:00:12.305Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "6bc6f006-1b62-48a1-bb11-4ef94f1be989",
+      "start": "2026-02-22T16:35:05.846Z",
+      "end": "2026-02-22T16:35:19.468Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Agents",
+        "API",
+        "OpenClaw",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "8a799a4e-6930-4156-89c6-1530cf09afe2",
+      "start": "2026-02-22T06:00:00.179Z",
+      "end": "2026-02-22T06:00:58.745Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Gateway",
+        "Cron",
+        "Medication",
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "d8b0af7b-aa1d-4e6e-a2b9-98ac3077e047",
+      "start": "2026-02-17T14:28:56.979Z",
+      "end": "2026-02-18T00:00:09.712Z",
+      "duration_seconds": 34272,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Agents",
+        "Cron",
+        "Python",
+        "Analytics"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "829a7c63-bd41-4320-b2dc-3c0d6a20eeca",
+      "start": "2026-02-07T01:00:30.057Z",
+      "end": "2026-02-07T22:09:58.348Z",
+      "duration_seconds": 76168,
+      "channel": "telegram",
+      "topics": [
+        "Health",
+        "Agents",
+        "Cron",
+        "Database",
+        "Python"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "213fc7b5-c57f-4a3a-9fe8-b55756b4191c",
+      "start": "2026-02-17T11:04:11.577Z",
+      "end": "2026-02-17T11:06:22.937Z",
+      "duration_seconds": 131,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Docker",
+        "API",
+        "Telegram",
+        "OpenClaw"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "62f004b1-868d-40ba-bc81-ace90c8f0f03",
+      "start": "2026-02-11T06:45:00.268Z",
+      "end": "2026-02-11T06:45:15.465Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "23675bc3-a558-4df9-9247-9b0d2b48c2e3",
+      "start": "2026-02-22T06:45:00.241Z",
+      "end": "2026-02-22T06:45:26.913Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Health",
+        "Tasks",
+        "Agents",
+        "API",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "b3c83d6a-d509-4ca2-9471-dcd23127d228",
+      "start": "2026-02-06T14:12:01.649Z",
+      "end": "2026-02-06T14:13:38.347Z",
+      "duration_seconds": 96,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Cron",
+        "Medication",
+        "Telegram",
+        "Heartbeat"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "a373e67e-3485-4f04-af3f-ed8f3f660f2a",
+      "start": "2026-02-19T01:00:00.563Z",
+      "end": "2026-02-19T15:48:16.915Z",
+      "duration_seconds": 53296,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Health",
+        "Agents",
+        "Cron",
+        "Python"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "f7f915e9-82c3-41cf-814e-09d48f429a49",
+      "start": "2026-02-10T01:00:39.890Z",
+      "end": "2026-02-10T13:27:54.005Z",
+      "duration_seconds": 44834,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Agents",
+        "Cron",
+        "Database",
+        "TypeScript"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "cfd26621-7ea1-4251-8df9-67b090b6ca82",
+      "start": "2026-02-06T14:15:02.544Z",
+      "end": "2026-02-06T14:16:35.048Z",
+      "duration_seconds": 92,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Medication",
+        "Telegram",
+        "Git"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "14a594d7-77d6-44e9-bbb8-9c669ee7b758",
+      "start": "2026-02-21T01:00:00.502Z",
+      "end": "2026-02-21T22:05:38.282Z",
+      "duration_seconds": 75937,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Health",
+        "Agents",
+        "Cron",
+        "Database"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "24f7229b-ccac-49ad-bf85-117aa051e384",
+      "start": "2026-02-06T06:53:00.056Z",
+      "end": "2026-02-06T06:53:05.827Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Telegram"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "ef33acef-5b11-4dcf-b78a-03c90ccfc915",
+      "start": "2026-02-06T14:17:59.626Z",
+      "end": "2026-02-08T00:54:55.851Z",
+      "duration_seconds": 124616,
+      "channel": "telegram",
+      "topics": [
+        "GitHub",
+        "Tasks",
+        "Agents",
+        "API",
+        "Telegram"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "e1ae4141-1920-4346-b8a4-78adc1f852ae",
+      "start": "2026-02-12T06:00:00.067Z",
+      "end": "2026-02-12T06:00:09.102Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "6d989d69-6755-44d0-ac1d-7e6805e65962",
+      "start": "2026-02-08T06:00:00.118Z",
+      "end": "2026-02-08T06:00:10.108Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "07780bbc-2633-4b2b-aea2-1b9bdb4f967a",
+      "start": "2026-02-05T19:11:31.795Z",
+      "end": "2026-02-06T00:52:47.971Z",
+      "duration_seconds": 20476,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Health",
+        "Agents",
+        "Cron",
+        "TypeScript"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "2d47ec10-5891-4842-8fc6-54c60c0dd770",
+      "start": "2026-02-10T19:15:30.369Z",
+      "end": "2026-02-11T00:30:40.404Z",
+      "duration_seconds": 18910,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Agents",
+        "Cron",
+        "TypeScript",
+        "Python"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "15160bee-db92-482b-9855-2a0d7e68372f",
+      "start": "2026-02-22T06:01:12.548Z",
+      "end": "2026-02-22T06:20:13.502Z",
+      "duration_seconds": 1140,
+      "channel": "telegram",
+      "topics": [
+        "GitHub",
+        "Tasks",
+        "Agents",
+        "Gateway",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "026bd954-dde2-4d51-93d1-42b4304ad26d",
+      "start": "2026-02-16T06:00:00.148Z",
+      "end": "2026-02-16T06:00:10.677Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "993a1e0a-13ec-49ef-870c-97eecaa3860a",
+      "start": "2026-02-22T16:35:10.950Z",
+      "end": "2026-02-22T16:35:41.455Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Agents",
+        "API",
+        "Cron",
+        "Telegram"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "036462a1-0f75-40c4-9a26-4f759ec5b242",
+      "start": "2026-02-09T14:08:52.718Z",
+      "end": "2026-02-10T00:30:59.524Z",
+      "duration_seconds": 37326,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Agents",
+        "Cron",
+        "Database",
+        "TypeScript"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "6a67bb22-c984-43c4-8eac-f66726612731",
+      "start": "2026-02-10T11:56:22.592Z",
+      "end": "2026-02-12T18:22:48.183Z",
+      "duration_seconds": 195985,
+      "channel": "telegram",
+      "topics": [
+        "Telegram"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "1c0e3bb1-a83e-4732-89fc-831aad75b4fb",
+      "start": "2026-02-18T09:34:57.732Z",
+      "end": "2026-02-20T13:19:43.248Z",
+      "duration_seconds": 186285,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "API",
+        "Telegram",
+        "OpenClaw",
+        "Git"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "404fad94-e183-446a-86d9-b269b03b9fc9",
+      "start": "2026-02-06T12:52:06.879Z",
+      "end": "2026-02-06T13:46:56.492Z",
+      "duration_seconds": 3289,
+      "channel": "telegram",
+      "topics": [
+        "GitHub",
+        "SQL",
+        "Health",
+        "Agents",
+        "API"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "a6fe0068-506a-48d6-9e8c-a603238015ab",
+      "start": "2026-02-18T06:20:00.160Z",
+      "end": "2026-02-18T06:20:14.995Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Health",
+        "Tasks",
+        "Agents",
+        "API",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "77f197d3-212d-4ac7-b167-c1bdc8c06168",
+      "start": "2026-02-05T15:53:37.849Z",
+      "end": "2026-02-05T19:02:30.473Z",
+      "duration_seconds": 11332,
+      "channel": "telegram",
+      "topics": [
+        "GitHub",
+        "Docker",
+        "SQL",
+        "Tasks",
+        "Agents"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "286219b2-7754-485c-a0f0-09c4f239d99c",
+      "start": "2026-02-06T17:53:10.416Z",
+      "end": "2026-02-07T00:30:55.898Z",
+      "duration_seconds": 23865,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Health",
+        "Agents",
+        "Cron",
+        "Database"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "24e0b7b8-c306-424d-bc4e-c17009b00019",
+      "start": "2026-02-18T06:45:00.184Z",
+      "end": "2026-02-18T06:45:14.602Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "GitHub",
+        "Tasks",
+        "Health",
+        "Agents",
+        "API"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "c5a580c9-fd73-422e-9d62-16409705d1ba",
+      "start": "2026-02-17T13:54:15.648Z",
+      "end": "2026-02-17T13:54:16.605Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "64767f0d-b8d2-4416-ae71-0ce91a427fe3",
+      "start": "2026-02-20T06:20:00.117Z",
+      "end": "2026-02-20T06:20:13.752Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "cb4559d7-b403-459c-b69a-c86ad1450309",
+      "start": "2026-02-09T01:00:31.269Z",
+      "end": "2026-02-09T14:09:34.124Z",
+      "duration_seconds": 47342,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Health",
+        "Agents",
+        "Cron",
+        "Database"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "12a4a311-2926-42b4-8b4c-dac1c80d9ed8",
+      "start": "2026-02-06T14:16:54.023Z",
+      "end": "2026-02-06T20:36:24.989Z",
+      "duration_seconds": 22770,
+      "channel": "telegram",
+      "topics": [
+        "Health",
+        "Agents",
+        "Cron",
+        "Database",
+        "GitHub"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "c3c6ffbe-ad5a-44e4-ab61-257a9f5ab12e",
+      "start": "2026-02-19T06:20:00.082Z",
+      "end": "2026-02-19T06:20:17.672Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "GitHub",
+        "Docker",
+        "Tasks",
+        "Agents",
+        "Gateway"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "2c85de63-706c-476b-946a-ffdf356250d3",
+      "start": "2026-02-21T06:20:00.142Z",
+      "end": "2026-02-21T06:48:03.706Z",
+      "duration_seconds": 1683,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Gateway",
+        "Agents",
+        "Cron",
+        "Medication"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "36cdfb1a-314f-4c93-bcfa-dec6f406a8d1",
+      "start": "2026-02-20T06:00:00.098Z",
+      "end": "2026-02-20T06:00:06.807Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "88011f37-2865-4068-ad2d-9222b4740b90",
+      "start": "2026-02-17T09:52:37.409Z",
+      "end": "2026-02-17T09:52:37.409Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "e93237dc-2b69-4a0b-9711-0fa74cc16163",
+      "start": "2026-02-17T10:03:12.750Z",
+      "end": "2026-02-17T10:03:12.751Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "7a69ae41-597b-4e0e-98a4-927e26181cb5",
+      "start": "2026-02-21T06:45:00.151Z",
+      "end": "2026-02-21T06:45:47.891Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Health",
+        "Tasks",
+        "Agents",
+        "Gateway",
+        "API"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "ae901c08-1222-47d3-8edd-4f4aa815f525",
+      "start": "2026-02-11T06:20:00.657Z",
+      "end": "2026-02-11T06:20:09.935Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "fb5c547d-de59-4149-b1c7-75e42fc7c074",
+      "start": "2026-02-06T16:29:48.591Z",
+      "end": "2026-02-06T16:44:58.597Z",
+      "duration_seconds": 910,
+      "channel": "telegram",
+      "topics": [
+        "GitHub",
+        "Agents",
+        "Gateway",
+        "API",
+        "Cron"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "4329dea1-10dd-48be-b9ee-4b22cc6eb2ec",
+      "start": "2026-02-10T06:20:00.060Z",
+      "end": "2026-02-10T06:20:17.961Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "115c91f3-cbef-4f42-b22c-65693ec1bbdc",
+      "start": "2026-02-21T06:00:00.158Z",
+      "end": "2026-02-21T06:00:16.528Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "GitHub",
+        "Tasks",
+        "Health",
+        "Agents",
+        "API"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "ca120fc4-9c99-470a-ae2c-03719d6a735e",
+      "start": "2026-02-04T20:30:30.317Z",
+      "end": "2026-02-05T07:43:42.449Z",
+      "duration_seconds": 40392,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Health",
+        "Agents",
+        "Cron",
+        "Database"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "1ea4bee2-d53c-410b-8b05-394879653d90",
+      "start": "2026-02-11T01:00:20.587Z",
+      "end": "2026-02-11T09:24:11.706Z",
+      "duration_seconds": 30231,
+      "channel": "telegram",
+      "topics": [
+        "GitHub",
+        "Tasks",
+        "Agents",
+        "Gateway",
+        "API"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "a0e271ab-e58e-4aff-9654-7335e7b6e8cc",
+      "start": "2026-02-17T06:45:00.082Z",
+      "end": "2026-02-17T06:45:07.807Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "Medication",
+        "Telegram",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "1cb89509-4ed7-452f-a9b0-5f58f0b1fdc7",
+      "start": "2026-02-11T09:32:30.438Z",
+      "end": "2026-02-12T00:30:30.130Z",
+      "duration_seconds": 53879,
+      "channel": "telegram",
+      "topics": [
+        "GitHub",
+        "Tasks",
+        "Agents",
+        "Cron",
+        "Medication"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "3c2cca9a-4c7a-40ed-950a-336d492cfa6f",
+      "start": "2026-02-12T06:20:00.062Z",
+      "end": "2026-02-12T06:20:11.713Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "32cb1af5-968a-4472-8719-64e03de4f4ea",
+      "start": "2026-02-08T06:20:00.127Z",
+      "end": "2026-02-08T06:20:10.503Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "168c8348-8af4-47af-983c-0b21e4e4f422",
+      "start": "2026-02-07T08:28:18.348Z",
+      "end": "2026-02-07T08:28:28.678Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "8ec327af-2ee3-491b-92a6-0c026db9da2e",
+      "start": "2026-02-08T06:45:00.131Z",
+      "end": "2026-02-08T06:45:13.204Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Health",
+        "Tasks",
+        "Cron",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "43de2a87-7df5-48f8-9bad-d1afb1bf8a6e",
+      "start": "2026-02-17T06:20:00.116Z",
+      "end": "2026-02-17T06:20:05.759Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "Medication",
+        "Telegram",
+        "Reminders"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "824949cc-09d2-4092-892c-69b272fc906b",
+      "start": "2026-02-19T06:45:00.146Z",
+      "end": "2026-02-19T06:45:07.565Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "c6fa057d-48a1-46f8-9392-577140bd065f",
+      "start": "2026-02-22T17:00:00.350Z",
+      "end": "2026-02-22T17:00:13.985Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "Telegram",
+        "OpenClaw",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "5e9bb7bb-e707-4a96-acd8-7f598c6c4a74",
+      "start": "2026-02-12T01:00:14.423Z",
+      "end": "2026-02-14T01:34:58.393Z",
+      "duration_seconds": 174883,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Health",
+        "Agents",
+        "Cron",
+        "Database"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "e2fae3dd-4850-46d6-ba92-a01b9ef6b6e9",
+      "start": "2026-02-22T20:41:57.879Z",
+      "end": "2026-02-22T20:44:42.470Z",
+      "duration_seconds": 164,
+      "channel": "telegram",
+      "topics": [
+        "Python",
+        "GitHub",
+        "Tasks",
+        "Gateway",
+        "API"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "87bd5f80-44ed-4798-acae-8f2fa71e520d",
+      "start": "2026-02-23T01:00:00.713Z",
+      "end": "2026-02-23T03:04:22.223Z",
+      "duration_seconds": 7461,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Telegram",
+        "Tasks",
+        "Medication",
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "02050f05-1ea7-4f67-bdba-3e3a3292caad",
+      "start": "2026-02-23T06:00:00.195Z",
+      "end": "2026-02-23T06:00:10.341Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Reminders",
+        "Health",
+        "Cron",
+        "Medication"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "552efa6d-32af-4f9b-ad0b-149d27550b47",
+      "start": "2026-02-23T06:45:00.121Z",
+      "end": "2026-02-23T06:45:05.509Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Reminders",
+        "Cron",
+        "Medication"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "9953d73e-97b1-4156-8f2d-656bfc193d1f",
+      "start": "2026-02-23T06:20:00.607Z",
+      "end": "2026-02-23T06:21:03.290Z",
+      "duration_seconds": 62,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Reminders",
+        "Gateway",
+        "Telegram",
+        "GitHub"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "fd44cb4a-3a9a-4bcc-968f-3c078c4c0fc2",
+      "start": "2026-02-23T14:44:23.579Z",
+      "end": "2026-02-23T14:45:58.697Z",
+      "duration_seconds": 95,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Git",
+        "Heartbeat",
+        "Tasks",
+        "Python"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "eb861e0d-044d-4fe9-a361-7542befadd5d",
+      "start": "2026-02-24T01:00:00.660Z",
+      "end": "2026-02-24T03:04:24.040Z",
+      "duration_seconds": 7463,
+      "channel": "telegram",
+      "topics": [
+        "Reminders",
+        "Heartbeat",
+        "Skills",
+        "Git",
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "eb861e0d-044d-4fe9-a361-7542befadd5d-topic-8593",
+      "start": "2026-02-24T06:20:40.989Z",
+      "end": "2026-02-24T06:45:31.905Z",
+      "duration_seconds": 1490,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Reminders",
+        "Cron",
+        "Medication"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "07e7b346-f468-4537-88bd-7ddb915dd662",
+      "start": "2026-02-24T06:20:00.110Z",
+      "end": "2026-02-24T06:20:38.841Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Heartbeat",
+        "Reminders",
+        "Cron",
+        "Gateway"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "3c05875b-a2e3-43af-ae5b-5ec8fb3157db",
+      "start": "2026-02-24T04:31:57.324Z",
+      "end": "2026-02-24T04:32:14.126Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "React",
+        "API",
+        "TypeScript"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "f9ebe6dd-b1e2-4810-90ec-367ebffd8597",
+      "start": "2026-02-24T06:45:00.145Z",
+      "end": "2026-02-24T06:45:36.765Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Python",
+        "Reminders",
+        "Cron",
+        "Health"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "216372de-8d18-4532-bd86-6a0032e070eb",
+      "start": "2026-02-24T06:00:00.149Z",
+      "end": "2026-02-24T06:00:04.747Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Medication",
+        "Reminders",
+        "Cron",
+        "Tasks"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "ff36e1dc-121f-4594-983a-7e66468e0ae5",
+      "start": "2026-02-24T04:24:56.229Z",
+      "end": "2026-02-24T04:26:12.267Z",
+      "duration_seconds": 76,
+      "channel": "telegram",
+      "topics": [],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "52aac7b1-f14c-412f-86bd-b7c1b0399912",
+      "start": "2026-02-24T14:17:13.793Z",
+      "end": "2026-02-24T14:17:27.833Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Docker",
+        "OpenClaw",
+        "Cron",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "50a0f219-fb33-4a34-ada9-a55d04ea22b5",
+      "start": "2026-02-24T14:18:13.739Z",
+      "end": "2026-02-24T14:18:18.863Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Docker",
+        "Cron",
+        "Heartbeat",
+        "Python"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "08b08483-1e53-4a3c-847c-bac0a797fde4",
+      "start": "2026-02-24T14:16:13.709Z",
+      "end": "2026-02-24T14:16:19.399Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Docker",
+        "Cron",
+        "Heartbeat",
+        "Python"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "82a50c0d-2df3-4b9e-9636-810393418550",
+      "start": "2026-02-24T11:48:49.751Z",
+      "end": "2026-02-24T13:22:08.708Z",
+      "duration_seconds": 5598,
+      "channel": "telegram",
+      "topics": [
+        "TypeScript",
+        "GitHub",
+        "SQL",
+        "Tasks",
+        "Analytics"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "33fd5f02-b77f-4619-85c5-578bc0a77f8f",
+      "start": "2026-02-24T14:19:13.736Z",
+      "end": "2026-02-24T14:19:28.252Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Docker",
+        "Cron",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "6964baf0-fbfb-425a-947a-e1ed1c5588f7",
+      "start": "2026-02-24T14:15:13.789Z",
+      "end": "2026-02-24T14:15:20.111Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Docker",
+        "Cron",
+        "Heartbeat",
+        "Python"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "126b7d71-fc8c-48a8-a1a3-76173ca23204",
+      "start": "2026-02-25T01:04:33.832Z",
+      "end": "2026-02-25T03:04:21.554Z",
+      "duration_seconds": 7187,
+      "channel": "telegram",
+      "topics": [
+        "Python",
+        "Analytics",
+        "Browser",
+        "Tasks",
+        "API"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "c39eca1d-662a-49a6-bcc8-c09a5bfbbfa0",
+      "start": "2026-02-25T06:20:00.155Z",
+      "end": "2026-02-25T06:20:14.504Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "API",
+        "OpenClaw",
+        "Tasks",
+        "Medication"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "661f865e-2ea2-483a-96dc-0e12546f4807",
+      "start": "2026-02-25T06:45:00.129Z",
+      "end": "2026-02-25T06:45:11.237Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Medication",
+        "Telegram",
+        "Tasks",
+        "Cron",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "9962398a-60fa-46c2-9e9b-90282d03f145",
+      "start": "2026-02-25T06:00:00.169Z",
+      "end": "2026-02-25T06:00:19.013Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "API",
+        "OpenClaw",
+        "Tasks",
+        "Medication"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "82865fff-aafc-44f0-b647-b096b4ba05fc",
+      "start": "2026-02-25T14:32:11.713Z",
+      "end": "2026-02-25T15:04:25.307Z",
+      "duration_seconds": 1933,
+      "channel": "telegram",
+      "topics": [
+        "Gateway",
+        "Health",
+        "Analytics",
+        "React",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "9ee83a71-7db8-4600-8876-b3bde33e4c2c",
+      "start": "2026-02-26T01:00:00.504Z",
+      "end": "2026-02-26T03:04:21.569Z",
+      "duration_seconds": 7461,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Heartbeat",
+        "Cron",
+        "Telegram",
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "77f6d3a8-efe2-4064-87e4-f3a110671d89",
+      "start": "2026-02-26T06:45:00.176Z",
+      "end": "2026-02-26T06:45:11.470Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Reminders",
+        "Medication",
+        "Cron",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "7411d58c-f45c-41aa-89fb-4613ed7d632d",
+      "start": "2026-02-26T06:00:00.560Z",
+      "end": "2026-02-26T06:00:10.791Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Reminders",
+        "Medication",
+        "Cron",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "1c723cd7-1d60-412d-b25d-d3708e33ef77",
+      "start": "2026-02-26T06:20:00.129Z",
+      "end": "2026-02-26T06:21:50.713Z",
+      "duration_seconds": 110,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Reminders",
+        "Git",
+        "Medication",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "16927cc6-1e2c-4804-85b9-b4e46404efb9",
+      "start": "2026-02-27T01:00:01.115Z",
+      "end": "2026-02-27T03:04:26.792Z",
+      "duration_seconds": 7465,
+      "channel": "telegram",
+      "topics": [
+        "Browser",
+        "Medication",
+        "OpenClaw",
+        "Heartbeat",
+        "Tasks"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "88c6227e-9965-4406-ad70-69abfb171122",
+      "start": "2026-02-27T06:45:00.133Z",
+      "end": "2026-02-27T06:45:16.901Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Reminders",
+        "OpenClaw",
+        "API",
+        "Tasks",
+        "Python"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "d4b5d90e-8cee-440c-bb36-45cd0ba77869",
+      "start": "2026-02-27T06:00:00.242Z",
+      "end": "2026-02-27T06:00:10.740Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Reminders",
+        "Tasks",
+        "Cron",
+        "Medication",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "42566020-1a44-4173-a677-39185dd0439a",
+      "start": "2026-02-27T06:20:00.154Z",
+      "end": "2026-02-27T06:20:16.641Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Reminders",
+        "OpenClaw",
+        "API",
+        "Tasks",
+        "Python"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "ee6ae9bc-fd86-4757-ad50-fa63c9ec1641",
+      "start": "2026-02-27T14:54:01.360Z",
+      "end": "2026-02-27T14:57:21.227Z",
+      "duration_seconds": 199,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Tasks",
+        "Telegram",
+        "Browser",
+        "Agents"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "4ae13e41-61da-4c6a-9a09-468831a33b3e",
+      "start": "2026-02-27T15:51:43.091Z",
+      "end": "2026-02-27T19:31:34.673Z",
+      "duration_seconds": 13191,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Git",
+        "Heartbeat",
+        "Gateway",
+        "Telegram"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "97be3128-9475-4f5e-b882-397fc41dbceb",
+      "start": "2026-02-28T02:34:03.065Z",
+      "end": "2026-02-28T02:37:47.583Z",
+      "duration_seconds": 224,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Python",
+        "TypeScript",
+        "React",
+        "Agents"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "24638725-e7c3-4dc4-b437-65f553cd48fc",
+      "start": "2026-02-28T02:44:19.315Z",
+      "end": "2026-02-28T02:45:35.529Z",
+      "duration_seconds": 76,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Python",
+        "TypeScript",
+        "React",
+        "Agents"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "76a5a613-59dd-419c-ae47-0be949b8779c",
+      "start": "2026-02-28T02:19:41.255Z",
+      "end": "2026-02-28T02:21:32.253Z",
+      "duration_seconds": 110,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Python",
+        "Agents",
+        "SQL",
+        "Git"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "88d4e99b-e5af-4463-8b15-44770d142a87",
+      "start": "2026-02-28T02:46:12.708Z",
+      "end": "2026-02-28T02:48:10.823Z",
+      "duration_seconds": 118,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Python",
+        "Agents",
+        "SQL",
+        "Git"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "eaac8438-59e1-4f44-bfa9-7e8a99baaaf6",
+      "start": "2026-02-28T02:50:40.251Z",
+      "end": "2026-02-28T02:51:39.820Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Python",
+        "Agents",
+        "SQL",
+        "Git"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "10d42135-b1d4-4ca4-91ce-4fa5f33b944f",
+      "start": "2026-02-28T02:33:12.526Z",
+      "end": "2026-02-28T02:35:29.664Z",
+      "duration_seconds": 137,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Python",
+        "TypeScript",
+        "React",
+        "Agents"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "24cbf6c6-1724-4754-9b00-97d40663c194",
+      "start": "2026-02-28T02:20:36.329Z",
+      "end": "2026-02-28T02:24:44.595Z",
+      "duration_seconds": 248,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Python",
+        "TypeScript",
+        "React",
+        "Agents"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "ba6de06e-47ff-489b-a7d6-6a6786a218e0",
+      "start": "2026-02-28T02:47:34.748Z",
+      "end": "2026-02-28T02:50:16.405Z",
+      "duration_seconds": 161,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Python",
+        "TypeScript",
+        "React",
+        "Agents"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "372dc2be-056b-408b-865e-67499926fb78",
+      "start": "2026-02-28T02:36:13.210Z",
+      "end": "2026-02-28T02:37:31.802Z",
+      "duration_seconds": 78,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Python",
+        "Agents",
+        "SQL",
+        "Git"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "4c23f099-a229-4589-b715-36310abc2984",
+      "start": "2026-02-28T02:51:02.448Z",
+      "end": "2026-02-28T02:52:38.986Z",
+      "duration_seconds": 96,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Python",
+        "TypeScript",
+        "React",
+        "Agents"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "ea090efa-4e15-4d9b-8767-31ed79a9264b",
+      "start": "2026-02-28T02:40:43.846Z",
+      "end": "2026-02-28T02:43:48.386Z",
+      "duration_seconds": 184,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Python",
+        "TypeScript",
+        "React",
+        "Agents"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "7a975ad8-4bbf-4162-9ca0-93022b254eb7",
+      "start": "2026-02-28T02:21:02.438Z",
+      "end": "2026-02-28T02:21:46.644Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Python",
+        "Agents",
+        "SQL",
+        "Git"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "838b21fd-750e-478a-a3ba-1dea44503d53",
+      "start": "2026-02-28T02:44:33.361Z",
+      "end": "2026-02-28T02:46:59.140Z",
+      "duration_seconds": 145,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Python",
+        "TypeScript",
+        "React",
+        "Agents"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "a9c05dc6-8bf3-402e-94b6-6ed40a9ffd72",
+      "start": "2026-02-28T06:45:00.178Z",
+      "end": "2026-02-28T06:45:04.847Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Reminders",
+        "Tasks",
+        "Cron",
+        "Medication"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "87cb47e1-3e35-46d8-bd46-db434373e9a6",
+      "start": "2026-02-28T06:20:00.142Z",
+      "end": "2026-02-28T06:20:02.856Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Reminders",
+        "Tasks",
+        "Cron",
+        "Medication"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "3d74e861-abb9-410c-bbc8-50c14edbe9b3",
+      "start": "2026-02-28T06:00:00.150Z",
+      "end": "2026-02-28T06:00:12.070Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Python",
+        "API",
+        "Agents",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "5248473a-97ef-44bc-9530-0f393375f9f0",
+      "start": "2026-03-01T01:26:10.123Z",
+      "end": "2026-03-01T03:04:21.242Z",
+      "duration_seconds": 5891,
+      "channel": "telegram",
+      "topics": [
+        "Analytics",
+        "Git",
+        "Medication",
+        "Agents",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "26db8798-6d52-44bf-a304-3fa4235de723",
+      "start": "2026-03-01T06:00:00.144Z",
+      "end": "2026-03-01T06:00:02.645Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Reminders",
+        "Medication",
+        "Cron"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "2dbf365a-7c73-486e-8a12-5ac594221c9d",
+      "start": "2026-03-01T06:45:00.139Z",
+      "end": "2026-03-01T06:45:02.743Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Reminders",
+        "Medication",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "14b1042a-cdd6-4fcf-97ae-3a43e170e54b",
+      "start": "2026-03-01T06:20:00.129Z",
+      "end": "2026-03-01T06:20:04.131Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Reminders",
+        "Medication",
+        "Cron"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "ca11c122-cc1f-49b6-bd92-f429bf8a50df",
+      "start": "2026-03-01T12:02:58.134Z",
+      "end": "2026-03-01T12:15:01.304Z",
+      "duration_seconds": 723,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Telegram",
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "058443d8-bd3f-4eca-bb83-1d6a8cec5701",
+      "start": "2026-03-01T17:00:00.226Z",
+      "end": "2026-03-01T17:00:45.838Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "Telegram",
+        "Agents",
+        "Cron",
+        "GitHub"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "3da74f0e-b5d4-4e49-b744-e87c9d6c9c70",
+      "start": "2026-03-02T05:04:26.293Z",
+      "end": "2026-03-02T05:05:40.948Z",
+      "duration_seconds": 74,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Agents",
+        "Cron",
+        "Telegram",
+        "API"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "e26ab83f-9be0-473e-8d93-a9cd42b97137",
+      "start": "2026-03-02T06:00:00.174Z",
+      "end": "2026-03-02T06:00:02.633Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Medication",
+        "Tasks",
+        "Reminders",
+        "Cron"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "47db5d96-730e-4834-adc0-05e7020ac1f4",
+      "start": "2026-03-02T06:20:00.117Z",
+      "end": "2026-03-02T06:20:02.742Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Medication",
+        "Tasks",
+        "Reminders",
+        "Cron"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "8d9bdcc0-bbec-4f04-8d02-a80ca3aeb096",
+      "start": "2026-03-02T06:45:00.129Z",
+      "end": "2026-03-02T06:45:02.975Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Medication",
+        "Tasks",
+        "Reminders",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "df31f4a3-5ac6-4e9c-9f07-33b289452820",
+      "start": "2026-03-02T20:09:43.144Z",
+      "end": "2026-03-02T20:12:39.634Z",
+      "duration_seconds": 176,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "GitHub",
+        "Git",
+        "Browser"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "f69e9d06-e303-4312-bbbd-ea887720a3b0",
+      "start": "2026-03-03T01:00:40.064Z",
+      "end": "2026-03-03T03:04:22.329Z",
+      "duration_seconds": 7422,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Python",
+        "Analytics",
+        "Skills",
+        "Heartbeat"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "2d6fc97f-05c4-4bc2-828e-0f4d5edaa34b",
+      "start": "2026-03-03T06:00:00.180Z",
+      "end": "2026-03-03T06:00:13.823Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Medication",
+        "API",
+        "Cron",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "45aa7a82-f447-4b28-b27a-c0c149787c11",
+      "start": "2026-03-03T06:20:00.131Z",
+      "end": "2026-03-03T06:20:03.044Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Medication",
+        "Reminders",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "6963cafd-f7c8-4d06-a4de-a84692736203",
+      "start": "2026-03-03T06:45:00.177Z",
+      "end": "2026-03-03T06:45:16.538Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Medication",
+        "API",
+        "Cron",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "cab128e4-cd76-47e0-aa57-bd6d975399fc",
+      "start": "2026-03-03T09:17:17.407Z",
+      "end": "2026-03-03T09:18:06.762Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "GitHub",
+        "Git"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "361eee04-eaac-4c31-a245-9c35b9794821",
+      "start": "2026-03-03T18:39:24.693Z",
+      "end": "2026-03-03T18:39:46.447Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "Python",
+        "Heartbeat"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "21b4ae84-9eec-4612-b91e-61b5c576c0f8",
+      "start": "2026-03-03T20:36:47.609Z",
+      "end": "2026-03-03T20:37:26.275Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Gateway",
+        "Python",
+        "OpenClaw"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "d8de052b-d507-4538-8027-d11923fb390d",
+      "start": "2026-03-03T19:10:36.330Z",
+      "end": "2026-03-03T19:10:58.488Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Python",
+        "Telegram",
+        "Heartbeat"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "3270bd0c-f83d-42d9-8348-c41a392580c5",
+      "start": "2026-03-03T18:39:49.359Z",
+      "end": "2026-03-03T18:40:12.229Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Python",
+        "Telegram",
+        "Heartbeat"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "c162f497-e8d4-417d-8dfc-6fefc058638f",
+      "start": "2026-03-03T18:44:49.330Z",
+      "end": "2026-03-03T18:45:11.542Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Python",
+        "Telegram",
+        "Heartbeat"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "2e4e24e8-4182-43eb-8601-4c0a82e6e6e2",
+      "start": "2026-03-03T20:31:47.618Z",
+      "end": "2026-03-03T20:32:31.542Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Gateway",
+        "Python",
+        "OpenClaw"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "d1bcd412-e9fe-4df3-b94e-76cb021ecb52",
+      "start": "2026-03-03T20:13:08.098Z",
+      "end": "2026-03-03T20:13:41.810Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "Python",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "6835ec06-748e-43c8-96f0-7bd9f2b31d68",
+      "start": "2026-03-03T18:44:24.627Z",
+      "end": "2026-03-03T18:44:46.832Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "Python",
+        "Heartbeat"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "1ae87b03-587b-4fe4-9766-a97de33a1aa6",
+      "start": "2026-03-03T20:10:34.370Z",
+      "end": "2026-03-03T20:11:45.318Z",
+      "duration_seconds": 70,
+      "channel": "telegram",
+      "topics": [
+        "API",
+        "Telegram",
+        "GitHub",
+        "Tasks",
+        "Python"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "22bcddea-1f88-4232-9469-abd8633003be",
+      "start": "2026-03-03T18:57:14.242Z",
+      "end": "2026-03-03T18:57:36.695Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "Python"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "7320e038-6a75-4977-8732-8c584329a0f4",
+      "start": "2026-03-03T18:49:24.646Z",
+      "end": "2026-03-03T18:49:47.015Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "Python",
+        "Heartbeat"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "9241de5b-7537-4794-9cec-cce08a87c61f",
+      "start": "2026-03-03T18:55:11.428Z",
+      "end": "2026-03-03T18:55:33.686Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Python",
+        "Telegram",
+        "Heartbeat"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "8acd0bdf-ddfc-4dd9-8a48-dcaaa86f0feb",
+      "start": "2026-03-03T18:51:51.279Z",
+      "end": "2026-03-03T18:52:13.401Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "Python"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "76bf80ec-9651-4899-b042-0e51bed8f4c5",
+      "start": "2026-03-03T20:26:47.711Z",
+      "end": "2026-03-03T20:28:12.313Z",
+      "duration_seconds": 84,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Gateway",
+        "Python",
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "e1f6b119-ab50-42af-9c92-2239856892f2",
+      "start": "2026-03-03T18:41:51.287Z",
+      "end": "2026-03-03T18:42:13.537Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "Python"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "c0ddd263-4f4d-41d7-bc07-2a8a26f8510c",
+      "start": "2026-03-03T18:46:51.246Z",
+      "end": "2026-03-03T18:47:13.635Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "Python"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "cd318fdc-a750-43ca-af8f-79c49b351682",
+      "start": "2026-03-03T17:35:23.690Z",
+      "end": "2026-03-03T18:18:17.849Z",
+      "duration_seconds": 2574,
+      "channel": "telegram",
+      "topics": [],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "3f000fb9-7603-4bda-ae4f-598514f40b13",
+      "start": "2026-03-03T18:54:47.837Z",
+      "end": "2026-03-03T18:55:10.049Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "Python",
+        "Heartbeat"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "b3ba8eb6-62df-479e-966b-67c9947ef523",
+      "start": "2026-03-03T18:49:49.294Z",
+      "end": "2026-03-03T18:50:11.270Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Python",
+        "Telegram",
+        "Heartbeat"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "bab427f1-966e-4d9e-9cfd-0f4135b89a91",
+      "start": "2026-03-03T20:41:47.726Z",
+      "end": "2026-03-03T20:42:23.381Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Gateway",
+        "Python",
+        "OpenClaw"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "0eed4cc6-0c85-439e-872c-897c615260ce",
+      "start": "2026-03-03T20:11:47.603Z",
+      "end": "2026-03-03T20:13:05.961Z",
+      "duration_seconds": 78,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Gateway",
+        "Python",
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "6a701e0e-a5b4-4def-810e-ffda3e7596dc",
+      "start": "2026-03-03T19:10:10.957Z",
+      "end": "2026-03-03T19:10:33.514Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "Python",
+        "Heartbeat"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "b10613d4-d5fb-4f32-9894-f36b56aad604",
+      "start": "2026-03-03T20:21:47.658Z",
+      "end": "2026-03-03T20:23:07.486Z",
+      "duration_seconds": 79,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Gateway",
+        "Python",
+        "OpenClaw"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "9befaa8d-7dfc-4406-b1a8-b97e9a450d99",
+      "start": "2026-03-03T21:02:29.563Z",
+      "end": "2026-03-03T21:02:36.860Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Gateway",
+        "Python",
+        "Cron"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "7cf4956e-2b7b-4f8b-97d1-ee57f2186706",
+      "start": "2026-03-03T20:16:47.622Z",
+      "end": "2026-03-03T20:18:10.387Z",
+      "duration_seconds": 82,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Gateway",
+        "Python",
+        "OpenClaw"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "87b4ad37-46e4-4572-81b3-da0366d30946",
+      "start": "2026-03-03T20:47:23.567Z",
+      "end": "2026-03-03T20:47:29.106Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Gateway",
+        "Python",
+        "Cron"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "0232e028-8dd8-47c2-b419-5c006a35feb5",
+      "start": "2026-03-03T19:12:37.549Z",
+      "end": "2026-03-03T19:12:59.696Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "Python"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "4c548fbc-7083-4ca7-b8b0-47b6d9db2fdf",
+      "start": "2026-03-03T22:11:51.672Z",
+      "end": "2026-03-03T22:11:57.659Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Python",
+        "Gateway",
+        "Heartbeat",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "e225e5b8-ec1f-4a10-a2cb-08c2863132b0",
+      "start": "2026-03-03T23:11:58.002Z",
+      "end": "2026-03-03T23:12:08.704Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Python",
+        "Gateway",
+        "Heartbeat",
+        "Tasks",
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "5ba076ca-44ec-4cf8-a594-1dad18fb1e38",
+      "start": "2026-03-04T01:12:24.028Z",
+      "end": "2026-03-04T01:12:31.238Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Python",
+        "Gateway",
+        "Heartbeat",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "ed897ff2-af25-4343-87f6-3239f4a7f3c4",
+      "start": "2026-03-04T03:03:10.907Z",
+      "end": "2026-03-04T03:03:16.464Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Python",
+        "Gateway",
+        "Heartbeat"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "d40bb361-00de-4e31-a4a9-a8983a420136",
+      "start": "2026-03-04T00:02:47.925Z",
+      "end": "2026-03-04T00:02:54.230Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Python",
+        "Gateway",
+        "Heartbeat"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "470bf387-d635-49f9-bd80-46b7535fd1c6",
+      "start": "2026-03-03T22:02:37.039Z",
+      "end": "2026-03-03T22:02:42.739Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Python",
+        "Gateway",
+        "Heartbeat"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "042051d2-c5a7-4600-98ee-312e995eca02",
+      "start": "2026-03-04T02:03:02.635Z",
+      "end": "2026-03-04T02:03:10.342Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Python",
+        "Gateway",
+        "Heartbeat"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "de289da8-d7fe-4eee-9742-319a9b7c8731",
+      "start": "2026-03-03T21:11:45.605Z",
+      "end": "2026-03-03T21:11:51.375Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Python",
+        "Gateway",
+        "Heartbeat",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "4da5d110-7211-4920-954d-8fa6a19db6e1",
+      "start": "2026-03-04T00:12:09.166Z",
+      "end": "2026-03-04T00:12:23.707Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Python",
+        "Gateway",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "c78ab674-3bd7-45b4-b28c-901d6d0fae98",
+      "start": "2026-03-03T23:02:42.948Z",
+      "end": "2026-03-03T23:02:47.793Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Python",
+        "Gateway",
+        "Heartbeat"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "b0339643-a2a0-46c5-b913-51adbdafd947",
+      "start": "2026-03-04T01:02:54.547Z",
+      "end": "2026-03-04T01:03:02.282Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Python",
+        "Gateway",
+        "Heartbeat"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "dd00c289-ae39-406a-b2ed-6ab2ac344185",
+      "start": "2026-03-04T02:12:31.563Z",
+      "end": "2026-03-04T02:13:25.239Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Git",
+        "Python",
+        "Gateway"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "09f8f32a-e6a3-4041-ac02-fe9bfcbcd086",
+      "start": "2026-03-04T01:12:31.420Z",
+      "end": "2026-03-04T03:04:29.558Z",
+      "duration_seconds": 6718,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Docker",
+        "Git",
+        "Python"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "96564214-5670-4354-bd04-362e6b350438",
+      "start": "2026-03-04T06:03:29.446Z",
+      "end": "2026-03-04T06:03:35.203Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Gateway",
+        "Heartbeat",
+        "Python",
+        "Cron"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "3ce39269-eeea-4c6a-8f58-4a39f6942f54",
+      "start": "2026-03-04T04:03:16.730Z",
+      "end": "2026-03-04T04:03:21.777Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Gateway",
+        "Heartbeat",
+        "Python",
+        "Cron"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "7483cca1-4533-4e38-beac-41e4cab28847",
+      "start": "2026-03-04T05:03:21.939Z",
+      "end": "2026-03-04T05:03:29.226Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Gateway",
+        "Heartbeat",
+        "Python",
+        "Cron"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "e1591ea3-78eb-482d-a110-f8d189329ddc",
+      "start": "2026-03-04T06:00:00.453Z",
+      "end": "2026-03-04T06:00:03.721Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Reminders",
+        "Medication",
+        "Cron",
+        "Tasks"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "7cf718dc-f341-4fd8-bf12-636f770cae4b",
+      "start": "2026-03-04T06:20:00.411Z",
+      "end": "2026-03-04T06:20:02.846Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Reminders",
+        "Medication",
+        "Cron",
+        "Tasks"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "4986bab2-384b-4f16-a88e-792634af3d65",
+      "start": "2026-03-04T05:14:14.932Z",
+      "end": "2026-03-04T05:14:23.882Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Gateway",
+        "Agents",
+        "Heartbeat",
+        "Python",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "51a5f325-8a81-4be3-b94b-3e546bb5ab14",
+      "start": "2026-03-04T07:14:51.540Z",
+      "end": "2026-03-04T07:14:59.724Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Gateway",
+        "Agents",
+        "Heartbeat",
+        "Python",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "72541cf5-8f93-406e-bc92-fecac41a84d7",
+      "start": "2026-03-04T04:14:09.275Z",
+      "end": "2026-03-04T04:14:14.572Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Gateway",
+        "Agents",
+        "Heartbeat",
+        "Python",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "223db59e-0774-435d-94e6-14bbbb485128",
+      "start": "2026-03-04T06:45:00.277Z",
+      "end": "2026-03-04T06:45:03.473Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Reminders",
+        "Medication",
+        "Cron",
+        "Tasks"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "6f73b2d6-04ab-4ae2-918d-ff19fb0c91f1",
+      "start": "2026-03-04T07:03:35.456Z",
+      "end": "2026-03-04T07:03:43.548Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Gateway",
+        "Heartbeat",
+        "Python",
+        "Cron"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "b67ed74e-230d-40af-8ac1-9308fb295bfd",
+      "start": "2026-03-04T08:03:43.740Z",
+      "end": "2026-03-04T08:03:53.069Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Gateway",
+        "Heartbeat",
+        "Python",
+        "Cron"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "8fa1898c-8353-434f-b3cd-66395810e356",
+      "start": "2026-03-04T03:13:25.457Z",
+      "end": "2026-03-04T03:14:08.931Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Gateway",
+        "API",
+        "Heartbeat",
+        "Python"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "2e962466-e7c7-4375-b2cd-d4f9639f59cf",
+      "start": "2026-03-04T08:15:00.147Z",
+      "end": "2026-03-04T08:15:06.394Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Gateway",
+        "Agents",
+        "Heartbeat",
+        "Python",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "fc9e8362-b553-4fe5-8cb1-1d43ed4223aa",
+      "start": "2026-03-04T06:14:24.450Z",
+      "end": "2026-03-04T06:14:51.166Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Gateway",
+        "API",
+        "Heartbeat",
+        "Python"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "a1d2814f-b1a8-4220-a6b6-f0455fac4669-topic-1",
+      "start": "2026-03-04T14:49:22.896Z",
+      "end": "2026-03-04T15:01:07.261Z",
+      "duration_seconds": 704,
+      "channel": "telegram",
+      "topics": [],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "98e0d63b-daa9-4117-b7cf-706be05d7936-topic-8",
+      "start": "2026-03-04T14:50:58.647Z",
+      "end": "2026-03-04T14:51:47.783Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "API",
+        "OpenClaw",
+        "Telegram"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "b3f88201-cf54-43b5-b7e3-45c7321896c3",
+      "start": "2026-03-04T12:18:01.956Z",
+      "end": "2026-03-04T14:47:12.367Z",
+      "duration_seconds": 8950,
+      "channel": "telegram",
+      "topics": [
+        "Python",
+        "OpenClaw"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "424dd786-7e84-4dbc-a580-cea3a280dc46",
+      "start": "2026-03-04T13:23:05.272Z",
+      "end": "2026-03-04T13:46:24.236Z",
+      "duration_seconds": 1398,
+      "channel": "telegram",
+      "topics": [],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "a42812bd-906c-482c-ac17-514cb85179ca",
+      "start": "2026-03-05T06:00:00.207Z",
+      "end": "2026-03-05T06:24:44.461Z",
+      "duration_seconds": 1484,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "Reminders",
+        "Medication"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "29c496ed-2ca4-4f96-932b-a2307cd1b620",
+      "start": "2026-03-05T06:45:00.428Z",
+      "end": "2026-03-05T06:45:22.436Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "Reminders",
+        "Medication"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "d0aa40dc-ec7d-4b02-ba69-17b4d879c278",
+      "start": "2026-03-04T19:11:31.118Z",
+      "end": "2026-03-04T19:37:32.831Z",
+      "duration_seconds": 1561,
+      "channel": "telegram",
+      "topics": [
+        "API",
+        "Docker",
+        "OpenClaw",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "225f28fd-2d46-4969-858f-b20422eb34c2",
+      "start": "2026-03-04T22:38:38.032Z",
+      "end": "2026-03-04T23:32:30.991Z",
+      "duration_seconds": 3232,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Telegram"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "b35c943e-8daf-4ca9-a01c-9199336d036c-topic-8",
+      "start": "2026-03-05T09:17:28.272Z",
+      "end": "2026-03-05T09:21:22.940Z",
+      "duration_seconds": 234,
+      "channel": "telegram",
+      "topics": [],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "63861178-90fb-4b7d-a29a-3f2dcb1597d9",
+      "start": "2026-03-05T01:21:18.266Z",
+      "end": "2026-03-06T00:20:49.903Z",
+      "duration_seconds": 82771,
+      "channel": "telegram",
+      "topics": [
+        "GitHub",
+        "OpenClaw",
+        "API",
+        "Docker",
+        "Reminders"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "894451dc-3098-4776-8807-eb3c35aa5d9f",
+      "start": "2026-03-06T01:20:51.019Z",
+      "end": "2026-03-06T04:17:37.603Z",
+      "duration_seconds": 10606,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "OpenClaw",
+        "Python",
+        "Analytics",
+        "Skills"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "58040f7a-d634-4bf7-b745-893d2e3d8adb",
+      "start": "2026-03-05T06:24:48.401Z",
+      "end": "2026-03-05T06:25:10.344Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "Reminders",
+        "Medication"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "677655cc-8120-45a5-8974-119542163d8e",
+      "start": "2026-03-04T18:55:38.127Z",
+      "end": "2026-03-04T18:55:39.704Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "738ea33d-5ccf-412b-96ea-01003ae6e376",
+      "start": "2026-03-04T18:53:08.028Z",
+      "end": "2026-03-04T18:53:08.029Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Agents",
+        "OpenClaw",
+        "Gateway"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "948ae344-74a0-4e11-9dd0-cf1f869d81c4",
+      "start": "2026-03-04T15:43:54.921Z",
+      "end": "2026-03-04T15:43:54.922Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "9dad7299-6480-4ff9-8ba3-d41227ad07f4",
+      "start": "2026-03-04T15:31:48.454Z",
+      "end": "2026-03-04T15:51:03.312Z",
+      "duration_seconds": 1154,
+      "channel": "telegram",
+      "topics": [],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "a08f9e7a-d35f-45dd-8513-2636378b0c2d",
+      "start": "2026-03-05T10:41:38.888Z",
+      "end": "2026-03-05T23:00:13.917Z",
+      "duration_seconds": 44315,
+      "channel": "telegram",
+      "topics": [
+        "Telegram"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "632f3415-9836-41a7-8e37-45f0b4910023",
+      "start": "2026-03-04T18:24:23.781Z",
+      "end": "2026-03-04T18:24:27.655Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "OpenClaw",
+        "Agents",
+        "Python",
+        "Heartbeat"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "6415d7c0-4eb9-4b53-9eb6-bc7e89f3d428",
+      "start": "2026-03-06T06:20:00.113Z",
+      "end": "2026-03-06T06:20:03.512Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Reminders",
+        "Medication",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "e5d44799-47a3-4763-af09-48066783a986",
+      "start": "2026-03-06T08:38:03.352Z",
+      "end": "2026-03-06T08:41:29.329Z",
+      "duration_seconds": 205,
+      "channel": "telegram",
+      "topics": [
+        "React",
+        "JavaScript",
+        "SQL",
+        "TypeScript",
+        "API"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "91cb9dca-77f9-4182-9620-1009c6a468b2",
+      "start": "2026-03-06T06:45:00.150Z",
+      "end": "2026-03-06T06:45:15.465Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Medication",
+        "Telegram",
+        "Cron",
+        "Reminders",
+        "Tasks"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "ba30f78c-c98f-43cc-b028-5dd8f6436c5e",
+      "start": "2026-03-06T06:00:00.166Z",
+      "end": "2026-03-06T06:19:19.666Z",
+      "duration_seconds": 1159,
+      "channel": "telegram",
+      "topics": [
+        "Reminders",
+        "Medication",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "99255dde-938c-4e95-9ce1-0cd92c1dae71",
+      "start": "2026-03-06T10:26:58.709Z",
+      "end": "2026-03-06T10:38:56.646Z",
+      "duration_seconds": 717,
+      "channel": "telegram",
+      "topics": [],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "ae12342f-7237-4956-b165-ffe87e344047",
+      "start": "2026-03-06T10:02:39.680Z",
+      "end": "2026-03-06T11:33:31.944Z",
+      "duration_seconds": 5452,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    }
+  ],
+  "last_import": "2026-03-06T18:06:41.685226",
+  "topic_stats": {
+    "SQL": {
+      "total_mentions": 31,
+      "last_seen": "2026-03-06T06:00:00.166Z",
+      "trend": "new"
+    },
+    "Agents": {
+      "total_mentions": 101,
+      "last_seen": "2026-03-06T10:02:39.680Z",
+      "trend": "new"
+    },
+    "Cron": {
+      "total_mentions": 133,
+      "last_seen": "2026-03-06T06:00:00.166Z",
+      "trend": "new"
+    },
+    "Database": {
+      "total_mentions": 18,
+      "last_seen": "2026-02-12T01:00:14.423Z",
+      "trend": "new"
+    },
+    "TypeScript": {
+      "total_mentions": 17,
+      "last_seen": "2026-03-06T06:00:00.166Z",
+      "trend": "new"
+    },
+    "Tasks": {
+      "total_mentions": 109,
+      "last_seen": "2026-03-06T06:00:00.166Z",
+      "trend": "new"
+    },
+    "Medication": {
+      "total_mentions": 66,
+      "last_seen": "2026-03-06T06:00:00.166Z",
+      "trend": "new"
+    },
+    "Reminders": {
+      "total_mentions": 65,
+      "last_seen": "2026-03-06T06:00:00.166Z",
+      "trend": "new"
+    },
+    "Health": {
+      "total_mentions": 26,
+      "last_seen": "2026-02-25T14:32:11.713Z",
+      "trend": "new"
+    },
+    "GitHub": {
+      "total_mentions": 21,
+      "last_seen": "2026-03-04T18:24:23.781Z",
+      "trend": "new"
+    },
+    "Docker": {
+      "total_mentions": 12,
+      "last_seen": "2026-03-04T18:24:23.781Z",
+      "trend": "new"
+    },
+    "API": {
+      "total_mentions": 35,
+      "last_seen": "2026-03-06T06:00:00.166Z",
+      "trend": "new"
+    },
+    "Gateway": {
+      "total_mentions": 48,
+      "last_seen": "2026-03-04T18:24:23.781Z",
+      "trend": "new"
+    },
+    "Python": {
+      "total_mentions": 82,
+      "last_seen": "2026-03-04T18:24:23.781Z",
+      "trend": "new"
+    },
+    "Analytics": {
+      "total_mentions": 8,
+      "last_seen": "2026-03-04T18:24:23.781Z",
+      "trend": "new"
+    },
+    "OpenClaw": {
+      "total_mentions": 47,
+      "last_seen": "2026-03-04T18:24:23.781Z",
+      "trend": "new"
+    },
+    "Heartbeat": {
+      "total_mentions": 47,
+      "last_seen": "2026-03-04T18:24:23.781Z",
+      "trend": "new"
+    },
+    "Telegram": {
+      "total_mentions": 64,
+      "last_seen": "2026-03-06T10:02:39.680Z",
+      "trend": "new"
+    },
+    "Git": {
+      "total_mentions": 17,
+      "last_seen": "2026-03-04T01:12:31.420Z",
+      "trend": "new"
+    },
+    "Skills": {
+      "total_mentions": 4,
+      "last_seen": "2026-03-04T18:24:23.781Z",
+      "trend": "new"
+    },
+    "React": {
+      "total_mentions": 11,
+      "last_seen": "2026-03-06T06:00:00.166Z",
+      "trend": "new"
+    },
+    "Browser": {
+      "total_mentions": 4,
+      "last_seen": "2026-03-02T20:09:43.144Z",
+      "trend": "new"
+    },
+    "JavaScript": {
+      "total_mentions": 1,
+      "last_seen": "2026-03-06T06:00:00.166Z",
+      "trend": "new"
+    }
+  },
+  "time_stats": {
+    "hourly_distribution": {
+      "13": 4,
+      "6": 75,
+      "22": 4,
+      "14": 17,
+      "1": 23,
+      "7": 3,
+      "16": 4,
+      "12": 4,
+      "9": 6,
+      "18": 17,
+      "10": 5,
+      "11": 3,
+      "19": 6,
+      "15": 4,
+      "17": 4,
+      "20": 13,
+      "8": 4,
+      "4": 4,
+      "2": 15,
+      "5": 3,
+      "21": 2,
+      "23": 2,
+      "3": 2,
+      "0": 2
+    },
+    "daily_distribution": {
+      "tuesday": 67,
+      "thursday": 21,
+      "saturday": 24,
+      "friday": 27,
+      "sunday": 18,
+      "wednesday": 52,
+      "monday": 17
+    }
+  },
+  "sentiment_stats": {
+    "positive": 19,
+    "neutral": 58,
+    "negative": 90,
+    "mixed": 59
+  }
+}

@@ -1,0 +1,4 @@
+{"timestamp": "2026-02-08T04:12:03.500291", "session_id": "interruption", "type": "session_resumed", "data": {"from": "integration-test"}}
+{"timestamp": "2026-02-08T04:12:03.500317", "session_id": "interruption", "type": "message_received", "data": {"content": "Quick question", "length": 14, "from": "colleague"}, "user_triggered": true}
+{"timestamp": "2026-02-08T04:12:03.500332", "session_id": "interruption", "type": "message_sent", "data": {"content": "Answer here", "length": 11}}
+{"timestamp": "2026-02-08T04:12:03.500345", "session_id": "interruption", "type": "context_switched", "data": {"from": "interruption", "to": "integration-test", "reason": "Returning from temporary switch"}}

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>КП — ILoveSchool / IIM</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f4f8;
+  }
+  .page {
+    width: 900px;
+    background: #ffffff;
+  }
+
+  /* HEADER */
+  .header {
+    display: flex;
+    height: 90px;
+  }
+  .header-logo-panel {
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 28px;
+    border-right: 1px solid #e2e8f0;
+    min-width: 200px;
+  }
+  .header-logo {
+    height: 44px;
+  }
+  .header-info {
+    background: linear-gradient(135deg, #007B7B 0%, #005F5F 100%);
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 36px;
+  }
+  .header-info .kp-label {
+    color: rgba(255,255,255,0.65);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .header-info h1 {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+  }
+  .header-info .subtitle {
+    color: rgba(255,255,255,0.75);
+    font-size: 12px;
+    margin-top: 3px;
+  }
+
+  /* ACCENT LINE */
+  .accent-line {
+    height: 4px;
+    background: linear-gradient(90deg, #FF6B35 0%, #FF9A3C 50%, #FFD166 100%);
+  }
+
+  /* CONTENT */
+  .content {
+    padding: 30px 36px;
+  }
+
+  /* INFO GRID */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 26px;
+  }
+  .info-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 18px;
+    border-left: 4px solid #007B7B;
+  }
+  .info-card .card-label {
+    font-size: 9px;
+    font-weight: 700;
+    color: #007B7B;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 5px;
+  }
+  .info-card .card-value {
+    font-size: 13px;
+    color: #1a202c;
+    font-weight: 600;
+  }
+  .info-card .card-sub {
+    font-size: 11px;
+    color: #718096;
+    margin-top: 2px;
+  }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: #007B7B;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  /* TASK */
+  .task-block {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin-bottom: 22px;
+    font-size: 13px;
+    color: #2d3748;
+    line-height: 1.65;
+  }
+
+  /* WORKS TABLE */
+  .works-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 22px;
+    font-size: 12px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .works-table th {
+    background: #007B7B;
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+  }
+  .works-table th.num { width: 44px; text-align: center; }
+  .works-table th.hrs { width: 80px; text-align: center; }
+  .works-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e8edf2;
+    color: #2d3748;
+  }
+  .works-table td.num { text-align: center; color: #a0aec0; font-size: 11px; }
+  .works-table td.hrs { text-align: center; font-weight: 700; color: #007B7B; }
+  .works-table tr:nth-child(even) td { background: #f8fafc; }
+  .works-table .total-row td {
+    background: #005F5F !important;
+    color: white !important;
+    font-weight: 700;
+    padding: 12px 14px;
+    font-size: 13px;
+    border-bottom: none;
+  }
+  .works-table .total-row td.hrs {
+    color: white !important;
+    font-size: 14px;
+  }
+
+  /* BOTTOM */
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 0;
+  }
+  .cost-block {
+    background: linear-gradient(135deg, #007B7B 0%, #005F5F 100%);
+    border-radius: 10px;
+    padding: 20px 22px;
+    color: white;
+  }
+  .cost-block .lbl {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    opacity: 0.7;
+    margin-bottom: 5px;
+  }
+  .cost-block .amount {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+  .cost-block .vat {
+    font-size: 11px;
+    opacity: 0.7;
+    margin-top: 4px;
+    margin-bottom: 14px;
+  }
+  .cost-block .dates-lbl {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-bottom: 3px;
+  }
+  .cost-block .dates {
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .payment-block {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+  .payment-block .pay-title {
+    font-size: 9px;
+    font-weight: 700;
+    color: #007B7B;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
+  }
+  .pay-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+  .pay-item:last-child { margin-bottom: 0; }
+  .pay-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #007B7B;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+  .pay-desc { color: #4a5568; flex: 1; }
+  .pay-amt { font-weight: 700; color: #1a202c; white-space: nowrap; margin-left: 8px; }
+
+  /* FOOTER */
+  .footer {
+    background: #1a202c;
+    padding: 16px 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+  }
+  .footer-left {
+    color: rgba(255,255,255,0.55);
+    font-size: 11px;
+    line-height: 1.7;
+  }
+  .footer-left strong { color: rgba(255,255,255,0.9); font-size: 12px; }
+  .footer-right {
+    text-align: right;
+    color: rgba(255,255,255,0.55);
+    font-size: 11px;
+    line-height: 1.7;
+  }
+  .footer-right .sign-lbl {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.35);
+  }
+  .footer-right .sign-name {
+    color: rgba(255,255,255,0.9);
+    font-weight: 600;
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-logo-panel">
+      <img class="header-logo" src="data:image/png;base64,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" alt="Gravity Group">
+    </div>
+    <div class="header-info">
+      <div style="text-align:right">
+        <div class="kp-label">Коммерческое предложение</div>
+        <h1>ILoveSchool / IIM</h1>
+        <div class="subtitle">17 февраля 2026 г.</div>
+      </div>
+    </div>
+  </div>
+  <div class="accent-line"></div>
+
+  <div class="content">
+
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="card-label">Заказчик</div>
+        <div class="card-value">ООО «ПЛАТФОРМА»</div>
+        <div class="card-sub">ИНН 5902054490 · Гуляев Евгений Артурович</div>
+      </div>
+      <div class="info-card">
+        <div class="card-label">Исполнитель</div>
+        <div class="card-value">ООО «Гравити Групп»</div>
+        <div class="card-sub">ИНН 5908999996 · gravity-group.ru</div>
+      </div>
+      <div class="info-card">
+        <div class="card-label">Основание</div>
+        <div class="card-value">Договор №66/2023</div>
+        <div class="card-sub">от 13 ноября 2023 г.</div>
+      </div>
+      <div class="info-card">
+        <div class="card-label">Сроки выполнения</div>
+        <div class="card-value">17 февраля — 3 марта 2026</div>
+        <div class="card-sub">~14 календарных дней</div>
+      </div>
+    </div>
+
+    <div class="section-title">Описание задачи</div>
+    <div class="task-block">
+      Замена интеграции Dashly на SendPulse в мобильном приложении IIM (Israel Inspires Me / ILoveSchool):
+      перенос push-уведомлений, чат-виджета и аналитики событий на новый провайдер с сохранением текущей функциональности.
+    </div>
+
+    <div class="section-title">Состав работ</div>
+    <table class="works-table">
+      <thead>
+        <tr>
+          <th class="num">№</th>
+          <th>Наименование работ</th>
+          <th>Специализация</th>
+          <th class="hrs">Часов</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="num">1</td>
+          <td>Разработка Back-End (Общий)</td>
+          <td>Backend-разработчик</td>
+          <td class="hrs">24,00</td>
+        </tr>
+        <tr>
+          <td class="num">2</td>
+          <td>Тестирование</td>
+          <td>QA-инженер</td>
+          <td class="hrs">7,20</td>
+        </tr>
+        <tr>
+          <td class="num">3</td>
+          <td>Ведение проекта</td>
+          <td>Менеджер проекта</td>
+          <td class="hrs">3,60</td>
+        </tr>
+        <tr class="total-row">
+          <td class="num"></td>
+          <td colspan="2"><strong>Итого трудозатраты</strong></td>
+          <td class="hrs">34,80</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="bottom-grid">
+      <div class="cost-block">
+        <div class="lbl">Общая стоимость</div>
+        <div class="amount">126 240 руб.</div>
+        <div class="vat">в т.ч. НДС 5% — 6 011,43 руб.</div>
+        <div class="dates-lbl">Гарантийный срок</div>
+        <div class="dates">3 месяца с даты сдачи работ</div>
+      </div>
+      <div class="payment-block">
+        <div class="pay-title">График оплаты</div>
+        <div class="pay-item">
+          <div class="pay-dot"></div>
+          <div class="pay-desc">30% — аванс при подписании</div>
+          <div class="pay-amt">37 872 руб.</div>
+        </div>
+        <div class="pay-item">
+          <div class="pay-dot"></div>
+          <div class="pay-desc">37% — по факту завершения этапа</div>
+          <div class="pay-amt">46 708,80 руб.</div>
+        </div>
+        <div class="pay-item">
+          <div class="pay-dot"></div>
+          <div class="pay-desc">Остаток — после подписания Акта</div>
+          <div class="pay-amt">41 659,20 руб.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">
+      <strong>ООО «Гравити Групп»</strong><br>
+      г. Пермь · gravity-group.ru<br>
+      ИНН 5908999996
+    </div>
+    <div class="footer-right">
+      <div class="sign-lbl">Директор</div>
+      <div class="sign-name">Яборов Андрей Владимирович</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SyncVoice™ Platform — Коммерческое предложение</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f2f5;
+    color: #1a1a2e;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    background: #ffffff;
+    margin: 0 auto 20px;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    break-after: page;
+  }
+
+  /* ========== PAGE 1: COVER ========== */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 297mm;
+    padding: 60px 50px;
+    position: relative;
+  }
+
+  .cover-accent-top {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #1a56db 0%, #3b82f6 50%, #1a56db 100%);
+  }
+
+  .cover-accent-bottom {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #1a56db 0%, #3b82f6 50%, #1a56db 100%);
+  }
+
+  .cover-logo-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 60px;
+  }
+
+  .cover-logo-icon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .cover-brand {
+    font-size: 36px;
+    font-weight: 800;
+    color: #1a1a2e;
+    letter-spacing: -0.5px;
+    text-align: center;
+  }
+
+  .cover-brand span {
+    color: #1a56db;
+  }
+
+  .cover-divider {
+    width: 80px;
+    height: 3px;
+    background: #1a56db;
+    border-radius: 2px;
+    margin: 30px 0;
+  }
+
+  .cover-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #374151;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .cover-date {
+    font-size: 16px;
+    font-weight: 400;
+    color: #6b7280;
+    text-align: center;
+  }
+
+  .cover-badge {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    font-weight: 500;
+    color: #9ca3af;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: 1px solid #e5e7eb;
+    padding: 6px 20px;
+    border-radius: 20px;
+  }
+
+  .cover-decoration {
+    position: absolute;
+    bottom: 90px;
+    right: 40px;
+    opacity: 0.05;
+    width: 250px;
+    height: 250px;
+  }
+
+  /* ========== INNER PAGE LAYOUT ========== */
+  .page-inner {
+    padding: 50px 50px 40px;
+    min-height: 297mm;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #e5e7eb;
+    margin-bottom: 36px;
+  }
+
+  .page-header-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .page-header-logo svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .page-header-brand {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a56db;
+    letter-spacing: -0.3px;
+  }
+
+  .page-header-label {
+    font-size: 12px;
+    color: #9ca3af;
+    font-weight: 500;
+  }
+
+  .page-number {
+    font-size: 12px;
+    color: #d1d5db;
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .section-subtitle {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 32px;
+  }
+
+  /* ========== PAGE 2: ABOUT ========== */
+  .block-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #1a56db;
+    margin-bottom: 12px;
+  }
+
+  .block-text {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #374151;
+    background: #f8fafc;
+    border-left: 3px solid #1a56db;
+    padding: 16px 20px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 28px;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-top: 12px;
+  }
+
+  .feature-card {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .feature-card-icon {
+    font-size: 24px;
+    line-height: 1;
+    width: 48px;
+    height: 48px;
+    background: #e8f0fe;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+
+  .feature-card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a2e;
+  }
+
+  .feature-card-desc {
+    font-size: 12px;
+    color: #6b7280;
+    line-height: 1.5;
+  }
+
+  /* ========== PAGE 3: SCENARIOS ========== */
+  .scenario-card {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scenario-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    background: #1a56db;
+    border-radius: 2px 0 0 2px;
+  }
+
+  .scenario-num {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #1a56db;
+    margin-bottom: 8px;
+  }
+
+  .scenario-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 10px;
+  }
+
+  .scenario-desc {
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.6;
+  }
+
+  .scenario-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+
+  .tag {
+    font-size: 11px;
+    font-weight: 500;
+    background: #eff6ff;
+    color: #1a56db;
+    border: 1px solid #bfdbfe;
+    border-radius: 20px;
+    padding: 3px 10px;
+  }
+
+  /* ========== PAGE 4: PLAN ========== */
+  .sprint-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+    font-size: 13px;
+  }
+
+  .sprint-table thead tr {
+    background: #1a56db;
+    color: #ffffff;
+  }
+
+  .sprint-table thead th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .sprint-table thead th:last-child {
+    text-align: right;
+  }
+
+  .sprint-table tbody tr {
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .sprint-table tbody tr:nth-child(even) {
+    background: #f9fafb;
+  }
+
+  .sprint-table tbody tr:hover {
+    background: #eff6ff;
+  }
+
+  .sprint-table tbody td {
+    padding: 12px 16px;
+    color: #374151;
+    vertical-align: top;
+  }
+
+  .sprint-table tbody td:first-child {
+    font-weight: 700;
+    color: #1a56db;
+    white-space: nowrap;
+  }
+
+  .sprint-table tbody td:last-child {
+    text-align: right;
+    font-weight: 600;
+    color: #1a1a2e;
+    white-space: nowrap;
+  }
+
+  .cost-summary {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 8px;
+  }
+
+  .cost-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 14px;
+    color: #6b7280;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .cost-row:last-child {
+    border-bottom: none;
+    padding-top: 16px;
+    margin-top: 8px;
+    font-size: 20px;
+    font-weight: 800;
+    color: #1a1a2e;
+  }
+
+  .cost-row:last-child .cost-label {
+    color: #1a1a2e;
+  }
+
+  .cost-row:last-child .cost-value {
+    color: #1a56db;
+  }
+
+  .cost-label { font-weight: 500; }
+  .cost-value { font-weight: 600; color: #374151; }
+
+  /* ========== PAGE 5: TEAM ========== */
+  .team-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 32px;
+    font-size: 13px;
+  }
+
+  .team-table thead tr {
+    background: #f3f4f6;
+  }
+
+  .team-table thead th {
+    padding: 10px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    color: #6b7280;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .team-table thead th:last-child {
+    text-align: right;
+  }
+
+  .team-table tbody tr {
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  .team-table tbody tr:nth-child(even) {
+    background: #f9fafb;
+  }
+
+  .team-table tbody td {
+    padding: 11px 16px;
+    color: #374151;
+  }
+
+  .team-table tbody td:last-child {
+    text-align: right;
+    font-weight: 600;
+    color: #1a56db;
+  }
+
+  .timeline-block {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .timeline-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+  }
+
+  .timeline-text h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a56db;
+    margin-bottom: 4px;
+  }
+
+  .timeline-text p {
+    font-size: 13px;
+    color: #374151;
+  }
+
+  .conditions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .condition-item {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 14px 16px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .condition-check {
+    width: 20px;
+    height: 20px;
+    background: #1a56db;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .condition-check::after {
+    content: '●';
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .condition-text {
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.5;
+  }
+
+  /* ========== PAGE 6: FINAL ========== */
+  .final-hero {
+    background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
+    border: 2px solid #bfdbfe;
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .final-hero-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #1a56db;
+    margin-bottom: 12px;
+  }
+
+  .final-hero-amount {
+    font-size: 52px;
+    font-weight: 800;
+    color: #1a56db;
+    letter-spacing: -2px;
+    margin-bottom: 8px;
+    line-height: 1;
+  }
+
+  .final-hero-vat {
+    font-size: 13px;
+    color: #9ca3af;
+    margin-bottom: 20px;
+  }
+
+  .final-hero-timeline {
+    display: inline-block;
+    background: #1a56db;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 28px;
+    border-radius: 30px;
+    margin-bottom: 16px;
+  }
+
+  .final-hero-desc {
+    font-size: 13px;
+    color: #6b7280;
+    max-width: 400px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .cta-block {
+    background: #1a56db;
+    border-radius: 12px;
+    padding: 24px 32px;
+    text-align: center;
+    margin-bottom: 28px;
+    color: white;
+  }
+
+  .cta-block h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .cta-block p {
+    font-size: 13px;
+    opacity: 0.85;
+  }
+
+  .contacts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .contact-card {
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 16px 20px;
+  }
+
+  .contact-role {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #1a56db;
+    margin-bottom: 6px;
+  }
+
+  .contact-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 4px;
+  }
+
+  .contact-info {
+    font-size: 12px;
+    color: #6b7280;
+    line-height: 1.6;
+  }
+
+  .page-footer {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid #f3f4f6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .page-footer-text {
+    font-size: 11px;
+    color: #d1d5db;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  @media print {
+    body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { margin: 0; }
+    .page:not(:last-child) { page-break-after: always; break-after: page; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== PAGE 1: COVER ==================== -->
+<div class="page">
+  <div class="cover">
+    <div class="cover-accent-top"></div>
+    <div class="cover-accent-bottom"></div>
+
+    <!-- BG decoration -->
+    <svg class="cover-decoration" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="100" cy="100" r="100" fill="#1a56db"/>
+    </svg>
+
+    <div class="cover-logo-wrap">
+      <!-- Logo SVG: sound wave + translation arrows -->
+      <svg class="cover-logo-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Background circle -->
+        <circle cx="50" cy="50" r="48" fill="#eff6ff" stroke="#bfdbfe" stroke-width="2"/>
+        <!-- Sound wave bars -->
+        <rect x="18" y="42" width="6" height="16" rx="3" fill="#1a56db"/>
+        <rect x="28" y="33" width="6" height="34" rx="3" fill="#1a56db"/>
+        <rect x="38" y="26" width="6" height="48" rx="3" fill="#1a56db" opacity="0.9"/>
+        <rect x="48" y="20" width="6" height="60" rx="3" fill="#1a56db"/>
+        <!-- Arrow right -->
+        <path d="M62 44 L78 50 L62 56" stroke="#1a56db" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <!-- Arrow left (below) -->
+        <path d="M78 38 L62 38" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="4 3"/>
+      </svg>
+      <div class="cover-brand">SyncVoice<span>™</span> Platform</div>
+    </div>
+
+    <div class="cover-divider"></div>
+
+    <div class="cover-title">Коммерческое предложение</div>
+    <div class="cover-date">27 февраля 2026 года</div>
+
+    <div class="cover-badge">Конфиденциально</div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 2: ABOUT ==================== -->
+<div class="page">
+  <div class="page-inner">
+    <div class="page-header">
+      <div class="page-header-logo">
+        <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="10" width="3.5" height="8" rx="1.5" fill="#1a56db"/>
+          <rect x="8" y="7" width="3.5" height="14" rx="1.5" fill="#1a56db"/>
+          <rect x="14" y="4" width="3.5" height="20" rx="1.5" fill="#1a56db" opacity="0.85"/>
+          <path d="M20 11 L26 14 L20 17" stroke="#1a56db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span class="page-header-brand">SyncVoice™ Platform</span>
+      </div>
+      <span class="page-header-label">Коммерческое предложение · 2026</span>
+      <span class="page-number">02</span>
+    </div>
+
+    <div class="section-title">О проекте</div>
+    <div class="section-subtitle">Задача, контекст и наше решение</div>
+
+    <div class="block-label">Задача клиента</div>
+    <div class="block-text">
+      Фармацевтический холдинг с международными партнёрами (RU / EN / HI / ZH). Переговоры, конференции, рабочие встречи — всё требует синхронного перевода в реальном времени. Облачные сервисы исключены: коммерческая тайна и требование on-premise развёртывания.
+    </div>
+
+    <div class="block-label">Наше решение</div>
+    <div class="block-text">
+      <strong>SyncVoice™</strong> — on-premise платформа синхронного перевода на базе . Работает полностью внутри инфраструктуры клиента. Латентность перевода — 1–3 секунды, поддержка 4 языков, специализированные глоссарии фармацевтической терминологии. Ни один байт речи не покидает периметр компании.
+    </div>
+
+    <div class="block-label" style="margin-top: 4px;">Ключевые характеристики</div>
+    <div class="cards-grid">
+      <div class="feature-card">
+        <div class="feature-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="#1a56db"><path d="M12 1C9.24 1 7 3.24 7 6v2H5v14h14V8h-2V6c0-2.76-2.24-5-5-5zm0 2c1.65 0 3 1.35 3 3v2H9V6c0-1.65 1.35-3 3-3zm0 9c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2z"/></svg></div>
+        <div class="feature-card-title">On-Premise</div>
+        <div class="feature-card-desc">Данные не покидают периметр компании. Полное соответствие требованиям ИБ и коммерческой тайне.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="#1a56db"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg></div>
+        <div class="feature-card-title">Real-Time</div>
+        <div class="feature-card-desc">Латентность синхронного перевода — 1–3 секунды. Живой разговор без задержек.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="#1a56db"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>
+        <div class="feature-card-title">4 языка</div>
+        <div class="feature-card-desc">Русский, английский, хинди, мандаринский китайский. Все направления перевода.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="#1a56db"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg></div>
+        <div class="feature-card-title">Глоссарии</div>
+        <div class="feature-card-desc">Специализированная фарм-терминология. 2 000+ терминов, импорт CSV/Excel, CRUD.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="#1a56db"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg></div>
+        <div class="feature-card-title">White Label</div>
+        <div class="feature-card-desc">Логотип, цвета, название и домен клиента. Полная кастомизация интерфейса через административную панель.</div>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span class="page-footer-text">SyncVoice™ Platform · Конфиденциально</span>
+      <span class="page-footer-text"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 3: SCENARIOS ==================== -->
+<div class="page">
+  <div class="page-inner">
+    <div class="page-header">
+      <div class="page-header-logo">
+        <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="10" width="3.5" height="8" rx="1.5" fill="#1a56db"/>
+          <rect x="8" y="7" width="3.5" height="14" rx="1.5" fill="#1a56db"/>
+          <rect x="14" y="4" width="3.5" height="20" rx="1.5" fill="#1a56db" opacity="0.85"/>
+          <path d="M20 11 L26 14 L20 17" stroke="#1a56db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span class="page-header-brand">SyncVoice™ Platform</span>
+      </div>
+      <span class="page-header-label">Коммерческое предложение · 2026</span>
+      <span class="page-number">03</span>
+    </div>
+
+    <div class="section-title">Сценарии использования</div>
+    <div class="section-subtitle">Три ключевых режима работы платформы</div>
+
+    <div class="scenario-card">
+      <div class="scenario-num">Сценарий 01</div>
+      <div class="scenario-title">Конференц-залы (In-Room)</div>
+      <div class="scenario-desc">
+        Физические микрофоны участников передают аудиопоток в систему. Каждый участник сканирует QR-код и получает перевод в наушники на выбранном языке. Постоянные залы с предварительной настройкой языкового профиля для каждого места — участники приходят и сразу работают.
+      </div>
+      <div class="scenario-tags">
+        
+        <span class="tag">QR-доступ</span>
+        <span class="tag">Постоянные залы</span>
+        <span class="tag">Языковые профили мест</span>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div class="scenario-num">Сценарий 02</div>
+      <div class="scenario-title">Видеоконференции</div>
+      <div class="scenario-desc">
+        Встроенная видеозвонилка — без сторонних сервисов. Участники подключаются через браузер по ссылке, перевод работает в реальном времени прямо внутри платформы. Все данные остаются на серверах клиента.
+      </div>
+      <div class="scenario-tags">
+        <span class="tag">On-Premise</span>
+        <span class="tag">Браузерный клиент</span>
+        <span class="tag">Real-Time</span>
+      </div>
+    </div>
+
+    <div class="scenario-card">
+      <div class="scenario-num">Сценарий 03</div>
+      <div class="scenario-title">Запись сессий</div>
+      <div class="scenario-desc">
+        Автоматическая запись встреч в формате MP4 с раздельными аудиодорожками для каждого языка. При воспроизведении участник выбирает нужный язык. Гибкая политика хранения: настройка периода хранения, автоудаление по расписанию, защита от несанкционированного доступа.
+      </div>
+      <div class="scenario-tags">
+        
+        <span class="tag">MP4</span>
+        <span class="tag">Раздельные аудиодорожки</span>
+        <span class="tag">Политика хранения</span>
+        <span class="tag">Автоудаление</span>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span class="page-footer-text">SyncVoice™ Platform · Конфиденциально</span>
+      <span class="page-footer-text"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 4: PLAN ==================== -->
+<div class="page">
+  <div class="page-inner">
+    <div class="page-header">
+      <div class="page-header-logo">
+        <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="10" width="3.5" height="8" rx="1.5" fill="#1a56db"/>
+          <rect x="8" y="7" width="3.5" height="14" rx="1.5" fill="#1a56db"/>
+          <rect x="14" y="4" width="3.5" height="20" rx="1.5" fill="#1a56db" opacity="0.85"/>
+          <path d="M20 11 L26 14 L20 17" stroke="#1a56db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span class="page-header-brand">SyncVoice™ Platform</span>
+      </div>
+      <span class="page-header-label">Коммерческое предложение · 2026</span>
+      <span class="page-number">04</span>
+    </div>
+
+    <div class="section-title">План работ</div>
+    <div class="section-subtitle">Разбивка по спринтам с детализацией стоимости</div>
+
+    <table class="sprint-table">
+      <thead>
+        <tr>
+          <th style="width:60px">Спринт</th>
+          <th>Содержание работ</th>
+          <th style="width:130px">Стоимость</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>С1</td>
+          <td>Базовая инфраструктура — видеозвонилка, UI, аудио треки</td>
+          <td>535 520 руб.</td>
+        </tr>
+        <tr>
+          <td>С2</td>
+          <td>AI Translation Engine — движок перевода, оптимизация обработки</td>
+          <td>627 360 руб.</td>
+        </tr>
+        <tr>
+          <td>С3</td>
+          <td>Аудио обработка — детекция речи, маршрутизация потоков, индикаторы активности</td>
+          <td>436 560 руб.</td>
+        </tr>
+        <tr>
+          <td>С4</td>
+          <td>Управление доступом — авторизация, роли и права, управление комнатами</td>
+          <td>582 080 руб.</td>
+        </tr>
+        <tr>
+          <td>С5</td>
+          <td>Постоянные залы — QR-доступ, языковые профили мест</td>
+          <td>716 800 руб.</td>
+        </tr>
+        <tr>
+          <td>С6</td>
+          <td>Admin Portal — дашборд, мониторинг, кастомизация и управление</td>
+          <td>660 320 руб.</td>
+        </tr>
+        <tr>
+          <td>С7</td>
+          <td>Глоссарии — CRUD, импорт CSV/Excel, управление терминами (2 000+)</td>
+          <td>1 388 240 руб.</td>
+        </tr>
+        <tr>
+          <td>С8</td>
+          <td>Запись сессий — MP4, раздельные аудиодорожки по языкам</td>
+          <td>312 640 руб.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="cost-summary">
+      <div class="cost-row">
+        <span class="cost-label">Базовая стоимость (8 спринтов)</span>
+        <span class="cost-value">5 259 520 руб.</span>
+      </div>
+      <div class="cost-row">
+        <span class="cost-label">Резерв на риски и непредвиденные работы (15%)</span>
+        <span class="cost-value">789 928 руб.</span>
+      </div>
+      <div class="cost-row">
+        <span class="cost-label">Итоговая стоимость проекта</span>
+        <span class="cost-value">6 048 448 руб.</span>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span class="page-footer-text">SyncVoice™ Platform · Конфиденциально</span>
+      <span class="page-footer-text"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 5: TEAM ==================== -->
+<div class="page">
+  <div class="page-inner">
+    <div class="page-header">
+      <div class="page-header-logo">
+        <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="10" width="3.5" height="8" rx="1.5" fill="#1a56db"/>
+          <rect x="8" y="7" width="3.5" height="14" rx="1.5" fill="#1a56db"/>
+          <rect x="14" y="4" width="3.5" height="20" rx="1.5" fill="#1a56db" opacity="0.85"/>
+          <path d="M20 11 L26 14 L20 17" stroke="#1a56db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span class="page-header-brand">SyncVoice™ Platform</span>
+      </div>
+      <span class="page-header-label">Коммерческое предложение · 2026</span>
+      <span class="page-number">05</span>
+    </div>
+
+    <div class="section-title">Команда и условия</div>
+    <div class="section-subtitle">Состав команды, ставки и условия сотрудничества</div>
+
+    <div class="block-label">Состав команды</div>
+    <table class="team-table">
+      <thead>
+        <tr>
+          <th>Роль</th>
+          <th style="text-align:right">Ставка</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Backend-разработчик</td>
+          <td>4 000 руб./час</td>
+        </tr>
+        <tr>
+          <td>Frontend-разработчик</td>
+          <td>3 600 руб./час</td>
+        </tr>
+        <tr>
+          <td>DevOps-инженер</td>
+          <td>4 000 руб./час</td>
+        </tr>
+        <tr>
+          <td>ML-инженер (AI-перевод)</td>
+          <td>4 000 руб./час</td>
+        </tr>
+        <tr>
+          <td>UX/UI дизайнер</td>
+          <td>3 200 руб./час</td>
+        </tr>
+        <tr>
+          <td>Аналитик</td>
+          <td>2 800 руб./час</td>
+        </tr>
+        <tr>
+          <td>Тестировщик</td>
+          <td>2 400 руб./час</td>
+        </tr>
+        <tr>
+          <td>Руководитель проекта</td>
+          <td>2 800 руб./час</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="timeline-block">
+      <div class="timeline-icon">●</div>
+      <div class="timeline-text">
+        <h4>Сроки реализации: 20–26 недель</h4>
+        <p>5–6,5 месяцев с момента старта. Поэтапная сдача по спринтам с промежуточными демонстрациями.</p>
+      </div>
+    </div>
+
+    <div class="block-label">Условия сотрудничества</div>
+    <div class="conditions-grid">
+      <div class="condition-item">
+        <div class="condition-check"></div>
+        <div class="condition-text">Исходный код передаётся заказчику в полном объёме</div>
+      </div>
+      <div class="condition-item">
+        <div class="condition-check"></div>
+        <div class="condition-text">Данные хранятся исключительно в инфраструктуре клиента</div>
+      </div>
+      <div class="condition-item">
+        <div class="condition-check"></div>
+        <div class="condition-text">Гарантийный период: 3 месяца после приёмки</div>
+      </div>
+      <div class="condition-item">
+        <div class="condition-check"></div>
+        <div class="condition-text">Оплата помесячно по факту выполненных спринтов</div>
+      </div>
+      <div class="condition-item">
+        <div class="condition-check"></div>
+        <div class="condition-text">Серверное оборудование предоставляется клиентом; мы консультируем по конфигурации под нужды проекта</div>
+      </div>
+      <div class="condition-item">
+        <div class="condition-check"></div>
+        <div class="condition-text">White Label: логотип, цвета и домен клиента настраиваются через административную панель без участия разработчиков</div>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span class="page-footer-text">SyncVoice™ Platform · Конфиденциально</span>
+      <span class="page-footer-text"></span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PAGE 6: FINAL ==================== -->
+<div class="page">
+  <div class="page-inner">
+    <div class="page-header">
+      <div class="page-header-logo">
+        <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="10" width="3.5" height="8" rx="1.5" fill="#1a56db"/>
+          <rect x="8" y="7" width="3.5" height="14" rx="1.5" fill="#1a56db"/>
+          <rect x="14" y="4" width="3.5" height="20" rx="1.5" fill="#1a56db" opacity="0.85"/>
+          <path d="M20 11 L26 14 L20 17" stroke="#1a56db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+        <span class="page-header-brand">SyncVoice™ Platform</span>
+      </div>
+      <span class="page-header-label">Коммерческое предложение · 2026</span>
+      <span class="page-number">06</span>
+    </div>
+
+    <div class="section-title">Итог</div>
+    <div class="section-subtitle">Стоимость и сроки проекта</div>
+
+    <div class="final-hero">
+      <div class="final-hero-label">Итоговая стоимость проекта</div>
+      <div class="final-hero-amount">6 048 448 руб.</div>
+      <div class="final-hero-vat">Без НДС · Оплата по факту спринтов</div>
+      <div class="final-hero-timeline">20–26 недель · 8 спринтов</div>
+      <div class="final-hero-desc">
+        On-premise платформа синхронного перевода, развёрнутая целиком в вашей инфраструктуре. Никаких облаков, никаких утечек данных.
+      </div>
+    </div>
+
+
+
+    <div class="page-footer">
+      <span class="page-footer-text">SyncVoice™ Platform · Коммерческое предложение · 27 февраля 2026</span>
+      <span class="page-footer-text">Конфиденциально</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

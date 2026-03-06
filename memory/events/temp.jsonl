@@ -1,0 +1,2 @@
+{"timestamp": "2026-02-08T04:12:42.553524", "session_id": "temp", "type": "session_resumed", "data": {"from": "api-test"}}
+{"timestamp": "2026-02-08T04:12:42.553565", "session_id": "temp", "type": "context_switched", "data": {"from": "temp", "to": "api-test", "reason": "Returning from temporary switch"}}

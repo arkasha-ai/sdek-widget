@@ -41,6 +41,23 @@ MEMORY.md                — curated wisdom (main session only)
 
 ---
 
+## При каждом сообщении от Дениса
+
+**Во всех сессиях** (личка, группы, любые чаты) — если sender_id == `364935958`, обновить `lastDenisMessageAt`:
+```bash
+python3 -c "
+import json, time
+from pathlib import Path
+p = Path.home() / '.openclaw/workspace/memory/state/heartbeat-state.json'
+s = json.loads(p.read_text()) if p.exists() else {}
+s['lastDenisMessageAt'] = int(time.time() * 1000)
+p.write_text(json.dumps(s, indent=2))
+"
+```
+Делать тихо, без комментариев. Работает в любом чате.
+
+---
+
 ## Голосовые сообщения
 
 Когда Денис присылает голосовое (`.ogg`):

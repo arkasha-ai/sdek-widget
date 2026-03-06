@@ -1,0 +1,5 @@
+{"timestamp": "2026-02-08T04:12:03.496150", "session_id": "test-integration", "type": "session_resumed", "data": {"from": "main"}}
+{"timestamp": "2026-02-08T04:12:03.496265", "session_id": "test-integration", "type": "message_received", "data": {"content": "Test message", "length": 12, "from": "System", "chat": "test-integration"}, "user_triggered": true}
+{"timestamp": "2026-02-08T04:12:03.496293", "session_id": "test-integration", "type": "message_sent", "data": {"content": "Response message", "length": 16}}
+{"timestamp": "2026-02-08T04:12:03.496311", "session_id": "test-integration", "type": "context_switched", "data": {"from": "test-integration", "to": "temp-session", "reason": "Temporary switch"}}
+{"timestamp": "2026-02-08T04:12:03.496379", "session_id": "test-integration", "type": "session_resumed", "data": {"from": "temp-session"}}
