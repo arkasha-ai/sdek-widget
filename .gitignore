@@ -6,8 +6,8 @@ secrets.env
 imap-idle.json
 openclaw.json
 
-# Runtime state (not needed in git)
-memory/state/*.json
+# Runtime state - include in git for recovery
+# memory/state/*.json
 
 # Virtual environments
 .venv/

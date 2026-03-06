@@ -32,3 +32,68 @@
 {"timestamp": "2026-02-08T04:05:25.747618", "session_id": "main", "type": "command_executed", "data": {"command": "./scripts/qdrant search --type email 'test'", "result": "success", "exit_code": 0}}
 {"timestamp": "2026-02-08T04:05:25.747631", "session_id": "main", "type": "task_completed", "data": {"task": "test_search_filters", "outcome": "success"}}
 {"timestamp": "2026-02-08T04:05:25.747644", "session_id": "main", "type": "message_sent", "data": {"content": "Filters tested and working! ✅", "length": 29}}
+{"timestamp": "2026-02-08T04:12:03.494510", "session_id": "main", "type": "task_started", "data": {"task": "helper_test", "phase": "verification"}}
+{"timestamp": "2026-02-08T04:12:03.494545", "session_id": "main", "type": "file_modified", "data": {"file": "demo.py", "details": "Testing helpers"}}
+{"timestamp": "2026-02-08T04:12:03.494564", "session_id": "main", "type": "task_completed", "data": {"task": "helper_test", "outcome": "success"}}
+{"timestamp": "2026-02-08T04:12:03.496102", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "test-integration", "reason": "Chat: test-integration"}}
+{"timestamp": "2026-02-08T04:12:42.553251", "session_id": "main", "type": "decision_made", "data": {"decision": "choice_a", "function": "make_decision", "reasoning": "Test reasoning"}}
+{"timestamp": "2026-02-08T04:12:42.553304", "session_id": "main", "type": "task_started", "data": {"task": "api_test_task"}}
+{"timestamp": "2026-02-08T04:12:42.553325", "session_id": "main", "type": "task_completed", "data": {"task": "api_test_task", "outcome": "success"}}
+{"timestamp": "2026-02-08T04:12:42.553455", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "api-test", "reason": "Chat: api-test"}}
+{"timestamp": "2026-02-08T04:13:01.154260", "session_id": "main", "type": "test_event", "data": {"message": "Testing event log system from Telegram chat", "chat": "Backend Release notes", "timestamp": "manual_test"}}
+{"timestamp": "2026-02-08T04:13:35.541614", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-08T04:14:07.773198", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Temporary switch"}}
+{"timestamp": "2026-02-08T04:14:08.273879", "session_id": "main", "type": "session_resumed", "data": {"from": "backend-release"}}
+{"timestamp": "2026-02-08T04:15:10.372531", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T12:55:02.854974", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T12:55:40.321838", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T12:56:45.071792", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T12:57:44.865850", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T12:57:58.751251", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T12:58:18.429672", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T12:58:30.313169", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T12:58:41.846665", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T12:59:01.063880", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T12:59:19.467203", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T12:59:28.517674", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T13:00:31.361640", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T13:01:55.316752", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T13:58:16.455578", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T13:58:57.687719", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:17:52.468161", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:18:23.874336", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:18:34.545654", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:19:18.330181", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:19:52.507295", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:20:04.582130", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:20:12.335356", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:20:19.491115", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:21:01.125069", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:21:26.090750", "session_id": "main", "type": "file_modified", "data": {"file": "AGENTS.md", "details": "Updated reaction rules: 🤡 for trolling (not only direct questions), separate from 🤷"}}
+{"timestamp": "2026-02-10T14:21:44.810556", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:22:27.475571", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:22:47.537847", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:22:56.607615", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:56:33.630512", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:56:43.348306", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:57:15.493417", "session_id": "main", "type": "message_sent", "data": {"content": "Gateway работает (PID 1010, uptime с 14:56). Что конкретно упало?", "length": 65, "to": "Denis"}}
+{"timestamp": "2026-02-10T14:58:19.013041", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:58:32.056875", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:58:46.543833", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T14:58:54.898381", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T16:03:54.779940", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T16:04:45.815783", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T16:05:22.553073", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T16:05:43.286898", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T16:07:39.479071", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T16:08:03.198682", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T16:36:22.370088", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T16:38:30.578799", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-10T16:40:43.282672", "session_id": "main", "type": "context_switched", "data": {"from": "main", "to": "backend-release", "reason": "Chat: backend-release"}}
+{"timestamp": "2026-02-16T08:50:01.748455", "session_id": "main", "type": "task_started", "data": {"task": "demo_task", "function": "example_task"}}
+{"timestamp": "2026-02-16T08:50:01.749539", "session_id": "main", "type": "task_completed", "data": {"task": "demo_task", "outcome": "success"}}
+{"timestamp": "2026-02-16T08:50:01.749702", "session_id": "main", "type": "task_started", "data": {"task": "demo_context", "phase": "testing"}}
+{"timestamp": "2026-02-16T08:50:01.749766", "session_id": "main", "type": "task_completed", "data": {"task": "demo_context", "outcome": "success"}}
+{"timestamp": "2026-02-16T08:50:01.749798", "session_id": "main", "type": "file_modified", "data": {"file": "test.py", "details": "Added function"}}
+{"timestamp": "2026-02-16T08:50:01.749824", "session_id": "main", "type": "command_executed", "data": {"command": "git commit", "result": "success", "exit_code": 0}}
+{"timestamp": "2026-02-16T08:50:01.749849", "session_id": "main", "type": "api_called", "data": {"api": "github", "endpoint": "/repos/arkasha-ai", "status": "success"}}
