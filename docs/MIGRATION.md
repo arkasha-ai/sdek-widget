@@ -90,14 +90,20 @@ s3cmd sync s3://arkasha/sessions/ ~/.openclaw/agents/main/sessions/
 ## Шаг 5: Восстановить secrets
 
 ```bash
-# ВРУЧНУЮ от Дениса — передать ~/.openclaw/secrets.env
-# Содержит: Telegram bot token, API keys, S3 credentials, etc.
-# Никогда не хранится в git/S3!
+# Скачать зашифрованный файл из S3
+s3cmd get s3://arkasha/secrets/secrets.env.enc /tmp/secrets.env.enc
 
-# Структура файла: ~/.openclaw/secrets.env
-# После копирования:
+# Расшифровать (нужен пароль который знает только Денис)
+openssl enc -d -aes-256-cbc -pbkdf2 -iter 600000 \
+  -in /tmp/secrets.env.enc \
+  -out ~/.openclaw/secrets.env \
+  -pass pass:'ВАШ_ПАРОЛЬ'
+
 chmod 600 ~/.openclaw/secrets.env
+rm /tmp/secrets.env.enc
 ```
+
+> Пароль хранится только у Дениса. Файл зашифрован AES-256.
 
 ## Шаг 6: Восстановить OpenClaw config
 
