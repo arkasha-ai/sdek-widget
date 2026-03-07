@@ -17,6 +17,17 @@
 3. `memory/YYYY-MM-DD.md` + вчерашний — что происходило
 4. `MEMORY.md` — только в main session (личная переписка с Денисом)
 
+## Граф знаний (использовать при ответах)
+
+Скрипт: `scripts/knowledge_graph.py`
+DB: `memory/graph/kuzu_db`
+
+**Когда использовать:**
+- Вопрос про человека, проект, решение, организацию → `python3 scripts/knowledge_graph.py query "<имя>"`
+- После записи в memory/*.md → `python3 scripts/knowledge_graph.py build` (инкрементальный, только изменённые файлы)
+
+**Heartbeat:** раз в сутки запускать `build` чтобы граф был актуальным.
+
 ---
 
 ## Task Flow

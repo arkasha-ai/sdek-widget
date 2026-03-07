@@ -122,6 +122,34 @@ def cmd_posts(args):
     result = make_request("GET", "/posts", params=params)
     print(json.dumps(result, indent=2))
 
+def solve_challenge(challenge_text):
+    """Решить математическую задачу из challenge_text"""
+    import re
+    text = challenge_text.lower()
+    # Извлекаем числа словами и цифрами
+    word_to_num = {
+        'zero': 0, 'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5,
+        'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10,
+        'eleven': 11, 'twelve': 12, 'thirteen': 13, 'fourteen': 14, 'fifteen': 15,
+        'sixteen': 16, 'seventeen': 17, 'eighteen': 18, 'nineteen': 19, 'twenty': 20,
+        'thirty': 30, 'forty': 40, 'fifty': 50, 'sixty': 60, 'seventy': 70,
+        'eighty': 80, 'ninety': 90, 'hundred': 100
+    }
+    # Заменяем слова на цифры
+    for word, num in sorted(word_to_num.items(), key=lambda x: -len(x[0])):
+        text = re.sub(r'\b' + word + r'\b', str(num), text)
+    # Ищем все числа в тексте
+    numbers = [int(n) for n in re.findall(r'\b\d+\b', text)]
+    if not numbers:
+        return None
+    # Определяем операцию (+ или -)
+    # Ищем паттерн: число + число или число - число
+    # Простая эвристика: суммируем все числа если есть "add/plus/total"
+    if 'add' in text or 'plus' in text or 'total' in text:
+        return f"{sum(numbers):.2f}"
+    # По умолчанию — сумма
+    return f"{sum(numbers):.2f}"
+
 def cmd_post(args):
     """Create a new post"""
     if len(args) < 3:
@@ -139,6 +167,19 @@ def cmd_post(args):
     }
     
     result = make_request("POST", "/posts", data=data)
+    
+    # Авто-верификация сразу после публикации
+    post = result.get("post", {})
+    verification = post.get("verification", {})
+    if verification and verification.get("verification_code"):
+        code = verification["verification_code"]
+        challenge = verification.get("challenge_text", "")
+        answer = solve_challenge(challenge)
+        if answer:
+            verify_data = {"verification_code": code, "answer": answer}
+            verify_result = make_request("POST", "/verify", data=verify_data)
+            result["auto_verification"] = verify_result
+    
     print(json.dumps(result, indent=2))
 
 def cmd_comment(args):

@@ -38,7 +38,25 @@ echo "Workspace snapshot: workspace-$DATE.tar.gz"
 
 # 3. OpenClaw config (без секретов)
 echo "Syncing openclaw config..."
-s3cmd put ~/.openclaw/config.json "s3://arkasha/config/config-$DATE.json" --quiet 2>/dev/null || true
+s3cmd put ~/.openclaw/openclaw.json "s3://arkasha/config/openclaw-$DATE.json" --quiet 2>/dev/null || true
+
+# 4. Encrypted env files
+echo "Backing up env files (encrypted)..."
+BACKUP_PASS=$(grep BACKUP_ENCRYPTION_PASS ~/.openclaw/secrets.env 2>/dev/null | cut -d= -f2)
+if [ -z "$BACKUP_PASS" ]; then
+  echo "BACKUP_ENCRYPTION_PASS not set in secrets.env — skipping env backup"
+else
+  for ENVFILE in email.env litellm.env github.env; do
+    SRC="$HOME/.openclaw/$ENVFILE"
+    if [ -f "$SRC" ]; then
+      TMPENC=$(mktemp /tmp/backup-enc-XXXXXX)
+      openssl enc -aes-256-cbc -pbkdf2 -in "$SRC" -out "$TMPENC" -pass pass:"$BACKUP_PASS" 2>/dev/null
+      s3cmd put "$TMPENC" "s3://arkasha/secrets/${ENVFILE%.env}-$DATE.env.enc" --quiet
+      rm -f "$TMPENC"
+      echo "  $ENVFILE → encrypted ✓"
+    fi
+  done
+fi
 
 echo "[$(date)] S3 backup complete!"
 

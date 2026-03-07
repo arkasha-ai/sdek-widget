@@ -53,6 +53,8 @@ def http_request(url, method="GET", headers=None, data=None):
 
 def get_embedding(text):
     """Получить embedding через LiteLLM"""
+    # Обрезаем до ~20K символов (~16K токенов) — лимит модели 32K токенов
+    text = text[:20000]
     return http_request(
         f"{LITELLM_BASE}/v1/embeddings",
         method="POST",
@@ -216,9 +218,10 @@ def chunk_markdown(content, file_path, max_chunk_size=800, overlap=100):
                     chunk_text = chunk_text[:last_space]
             label = f'{section} (часть {part+1})' if part > 0 else section
             result.append((chunk_text.strip(), label, parent, level))
-            start += len(chunk_text) - overlap
-            if start < 0:
-                break
+            advance = len(chunk_text) - overlap
+            if advance <= 0:
+                advance = max(1, max_chunk_size - overlap)  # гарантируем продвижение вперёд
+            start += advance
             part += 1
         return result
 
@@ -524,13 +527,11 @@ def main():
         neo4j_flag = '--neo4j' in sys.argv
         workspace = Path.home() / ".openclaw" / "workspace"
         memory_files = (
-            list(workspace.glob("memory/*.md")) +
-            list(workspace.glob("memory/projects/*.md")) +
-            list(workspace.glob("memory/people/*.md")) +
-            list(workspace.glob("memory/tools/*.md")) +
-            list(workspace.glob("memory/rules/*.md")) +
+            list(workspace.glob("memory/**/*.md")) +
             [workspace / "MEMORY.md"]
         )
+        # Пропускаем файлы больше 5MB (логи и прочий мусор)
+        memory_files = [f for f in memory_files if f.exists() and f.stat().st_size < 5 * 1024 * 1024]
 
         total_files = 0
         total_chunks = 0

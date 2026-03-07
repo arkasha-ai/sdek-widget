@@ -280,8 +280,17 @@ async def main():
     me = await client.get_me()
     log.info(f"Userbot started: {me.first_name} @{me.username} (id:{me.id})")
 
+    seen_ids: set[int] = set()
+
     @client.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
     async def on_dm(event):
+        mid = event.message.id
+        if mid in seen_ids:
+            log.warning(f"[dedup] Skipping duplicate message_id={mid}")
+            return
+        seen_ids.add(mid)
+        if len(seen_ids) > 1000:
+            seen_ids.clear()
         await handle_message(event, client)
 
     log.info("Userbot running (text + voice + photo + docs)")
