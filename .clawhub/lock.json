@@ -34,12 +34,36 @@
       "installedAt": 1771080634672
     },
     "agent-analytics": {
-      "version": "2.1.0",
-      "installedAt": 1771083079091
+      "version": "4.0.0",
+      "installedAt": 1772932863556
     },
     "superdesign": {
       "version": "1.0.0",
       "installedAt": 1771083477399
+    },
+    "infra-watchdog": {
+      "version": "1.1.0",
+      "installedAt": 1772933189074
+    },
+    "quack-code-review": {
+      "version": "1.0.0",
+      "installedAt": 1772933190368
+    },
+    "scrapling-official": {
+      "version": "0.4.1",
+      "installedAt": 1772933593894
+    },
+    "ask-council": {
+      "version": "1.0.4",
+      "installedAt": 1772933595215
+    },
+    "paper-digest": {
+      "version": "0.0.2",
+      "installedAt": 1772933596466
+    },
+    "mindgraph-rs": {
+      "version": "5.0.8",
+      "installedAt": 1772933599742
     }
   }
 }

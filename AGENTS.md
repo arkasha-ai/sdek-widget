@@ -52,6 +52,28 @@ MEMORY.md                — curated wisdom (main session only)
 
 ---
 
+## Лекарства — триггер "выпил"
+
+Если Денис пишет "выпил" (или "принял", "выпил лекарство", "выпил таблетку") — в любом чате:
+1. Обновить `memory/state/medicine-today.json` → `taken: true`, `takenAt: <timestamp ISO>`
+2. Ответить коротко: "Ок, отмечено ✅ Следующие напоминания отменены."
+3. Делать тихо и быстро.
+
+```bash
+python3 -c "
+import json, time
+from datetime import datetime, timezone
+from pathlib import Path
+p = Path.home() / '.openclaw/workspace/memory/state/medicine-today.json'
+s = json.loads(p.read_text()) if p.exists() else {}
+s['taken'] = True
+s['takenAt'] = datetime.now(timezone.utc).isoformat()
+p.write_text(json.dumps(s, indent=2))
+"
+```
+
+---
+
 ## При каждом сообщении от Дениса
 
 **Во всех сессиях** (личка, группы, любые чаты) — если sender_id == `364935958`, обновить `lastDenisMessageAt`:

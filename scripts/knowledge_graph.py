@@ -1014,11 +1014,12 @@ def call_litellm(text: str, secrets: dict, limit: int = 10, source: str = "", gr
 
     try:
         result = client.chat.completions.create(
-            model="GLM-4.7",
+            model="gpt-oss-120b",
             response_model=ExtractedEntities,
             messages=[{"role": "user", "content": prompt}],
             temperature=0.1,
-            max_tokens=65536,
+            max_tokens=2048,
+            timeout=30,
         )
         if DEBUG_MODE:
             with open(DEBUG_LOG, "a") as f:
@@ -1125,7 +1126,7 @@ def cmd_build(full: bool = False):
         entities = call_litellm(text, secrets, limit=limit, source=rel_name, graph_context=graph_context)
         return i, fpath, fhash, entities, rel_name
 
-    WORKERS = 5
+    WORKERS = 10
     results = []
 
     with ThreadPoolExecutor(max_workers=WORKERS) as executor:
@@ -1239,7 +1240,7 @@ def cmd_build_sessions():
         entities = call_litellm(text, secrets, limit=limit, source=rel_name)
         return i, text, source, entities
 
-    WORKERS = 5
+    WORKERS = 10
     results = []
 
     with ThreadPoolExecutor(max_workers=WORKERS) as executor:
