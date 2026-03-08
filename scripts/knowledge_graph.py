@@ -352,6 +352,8 @@ _NOISE_ENTITY_PATTERNS: list[_re.Pattern] = [
     # UUIDs (full and short hex hashes)
     _re.compile(r'[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}'),
     _re.compile(r'^[0-9a-fA-F]{12,}$'),
+    # Git commit hashes (6-8 hex chars, standalone)
+    _re.compile(r'^[0-9a-f]{6,8}$'),
     # IP addresses (v4)
     _re.compile(r'\b(\d{1,3}\.){2,3}\d{1,3}(/\d+)?\b'),
     # Timestamps / time patterns (07:02, 09:00 — основное, etc.)
@@ -387,6 +389,8 @@ _NOISE_ENTITY_PATTERNS: list[_re.Pattern] = [
     _re.compile(r'\*'),
     # Telegram channel references (telegram:364935958)
     _re.compile(r'^telegram:\d+$'),
+    # Telegram chat ID mentions in text
+    _re.compile(r'Telegram chat ID', _re.IGNORECASE),
     # Sub-agent IDs (Sub-agent 8cf55346)
     _re.compile(r'^Sub-agent\s+[0-9a-f]+$', _re.IGNORECASE),
     # Strings starting with "file_" (file_72, file_73...)
@@ -403,6 +407,17 @@ _NOISE_ENTITY_PATTERNS: list[_re.Pattern] = [
     _re.compile(r'^skills/'),
     # Hardware specs as standalone entities
     _re.compile(r'^\d+\s*[GT]B$', _re.IGNORECASE),
+    # Python snake_case function/method names with verb prefixes
+    _re.compile(r'^(get|set|put|post|delete|patch|create|update|remove|find|fetch|send|receive|handle|process|parse|build|make|init|start|stop|run|exec|load|save|dump|log|print|check|validate|verify|test|mock|assert|ensure|compute|calculate|convert|transform|format|render|display|show|hide|open|close|read|write|add|insert|append|push|pop|pull|merge|split|join|connect|disconnect|subscribe|unsubscribe|listen|emit|dispatch|trigger|fire|raise|throw|catch|retry|reset|clear|clean|flush|purge|sync|async|wait|sleep|poll|watch|observe|monitor|track|record|replay|restore|recover|backup|archive|compress|decompress|encrypt|decrypt|sign|verify|authorize|authenticate|register|login|logout|index|search|query|filter|sort|group|aggregate|reduce|map|scan|collect|stream|pipe|chain|wrap|unwrap|lock|unlock|acquire|release|allocate|free|manage|configure|setup|teardown|destroy|kill|abort|cancel|schedule|enqueue|dequeue|publish|consume|produce|forward|redirect|route|proxy|cache|invalidate|refresh|reload|restart|reboot|shutdown|suspend|resume|pause|continue|skip|ignore|suppress|mute|unmute|enable|disable|activate|deactivate|toggle|switch|swap|rotate|shift|move|copy|clone|duplicate|rename|replace|substitute|override|overwrite|extend|implement|inherit|compose|decorate|annotate|tag|label|mark|flag|pin|unpin|star|unstar|like|unlike|follow|unfollow|block|unblock|ban|unban|accept|reject|approve|deny|grant|revoke|assign|unassign|delegate|escalate|notify|alert|warn|inform|report|announce|broadcast|multicast|unicast)_[a-z][a-z_]*$'),
+    # CLI command strings (openclaw ...)
+    _re.compile(r'^openclaw\s+\w+', _re.IGNORECASE),
+    # Stdout/log output patterns: "N entities, N relations", "STATUS_OK" style
+    _re.compile(r'^\d+\s+entit', _re.IGNORECASE),
+    _re.compile(r'^[A-Z_]+_OK$'),
+    # Tomato varieties (Помидор ...)
+    _re.compile(r'^Помидор\s+', _re.IGNORECASE),
+    # ONLYOFFICE API method patterns (API Verb...)
+    _re.compile(r'^API\s+(Create|Get|Set|Delete|Update|Remove|Insert|Add|Replace|Search|Find|Open|Close|Save|Load|Print|Export|Import|Merge|Split|Copy|Move|Rename|Format|Style|Bold|Italic|Underline|Strikeout|Numbering|Paragraph|Table|Chart|Image|Shape|Document|Worksheet|Slide|Presentation)\w*', _re.IGNORECASE),
 ]
 
 # Additional exact-match noise set for entities that regex alone can't catch cleanly
@@ -414,8 +429,15 @@ _NOISE_ENTITY_EXACT: set[str] = {
     "Header", "Sidebar", "HomePage", "Browser", "Podcast", "Excel",
     "Markdown", "Sentiment", "S3", "DXF", "JSONL", "JWT", "SIEM",
     "WOPI", "desktop", "iOS", "nodes", "xlsx", "iOS Node",
-    # Role titles (not persons)
+    # Role titles / job positions (not persons, not orgs)
     "Backend Lead", "Backend API", "QA",
+    "Backend Senior", "ML-инженер", "Frontend", "DevOps",
+    "Backend", "Senior", "Junior", "Middle", "Team Lead", "Tech Lead",
+    "PM", "RP", "Analyst", "Executor", "Ispolnitel",
+    "AI Engineer", "Engineering Team Lead",
+    # Telegram groups (not real organizations)
+    "Остров Аркаша", "Оценки Аркаша", "Тестирование Аркадий",
+    "Афигеваем от ассистентов", "Тестирование Аркадия",
     # Generic concepts too vague to be useful
     "здоровье", "раскрой", "sonnet", "opus", "arkasha",
     "Кэширование", "Напоминания", "Карточки контента",
@@ -438,6 +460,44 @@ _NOISE_ENTITY_EXACT: set[str] = {
     "Guest in someone's life",
     # Delivery modes / config values
     "delivery.mode=announce",
+    # Stdout/log noise
+    "HEARTBEAT_OK", "Cron статус", "Context usage",
+    # Internal code classes/objects (not real technologies)
+    "SessionContext", "SpeakerProfile", "Transcript", "FsNode", "fsApi", "fsStore",
+    "numPr",
+    # User flow steps / TickTick generic tasks (not real projects)
+    "Корзина", "Оформление заказа", "Регистрация и авторизация",
+    "Поиск товаров", "Переход между ключевыми разделами",
+    "Проверка статуса заказа", "Поиск и каталог",
+    "прогресс-индикатор в корзине",
+    "Управление", "Документация", "Личный", "Работа", "Фитнес", "Заявка",
+    # Log entries / status messages / TODOs
+    "Показать результаты Денису",
+    "Ожидается ответ от Дениса о приёме лекарств",
+    "Попытки отправки через Telegram бот не удались из-за технических проблем",
+    "Система автоматически доставит напоминания по установленным каналам",
+    "Разобраться с блокировкой GitHub аккаунта arkasha-ai",
+    "Объяснение задержек SyncVoice",
+    "Почему перевод звучит не мгновенно",
+    "Токен embeddings протух",
+    "Честно", "Вывод", "Субагент", "память",
+    "credentials", "cleanup", "indexer", "diarization",
+    "media_prep", "nlp_adapter", "speaker_linking", "syncvoice",
+    "memory_search", "index-memory", "index-sessions",
+    # Generic standalone identifiers
+    "main",
+    # Voice names leaked as technology
+    "ru-RU-DmitryNeural", "ru-RU-SvetlanaNeural",
+    # Too-generic project names
+    "Systems", "Back-end", "Front-end",
+    # Misc noise
+    "Calibri", "Embla",
+    "Адаптация", "Организм", "Логирование",
+    "Продуктивное окружение", "Разговор о жизни",
+    "Дефолтная модель сессии", "личка владельцу",
+    "Шаблонная замена", "External content", "Documents",
+    "Meet", "Teams", "Vue", "Svelte", "Vite", "WebSocket", "TypeScript",
+    "aiopg", "Rust 2024",
 }
 
 def _is_noise_entity(name: str, etype: str) -> bool:
@@ -456,6 +516,12 @@ def _is_noise_entity(name: str, etype: str) -> bool:
         'ГОСТ 34.10-2012', 'ГОСТ 34.11-2012',
         'SQLAlchemy 2.0.47', 'Python 3.13',
         'Qwen3-235B', 'Qwen3-Coder-480B',
+        # Real technologies with snake_case-like names
+        'docker-compose', 'class-variance-authority',
+        'shadcn-vue', 'shadcn-svelte', 'lucide-vue-next',
+        'html-to-docx', 'python-docx', 'python-jose',
+        'pdfjs-dist', 'reka-ui', 'docx-preview',
+        'pre-mortem-analyst',
     }
     if name_stripped in _ENTITY_WHITELIST:
         return False
@@ -478,11 +544,74 @@ def _is_noise_entity(name: str, etype: str) -> bool:
     # Idea entities: filter out descriptive phrases that look like section headers
     # (contain ✅, 🎉, —, or are suspiciously long with colons)
     if etype == "Idea":
-        if any(ch in name_stripped for ch in ('✅', '🎉', '❌', '⚠️', '📊', '📬', '🔒')):
+        if any(ch in name_stripped for ch in ('✅', '🎉', '❌', '⚠️', '📊', '📬', '🔒', '🤖')):
             return True
         # "Foo — Bar" style headers
         if ' — ' in name_stripped and len(name_stripped) > 30:
             return True
+        # Log/status entries: sentences with verbs indicating status/action
+        _idea_noise_words = {
+            'ожидается', 'попытки', 'система', 'автоматически', 'доставит',
+            'показать', 'разобраться', 'не удались', 'крах', 'объяснение',
+        }
+        lower = name_stripped.lower()
+        if any(w in lower for w in _idea_noise_words):
+            return True
+        # Stdout-like output: "N entities, N relations" etc.
+        if _re.match(r'^\d+\s+\w+,\s+\d+\s+\w+$', name_stripped):
+            return True
+
+    # Organizations: filter job titles and Telegram groups
+    if etype == "Organization":
+        _job_title_patterns = [
+            _re.compile(r'^(Backend|Frontend|DevOps|QA|PM|RP|ML|AI|Data|Full.?Stack|Senior|Junior|Middle|Lead|Head|Chief|Director|Manager|Engineer|Developer|Architect|Designer|Analyst|Tester|Admin|Coordinator|Specialist|Consultant|Intern)\b', _re.IGNORECASE),
+            _re.compile(r'(инженер|разработчик|архитектор|тестировщик|аналитик|менеджер|руководитель|директор|специалист|координатор|консультант|стажёр|стажер)$', _re.IGNORECASE),
+        ]
+        for pat in _job_title_patterns:
+            if pat.search(name_stripped):
+                return True
+        # Telegram groups with Аркаш/Аркадий in name
+        if _re.search(r'(Аркаш|Аркадий|ассистент)', name_stripped, _re.IGNORECASE):
+            return True
+
+    # Projects: filter user-flow steps, generic task names, tomato varieties
+    if etype == "Project":
+        _generic_project_names = {
+            'корзина', 'оформление заказа', 'регистрация и авторизация',
+            'поиск товаров', 'переход между ключевыми разделами',
+            'проверка статуса заказа', 'управление', 'документация',
+            'личный', 'работа', 'фитнес', 'заявка', 'поиск и каталог',
+            'каталог и поиск', 'сортировка и фильтрация',
+            'регистрация', 'авторизация', 'восстановление пароля',
+            'выбор доставки', 'выбор оплаты',
+        }
+        if name_stripped.lower() in _generic_project_names:
+            return True
+        # Tomato varieties from TickTick
+        if name_stripped.lower().startswith('помидор'):
+            return True
+
+    # Technologies: filter internal code objects (PascalCase single words that aren't known tech)
+    if etype == "Technology":
+        # snake_case names (likely function/variable names)
+        if _re.match(r'^[a-z][a-z0-9]*(_[a-z0-9]+)+$', name_stripped):
+            return True
+        # camelCase names (likely JS/code objects)
+        if _re.match(r'^[a-z][a-zA-Z0-9]+$', name_stripped) and any(c.isupper() for c in name_stripped):
+            return True
+
+    # Identifiers: filter git commit hashes and negative telegram IDs
+    if etype == "Identifier":
+        # Short hex hashes (git commits)
+        if _re.match(r'^[0-9a-f]{6,8}$', name_stripped):
+            return True
+        # Telegram-style negative IDs not in KNOWN_CHATS
+        if _re.match(r'^-\d{7,}$', name_stripped):
+            return True
+        # "main" or other generic identifiers
+        if name_stripped in ('main', 'master', 'dev', 'staging', 'production'):
+            return True
+
     return False
 
 # ---------------------------------------------------------------------------
@@ -885,11 +1014,11 @@ def call_litellm(text: str, secrets: dict, limit: int = 10, source: str = "", gr
 
     try:
         result = client.chat.completions.create(
-            model="Qwen/Qwen3-Coder-Next",
+            model="GLM-4.7",
             response_model=ExtractedEntities,
             messages=[{"role": "user", "content": prompt}],
             temperature=0.1,
-            max_tokens=4096,
+            max_tokens=65536,
         )
         if DEBUG_MODE:
             with open(DEBUG_LOG, "a") as f:
@@ -920,6 +1049,12 @@ def cmd_build(full: bool = False):
     hashes = {} if full else load_hashes()
     if full:
         print("[build] Full rebuild — ignoring cached hashes", file=sys.stderr)
+        # Clear existing data for a truly clean rebuild
+        try:
+            conn.execute("MATCH (e:Entity) DETACH DELETE e")
+            print("[build] Cleared all existing entities and relations", file=sys.stderr)
+        except Exception as e:
+            print(f"[build] Warning: could not clear DB: {e}", file=sys.stderr)
 
     # Collect all .md files
     md_files = []

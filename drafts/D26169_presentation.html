@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Генетический профиль D26169</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --bg: #1a1a2e;
+    --slide: #16213e;
+    --accent-blue: #0f3460;
+    --red: #e94560;
+    --yellow: #f5a623;
+    --green: #4caf50;
+    --text: #e8e8e8;
+    --text-muted: #8892a4;
+    --card-bg: rgba(15, 52, 96, 0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .presentation {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 80px;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    background: linear-gradient(135deg, var(--slide) 0%, var(--bg) 100%);
+  }
+
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .slide.prev {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+
+  h1 {
+    font-size: 2.8em;
+    font-weight: 800;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 0%, #a8c0ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: 2em;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #fff;
+  }
+
+  h3 {
+    font-size: 1.3em;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--yellow);
+  }
+
+  .subtitle {
+    font-size: 1.3em;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+
+  .card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(10px);
+  }
+
+  .card.critical { border-left: 4px solid var(--red); }
+  .card.warning { border-left: 4px solid var(--yellow); }
+  .card.ok { border-left: 4px solid var(--green); }
+
+  .badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge-red { background: rgba(233,69,96,0.2); color: var(--red); }
+  .badge-yellow { background: rgba(245,166,35,0.2); color: var(--yellow); }
+  .badge-green { background: rgba(76,175,80,0.2); color: var(--green); }
+  .badge-blue { background: rgba(15,52,96,0.5); color: #64b5f6; }
+
+  ul { list-style: none; padding: 0; }
+  ul li {
+    padding: 6px 0;
+    padding-left: 20px;
+    position: relative;
+    font-size: 0.95em;
+    line-height: 1.5;
+  }
+  ul li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--yellow);
+    font-weight: 700;
+  }
+
+  .gene-tag {
+    display: inline-block;
+    background: rgba(15,52,96,0.6);
+    padding: 2px 10px;
+    border-radius: 6px;
+    font-size: 0.8em;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: #64b5f6;
+    margin: 2px;
+  }
+
+  .impact-high { color: var(--red); font-weight: 700; }
+  .impact-mod { color: var(--yellow); }
+  .zyg-hom { color: var(--red); }
+  .zyg-het { color: var(--yellow); }
+
+  .progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 8px 0;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.8s ease;
+  }
+
+  .nav {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    z-index: 100;
+    background: rgba(22, 33, 62, 0.9);
+    padding: 12px 24px;
+    border-radius: 40px;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .nav button {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    font-size: 1.1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .nav button:hover { background: rgba(255,255,255,0.15); }
+  .nav button:disabled { opacity: 0.3; cursor: default; }
+
+  .slide-counter {
+    font-size: 0.85em;
+    color: var(--text-muted);
+    min-width: 60px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .dots {
+    display: flex;
+    gap: 6px;
+  }
+  .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .dot.active { background: var(--yellow); transform: scale(1.3); }
+
+  .title-slide {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+  .title-slide h1 { font-size: 3.5em; margin-bottom: 24px; }
+  .title-slide .subtitle { font-size: 1.5em; }
+
+  .dna-helix {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.06;
+    font-size: 300px;
+  }
+
+  .chart-container {
+    max-width: 420px;
+    max-height: 420px;
+    margin: 0 auto;
+  }
+
+  .finding-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 20px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .finding-num {
+    font-size: 1.8em;
+    font-weight: 800;
+    min-width: 40px;
+  }
+  .finding-content { flex: 1; }
+  .finding-content strong { color: #fff; }
+  .finding-content p { font-size: 0.85em; color: var(--text-muted); margin-top: 4px; }
+
+  .analysis-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 6px;
+    font-size: 0.88em;
+  }
+  .analysis-table th {
+    text-align: left;
+    color: var(--text-muted);
+    font-weight: 500;
+    padding: 8px 12px;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .analysis-table td {
+    padding: 10px 12px;
+    background: var(--card-bg);
+  }
+  .analysis-table tr td:first-child { border-radius: 8px 0 0 8px; }
+  .analysis-table tr td:last-child { border-radius: 0 8px 8px 0; }
+
+  .disclaimer {
+    background: rgba(233,69,96,0.08);
+    border: 1px solid rgba(233,69,96,0.2);
+    border-radius: 16px;
+    padding: 32px;
+    font-size: 0.95em;
+    line-height: 1.7;
+  }
+
+  .pathway {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 16px 0;
+    font-size: 0.9em;
+  }
+  .pathway .step {
+    background: var(--card-bg);
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .pathway .step.affected {
+    border-color: var(--red);
+    background: rgba(233,69,96,0.15);
+  }
+  .pathway .arrow { color: var(--text-muted); font-size: 1.2em; }
+
+  .scroll-content {
+    overflow-y: auto;
+    max-height: calc(100vh - 140px);
+    padding-right: 10px;
+  }
+  .scroll-content::-webkit-scrollbar { width: 4px; }
+  .scroll-content::-webkit-scrollbar-track { background: transparent; }
+  .scroll-content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .slide.active .card,
+  .slide.active .finding-row {
+    animation: fadeInUp 0.5s ease forwards;
+  }
+  .slide.active .card:nth-child(2),
+  .slide.active .finding-row:nth-child(2) { animation-delay: 0.1s; }
+  .slide.active .card:nth-child(3),
+  .slide.active .finding-row:nth-child(3) { animation-delay: 0.2s; }
+  .slide.active .card:nth-child(4) { animation-delay: 0.3s; }
+  .slide.active .card:nth-child(5) { animation-delay: 0.4s; }
+</style>
+</head>
+<body>
+
+<div class="presentation">
+
+  <!-- SLIDE 1: Title -->
+  <div class="slide title-slide active" data-slide="0">
+    <div class="dna-helix">&#x1F9EC;</div>
+    <h1>Генетический профиль D26169</h1>
+    <p class="subtitle">Анализ клинически значимых вариантов (MODERATE & HIGH impact)</p>
+    <div style="margin-top:40px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+      <span class="badge badge-red">3 критичных находки</span>
+      <span class="badge badge-yellow">8 важных</span>
+      <span class="badge badge-green">5 оптимальных</span>
+    </div>
+    <p style="margin-top:60px; color:var(--text-muted); font-size:0.85em;">07.03.2026 &nbsp;|&nbsp; Черновик — требует верификации специалистом</p>
+  </div>
+
+  <!-- SLIDE 2: Overview -->
+  <div class="slide" data-slide="1">
+    <h2>Что исследовалось</h2>
+    <p class="subtitle">Обзор генетического тестирования</p>
+    <div class="grid-3">
+      <div class="card">
+        <h3>Категории</h3>
+        <ul>
+          <li>Фолатно-метиониновый цикл</li>
+          <li>Витамины и минералы</li>
+          <li>Детоксикация (фазы 1, 2)</li>
+          <li>Иммунитет</li>
+          <li>Питание</li>
+          <li>Физическая активность</li>
+          <li>Митохондрии</li>
+          <li>Факторы свёртывания</li>
+          <li>Метаболизм и вес</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Ключевые цифры</h3>
+        <div style="margin:16px 0;">
+          <p style="font-size:2.5em; font-weight:800; color:var(--red);">30+</p>
+          <p style="color:var(--text-muted);">значимых вариантов</p>
+        </div>
+        <div>
+          <p style="font-size:2.5em; font-weight:800; color:var(--yellow);">9</p>
+          <p style="color:var(--text-muted);">категорий анализа</p>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Импакт</h3>
+        <div style="margin-top:12px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+            <span>HIGH impact</span><span class="impact-high">3 варианта</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:20%;background:var(--red)"></div></div>
+        </div>
+        <div style="margin-top:16px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+            <span>Гомозиготы (1/1)</span><span class="zyg-hom">16+</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:65%;background:var(--yellow)"></div></div>
+        </div>
+        <div style="margin-top:16px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+            <span>Гетерозиготы (0/1)</span><span class="zyg-het">12+</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:45%;background:var(--green)"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: Top 5 findings -->
+  <div class="slide" data-slide="2">
+    <h2>Топ-5 ключевых находок</h2>
+    <p class="subtitle">По клинической значимости</p>
+    <div class="finding-row">
+      <div class="finding-num" style="color:var(--red)">1</div>
+      <div class="finding-content">
+        <strong>Тройное нарушение метаболизма B12</strong>
+        <span class="gene-tag">CUBN</span> <span class="gene-tag">MTR</span> <span class="gene-tag">FUT2</span>
+        <p>Всасывание + внутриклеточный метаболизм + секреторный статус — три звена одной цепи</p>
+      </div>
+      <span class="badge badge-red">КРИТИЧНО</span>
+    </div>
+    <div class="finding-row">
+      <div class="finding-num" style="color:var(--red)">2</div>
+      <div class="finding-content">
+        <strong>Нарушение метилирования (4 гена)</strong>
+        <span class="gene-tag">MTHFR</span> <span class="gene-tag">SHMT1</span> <span class="gene-tag">MTHFD1</span> <span class="gene-tag">MTR</span>
+        <p>Все ключевые ферменты фолатного цикла затронуты</p>
+      </div>
+      <span class="badge badge-red">КРИТИЧНО</span>
+    </div>
+    <div class="finding-row">
+      <div class="finding-num" style="color:var(--red)">3</div>
+      <div class="finding-content">
+        <strong>Сниженная детоксикация (фаза 2)</strong>
+        <span class="gene-tag">GSTP1 1/1</span>
+        <p>Глутатион-S-трансфераза Pi — Val/Val, значительно снижена активность</p>
+      </div>
+      <span class="badge badge-red">КРИТИЧНО</span>
+    </div>
+    <div class="finding-row">
+      <div class="finding-num" style="color:var(--yellow)">4</div>
+      <div class="finding-content">
+        <strong>Непереносимость лактозы</strong>
+        <span class="gene-tag">LCT 1/1</span>
+        <p>Генетически подтверждённая лактазная недостаточность</p>
+      </div>
+      <span class="badge badge-yellow">ВАЖНО</span>
+    </div>
+    <div class="finding-row">
+      <div class="finding-num" style="color:var(--yellow)">5</div>
+      <div class="finding-content">
+        <strong>Повышенный риск AMD (макулодистрофия)</strong>
+        <span class="gene-tag">CFH 1/1</span> <span class="gene-tag">CFI 1/1</span> <span class="gene-tag">C3</span>
+        <p>Три гена системы комплемента — кумулятивный риск</p>
+      </div>
+      <span class="badge badge-yellow">ВАЖНО</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: Nutrition -->
+  <div class="slide" data-slide="3">
+    <h2>Питание</h2>
+    <p class="subtitle">Генетически обусловленные пищевые особенности</p>
+    <div class="grid-3">
+      <div class="card critical">
+        <h3>Лактоза</h3>
+        <p><span class="gene-tag">LCT</span> rs2322659 + rs4954449</p>
+        <p style="margin:8px 0;"><span class="badge badge-red">1/1 гомозигота</span></p>
+        <p style="font-size:0.9em; margin-top:12px;">Полная непереносимость. Лактаза не вырабатывается.</p>
+        <ul style="margin-top:12px;">
+          <li>Исключить молочные продукты</li>
+          <li>Безлактозные альтернативы OK</li>
+          <li>Компенсировать Ca из др. источников</li>
+        </ul>
+      </div>
+      <div class="card warning">
+        <h3>Алкоголь</h3>
+        <p><span class="gene-tag">ADH1B</span> rs1229984</p>
+        <p style="margin:8px 0;"><span class="badge badge-yellow">1/1 гомозигота</span></p>
+        <p style="font-size:0.9em; margin-top:12px;">ADH в 40-100x быстрее. Накопление токсичного ацетальдегида.</p>
+        <ul style="margin-top:12px;">
+          <li>Минимизировать / исключить алкоголь</li>
+          <li>Покраснение, тошнота — типичная реакция</li>
+          <li>Повышен риск повреждения ДНК</li>
+        </ul>
+      </div>
+      <div class="card ok">
+        <h3>Глюкоза и кишечник</h3>
+        <p><span class="gene-tag">GCKR</span> <span class="gene-tag">MYO9B</span></p>
+        <p style="margin:8px 0;"><span class="badge badge-green">0/1 гетерозигота</span></p>
+        <p style="font-size:0.9em; margin-top:12px;">Умеренное влияние на триглицериды и барьер кишечника.</p>
+        <ul style="margin-top:12px;">
+          <li>Контроль триглицеридов</li>
+          <li>L-глутамин для кишечника</li>
+          <li>Больше клетчатки</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: B12 -->
+  <div class="slide" data-slide="4">
+    <h2>Витамин B12 — Тройная проблема</h2>
+    <p class="subtitle">Три независимых механизма снижения B12</p>
+    <div class="grid-2">
+      <div>
+        <div class="card critical" style="margin-bottom:16px;">
+          <h3>1. Всасывание — CUBN</h3>
+          <p style="font-size:0.9em;">Кубилин — рецептор в кишечнике для B12. Множественные гомозиготные варианты. Даже при достаточном потреблении B12 может <strong>не усваиваться</strong>.</p>
+        </div>
+        <div class="card critical" style="margin-bottom:16px;">
+          <h3>2. Метаболизм — MTR (1/1)</h3>
+          <p style="font-size:0.9em;">Метионин-синтаза использует B12 как кофактор. Гомозигота A2756G → снижена эффективность → повышен гомоцистеин.</p>
+        </div>
+        <div class="card warning">
+          <h3>3. Секреция — FUT2 (0/1 HIGH)</h3>
+          <p style="font-size:0.9em;">Stop_gained вариант. Влияет на микробиом и усвоение B12 через секреторный статус.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="border: 2px solid var(--red); text-align:center;">
+          <h3 style="color:var(--red);">Срочные анализы</h3>
+          <div style="text-align:left; margin-top:16px;">
+            <ul>
+              <li><strong>B12 сыворотки</strong> — базовый уровень</li>
+              <li><strong>Гомоцистеин</strong> — маркер дефицита</li>
+              <li><strong>ММК</strong> — тканевой дефицит</li>
+              <li><strong>Голотранскобаламин</strong> — активный B12</li>
+            </ul>
+          </div>
+          <div style="margin-top:20px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.1); text-align:left;">
+            <h3 style="color:var(--green);">Коррекция</h3>
+            <ul>
+              <li>Метилкобаламин + аденозилкобаламин</li>
+              <li>1000-5000 мкг/сут сублингвально</li>
+              <li>При неэффективности → инъекции</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: Vitamin D & Methylation -->
+  <div class="slide" data-slide="5">
+    <h2>Витамин D и метилирование</h2>
+    <div class="grid-2">
+      <div>
+        <div class="card warning" style="margin-bottom:20px;">
+          <h3>Витамин D — VDR (HIGH impact)</h3>
+          <p><span class="gene-tag">VDR</span> rs2228570 (0/1) — start_lost</p>
+          <p style="font-size:0.9em; margin-top:12px;">Альтернативный старт-кодон → менее активный рецептор. Нужны более высокие уровни D для того же эффекта.</p>
+          <ul style="margin-top:12px;">
+            <li>Целевой 25(OH)D: <strong>40-60 нг/мл</strong></li>
+            <li>D3 2000-5000 МЕ/сут (по анализам)</li>
+            <li>Витамин K2 (MK-7) обязательно</li>
+            <li>Магний для активации</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card critical">
+          <h3>Метилирование — 4 гена затронуты</h3>
+          <div class="pathway">
+            <span class="step">Фолат</span>
+            <span class="arrow">→</span>
+            <span class="step">ТГФ</span>
+            <span class="arrow">→</span>
+            <span class="step affected">SHMT1 (1/1)</span>
+            <span class="arrow">→</span>
+            <span class="step affected">MTHFD1 (1/1)</span>
+            <span class="arrow">→</span>
+            <span class="step affected">MTHFR (0/1)</span>
+            <span class="arrow">→</span>
+            <span class="step affected">MTR+B12 (1/1)</span>
+            <span class="arrow">→</span>
+            <span class="step">SAM</span>
+          </div>
+          <p style="font-size:0.9em;">Метилирование критично для: эпигенетики, детоксикации, нейромедиаторов, ремонта ДНК.</p>
+          <ul style="margin-top:12px;">
+            <li>Метилфолат (5-MTHF) 400-800 мкг</li>
+            <li>Метилкобаламин (B12)</li>
+            <li>B6 (P5P) + B2 (рибофлавин)</li>
+            <li>TMG (бетаин) — обходной путь</li>
+            <li>Гомоцистеин &lt; 8 мкмоль/л</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: Detox -->
+  <div class="slide" data-slide="6">
+    <h2>Детоксикация</h2>
+    <p class="subtitle">Фаза 1 (активация) и Фаза 2 (конъюгация)</p>
+    <div class="grid-2">
+      <div class="card warning">
+        <h3>Фаза 1 — CYP1B1</h3>
+        <p style="margin:8px 0;"><span class="badge badge-yellow">множественные 0/1</span></p>
+        <p style="font-size:0.9em;">Цитохром P450 1B1 — метаболизм эстрогенов и ксенобиотиков. Гетерозиготные варианты — изменённая активность.</p>
+        <ul style="margin-top:16px;">
+          <li>DIM 100-200 мг/сут</li>
+          <li>Крестоцветные овощи ежедневно</li>
+          <li>Минимизировать ксеноэстрогены</li>
+          <li>Избегать пластика, парабенов</li>
+        </ul>
+      </div>
+      <div class="card critical">
+        <h3>Фаза 2 — GSTP1 (1/1)</h3>
+        <p style="margin:8px 0;"><span class="badge badge-red">гомозигота Val/Val</span></p>
+        <p style="font-size:0.9em;">Глутатион-S-трансфераза Pi <strong>значительно снижена</strong>. Токсичные метаболиты фазы 1 хуже конъюгируются.</p>
+        <ul style="margin-top:16px;">
+          <li><strong>NAC 600-1200 мг/сут</strong></li>
+          <li>Альфа-липоевая кислота</li>
+          <li>Сульфорафан (брокколи)</li>
+          <li>Расторопша (силимарин)</li>
+          <li>Глицин 3-5 г/сут</li>
+          <li>Сауна — доп. выведение</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="margin-top:20px; border: 1px solid var(--yellow);">
+      <p style="font-size:0.9em;"><strong style="color:var(--yellow);">Дисбаланс фаз:</strong> Если фаза 1 активна, а фаза 2 снижена (GSTP1) → накопление реактивных промежуточных метаболитов. Поддержка глутатиона — приоритет №1 в детоксикации.</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: Immunity -->
+  <div class="slide" data-slide="7">
+    <h2>Иммунитет и воспаление</h2>
+    <div class="grid-2">
+      <div>
+        <div class="card warning" style="margin-bottom:16px;">
+          <h3>CFH — риск AMD (1/1)</h3>
+          <p><span class="gene-tag">CFH</span> His402Tyr — гомозигота</p>
+          <p style="font-size:0.9em; margin-top:8px;">Риск возрастной макулодистрофии повышен в 5-7 раз. В сочетании с CFI и C3 — кумулятивный эффект.</p>
+          <ul style="margin-top:8px;">
+            <li>Лютеин 10-20 мг + зеаксантин</li>
+            <li>Омега-3 (EPA+DHA)</li>
+            <li>Солнцезащитные очки</li>
+            <li>Осмотр офтальмолога</li>
+          </ul>
+        </div>
+        <div class="card warning">
+          <h3>IFIH1 (1/1) — Врождённый иммунитет</h3>
+          <p style="font-size:0.9em;">MDA5 — распознавание вирусной РНК. Ассоциация с аутоиммунными заболеваниями (СД1, витилиго).</p>
+        </div>
+      </div>
+      <div>
+        <div class="card warning" style="margin-bottom:16px;">
+          <h3>NLRP3 — Инфламмасома (0/1)</h3>
+          <p><span class="gene-tag">NLRP3</span> Q705K — гетерозигота</p>
+          <p style="font-size:0.9em; margin-top:8px;">Повышенная продукция IL-1β и IL-18. Склонность к хроническому воспалению.</p>
+          <ul style="margin-top:8px;">
+            <li>Омега-3 2-3 г/сут</li>
+            <li>Куркумин с пиперином</li>
+            <li>Ограничить сахар</li>
+            <li>Контроль hs-CRP</li>
+          </ul>
+        </div>
+        <div class="card ok">
+          <h3>FUT2 — Микробиом (0/1 HIGH)</h3>
+          <p style="font-size:0.9em;">Изменённый секреторный статус → сдвиг микробиоты. Пробиотики (Bifidobacterium), пребиотики.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: Physical activity & weight -->
+  <div class="slide" data-slide="8">
+    <h2>Физическая активность и вес</h2>
+    <div class="grid-2">
+      <div>
+        <div class="card warning" style="margin-bottom:16px;">
+          <h3>UCP2 — Энергообмен (1/1)</h3>
+          <p><span class="gene-tag">UCP2</span> rs660339 Ala55Val — гомозигота</p>
+          <p style="font-size:0.9em; margin-top:12px;">Разобщающий белок 2 — регулирует термогенез и расход энергии в митохондриях. Гомозигота может снижать эффективность.</p>
+          <ul style="margin-top:12px;">
+            <li>Аэробная нагрузка 150+ мин/нед</li>
+            <li>HIIT — стимуляция митохондрий</li>
+            <li>Силовые 2-3 раза/нед</li>
+            <li>Гиподинамия особенно вредна</li>
+          </ul>
+        </div>
+        <div class="card ok">
+          <h3>PPARG — Инсулин (0/1)</h3>
+          <p><span class="gene-tag">PPARG</span> Pro12Ala — защитный вариант</p>
+          <p style="font-size:0.9em; margin-top:8px;">Повышенная чувствительность к инсулину. Хорошая новость — но только при достаточной активности.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="text-align:center; padding:30px;">
+          <h3>Профиль метаболизма</h3>
+          <div class="chart-container" style="max-width:340px; max-height:340px;">
+            <canvas id="radarChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: Minerals & Mitochondria -->
+  <div class="slide" data-slide="9">
+    <h2>Минералы и митохондрии</h2>
+    <div class="grid-2">
+      <div>
+        <h3 style="margin-bottom:16px;">Минералы</h3>
+        <div class="card warning" style="margin-bottom:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong>Железо</strong> — <span class="gene-tag">SLC11A2</span> 1/1
+              <p style="font-size:0.85em; color:var(--text-muted); margin-top:4px;">Транспортёр DMT1. Изменённое всасывание — проверить ферритин.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card warning" style="margin-bottom:12px;">
+          <div>
+            <strong>Селен</strong> — <span class="gene-tag">TXNRD2</span> 1/1
+            <p style="font-size:0.85em; color:var(--text-muted); margin-top:4px;">Тиоредоксин-редуктаза (селенопротеин). Бразильские орехи, 100-200 мкг/сут.</p>
+          </div>
+        </div>
+        <div class="card ok" style="margin-bottom:12px;">
+          <div>
+            <strong>Кальций</strong> — <span class="gene-tag">CACNA1C</span> 1/1
+            <p style="font-size:0.85em; color:var(--text-muted); margin-top:4px;">Кальциевые каналы. Магний для баланса. Немолочные источники Ca.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="margin-bottom:16px;">Митохондрии</h3>
+        <div class="card ok" style="margin-bottom:12px;">
+          <strong>Комплекс III</strong> — <span class="gene-tag">UQCRC2</span> 0/1
+          <p style="font-size:0.85em; color:var(--text-muted); margin-top:4px;">Гетерозигота — умеренное влияние на дыхательную цепь.</p>
+        </div>
+        <div class="card" style="border:1px solid var(--green);">
+          <h3 style="color:var(--green);">Поддержка митохондрий</h3>
+          <ul style="margin-top:12px;">
+            <li><strong>CoQ10 (убихинол)</strong> 100-200 мг</li>
+            <li>PQQ 10-20 мг</li>
+            <li>Магний 400 мг</li>
+            <li>D-рибоза 5 г</li>
+            <li>Физическая активность!</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: Lab Tests -->
+  <div class="slide" data-slide="10">
+    <h2>Рекомендуемые анализы</h2>
+    <div class="scroll-content">
+      <div class="grid-2">
+        <div>
+          <h3 style="color:var(--red);">Первоочередные</h3>
+          <table class="analysis-table">
+            <tr><td><strong>Витамин B12</strong></td><td><span class="gene-tag">CUBN</span><span class="gene-tag">MTR</span></td></tr>
+            <tr><td><strong>Гомоцистеин</strong></td><td><span class="gene-tag">MTHFR</span><span class="gene-tag">MTR</span></td></tr>
+            <tr><td><strong>ММК</strong> (метилмалоновая к-та)</td><td><span class="gene-tag">CUBN</span></td></tr>
+            <tr><td><strong>Голотранскобаламин</strong></td><td><span class="gene-tag">CUBN</span></td></tr>
+            <tr><td><strong>25(OH)D</strong></td><td><span class="gene-tag">VDR</span></td></tr>
+            <tr><td><strong>Ферритин</strong></td><td><span class="gene-tag">SLC11A2</span></td></tr>
+            <tr><td><strong>hs-CRP</strong></td><td><span class="gene-tag">NLRP3</span></td></tr>
+          </table>
+        </div>
+        <div>
+          <h3 style="color:var(--yellow);">Второй этап</h3>
+          <table class="analysis-table">
+            <tr><td><strong>Фолат эритроцитарный</strong></td><td><span class="gene-tag">MTHFR</span></td></tr>
+            <tr><td><strong>Селен</strong></td><td><span class="gene-tag">TXNRD2</span></td></tr>
+            <tr><td><strong>Липидный профиль</strong></td><td><span class="gene-tag">APOE</span></td></tr>
+            <tr><td><strong>Глюкоза + HbA1c</strong></td><td><span class="gene-tag">GCKR</span></td></tr>
+            <tr><td><strong>Инсулин + HOMA-IR</strong></td><td><span class="gene-tag">PPARG</span></td></tr>
+            <tr><td><strong>Железо + ОЖСС</strong></td><td><span class="gene-tag">SLC11A2</span></td></tr>
+            <tr><td><strong>IL-6</strong></td><td><span class="gene-tag">NLRP3</span></td></tr>
+          </table>
+        </div>
+      </div>
+      <div style="margin-top:20px;">
+        <h3 style="color:var(--green);">Третий этап (по показаниям)</h3>
+        <div class="grid-3" style="margin-top:12px; font-size:0.9em;">
+          <div class="card">OCT глазного дна<br><span style="color:var(--text-muted); font-size:0.85em;">CFH, CFI, C3</span></div>
+          <div class="card">Микробиом кала<br><span style="color:var(--text-muted); font-size:0.85em;">FUT2, MYO9B</span></div>
+          <div class="card">Органические кислоты<br><span style="color:var(--text-muted); font-size:0.85em;">UQCRC2</span></div>
+          <div class="card">Глутатион восст.<br><span style="color:var(--text-muted); font-size:0.85em;">GSTP1</span></div>
+          <div class="card">Зонулин (кал)<br><span style="color:var(--text-muted); font-size:0.85em;">MYO9B</span></div>
+          <div class="card">Метаболиты эстрогенов<br><span style="color:var(--text-muted); font-size:0.85em;">CYP1B1</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12: Summary & Priorities -->
+  <div class="slide" data-slide="11">
+    <h2>Итог и приоритеты</h2>
+    <p class="subtitle">План действий по приоритету</p>
+    <div class="grid-2">
+      <div>
+        <div class="card critical" style="margin-bottom:12px;">
+          <h3 style="color:var(--red);">Немедленно</h3>
+          <ul>
+            <li>Сдать B12 + гомоцистеин + ММК</li>
+            <li>Начать метилкобаламин 1000+ мкг</li>
+            <li>Метилфолат вместо фолиевой кислоты</li>
+            <li>NAC 600 мг для глутатиона</li>
+            <li>Убрать молочные продукты</li>
+          </ul>
+        </div>
+        <div class="card warning" style="margin-bottom:12px;">
+          <h3 style="color:var(--yellow);">В течение месяца</h3>
+          <ul>
+            <li>Проверить 25(OH)D, ферритин, селен</li>
+            <li>Добавить D3 + K2</li>
+            <li>Омега-3 для CFH/NLRP3</li>
+            <li>Лютеин + зеаксантин</li>
+            <li>B-комплекс (P5P, рибофлавин)</li>
+          </ul>
+        </div>
+        <div class="card ok">
+          <h3 style="color:var(--green);">Долгосрочно</h3>
+          <ul>
+            <li>Регулярные тренировки (UCP2)</li>
+            <li>Средиземноморская диета</li>
+            <li>Контроль анализов каждые 3-6 мес</li>
+            <li>Осмотр офтальмолога (AMD)</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="text-align:center; padding:24px;">
+          <h3>Риск по категориям</h3>
+          <div class="chart-container" style="max-width:360px; max-height:360px;">
+            <canvas id="riskRadar"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 13: Disclaimer -->
+  <div class="slide" data-slide="12">
+    <h2>Важные оговорки</h2>
+    <div style="max-width:800px;">
+      <div class="disclaimer">
+        <p style="font-size:1.1em; font-weight:600; color:var(--red); margin-bottom:16px;">Этот документ НЕ является медицинским диагнозом</p>
+        <ul>
+          <li><strong>Генетические варианты — это предрасположенности,</strong> а не диагнозы. Наличие варианта не означает обязательного развития заболевания.</li>
+          <li style="margin-top:8px;"><strong>Все дозировки ориентировочны</strong> и должны корректироваться врачом на основании анализов и текущего состояния.</li>
+          <li style="margin-top:8px;"><strong>Перед приёмом добавок</strong> необходима консультация врача-терапевта, нутрициолога или генетика.</li>
+          <li style="margin-top:8px;"><strong>Данные основаны на текущих научных знаниях,</strong> которые постоянно обновляются.</li>
+          <li style="margin-top:8px;"><strong>Комбинированные эффекты генов</strong> (эпистаз) могут отличаться от суммы отдельных.</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:24px; text-align:center;">
+        <p style="color:var(--text-muted); font-size:0.9em;">Генетический профиль D26169 | Анализ MODERATE & HIGH impact вариантов</p>
+        <p style="color:var(--text-muted); font-size:0.85em; margin-top:8px;">Дата: 07.03.2026 | Статус: Черновик</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation -->
+<div class="nav">
+  <button id="prevBtn" onclick="navigate(-1)" disabled>&#8592;</button>
+  <div class="dots" id="dots"></div>
+  <span class="slide-counter" id="counter">1 / 13</span>
+  <button id="nextBtn" onclick="navigate(1)">&#8594;</button>
+</div>
+
+<script>
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  const dotsContainer = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+
+  // Create dots
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goTo(i);
+    dotsContainer.appendChild(dot);
+  }
+
+  function goTo(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    slides[current].classList.add(n > current ? 'prev' : '');
+    current = n;
+    slides.forEach((s, i) => {
+      s.classList.remove('active', 'prev');
+      if (i === current) s.classList.add('active');
+    });
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === current));
+    counter.textContent = `${current + 1} / ${total}`;
+    document.getElementById('prevBtn').disabled = current === 0;
+    document.getElementById('nextBtn').disabled = current === total - 1;
+  }
+
+  function navigate(dir) { goTo(current + dir); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); navigate(1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); navigate(-1); }
+    if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+    if (e.key === 'End') { e.preventDefault(); goTo(total - 1); }
+  });
+
+  // Touch support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) navigate(diff > 0 ? 1 : -1);
+  });
+
+  // Charts
+  function initCharts() {
+    // Radar on slide 9
+    const radarCtx = document.getElementById('radarChart');
+    if (radarCtx) {
+      new Chart(radarCtx, {
+        type: 'radar',
+        data: {
+          labels: ['Энергообмен', 'Термогенез', 'Липиды', 'Инсулин', 'Вес', 'Выносливость'],
+          datasets: [{
+            label: 'Генетический профиль',
+            data: [3, 3, 5, 7, 4, 5],
+            backgroundColor: 'rgba(233, 69, 96, 0.15)',
+            borderColor: '#e94560',
+            borderWidth: 2,
+            pointBackgroundColor: '#e94560',
+            pointRadius: 4
+          }, {
+            label: 'Норма',
+            data: [7, 7, 7, 7, 7, 7],
+            backgroundColor: 'rgba(76, 175, 80, 0.08)',
+            borderColor: 'rgba(76, 175, 80, 0.4)',
+            borderWidth: 1,
+            borderDash: [4, 4],
+            pointRadius: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          scales: {
+            r: {
+              beginAtZero: true,
+              max: 10,
+              ticks: { display: false },
+              grid: { color: 'rgba(255,255,255,0.08)' },
+              pointLabels: { color: '#8892a4', font: { size: 11 } }
+            }
+          },
+          plugins: {
+            legend: { display: true, labels: { color: '#8892a4', font: { size: 10 }, boxWidth: 12 } }
+          }
+        }
+      });
+    }
+
+    // Risk radar on slide 12
+    const riskCtx = document.getElementById('riskRadar');
+    if (riskCtx) {
+      new Chart(riskCtx, {
+        type: 'radar',
+        data: {
+          labels: ['B12', 'Метилирование', 'Детокс', 'Иммунитет', 'Питание', 'Мито', 'Зрение', 'Воспаление'],
+          datasets: [{
+            label: 'Уровень риска',
+            data: [9, 8, 8, 5, 7, 3, 7, 6],
+            backgroundColor: 'rgba(233, 69, 96, 0.2)',
+            borderColor: '#e94560',
+            borderWidth: 2,
+            pointBackgroundColor: function(ctx) {
+              const v = ctx.raw;
+              if (v >= 8) return '#e94560';
+              if (v >= 6) return '#f5a623';
+              return '#4caf50';
+            },
+            pointRadius: 5
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          scales: {
+            r: {
+              beginAtZero: true,
+              max: 10,
+              ticks: { display: false },
+              grid: { color: 'rgba(255,255,255,0.08)' },
+              pointLabels: { color: '#8892a4', font: { size: 11 } }
+            }
+          },
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      });
+    }
+  }
+
+  // Init charts after page load
+  window.addEventListener('load', initCharts);
+</script>
+</body>
+</html>

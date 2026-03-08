@@ -3758,23 +3758,167 @@
       "sentiment": "negative",
       "productivity_score": 0.8999999999999999,
       "tasks_completed": 1
+    },
+    {
+      "id": "1b91e3fd-0561-4e09-be80-ba6b0f1cfdfb",
+      "start": "2026-03-06T21:45:23.521Z",
+      "end": "2026-03-07T00:50:35.994Z",
+      "duration_seconds": 11112,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "React",
+        "Git",
+        "GitHub",
+        "Reminders"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "463128e8-01b7-499d-a23d-e4e5859488a6",
+      "start": "2026-03-07T01:18:25.820Z",
+      "end": "2026-03-07T03:04:22.099Z",
+      "duration_seconds": 6356,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Heartbeat",
+        "API",
+        "Python",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "ef7b2d59-8e68-4648-911a-16b26e50b619",
+      "start": "2026-03-07T06:00:00.209Z",
+      "end": "2026-03-07T06:00:06.810Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Reminders",
+        "Tasks",
+        "Heartbeat",
+        "Medication",
+        "Cron"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "901b3da7-fde5-41e0-b0ad-442a20a7abb5",
+      "start": "2026-03-07T06:20:00.148Z",
+      "end": "2026-03-07T06:20:03.269Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Medication",
+        "Reminders",
+        "Cron",
+        "Tasks"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "d41e942a-2af7-47bc-9ef6-9c0fcfcba445",
+      "start": "2026-03-07T08:40:28.402Z",
+      "end": "2026-03-07T08:54:33.429Z",
+      "duration_seconds": 845,
+      "channel": "telegram",
+      "topics": [
+        "Health"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "c493bcc2-43a8-4396-8a8f-381029f4686a",
+      "start": "2026-03-07T06:45:00.140Z",
+      "end": "2026-03-07T06:45:14.046Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Python",
+        "OpenClaw",
+        "Reminders",
+        "Tasks",
+        "API"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "b9663e6d-64e1-4419-a189-6faee4002375",
+      "start": "2026-03-07T10:31:47.438Z",
+      "end": "2026-03-07T10:31:47.438Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "6dd35f35-eb34-4028-934d-a2fb003d9c3a-topic-8",
+      "start": "2026-03-07T12:37:44.417Z",
+      "end": "2026-03-07T13:18:36.250Z",
+      "duration_seconds": 2451,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Agents",
+        "Python",
+        "API",
+        "Telegram"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "e9a89f0b-a0ba-4a17-8e26-b7338f7d11f7",
+      "start": "2026-03-07T17:22:34.770Z",
+      "end": "2026-03-07T21:04:21.674Z",
+      "duration_seconds": 13306,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "Analytics",
+        "API",
+        "Skills",
+        "Heartbeat"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
     }
   ],
-  "last_import": "2026-03-07T00:04:24.713635",
+  "last_import": "2026-03-08T00:04:21.753106",
   "topic_stats": {
     "SQL": {
-      "total_mentions": 31,
-      "last_seen": "2026-03-06T06:00:00.166Z",
+      "total_mentions": 32,
+      "last_seen": "2026-03-07T01:18:25.820Z",
       "trend": "new"
     },
     "Agents": {
-      "total_mentions": 105,
-      "last_seen": "2026-03-06T20:15:37.129Z",
+      "total_mentions": 107,
+      "last_seen": "2026-03-07T12:37:44.417Z",
       "trend": "new"
     },
     "Cron": {
-      "total_mentions": 133,
-      "last_seen": "2026-03-06T06:00:00.166Z",
+      "total_mentions": 135,
+      "last_seen": "2026-03-07T06:45:00.140Z",
       "trend": "new"
     },
     "Database": {
@@ -3788,28 +3932,28 @@
       "trend": "new"
     },
     "Tasks": {
-      "total_mentions": 113,
-      "last_seen": "2026-03-06T20:15:37.129Z",
+      "total_mentions": 116,
+      "last_seen": "2026-03-07T06:45:00.140Z",
       "trend": "new"
     },
     "Medication": {
-      "total_mentions": 66,
-      "last_seen": "2026-03-06T06:00:00.166Z",
+      "total_mentions": 68,
+      "last_seen": "2026-03-07T06:45:00.140Z",
       "trend": "new"
     },
     "Reminders": {
-      "total_mentions": 65,
-      "last_seen": "2026-03-06T06:00:00.166Z",
+      "total_mentions": 69,
+      "last_seen": "2026-03-07T06:45:00.140Z",
       "trend": "new"
     },
     "Health": {
-      "total_mentions": 26,
-      "last_seen": "2026-02-25T14:32:11.713Z",
+      "total_mentions": 27,
+      "last_seen": "2026-03-07T06:45:00.140Z",
       "trend": "new"
     },
     "GitHub": {
-      "total_mentions": 21,
-      "last_seen": "2026-03-04T18:24:23.781Z",
+      "total_mentions": 22,
+      "last_seen": "2026-03-07T01:18:25.820Z",
       "trend": "new"
     },
     "Docker": {
@@ -3818,8 +3962,8 @@
       "trend": "new"
     },
     "API": {
-      "total_mentions": 37,
-      "last_seen": "2026-03-06T20:15:37.129Z",
+      "total_mentions": 41,
+      "last_seen": "2026-03-07T17:22:34.770Z",
       "trend": "new"
     },
     "Gateway": {
@@ -3828,43 +3972,43 @@
       "trend": "new"
     },
     "Python": {
-      "total_mentions": 82,
-      "last_seen": "2026-03-04T18:24:23.781Z",
+      "total_mentions": 85,
+      "last_seen": "2026-03-07T12:37:44.417Z",
       "trend": "new"
     },
     "Analytics": {
-      "total_mentions": 8,
-      "last_seen": "2026-03-04T18:24:23.781Z",
+      "total_mentions": 9,
+      "last_seen": "2026-03-07T17:22:34.770Z",
       "trend": "new"
     },
     "OpenClaw": {
-      "total_mentions": 49,
-      "last_seen": "2026-03-06T20:15:37.129Z",
+      "total_mentions": 52,
+      "last_seen": "2026-03-07T12:37:44.417Z",
       "trend": "new"
     },
     "Heartbeat": {
-      "total_mentions": 47,
-      "last_seen": "2026-03-04T18:24:23.781Z",
+      "total_mentions": 50,
+      "last_seen": "2026-03-07T17:22:34.770Z",
       "trend": "new"
     },
     "Telegram": {
-      "total_mentions": 68,
-      "last_seen": "2026-03-06T20:15:37.129Z",
+      "total_mentions": 70,
+      "last_seen": "2026-03-07T12:37:44.417Z",
       "trend": "new"
     },
     "Git": {
-      "total_mentions": 19,
-      "last_seen": "2026-03-06T20:15:37.129Z",
+      "total_mentions": 21,
+      "last_seen": "2026-03-07T17:22:34.770Z",
       "trend": "new"
     },
     "Skills": {
-      "total_mentions": 4,
-      "last_seen": "2026-03-04T18:24:23.781Z",
+      "total_mentions": 5,
+      "last_seen": "2026-03-07T17:22:34.770Z",
       "trend": "new"
     },
     "React": {
-      "total_mentions": 11,
-      "last_seen": "2026-03-06T06:00:00.166Z",
+      "total_mentions": 12,
+      "last_seen": "2026-03-07T01:18:25.820Z",
       "trend": "new"
     },
     "Browser": {
@@ -3881,26 +4025,26 @@
   "time_stats": {
     "hourly_distribution": {
       "13": 4,
-      "6": 75,
+      "6": 78,
       "22": 4,
       "14": 17,
-      "1": 23,
+      "1": 24,
       "7": 3,
       "16": 4,
-      "12": 4,
+      "12": 5,
       "9": 6,
       "18": 17,
-      "10": 5,
+      "10": 6,
       "11": 3,
       "19": 6,
       "15": 4,
-      "17": 4,
+      "17": 5,
       "20": 19,
-      "8": 4,
+      "8": 5,
       "4": 4,
       "2": 15,
       "5": 3,
-      "21": 2,
+      "21": 3,
       "23": 2,
       "3": 2,
       "0": 2
@@ -3908,17 +4052,17 @@
     "daily_distribution": {
       "tuesday": 67,
       "thursday": 21,
-      "saturday": 24,
-      "friday": 33,
+      "saturday": 32,
+      "friday": 34,
       "sunday": 18,
       "wednesday": 52,
       "monday": 17
     }
   },
   "sentiment_stats": {
-    "positive": 20,
-    "neutral": 59,
-    "negative": 93,
-    "mixed": 60
+    "positive": 21,
+    "neutral": 61,
+    "negative": 96,
+    "mixed": 63
   }
 }
