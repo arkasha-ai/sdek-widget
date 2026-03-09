@@ -16,12 +16,12 @@ from analyzer import analyze
 
 
 def get_week_range() -> tuple:
-    """Get start and end of current week."""
+    """Get start and end of current week (Mon–Sun, Europe/Moscow)."""
     today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-    days_since_sunday = (today.weekday() + 1) % 7
-    sunday = today - timedelta(days=days_since_sunday)
-    saturday = sunday + timedelta(days=6, hours=23, minutes=59, seconds=59)
-    return sunday.isoformat(), saturday.isoformat()
+    days_since_monday = today.weekday()  # 0=Mon, 6=Sun
+    monday = today - timedelta(days=days_since_monday)
+    sunday = monday + timedelta(days=6, hours=23, minutes=59, seconds=59)
+    return monday.isoformat(), sunday.isoformat()
 
 
 def get_month_range() -> tuple:

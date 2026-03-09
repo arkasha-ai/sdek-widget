@@ -32,6 +32,16 @@
 - Endpoint: `https://litellm.jakeberrimor.com`, model: `openai/whisper-large-v3`
 - Config: `~/.openclaw/litellm.env`
 
+## MindGraph 🧠
+- Сервер: `http://127.0.0.1:18790` (автостарт @reboot)
+- Токен: `MINDGRAPH_TOKEN` из `~/.openclaw/secrets.env`
+- Поиск: `POST /retrieve {"action":"text","query":"...","limit":5}`
+- Entity: `POST /reality/entity {"action":"create","agent_id":"arkasha","label":"...","props":{"entity_type":"Person"}}`
+- Сессия: `POST /memory/session {"action":"open","agent_id":"arkasha","label":"..."}`
+- Health: `curl http://127.0.0.1:18790/health`
+- Клиент: `skills/mindgraph-rs/mindgraph-client.js`
+- ⚠️ Старый KuzuDB граф: `archive/knowledge-graph-kuzu/` (не используется)
+
 ## Qdrant 🔍
 - `python3 scripts/qdrant_indexer.py search "запрос"`
 - `python3 scripts/qdrant_indexer.py index-emails`

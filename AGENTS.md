@@ -17,16 +17,18 @@
 3. `memory/YYYY-MM-DD.md` + вчерашний — что происходило
 4. `MEMORY.md` — только в main session (личная переписка с Денисом)
 
-## Граф знаний (использовать при ответах)
+## Граф знаний — MindGraph (использовать при ответах)
 
-Скрипт: `scripts/knowledge_graph.py`
-DB: `memory/graph/kuzu_db`
+Сервер: `http://127.0.0.1:18790` | Скилл: `skills/mindgraph-rs/`
+Токен: `MINDGRAPH_TOKEN` из `~/.openclaw/secrets.env`
+Клиент: `skills/mindgraph-rs/mindgraph-client.js`
 
 **Когда использовать:**
-- Вопрос про человека, проект, решение, организацию → `python3 scripts/knowledge_graph.py query "<имя>"`
-- После записи в memory/*.md → `python3 scripts/knowledge_graph.py build` (инкрементальный, только изменённые файлы)
+- Вопрос про человека, проект, решение, организацию → `POST /retrieve {"action":"text","query":"<имя>"}`
+- Создать entity → `POST /reality/entity {"action":"create","agent_id":"arkasha","label":"..."}`
+- Semantic search (если настроены embeddings) → `POST /retrieve {"action":"hybrid","query":"..."}`
 
-**Heartbeat:** раз в сутки запускать `build` чтобы граф был актуальным.
+**Старый граф (KuzuDB):** заархивирован в `archive/knowledge-graph-kuzu/` — не удалён, не используется.
 
 ---
 

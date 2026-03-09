@@ -6,6 +6,13 @@
         "API_KEY": "F3A391ED-2051-489F-94BE-CE8C9D5ED92B",
         "EMAIL": "contact@jakeberrimor.com"
       }
+    },
+    "mindgraph-mcp": {
+      "command": "/home/clawdbot/.openclaw/workspace/skills/mindgraph-rs/mindgraph-mcp",
+      "env": {
+        "MINDGRAPH_API_URL": "http://127.0.0.1:18790",
+        "MINDGRAPH_API_KEY": "fIKiNiTEAd7qLfdtp60DaYVShhBTWy3F"
+      }
     }
   },
   "imports": []
