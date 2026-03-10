@@ -4061,9 +4061,139 @@
       "sentiment": "neutral",
       "productivity_score": 0.3,
       "tasks_completed": 0
+    },
+    {
+      "id": "0e85c7b7-3fb4-4664-9e49-5edbae4bb7c0",
+      "start": "2026-03-09T01:00:41.190Z",
+      "end": "2026-03-09T03:04:23.798Z",
+      "duration_seconds": 7422,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "Analytics",
+        "Skills",
+        "Heartbeat",
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "27b612d8-e841-49de-ae1f-d13d46b649a8",
+      "start": "2026-03-09T09:30:00.159Z",
+      "end": "2026-03-09T09:30:32.978Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Heartbeat",
+        "Medication",
+        "Tasks",
+        "Reminders"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "99b6e76a-e6bf-456c-bc17-efbcda88d96e",
+      "start": "2026-03-09T07:29:11.943Z",
+      "end": "2026-03-09T07:29:20.150Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Medication",
+        "Tasks",
+        "Reminders",
+        "Cron"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "1f8734e2-0b29-4bbb-8c61-9e6ca90453e2",
+      "start": "2026-03-09T07:29:20.280Z",
+      "end": "2026-03-09T07:29:28.081Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Medication",
+        "Tasks",
+        "Reminders",
+        "Cron"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "d0928991-f152-4348-82b1-982000b192b7",
+      "start": "2026-03-09T07:29:28.268Z",
+      "end": "2026-03-09T07:29:36.060Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Medication",
+        "Tasks",
+        "Reminders",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "4b9a11c2-e4ef-407d-b42f-bbccd1b274d2",
+      "start": "2026-03-09T10:15:00.218Z",
+      "end": "2026-03-09T10:15:41.475Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Medication",
+        "Cron",
+        "Reminders",
+        "OpenClaw",
+        "Tasks"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "73532c9d-25b1-42bf-8d25-564dc16a5e7f",
+      "start": "2026-03-09T09:50:00.145Z",
+      "end": "2026-03-09T09:50:28.010Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Medication",
+        "Cron",
+        "OpenClaw",
+        "Reminders"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "e0bb4bfe-b0b4-4bbb-a1bc-fa5af0be8a6a",
+      "start": "2026-03-09T18:12:54.868Z",
+      "end": "2026-03-09T18:22:06.123Z",
+      "duration_seconds": 551,
+      "channel": "telegram",
+      "topics": [],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
     }
   ],
-  "last_import": "2026-03-09T00:04:23.293335",
+  "last_import": "2026-03-10T00:04:22.048756",
   "topic_stats": {
     "SQL": {
       "total_mentions": 32,
@@ -4071,13 +4201,13 @@
       "trend": "new"
     },
     "Agents": {
-      "total_mentions": 108,
-      "last_seen": "2026-03-07T23:22:52.049Z",
+      "total_mentions": 110,
+      "last_seen": "2026-03-09T09:50:00.145Z",
       "trend": "new"
     },
     "Cron": {
-      "total_mentions": 139,
-      "last_seen": "2026-03-08T17:00:00.202Z",
+      "total_mentions": 144,
+      "last_seen": "2026-03-09T09:50:00.145Z",
       "trend": "new"
     },
     "Database": {
@@ -4091,18 +4221,18 @@
       "trend": "new"
     },
     "Tasks": {
-      "total_mentions": 121,
-      "last_seen": "2026-03-08T17:00:00.202Z",
+      "total_mentions": 126,
+      "last_seen": "2026-03-09T09:50:00.145Z",
       "trend": "new"
     },
     "Medication": {
-      "total_mentions": 73,
-      "last_seen": "2026-03-08T17:00:00.202Z",
+      "total_mentions": 79,
+      "last_seen": "2026-03-09T09:50:00.145Z",
       "trend": "new"
     },
     "Reminders": {
-      "total_mentions": 72,
-      "last_seen": "2026-03-08T06:00:00.194Z",
+      "total_mentions": 78,
+      "last_seen": "2026-03-09T09:50:00.145Z",
       "trend": "new"
     },
     "Health": {
@@ -4136,33 +4266,33 @@
       "trend": "new"
     },
     "Analytics": {
-      "total_mentions": 10,
-      "last_seen": "2026-03-08T17:00:00.202Z",
+      "total_mentions": 11,
+      "last_seen": "2026-03-09T01:00:41.190Z",
       "trend": "new"
     },
     "OpenClaw": {
-      "total_mentions": 56,
-      "last_seen": "2026-03-08T06:00:00.194Z",
+      "total_mentions": 61,
+      "last_seen": "2026-03-09T09:50:00.145Z",
       "trend": "new"
     },
     "Heartbeat": {
-      "total_mentions": 51,
-      "last_seen": "2026-03-07T23:22:52.049Z",
+      "total_mentions": 53,
+      "last_seen": "2026-03-09T07:29:28.268Z",
       "trend": "new"
     },
     "Telegram": {
-      "total_mentions": 71,
-      "last_seen": "2026-03-08T06:00:00.194Z",
+      "total_mentions": 72,
+      "last_seen": "2026-03-09T07:29:28.268Z",
       "trend": "new"
     },
     "Git": {
-      "total_mentions": 21,
-      "last_seen": "2026-03-07T17:22:34.770Z",
+      "total_mentions": 22,
+      "last_seen": "2026-03-09T01:00:41.190Z",
       "trend": "new"
     },
     "Skills": {
-      "total_mentions": 7,
-      "last_seen": "2026-03-08T17:00:00.202Z",
+      "total_mentions": 8,
+      "last_seen": "2026-03-09T01:00:41.190Z",
       "trend": "new"
     },
     "React": {
@@ -4192,13 +4322,13 @@
       "6": 81,
       "22": 4,
       "14": 17,
-      "1": 25,
-      "7": 4,
+      "1": 26,
+      "7": 7,
       "16": 4,
       "12": 5,
-      "9": 7,
-      "18": 17,
-      "10": 6,
+      "9": 9,
+      "18": 18,
+      "10": 7,
       "11": 3,
       "19": 6,
       "15": 4,
@@ -4220,13 +4350,13 @@
       "friday": 34,
       "sunday": 27,
       "wednesday": 52,
-      "monday": 17
+      "monday": 25
     }
   },
   "sentiment_stats": {
-    "positive": 24,
-    "neutral": 64,
-    "negative": 98,
+    "positive": 25,
+    "neutral": 68,
+    "negative": 101,
     "mixed": 65
   }
 }
