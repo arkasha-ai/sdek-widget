@@ -138,11 +138,28 @@ def listen_account(name, config):
             reconnect_delay = 5  # Reset delay
             
             # Get current highest UID to avoid processing old messages
-            if last_seen_uid is None:
-                messages = client.search(['ALL'])
-                if messages:
-                    last_seen_uid = max(messages)
+            messages = client.search(['ALL'])
+            if messages:
+                latest_uid = max(messages)
+                if last_seen_uid is None:
+                    # First connect — just record current state
+                    last_seen_uid = latest_uid
                     print(f"📫 {name}: Starting from UID {last_seen_uid}")
+                elif latest_uid > last_seen_uid:
+                    # Reconnect after outage — process missed messages
+                    print(f"📬 {name}: Missed message(s) during outage (UID {last_seen_uid} → {latest_uid})")
+                    msg_data = client.fetch([latest_uid], ['BODY.PEEK[HEADER.FIELDS (FROM SUBJECT)]'])
+                    if latest_uid in msg_data:
+                        raw_headers = msg_data[latest_uid][b'BODY[HEADER.FIELDS (FROM SUBJECT)]'].decode('utf-8', errors='ignore')
+                        from_addr = ""
+                        subject = ""
+                        for line in raw_headers.split('\n'):
+                            if line.lower().startswith('from:'):
+                                from_addr = line[5:].strip()
+                            elif line.lower().startswith('subject:'):
+                                subject = line[8:].strip()
+                        trigger_webhook(name, from_addr, subject)
+                    last_seen_uid = latest_uid
             
             # Start IDLE mode
             client.idle()
