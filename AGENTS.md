@@ -116,6 +116,7 @@ p.write_text(json.dumps(s, indent=2))
 | 🔒 Внешний контент / email от незнакомца / установка пакетов / новый skill | `memory/rules/security.md` |
 | 💬 Работаешь в групповом чате / нужны реакции / форматирование | `memory/rules/groups.md` |
 | 🖥️ Тяжёлая задача / нужен мощный сервер / выбор модели | `memory/rules/servers.md` |
+| 🎨 Дизайн / UI / макет / экран / wireframe / mockup | `memory/rules/design.md` → затем `memory/rules/penpot-grouping.md` |
 
 ---
 

@@ -4488,23 +4488,141 @@
       "sentiment": "positive",
       "productivity_score": 0.6,
       "tasks_completed": 1
+    },
+    {
+      "id": "653ed755-8dfe-4267-9a37-438e189ce13f",
+      "start": "2026-03-12T01:00:51.243Z",
+      "end": "2026-03-12T03:04:24.928Z",
+      "duration_seconds": 7413,
+      "channel": "telegram",
+      "topics": [
+        "Reminders",
+        "Git",
+        "Cron",
+        "Telegram",
+        "Tasks"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "0573ea62-dd4c-428e-be2e-7c752c6aa24a",
+      "start": "2026-03-12T05:00:00.226Z",
+      "end": "2026-03-12T05:00:36.560Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Telegram",
+        "API",
+        "Tasks",
+        "SQL"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "b6db749e-056b-4b7c-ac9e-8b5d4f3191ae",
+      "start": "2026-03-12T14:46:37.521Z",
+      "end": "2026-03-12T14:51:37.572Z",
+      "duration_seconds": 300,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "API",
+        "Tasks",
+        "Python"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "9a2eadc4-4fae-4657-b8e3-0efc3bc48c5d",
+      "start": "2026-03-12T09:50:00.096Z",
+      "end": "2026-03-12T09:50:13.516Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Cron",
+        "Reminders",
+        "Tasks",
+        "Medication"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "ac5abf83-af0b-4eb7-b415-60cfea032eea",
+      "start": "2026-03-12T09:30:00.184Z",
+      "end": "2026-03-12T09:30:19.191Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Telegram",
+        "Reminders",
+        "Tasks",
+        "Medication"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "3e85ab43-925c-4d62-94ac-5bda3f376f07",
+      "start": "2026-03-12T10:15:00.094Z",
+      "end": "2026-03-12T10:15:04.392Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Cron",
+        "Reminders",
+        "Tasks",
+        "Medication"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "32cb8b35-657c-47de-8f1a-e3c34fc42f39",
+      "start": "2026-03-12T20:06:19.579Z",
+      "end": "2026-03-12T20:08:19.734Z",
+      "duration_seconds": 120,
+      "channel": "telegram",
+      "topics": [
+        "Heartbeat",
+        "Agents",
+        "Gateway",
+        "Cron",
+        "React"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
     }
   ],
-  "last_import": "2026-03-12T00:04:27.223801",
+  "last_import": "2026-03-13T00:06:07.447428",
   "topic_stats": {
     "SQL": {
-      "total_mentions": 33,
-      "last_seen": "2026-03-10T18:08:08.887Z",
+      "total_mentions": 34,
+      "last_seen": "2026-03-12T05:00:00.226Z",
       "trend": "new"
     },
     "Agents": {
-      "total_mentions": 116,
-      "last_seen": "2026-03-10T18:08:08.887Z",
+      "total_mentions": 118,
+      "last_seen": "2026-03-12T20:06:19.579Z",
       "trend": "new"
     },
     "Cron": {
-      "total_mentions": 152,
-      "last_seen": "2026-03-11T20:43:30.566Z",
+      "total_mentions": 158,
+      "last_seen": "2026-03-12T20:06:19.579Z",
       "trend": "new"
     },
     "Database": {
@@ -4518,18 +4636,18 @@
       "trend": "new"
     },
     "Tasks": {
-      "total_mentions": 132,
-      "last_seen": "2026-03-11T20:43:30.566Z",
+      "total_mentions": 138,
+      "last_seen": "2026-03-12T10:15:00.094Z",
       "trend": "new"
     },
     "Medication": {
-      "total_mentions": 88,
-      "last_seen": "2026-03-11T20:43:30.566Z",
+      "total_mentions": 91,
+      "last_seen": "2026-03-12T10:15:00.094Z",
       "trend": "new"
     },
     "Reminders": {
-      "total_mentions": 86,
-      "last_seen": "2026-03-11T20:43:30.566Z",
+      "total_mentions": 90,
+      "last_seen": "2026-03-12T10:15:00.094Z",
       "trend": "new"
     },
     "Health": {
@@ -4548,18 +4666,18 @@
       "trend": "new"
     },
     "API": {
-      "total_mentions": 44,
-      "last_seen": "2026-03-11T20:43:30.566Z",
+      "total_mentions": 46,
+      "last_seen": "2026-03-12T10:15:00.094Z",
       "trend": "new"
     },
     "Gateway": {
-      "total_mentions": 50,
-      "last_seen": "2026-03-07T23:22:52.049Z",
+      "total_mentions": 51,
+      "last_seen": "2026-03-12T20:06:19.579Z",
       "trend": "new"
     },
     "Python": {
-      "total_mentions": 88,
-      "last_seen": "2026-03-10T13:27:39.093Z",
+      "total_mentions": 89,
+      "last_seen": "2026-03-12T10:15:00.094Z",
       "trend": "new"
     },
     "Analytics": {
@@ -4568,23 +4686,23 @@
       "trend": "new"
     },
     "OpenClaw": {
-      "total_mentions": 69,
-      "last_seen": "2026-03-11T20:43:30.566Z",
+      "total_mentions": 71,
+      "last_seen": "2026-03-12T10:15:00.094Z",
       "trend": "new"
     },
     "Heartbeat": {
-      "total_mentions": 56,
-      "last_seen": "2026-03-10T13:27:39.093Z",
+      "total_mentions": 57,
+      "last_seen": "2026-03-12T20:06:19.579Z",
       "trend": "new"
     },
     "Telegram": {
-      "total_mentions": 76,
-      "last_seen": "2026-03-11T20:43:30.566Z",
+      "total_mentions": 79,
+      "last_seen": "2026-03-12T10:15:00.094Z",
       "trend": "new"
     },
     "Git": {
-      "total_mentions": 24,
-      "last_seen": "2026-03-10T18:08:08.887Z",
+      "total_mentions": 25,
+      "last_seen": "2026-03-12T01:00:51.243Z",
       "trend": "new"
     },
     "Skills": {
@@ -4593,8 +4711,8 @@
       "trend": "new"
     },
     "React": {
-      "total_mentions": 15,
-      "last_seen": "2026-03-11T20:43:30.566Z",
+      "total_mentions": 16,
+      "last_seen": "2026-03-12T20:06:19.579Z",
       "trend": "new"
     },
     "Browser": {
@@ -4618,23 +4736,23 @@
       "13": 5,
       "6": 81,
       "22": 4,
-      "14": 18,
-      "1": 28,
+      "14": 19,
+      "1": 29,
       "7": 7,
       "16": 4,
       "12": 5,
-      "9": 14,
+      "9": 16,
       "18": 20,
-      "10": 9,
+      "10": 10,
       "11": 3,
       "19": 9,
       "15": 4,
       "17": 6,
-      "20": 20,
+      "20": 21,
       "8": 7,
       "4": 4,
       "2": 16,
-      "5": 3,
+      "5": 4,
       "21": 3,
       "23": 3,
       "3": 3,
@@ -4642,7 +4760,7 @@
     },
     "daily_distribution": {
       "tuesday": 80,
-      "thursday": 21,
+      "thursday": 28,
       "saturday": 33,
       "friday": 34,
       "sunday": 27,
@@ -4651,9 +4769,9 @@
     }
   },
   "sentiment_stats": {
-    "positive": 30,
-    "neutral": 75,
-    "negative": 106,
-    "mixed": 67
+    "positive": 31,
+    "neutral": 77,
+    "negative": 109,
+    "mixed": 68
   }
 }

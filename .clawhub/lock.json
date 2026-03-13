@@ -64,6 +64,10 @@
     "mindgraph-rs": {
       "version": "5.0.8",
       "installedAt": 1772933599742
+    },
+    "generate-presentation": {
+      "version": "1.0.0",
+      "installedAt": 1773347832408
     }
   }
 }

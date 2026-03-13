@@ -1,0 +1,59 @@
+# Правила: Когда просят сделать дизайн
+
+## Триггер
+Слова: "сделай дизайн", "нарисуй UI", "создай макет", "сделай экран", "design", "UI", "wireframe", "mockup", "прототип"
+
+## Обязательный порядок действий
+
+1. **Читать гайдлайн группировки:** `memory/rules/penpot-grouping.md`
+2. **Читать API-справку:** `memory/tools/penpot-api.md`
+3. **Инструмент — только Penpot:** `https://penpot.jakeberrimor.com`
+   - Login: `spam@jakeberrimor.com` / `q25RiI#L`
+   - Текущий рабочий файл: `memory/state/penpot-nota.json`
+4. **Пройти по чеклисту группировки** перед написанием кода
+
+## Инструменты для работы с Penpot
+
+**Просмотр и поиск объектов — через MCP (mcporter), не браузер:**
+```bash
+# Найти frame по имени
+mcporter call penpot-mcp.search_object --args '{"file_id":"<id>","query":"^Home$"}' --output json
+
+# Дерево объектов
+mcporter call penpot-mcp.get_object_tree --args '{"file_id":"<id>","object_id":"<oid>"}' --output json
+
+# Экспорт PNG
+mcporter call penpot-mcp.export_object --args '{"file_id":"<id>","object_id":"<oid>","scale":2,"format":"png"}' --output json
+# Если MCP export не работает → API export через requests (см. nota_final.py)
+```
+
+**НЕ открывать браузер** для просмотра/экспорта — только MCP или API.
+
+## Ключевые технические правила Penpot API
+
+- `text-align` → уровень **paragraph** (`"~:text-align": "center"`)
+- `vertical-align` → **не работает**, использовать ручной расчёт: `y = container_y + (container_h - font_size * 1.2) / 2`
+- Stroke: `"~:stroke-style": "~:solid"`, `"~:stroke-alignment": "~:inner"`
+- Каждый update — отдельный POST к `/update-file` с правильным `revn`
+- Работать в **одном файле** (не создавать копии): читать `penpot-nota.json`, обновлять тот же файл
+
+## Чеклист группировки (перед кодом)
+
+- [ ] Каждая кнопка → subframe
+- [ ] Каждый badge / tag / chip / pill → subframe
+- [ ] Каждая карточка (card) → subframe
+- [ ] Avatar (circle + initials) → subframe
+- [ ] FAB (circle + icon) → subframe
+- [ ] Search bar (bg + icon + hint) → subframe
+- [ ] Nav Bar → subframe, каждый tab внутри тоже subframe
+- [ ] Toolbar → subframe, каждая кнопка внутри тоже subframe
+- [ ] App Bar / Header → subframe
+- [ ] Любой `bg rect + текст` — ВСЕГДА subframe
+
+## Что НЕ нужно группировать
+- Одиночный текст (заголовок, параграф, подпись секции)
+- Одиночный divider / разделитель
+- Body copy (строки контента)
+
+---
+_Создано: 2026-03-13 по просьбе Дениса_

@@ -1,0 +1,18 @@
+[Unit]
+Description=MindGraph Live Mode Watcher
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=clawdbot
+WorkingDirectory=/home/clawdbot/.openclaw/workspace
+ExecStart=/usr/bin/python3 /home/clawdbot/.openclaw/workspace/scripts/mindgraph_live.py
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+EnvironmentFile=-/home/clawdbot/.openclaw/secrets.env
+
+[Install]
+WantedBy=multi-user.target

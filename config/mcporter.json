@@ -20,6 +20,12 @@
         "API_KEY": "F3A391ED-2051-489F-94BE-CE8C9D5ED92B",
         "EMAIL": "contact@jakeberrimor.com"
       }
+    },
+    "penpot-mcp": {
+      "baseUrl": "https://penpot-mcp.jakeberrimor.com/sse"
+    },
+    "penpot-official": {
+      "baseUrl": "http://localhost:4401/sse"
     }
   },
   "imports": []

@@ -32,6 +32,20 @@
 - Endpoint: `https://litellm.jakeberrimor.com`, model: `openai/whisper-large-v3`
 - Config: `~/.openclaw/litellm.env`
 
+## Penpot MCP 🎨
+- **Всегда использовать для просмотра/поиска/экспорта — не открывать браузер!**
+- Сервер: `https://penpot-mcp.jakeberrimor.com/sse`
+- Config: `~/.openclaw/workspace/config/mcporter.json`
+- Команды:
+  ```bash
+  mcporter call penpot-mcp.search_object --args '{"file_id":"<id>","query":"<regex>"}' --output json
+  mcporter call penpot-mcp.get_object_tree --args '{"file_id":"<id>","object_id":"<oid>"}' --output json
+  mcporter call penpot-mcp.export_object --args '{"file_id":"<id>","object_id":"<oid>","scale":2,"format":"png"}' --output json
+  mcporter call penpot-mcp.get_file --args '{"file_id":"<id>"}' --output json
+  ```
+- Если export_object не работает → API export через requests POST `/api/export` (см. `/tmp/nota_final.py`)
+- Рабочий файл: `memory/state/penpot-nota.json`
+
 ## MindGraph 🧠
 - Сервер: `http://127.0.0.1:18790` (автостарт @reboot)
 - Токен: `MINDGRAPH_TOKEN` из `~/.openclaw/secrets.env`
