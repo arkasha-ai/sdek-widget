@@ -115,13 +115,14 @@ class PenpotSession:
             print(f"  Export failed: {r.status_code}")
             return None
         res = r.json()
-        uri_obj = find(res, "~:uri")
+        # Export returns regular JSON dict (not Transit list)
+        uri_obj = res.get("~:uri") if isinstance(res, dict) else find(res, "~:uri")
         if isinstance(uri_obj, dict):
             img_url = uri_obj.get("~#uri","")
         else:
             img_url = str(uri_obj) if uri_obj else ""
         if not img_url:
-            print(f"  Export: no URI in response")
+            print(f"  Export: no URI in response; res keys={list(res.keys()) if isinstance(res,dict) else type(res)}")
             return None
         img = self.s.get(img_url)
         path = f"/tmp/{name}.png"

@@ -1,213 +1,128 @@
 ---
 name: frontend-design
-description: Expert frontend design guidelines for creating beautiful, modern UIs. Use when building landing pages, dashboards, or any user interface.
+description: Expert frontend design guidelines for creating beautiful, modern UIs. Use when building landing pages, dashboards, web components, posters, or any user interface. Avoids generic AI aesthetics (Inter font, purple gradients, cards in cards).
 metadata: {"clawdbot":{"emoji":"🎨"}}
+license: Apache 2.0. Based on Anthropic's frontend-design skill, extended by Impeccable (pbakaus/impeccable). See NOTICE.md for attribution.
 ---
 
-# Frontend Design Skill
+This skill guides creation of distinctive, production-grade frontend interfaces that avoid generic "AI slop" aesthetics. Implement real working code with exceptional attention to aesthetic details and creative choices.
 
-Use this skill when creating UI components, landing pages, dashboards, or any frontend design work.
+## Design Direction
 
-## Design Workflow
+Commit to a BOLD aesthetic direction:
+- **Purpose**: What problem does this interface solve? Who uses it?
+- **Tone**: Pick an extreme: brutally minimal, maximalist chaos, retro-futuristic, organic/natural, luxury/refined, playful/toy-like, editorial/magazine, brutalist/raw, art deco/geometric, soft/pastel, industrial/utilitarian, etc. There are so many flavors to choose from. Use these for inspiration but design one that is true to the aesthetic direction.
+- **Constraints**: Technical requirements (framework, performance, accessibility).
+- **Differentiation**: What makes this UNFORGETTABLE? What's the one thing someone will remember?
 
-Follow this structured approach for UI design:
+**CRITICAL**: Choose a clear conceptual direction and execute it with precision. Bold maximalism and refined minimalism both work—the key is intentionality, not intensity.
 
-1. **Layout Design** — Think through component structure, create ASCII wireframes
-2. **Theme Design** — Define colors, fonts, spacing, shadows
-3. **Animation Design** — Plan micro-interactions and transitions
-4. **Implementation** — Generate the actual code
+Then implement working code that is:
+- Production-grade and functional
+- Visually striking and memorable
+- Cohesive with a clear aesthetic point-of-view
+- Meticulously refined in every detail
 
-### 1. Layout Design
+## Frontend Aesthetics Guidelines
 
-Before coding, sketch the layout in ASCII format:
+### Typography
+→ *Consult [typography reference](reference/typography.md) for scales, pairing, and loading strategies.*
 
-```
-┌─────────────────────────────────────┐
-│         HEADER / NAV BAR            │
-├─────────────────────────────────────┤
-│                                     │
-│            HERO SECTION             │
-│         (Title + CTA)               │
-│                                     │
-├─────────────────────────────────────┤
-│   FEATURE   │  FEATURE  │  FEATURE  │
-│     CARD    │   CARD    │   CARD    │
-├─────────────────────────────────────┤
-│            FOOTER                   │
-└─────────────────────────────────────┘
-```
+Choose fonts that are beautiful, unique, and interesting. Pair a distinctive display font with a refined body font.
 
-### 2. Theme Guidelines
+**DO**: Use a modular type scale with fluid sizing (clamp)
+**DO**: Vary font weights and sizes to create clear visual hierarchy
+**DON'T**: Use overused fonts—Inter, Roboto, Arial, Open Sans, system defaults
+**DON'T**: Use monospace typography as lazy shorthand for "technical/developer" vibes
+**DON'T**: Put large icons with rounded corners above every heading—they rarely add value and make sites look templated
 
-**Color Rules:**
-- NEVER use generic bootstrap-style blue (#007bff) — it looks dated
-- Prefer oklch() for modern color definitions
-- Use semantic color variables (--primary, --secondary, --muted, etc.)
-- Consider both light and dark mode from the start
+### Color & Theme
+→ *Consult [color reference](reference/color-and-contrast.md) for OKLCH, palettes, and dark mode.*
 
-**Font Selection (Google Fonts):**
-```
-Sans-serif: Inter, Roboto, Poppins, Montserrat, Outfit, Plus Jakarta Sans, DM Sans, Space Grotesk
-Monospace: JetBrains Mono, Fira Code, Source Code Pro, IBM Plex Mono, Space Mono, Geist Mono
-Serif: Merriweather, Playfair Display, Lora, Source Serif Pro, Libre Baskerville
-Display: Architects Daughter, Oxanium
-```
+Commit to a cohesive palette. Dominant colors with sharp accents outperform timid, evenly-distributed palettes.
 
-**Spacing & Shadows:**
-- Use consistent spacing scale (0.25rem base)
-- Shadows should be subtle — avoid heavy drop shadows
-- Consider using oklch() for shadow colors too
+**DO**: Use modern CSS color functions (oklch, color-mix, light-dark) for perceptually uniform, maintainable palettes
+**DO**: Tint your neutrals toward your brand hue—even a subtle hint creates subconscious cohesion
+**DON'T**: Use gray text on colored backgrounds—it looks washed out; use a shade of the background color instead
+**DON'T**: Use pure black (#000) or pure white (#fff)—always tint; pure black/white never appears in nature
+**DON'T**: Use the AI color palette: cyan-on-dark, purple-to-blue gradients, neon accents on dark backgrounds
+**DON'T**: Use gradient text for "impact"—especially on metrics or headings; it's decorative rather than meaningful
+**DON'T**: Default to dark mode with glowing accents—it looks "cool" without requiring actual design decisions
 
-### 3. Theme Patterns
+### Layout & Space
+→ *Consult [spatial reference](reference/spatial-design.md) for grids, rhythm, and container queries.*
 
-**Modern Dark Mode (Vercel/Linear style):**
-```css
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.970 0 0);
-  --muted: oklch(0.970 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --border: oklch(0.922 0 0);
-  --radius: 0.625rem;
-  --font-sans: Inter, system-ui, sans-serif;
-}
-```
+Create visual rhythm through varied spacing—not the same padding everywhere. Embrace asymmetry and unexpected compositions. Break the grid intentionally for emphasis.
 
-**Neo-Brutalism (90s web revival):**
-```css
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0 0 0);
-  --primary: oklch(0.649 0.237 26.97);
-  --secondary: oklch(0.968 0.211 109.77);
-  --accent: oklch(0.564 0.241 260.82);
-  --border: oklch(0 0 0);
-  --radius: 0px;
-  --shadow: 4px 4px 0px 0px hsl(0 0% 0%);
-  --font-sans: DM Sans, sans-serif;
-  --font-mono: Space Mono, monospace;
-}
-```
+**DO**: Create visual rhythm through varied spacing—tight groupings, generous separations
+**DO**: Use fluid spacing with clamp() that breathes on larger screens
+**DO**: Use asymmetry and unexpected compositions; break the grid intentionally for emphasis
+**DON'T**: Wrap everything in cards—not everything needs a container
+**DON'T**: Nest cards inside cards—visual noise, flatten the hierarchy
+**DON'T**: Use identical card grids—same-sized cards with icon + heading + text, repeated endlessly
+**DON'T**: Use the hero metric layout template—big number, small label, supporting stats, gradient accent
+**DON'T**: Center everything—left-aligned text with asymmetric layouts feels more designed
+**DON'T**: Use the same spacing everywhere—without rhythm, layouts feel monotonous
 
-**Glassmorphism:**
-```css
-.glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 1rem;
-}
-```
+### Visual Details
+**DO**: Use intentional, purposeful decorative elements that reinforce brand
+**DON'T**: Use glassmorphism everywhere—blur effects, glass cards, glow borders used decoratively rather than purposefully
+**DON'T**: Use rounded elements with thick colored border on one side—a lazy accent that almost never looks intentional
+**DON'T**: Use sparklines as decoration—tiny charts that look sophisticated but convey nothing meaningful
+**DON'T**: Use rounded rectangles with generic drop shadows—safe, forgettable, could be any AI output
+**DON'T**: Use modals unless there's truly no better alternative—modals are lazy
 
-### 4. Animation Guidelines
+### Motion
+→ *Consult [motion reference](reference/motion-design.md) for timing, easing, and reduced motion.*
 
-**Micro-syntax for planning:**
-```
-button: 150ms [S1→0.95→1] press
-hover: 200ms [Y0→-2, shadow↗]
-fadeIn: 400ms ease-out [Y+20→0, α0→1]
-slideIn: 350ms ease-out [X-100→0, α0→1]
-bounce: 600ms [S0.95→1.05→1]
-```
+Focus on high-impact moments: one well-orchestrated page load with staggered reveals creates more delight than scattered micro-interactions.
 
-**Common patterns:**
-- Entry animations: 300-500ms, ease-out
-- Hover states: 150-200ms
-- Button press: 100-150ms
-- Page transitions: 300-400ms
+**DO**: Use motion to convey state changes—entrances, exits, feedback
+**DO**: Use exponential easing (ease-out-quart/quint/expo) for natural deceleration
+**DO**: For height animations, use grid-template-rows transitions instead of animating height directly
+**DON'T**: Animate layout properties (width, height, padding, margin)—use transform and opacity only
+**DON'T**: Use bounce or elastic easing—they feel dated and tacky; real objects decelerate smoothly
 
-### 5. Implementation Rules
+### Interaction
+→ *Consult [interaction reference](reference/interaction-design.md) for forms, focus, and loading patterns.*
 
-**Tailwind CSS:**
-```html
-<!-- Import via CDN for prototypes -->
-<script src="https://cdn.tailwindcss.com"></script>
-```
+Make interactions feel fast. Use optimistic UI—update immediately, sync later.
 
-**Flowbite (component library):**
-```html
-<link href="https://cdn.jsdelivr.net/npm/flowbite@2.0.0/dist/flowbite.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/flowbite@2.0.0/dist/flowbite.min.js"></script>
-```
+**DO**: Use progressive disclosure—start simple, reveal sophistication through interaction (basic options first, advanced behind expandable sections; hover states that reveal secondary actions)
+**DO**: Design empty states that teach the interface, not just say "nothing here"
+**DO**: Make every interactive surface feel intentional and responsive
+**DON'T**: Repeat the same information—redundant headers, intros that restate the heading
+**DON'T**: Make every button primary—use ghost buttons, text links, secondary styles; hierarchy matters
 
-**Icons (Lucide):**
-```html
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-<script>lucide.createIcons();</script>
-```
+### Responsive
+→ *Consult [responsive reference](reference/responsive-design.md) for mobile-first, fluid design, and container queries.*
 
-**Images:**
-- Use real placeholder services: Unsplash, placehold.co
-- Never make up image URLs
-- Example: `https://images.unsplash.com/photo-xxx?w=800&h=600`
+**DO**: Use container queries (@container) for component-level responsiveness
+**DO**: Adapt the interface for different contexts—don't just shrink it
+**DON'T**: Hide critical functionality on mobile—adapt the interface, don't amputate it
 
-### 6. Responsive Design
+### UX Writing
+→ *Consult [ux-writing reference](reference/ux-writing.md) for labels, errors, and empty states.*
 
-Always design mobile-first and responsive:
-
-```css
-/* Mobile first */
-.container { padding: 1rem; }
-
-/* Tablet */
-@media (min-width: 768px) {
-  .container { padding: 2rem; }
-}
-
-/* Desktop */
-@media (min-width: 1024px) {
-  .container { max-width: 1200px; margin: 0 auto; }
-}
-```
-
-### 7. Accessibility
-
-- Use semantic HTML (header, main, nav, section, article)
-- Include proper heading hierarchy (h1 → h2 → h3)
-- Add aria-labels to interactive elements
-- Ensure sufficient color contrast (4.5:1 minimum)
-- Support keyboard navigation
-
-### 8. Component Design Tips
-
-**Cards:**
-- Subtle shadows, not heavy drop shadows
-- Consistent padding (p-4 to p-6)
-- Hover state: slight lift + shadow increase
-
-**Buttons:**
-- Clear visual hierarchy (primary, secondary, ghost)
-- Adequate touch targets (min 44x44px)
-- Loading and disabled states
-
-**Forms:**
-- Clear labels above inputs
-- Visible focus states
-- Inline validation feedback
-- Adequate spacing between fields
-
-**Navigation:**
-- Sticky header for long pages
-- Clear active state indication
-- Mobile-friendly hamburger menu
+**DO**: Make every word earn its place
+**DON'T**: Repeat information users can already see
 
 ---
 
-## Quick Reference
+## The AI Slop Test
 
-| Element | Recommendation |
-|---------|---------------|
-| Primary font | Inter, Outfit, DM Sans |
-| Code font | JetBrains Mono, Fira Code |
-| Border radius | 0.5rem - 1rem (modern), 0 (brutalist) |
-| Shadow | Subtle, 1-2 layers max |
-| Spacing | 4px base unit (0.25rem) |
-| Animation | 150-400ms, ease-out |
-| Colors | oklch() for modern, avoid generic blue |
+**Critical quality check**: If you showed this interface to someone and said "AI made this," would they believe you immediately? If yes, that's the problem.
+
+A distinctive interface should make someone ask "how was this made?" not "which AI made this?"
+
+Review the DON'T guidelines above—they are the fingerprints of AI-generated work from 2024-2025.
 
 ---
 
-*Based on SuperDesign patterns — https://superdesign.dev*
+## Implementation Principles
+
+Match implementation complexity to the aesthetic vision. Maximalist designs need elaborate code with extensive animations and effects. Minimalist or refined designs need restraint, precision, and careful attention to spacing, typography, and subtle details.
+
+Interpret creatively and make unexpected choices that feel genuinely designed for the context. No design should be the same. Vary between light and dark themes, different fonts, different aesthetics. NEVER converge on common choices across generations.
+
+Remember: {{model}} is capable of extraordinary creative work. Don't hold back—show what can truly be created when thinking outside the box and committing fully to a distinctive vision.

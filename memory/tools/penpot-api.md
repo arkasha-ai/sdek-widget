@@ -745,3 +745,130 @@ Scale: умножить src coords на (ps/24) и добавить (px, py).
 **Доступные иконки:** house, search, plus, arrow-left, bookmark, ellipsis, 
 tag, settings, more-vertical, bold, italic, list, hash, star, type, check, 
 x, chevron-down, clock, calendar
+
+---
+
+## ✅ Градиенты и Blur — РАБОТАЮТ (обнаружено 2026-03-13)
+
+> ⚠️ Раньше ошибочно считалось что НЕ работают. Проблема была в неправильном имени ключа (`fill-gradient` вместо `fill-color-gradient`).
+
+### Gradient Fill
+```python
+# Линейный градиент (горизонтальный: слева→направо)
+gradient_fill = {
+    "~:fill-color-gradient": {
+        "~:type": "~:linear",      # или "~:radial"
+        "~:start-x": 0.0,          # 0.0 = левый край фигуры
+        "~:start-y": 0.0,
+        "~:end-x": 1.0,            # 1.0 = правый край
+        "~:end-y": 0.0,
+        "~:width": 1.0,
+        "~:stops": [
+            {"~:color": "#FF4757", "~:opacity": 1.0, "~:offset": 0.0},
+            {"~:color": "#FF6B81", "~:opacity": 1.0, "~:offset": 1.0}
+        ]
+    }
+}
+# Использование: "~:fills": [gradient_fill]
+# ⚠️ НЕ смешивать fill-color + fill-color-gradient в одном fill object!
+#    has-valid-fill-attrs проверяет что ровно ОДИН из: fill-color/fill-color-gradient/fill-image
+
+# Вертикальный градиент (сверху вниз):
+# start-x=0, start-y=0, end-x=0, end-y=1
+
+# Диагональный:
+# start-x=0, start-y=0, end-x=1, end-y=1
+```
+
+### Blur (layer blur)
+```python
+import uuid
+blur_attr = {
+    "~:id": f"~u{str(uuid.uuid4())}",
+    "~:type": "~:layer-blur",
+    "~:value": 8,          # радиус blur в px
+    "~:hidden": False,
+    "~:expand-value": 0
+}
+# Использование: добавить в объект как "~:blur": blur_attr
+```
+
+### Blend Mode
+```python
+# Поддерживаемые режимы (в ~:blend-mode):
+# ~:normal, ~:multiply, ~:screen, ~:overlay
+# ~:darken, ~:lighten, ~:color-dodge, ~:color-burn
+# ~:hard-light, ~:soft-light, ~:difference, ~:exclusion
+# ~:hue, ~:saturation, ~:color, ~:luminosity
+
+obj["~:blend-mode"] = "~:overlay"  # пример
+```
+
+### Glassmorphism (имитация)
+```python
+# Слой 1: полупрозрачный фон
+{"~:fills": [{"~:fill-color": "#FFFFFF", "~:fill-opacity": 0.08}}
+# Слой 2: blur overlay
+{"~:blur": {"~:id":f"~u{uid()}","~:type":"~:layer-blur","~:value":20,"~:hidden":False,"~:expand-value":0}}
+# Слой 3: тонкая граница
+{"~:strokes": [{"~:stroke-color":"#FFFFFF","~:stroke-opacity":0.15,"~:stroke-width":1,...}]}
+```
+
+---
+
+## ✅ Auto-layout (Flex/Grid) и Constraints — РАБОТАЮТ (исходники, 2026-03-13)
+
+### Constraints (простое позиционирование, работает без layout)
+```python
+# Прилипание к краям родителя
+obj["~:constraints-h"] = "~:left"      # :left :right :leftright :center :scale
+obj["~:constraints-v"] = "~:top"       # :top :bottom :topbottom :center :scale
+obj["~:fixed-scroll"] = False          # прилипать при скролле фрейма
+```
+
+### Flex Auto-layout (на фрейме/артборде)
+```python
+# Превратить subframe в flex-контейнер:
+frame_obj["~:layout"] = "~:flex"
+frame_obj["~:layout-flex-dir"] = "~:row"        # :row :row-reverse :column :column-reverse
+frame_obj["~:layout-gap-type"] = "~:simple"     # или :multiple (разный row/col gap)
+frame_obj["~:layout-gap"] = {"~:row-gap": 0, "~:column-gap": 12}
+frame_obj["~:layout-align-items"] = "~:center"  # :start :end :center :stretch
+frame_obj["~:layout-justify-content"] = "~:space-between"  # :start :center :end :space-between :space-around :space-evenly
+frame_obj["~:layout-wrap-type"] = "~:nowrap"    # :wrap :nowrap
+frame_obj["~:layout-padding-type"] = "~:simple"
+frame_obj["~:layout-padding"] = {"~:p1": 16, "~:p2": 16, "~:p3": 16, "~:p4": 16}  # top right bottom left
+```
+
+### Flex child attrs (на дочернем элементе)
+```python
+child["~:layout-item-h-sizing"] = "~:fill"   # :fill :fix :auto
+child["~:layout-item-v-sizing"] = "~:fix"
+child["~:layout-item-margin"] = {"~:m1": 0, "~:m2": 0, "~:m3": 0, "~:m4": 0}
+child["~:layout-item-margin-type"] = "~:simple"
+child["~:layout-item-align-self"] = "~:center"  # :start :end :center :stretch
+child["~:layout-item-absolute"] = False   # вывести из flex-потока (абсолютное позиционирование)
+child["~:layout-item-z-index"] = 0
+```
+
+### CSS Grid (на фрейме)
+```python
+frame_obj["~:layout"] = "~:grid"
+frame_obj["~:layout-grid-dir"] = "~:row"   # :row :column
+frame_obj["~:layout-grid-columns"] = [
+    {"~:type": "~:flex", "~:value": 1},   # 1fr
+    {"~:type": "~:fixed", "~:value": 120}, # 120px
+    {"~:type": "~:auto", "~:value": None}, # auto
+    {"~:type": "~:percent", "~:value": 50} # 50%
+]
+frame_obj["~:layout-grid-rows"] = [...]
+# Grid cell positioning (на дочернем элементе):
+# layout-grid-cells — map id→GridCell (id=child shape id)
+# GridCell: row, row-span, column, column-span, position(:auto/:manual), align-self, justify-self
+```
+
+### Важные замечания
+- Auto-layout работает ТОЛЬКО на фреймах (subframes), не на отдельных shape
+- При layout=flex Penpot сам управляет позициями детей — не нужно вручную задавать x/y
+- Constraints работают внутри НЕ-layout фреймов (для stick-to-edge поведения)
+- layout-item-absolute=true выводит элемент из flex-потока (как position:absolute в CSS)
