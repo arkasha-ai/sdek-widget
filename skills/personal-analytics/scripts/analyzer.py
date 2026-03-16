@@ -26,25 +26,40 @@ def parse_datetime(dt_str: str) -> datetime:
     return dt
 
 
-def filter_sessions(sessions: List[Dict], since: str = None, until: str = None) -> List[Dict]:
-    """Filter sessions by date range."""
-    if not since and not until:
-        return sessions
-    
+AUTOMATED_TOPICS = {"Cron", "Heartbeat", "Medication", "Reminders", "Tasks", "OpenClaw", "Gateway", "Telegram"}
+AUTOMATED_MIN_DURATION = 300  # seconds — sessions shorter than this are considered automated
+
+
+def is_automated_session(session: Dict) -> bool:
+    """Return True if session is heartbeat/cron (not real conversation)."""
+    # Short sessions are almost always automated
+    if session.get("duration_seconds", 0) < AUTOMATED_MIN_DURATION:
+        return True
+    # Marked explicitly
+    if session.get("source") == "automated":
+        return True
+    return False
+
+
+def filter_sessions(sessions: List[Dict], since: str = None, until: str = None,
+                    exclude_automated: bool = False) -> List[Dict]:
+    """Filter sessions by date range and optionally exclude automated sessions."""
     filtered = []
     since_dt = parse_datetime(since) if since else None
     until_dt = parse_datetime(until) if until else None
-    
+
     for session in sessions:
         session_dt = parse_datetime(session.get("start", ""))
-        
+
         if since_dt and session_dt < since_dt:
             continue
         if until_dt and session_dt > until_dt:
             continue
-        
+        if exclude_automated and is_automated_session(session):
+            continue
+
         filtered.append(session)
-    
+
     return filtered
 
 
@@ -263,33 +278,37 @@ def generate_insights(analysis: Dict) -> List[str]:
     return insights
 
 
-def analyze(since: str = None, until: str = None, insights: bool = False, verbose: bool = False) -> Dict:
+def analyze(since: str = None, until: str = None, insights: bool = False,
+            verbose: bool = False, exclude_automated: bool = True) -> Dict:
     """Main analysis function."""
     if not is_enabled():
         print("⚠️ Analytics tracking is disabled", file=sys.stderr)
         return {}
-    
+
     # Load data
     data = load_data()
     sessions = data.get("sessions", [])
-    
+
     if not sessions:
         print("⚠️ No session data available", file=sys.stderr)
         return {}
-    
-    # Filter by date range
-    filtered_sessions = filter_sessions(sessions, since=since, until=until)
+
+    # Filter by date range and automated sessions
+    filtered_sessions = filter_sessions(sessions, since=since, until=until,
+                                        exclude_automated=exclude_automated)
     
     if not filtered_sessions:
         print("⚠️ No sessions in specified range", file=sys.stderr)
         return {}
     
     # Run analyses
+    total_before_filter = len(filter_sessions(sessions, since=since, until=until))
     analysis = {
         "period": {
             "start": since or filtered_sessions[0].get("start"),
             "end": until or filtered_sessions[-1].get("end"),
-            "session_count": len(filtered_sessions)
+            "session_count": len(filtered_sessions),
+            "automated_excluded": total_before_filter - len(filtered_sessions)
         },
         "time_patterns": analyze_time_patterns(filtered_sessions),
         "topics": analyze_topics(filtered_sessions),

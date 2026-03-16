@@ -59,6 +59,14 @@ def generate_markdown_report(analysis: Dict, report_type: str) -> str:
     
     report = f"# 📊 {report_type.capitalize()} Analytics Report\n"
     report += f"**{date_range}**\n\n"
+
+    # Show session counts
+    period = analysis.get("period", {})
+    session_count = period.get("session_count", 0)
+    automated_excluded = period.get("automated_excluded", 0)
+    if automated_excluded > 0:
+        report += f"_Реальные разговоры: {session_count} сессий (исключено {automated_excluded} автоматических heartbeat/cron)_\n\n"
+
     report += "---\n\n"
     
     # Highlights
@@ -209,9 +217,9 @@ def main():
             sys.exit(1)
         since, until = args.since, args.until
     
-    # Run analysis
+    # Run analysis (exclude automated heartbeat/cron sessions by default)
     try:
-        analysis = analyze(since=since, until=until, insights=True)
+        analysis = analyze(since=since, until=until, insights=True, exclude_automated=True)
     except Exception as e:
         print(f"❌ Analysis failed: {e}", file=sys.stderr)
         sys.exit(1)
