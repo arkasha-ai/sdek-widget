@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Контент-план — МЦ «Здоровье»</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Montserrat', Arial, sans-serif;
+    background: #f4f9f4;
+    color: #2c2c2c;
+    padding: 40px 30px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: linear-gradient(135deg, #2d6a2d, #4caf50);
+    border-radius: 16px;
+    color: white;
+  }
+  .header h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+  .header p { font-size: 14px; opacity: 0.85; }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2d6a2d;
+    margin: 40px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #4caf50;
+  }
+  h3 { font-size: 15px; font-weight: 600; color: #2d6a2d; margin: 20px 0 8px; }
+
+  /* ТАБЛИЦА */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  thead tr { background: #2d6a2d; color: white; }
+  thead th { padding: 12px 10px; text-align: left; font-weight: 600; }
+  tbody tr:nth-child(even) { background: #f0f7f0; }
+  tbody td { padding: 11px 10px; border-bottom: 1px solid #e0ede0; vertical-align: top; }
+  .tag {
+    display: inline-block;
+    background: #e8f5e9;
+    color: #2d6a2d;
+    border-radius: 20px;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  /* СТОРИС */
+  .stories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .story-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  .story-card img {
+    width: 100%;
+    display: block;
+  }
+  .story-label {
+    padding: 12px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #2d6a2d;
+    border-top: 2px solid #e8f5e9;
+  }
+  .story-num {
+    display: inline-block;
+    background: #2d6a2d;
+    color: white;
+    border-radius: 50%;
+    width: 22px; height: 22px;
+    text-align: center;
+    line-height: 22px;
+    font-size: 12px;
+    margin-right: 6px;
+  }
+
+  /* ПОСТЫ */
+  .post-card {
+    background: white;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    margin-bottom: 24px;
+  }
+  .post-meta {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px;
+  }
+  .meta-badge {
+    background: #e8f5e9;
+    color: #2d6a2d;
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .post-visual-note {
+    background: #f0f7f0;
+    border-left: 4px solid #4caf50;
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 16px;
+  }
+  .post-body { font-size: 14px; line-height: 1.7; color: #333; white-space: pre-wrap; }
+
+  .section-note {
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #795548;
+    margin-bottom: 16px;
+  }
+
+  @media print {
+    body { background: white; }
+    .stories-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Контент-план для ВКонтакте</h1>
+  <p>Медицинский центр «Здоровье»</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     РАЗДЕЛ 1: КОНТЕНТ-ПЛАН (ТАБЛИЦА)
+════════════════════════════════════════════ -->
+
+<h2>1. Контент-план</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Тема</th>
+      <th>Тип</th>
+      <th>Формат</th>
+      <th>Идея публикации</th>
+      <th>Визуал</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>1</strong></td>
+      <td>Консультация гастроэнтеролога</td>
+      <td><span class="tag">Экспертный</span></td>
+      <td>Карусель (3–4 карточки)</td>
+      <td>Показать, с какими симптомами нужно обращаться к гастроэнтерологу. Текст: тяжесть, изжога, вздутие — сигналы, что стоит обратиться к специалисту.</td>
+      <td>Женщина держится за живот, карточки с симптомами</td>
+    </tr>
+    <tr>
+      <td><strong>2</strong></td>
+      <td>Сдача анализов</td>
+      <td><span class="tag">Образовательный</span></td>
+      <td>Карусель / инфографика</td>
+      <td>Рассказать, как правильно подготовиться к сдаче анализов.</td>
+      <td>Пробирки, процедурный кабинет, иконки подготовки</td>
+    </tr>
+    <tr>
+      <td><strong>3</strong></td>
+      <td>Когда нужно делать УЗИ</td>
+      <td><span class="tag">Информационный</span></td>
+      <td>Видео / карточки</td>
+      <td>Показать основные ситуации, когда стоит пройти УЗИ.</td>
+      <td>Кабинет УЗИ, врач объясняет результаты</td>
+    </tr>
+    <tr>
+      <td><strong>4</strong></td>
+      <td>Профилактика витамина D</td>
+      <td><span class="tag">Сторис</span></td>
+      <td>Серия из 4 сторис</td>
+      <td>Показать симптомы дефицита и предложить проверить уровень витамина.</td>
+      <td>Солнце, иконки иммунитета и энергии, лаборатория</td>
+    </tr>
+    <tr>
+      <td><strong>5</strong></td>
+      <td>Акции для пациентов</td>
+      <td><span class="tag">Продающий</span></td>
+      <td>Карточка / баннер</td>
+      <td>Рассказывать об актуальных акциях клиники. Пример: скидка на диагностику / комплекс анализов.</td>
+      <td>Баннер, текст акции, контакты</td>
+    </tr>
+    <tr>
+      <td><strong>6</strong></td>
+      <td>Интерактив</td>
+      <td><span class="tag">Вовлекающий</span></td>
+      <td>Опрос / вопрос аудитории</td>
+      <td>«Когда вы последний раз проходили обследование?» Варианты: В этом году / Больше года назад / Только когда что-то болит.</td>
+      <td>Простая карточка с вопросом</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- ═══════════════════════════════════════════
+     РАЗДЕЛ 2: СЕРИЯ СТОРИС — ВИТАМИН D
+════════════════════════════════════════════ -->
+
+<h2>2. Серия сторис — «Профилактика витамина D»</h2>
+
+<div class="stories-grid">
+
+  <div class="story-card">
+    <img src="/home/clawdbot/.openclaw/media/inbound/file_370---2166b87c-1b3d-466b-b996-a586d778db40.jpg" alt="Сторис 1">
+    <div class="story-label"><span class="story-num">1</span> Симптомы дефицита</div>
+  </div>
+
+  <div class="story-card">
+    <img src="/home/clawdbot/.openclaw/media/inbound/file_371---a7759b1f-c22e-4c5c-8a61-72c0dc29fa64.jpg" alt="Сторис 2">
+    <div class="story-label"><span class="story-num">2</span> Зачем организму витамин D</div>
+  </div>
+
+  <div class="story-card">
+    <img src="/home/clawdbot/.openclaw/media/inbound/file_372---8e9a71f6-ee0b-414d-9b92-f6b6bb838846.jpg" alt="Сторис 3">
+    <div class="story-label"><span class="story-num">3</span> Как предотвратить дефицит</div>
+  </div>
+
+  <div class="story-card">
+    <img src="/home/clawdbot/.openclaw/media/inbound/file_373---92694b1f-30cf-4d24-8091-3d54ffe125fa.jpg" alt="Сторис 4">
+    <div class="story-label"><span class="story-num">4</span> Призыв к действию</div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     РАЗДЕЛ 3: ПОСТЫ
+════════════════════════════════════════════ -->
+
+<h2>3. Готовые посты</h2>
+
+<!-- ПОСТ 1 -->
+<div class="post-card">
+  <h3>Пост 1 — Консультация гастроэнтеролога</h3>
+  <div class="post-meta">
+    <span class="meta-badge">Экспертный пост</span>
+    <span class="meta-badge">Карусель 3–4 карточки</span>
+  </div>
+  <div class="post-visual-note">
+    📎 Визуал: фотография женщины, которая держится за живот / кабинет врача / карточки с симптомами
+  </div>
+  <div class="post-body">🔍 Когда пора к гастроэнтерологу?
+
+Многие терпят дискомфорт в животе неделями, списывая его на стресс или «что-то съел». Но организм сигналит — и важно его услышать.
+
+Обратитесь к гастроэнтерологу, если у вас:
+
+• Тяжесть или боль в животе после еды
+• Частая изжога или кислый привкус во рту
+• Вздутие и повышенное газообразование
+• Нарушения стула (запоры или диарея)
+• Тошнота без видимой причины
+
+Эти симптомы могут говорить о гастрите, язве, синдроме раздражённого кишечника и других заболеваниях ЖКТ.
+
+Не ждите, пока станет хуже — запишитесь на консультацию!
+
+📞 +7 (8412) 45-03-03
+🏥 Медицинский центр «Здоровье»</div>
+</div>
+
+<!-- ПОСТ 2 -->
+<div class="post-card">
+  <h3>Пост 2 — Сдача анализов</h3>
+  <div class="post-meta">
+    <span class="meta-badge">Образовательный пост</span>
+    <span class="meta-badge">Карусель / инфографика</span>
+  </div>
+  <div class="post-visual-note">
+    📎 Визуал: пробирки с кровью, процедурный кабинет, иконки подготовки (еда перечёркнута, часы, стакан воды)
+  </div>
+  <div class="post-body">🧪 Как правильно подготовиться к сдаче анализов?
+
+Результат анализа зависит не только от лаборатории, но и от того, как вы подготовились. Пара простых правил — и данные будут точными.
+
+Общие правила подготовки:
+
+✅ Сдавайте анализы натощак (последний приём пищи — за 8–12 часов)
+✅ Пейте только чистую воду — чай, кофе и сок искажают результаты
+✅ Откажитесь от алкоголя за 24 часа до сдачи
+✅ Избегайте физических нагрузок накануне
+✅ Не принимайте лекарства без согласования с врачом
+✅ Приходите в спокойном состоянии — посидите 10–15 минут перед забором крови
+
+Если сомневаетесь — позвоните нам, мы расскажем об особенностях подготовки к конкретному анализу.
+
+📞 +7 (8412) 45-03-03
+🏥 Медицинский центр «Здоровье»</div>
+</div>
+
+</body>
+</html>
