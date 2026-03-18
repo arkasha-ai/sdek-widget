@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Denis Parmeev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: oklch(10% 0.01 250);
+    --surface: oklch(14% 0.015 250);
+    --border: oklch(22% 0.02 250);
+    --text: oklch(92% 0.01 250);
+    --muted: oklch(55% 0.02 250);
+    --accent: oklch(72% 0.18 142);
+    --accent-dim: oklch(72% 0.18 142 / 0.12);
+  }
+
+  html { scroll-behavior: smooth; min-width: 1200px; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* LAYOUT */
+  .shell {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* LEFT PANEL — INFO */
+  .left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(2rem, 5vw, 4rem);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+  }
+
+  .identity {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+    padding: 0.3rem 0.6rem;
+    width: fit-content;
+  }
+
+  .badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--text);
+  }
+
+  h1 span {
+    color: var(--muted);
+    display: block;
+    font-weight: 400;
+  }
+
+  .tagline {
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 36ch;
+    border-left: 2px solid var(--accent);
+    padding-left: 1rem;
+  }
+
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.25rem 0.5rem;
+    color: var(--muted);
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .tag:hover {
+    color: var(--text);
+    border-color: var(--accent);
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    cursor: pointer;
+  }
+
+  .nav-item:hover { color: var(--text); border-bottom-color: var(--border); }
+  .nav-item.active { color: var(--accent); }
+
+  .nav-item::before {
+    content: attr(data-num);
+    font-size: 0.65rem;
+    color: var(--border);
+    width: 1.5rem;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-links a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--accent); }
+
+  /* RIGHT PANEL — CHAT */
+  .right {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    position: relative;
+  }
+
+  .chat-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.75rem;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .chat-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .chat-title strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .model-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.2rem 0.5rem;
+  }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .msg {
+    display: flex;
+    gap: 0.75rem;
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .msg-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+  }
+
+  .msg-avatar.user { background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent); }
+  .msg-avatar.bot { background: var(--border); color: var(--muted); }
+
+  .msg-body { flex: 1; }
+
+  .msg-name {
+    font-size: 0.7rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--muted);
+    margin-bottom: 0.35rem;
+  }
+
+  .msg-text {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--text);
+  }
+
+  .msg-text p + p { margin-top: 0.5rem; }
+
+  /* Suggestion chips */
+  .suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0 1.75rem 1.25rem;
+  }
+
+  .chip {
+    font-size: 0.8rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.4rem 0.75rem;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+    font-family: 'Syne', sans-serif;
+  }
+
+  .chip:hover {
+    color: var(--text);
+    border-color: var(--accent);
+    background: var(--accent-dim);
+  }
+
+  /* Input */
+  .chat-input-wrap {
+    padding: 1.25rem 1.75rem;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .chat-input-row {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-end;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    transition: border-color 0.2s;
+  }
+
+  .chat-input-row:focus-within {
+    border-color: var(--accent);
+  }
+
+  .chat-input-row textarea {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    resize: none;
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    min-height: 24px;
+    max-height: 120px;
+  }
+
+  .chat-input-row textarea::placeholder {
+    color: var(--muted);
+  }
+
+  .send-btn {
+    background: var(--accent);
+    border: none;
+    border-radius: 4px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: opacity 0.2s;
+    color: oklch(10% 0.01 250);
+  }
+
+  .send-btn:hover { opacity: 0.8; }
+
+  /* Typing indicator */
+  .typing {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    height: 20px;
+  }
+
+  .typing span {
+    width: 5px;
+    height: 5px;
+    background: var(--muted);
+    border-radius: 50%;
+    animation: bounce 1.2s ease-in-out infinite;
+  }
+
+  .typing span:nth-child(2) { animation-delay: 0.2s; }
+  .typing span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-5px); }
+  }
+
+  /* Scrollbar */
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-track { background: transparent; }
+  .chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <!-- LEFT -->
+  <div class="left">
+    <div class="identity">
+      <div class="badge">available for work</div>
+
+      <div>
+        <h1>Denis<span>Parmeev</span></h1>
+      </div>
+
+      <p class="tagline">
+        Тимлид & архитектор LLM-систем. Строю то, что работает — от концепции до прода.
+      </p>
+
+      <div class="stack">
+        <span class="tag">Python</span>
+        <span class="tag">TypeScript</span>
+        <span class="tag">Next.js</span>
+        <span class="tag">FastAPI</span>
+        <span class="tag">LLM</span>
+        <span class="tag">Agents</span>
+        <span class="tag">RAG</span>
+        <span class="tag">Docker</span>
+        <span class="tag">Postgres</span>
+      </div>
+    </div>
+
+    <div>
+      <nav class="nav">
+        <a class="nav-item active" data-num="01">Проекты</a>
+        <a class="nav-item" data-num="02">Опыт</a>
+        <a class="nav-item" data-num="03">Стек</a>
+        <a class="nav-item" data-num="04">Контакт</a>
+      </nav>
+
+      <div class="footer-links">
+        <a href="#">GitHub</a>
+        <a href="#">Telegram</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">CV.pdf</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+    <div class="chat-topbar">
+      <span class="chat-title"><strong>denis-ai</strong> · портфолио-агент</span>
+      <span class="model-badge">gpt-oss-120b</span>
+    </div>
+
+    <div class="chat-messages" id="messages">
+      <div class="msg">
+        <div class="msg-avatar bot">AI</div>
+        <div class="msg-body">
+          <div class="msg-name">denis-ai · сейчас</div>
+          <div class="msg-text">
+            Привет. Я AI-версия Дениса — могу рассказать про проекты, стек, опыт или ответить на любой вопрос. Спрашивай.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="suggestions" id="suggestions">
+      <button class="chip" onclick="ask(this)">Расскажи про себя</button>
+      <button class="chip" onclick="ask(this)">Какие проекты делал?</button>
+      <button class="chip" onclick="ask(this)">Опыт с LLM?</button>
+      <button class="chip" onclick="ask(this)">Готов к найму?</button>
+    </div>
+
+    <div class="chat-input-wrap">
+      <div class="chat-input-row">
+        <textarea id="input" placeholder="Напиши вопрос..." rows="1" onkeydown="handleKey(event)"></textarea>
+        <button class="send-btn" onclick="sendMsg()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function ask(btn) {
+  document.getElementById('input').value = btn.textContent;
+  sendMsg();
+  document.getElementById('suggestions').style.display = 'none';
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
+  const ta = e.target;
+  ta.style.height = 'auto';
+  ta.style.height = ta.scrollHeight + 'px';
+}
+
+function sendMsg() {
+  const input = document.getElementById('input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  addMsg('you', text, true);
+  input.value = '';
+  input.style.height = 'auto';
+  document.getElementById('suggestions').style.display = 'none';
+
+  // Fake typing + response
+  setTimeout(() => {
+    const typingEl = addTyping();
+    setTimeout(() => {
+      typingEl.remove();
+      const responses = {
+        'Расскажи про себя': 'Работаю на пересечении продукта, архитектуры и AI. Последние 2+ года строю LLM-системы — от RAG-пайплайнов до автономных агентов. Тимлид в Gravity, параллельно веду свои проекты.',
+        'Какие проекты делал?': 'Из последнего: корпоративная база знаний на LLM (Gravity), AI-ассистент с памятью и агентной архитектурой, парсер + аналитика для производства, этот сайт-агент. Подробнее — спроси по конкретному направлению.',
+        'Опыт с LLM?': 'Claude, GPT, Qwen, Mistral — работал со всеми. RAG с разными векторными БД, function calling, multi-agent, fine-tuning на малых данных. Основной фокус — production-grade системы, не демо.',
+        'Готов к найму?': 'Да, смотрю интересные предложения. Предпочтительно remote или Пенза. Стек: Python + TypeScript, LLM-инфра, архитектура. Пиши в Telegram — отвечу быстро.',
+      };
+      const reply = responses[text] || 'Хороший вопрос. Если коротко — да, занимался этим. Хочешь подробности по конкретному аспекту?';
+      addMsg('denis-ai', reply, false);
+    }, 1200 + Math.random() * 800);
+  }, 300);
+}
+
+function addMsg(name, text, isUser) {
+  const msgs = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg';
+  div.innerHTML = `
+    <div class="msg-avatar ${isUser ? 'user' : 'bot'}">${isUser ? 'you' : 'AI'}</div>
+    <div class="msg-body">
+      <div class="msg-name">${name} · сейчас</div>
+      <div class="msg-text">${text}</div>
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function addTyping() {
+  const msgs = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg';
+  div.innerHTML = `
+    <div class="msg-avatar bot">AI</div>
+    <div class="msg-body">
+      <div class="msg-name">denis-ai · печатает</div>
+      <div class="typing"><span></span><span></span><span></span></div>
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+</script>
+</body>
+</html>

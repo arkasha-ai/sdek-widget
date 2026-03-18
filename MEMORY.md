@@ -129,7 +129,13 @@ arkasha-ai — был заблокирован 15.02.2026 (aggressive activity p
 
 ---
 
-_Обновлено: 2026-03-13_
+### AI рендеры (2026-03-18)
+- **Replicate API** доступен → `REPLICATE_API_TOKEN` в secrets.env
+- **FLUX.1-dev** (`black-forest-labs/flux-dev`) — продуктовые рендеры, техвиз, концепт-арт
+- Шаблон скрипта: `scripts/render_table_column.py`
+- Первый рендер: телескопическая колонка DIY стола → результат отличный
+
+_Обновлено: 2026-03-18_
 
 ---
 
