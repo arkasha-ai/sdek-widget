@@ -1,0 +1,1057 @@
+<DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Договор субаренды нежилого помещения</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --navy: #1a2744;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --blue-mid: #3b82f6;
+    --accent: #f59e0b;
+    --accent-light: #fef3c7;
+    --green: #059669;
+    --green-light: #d1fae5;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-400: #9ca3af;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-900: #111827;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: white;
+    color: var(--gray-900);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* COVER */
+  .cover {
+    background: linear-gradient(135deg, var(--navy) 0%, #243b6e 100%);
+    color: white;
+    padding: 48px 56px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 200px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .cover-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: rgba(255,255,255,0.85);
+  }
+  .cover-title {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .cover-subtitle {
+    font-size: 15px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 36px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .cover-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .cover-meta-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.5);
+  }
+  .cover-meta-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+  }
+  .cover-doc-num {
+    position: absolute;
+    top: 48px; right: 56px;
+    text-align: right;
+  }
+  .cover-doc-num-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .cover-doc-num-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.15);
+  }
+
+  /* KEY TERMS SUMMARY */
+  .summary {
+    background: var(--gray-50);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 32px 56px;
+  }
+  .summary-title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gray-400);
+    margin-bottom: 20px;
+  }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .summary-card {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 10px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .summary-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--blue);
+    border-radius: 10px 10px 0 0;
+  }
+  .summary-card.accent::before { background: var(--accent); }
+  .summary-card.green::before { background: var(--green); }
+  .summary-card.red::before { background: var(--red); }
+  .summary-card-icon {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+  .summary-card-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gray-400);
+    margin-bottom: 4px;
+  }
+  .summary-card-value {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--gray-900);
+    line-height: 1.3;
+  }
+  .summary-card-sub {
+    font-size: 11px;
+    color: var(--gray-400);
+    margin-top: 2px;
+  }
+
+  /* PARTIES */
+  .parties {
+    padding: 32px 56px;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .parties-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 16px;
+    align-items: center;
+  }
+  .party-card {
+    background: var(--blue-light);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .party-card.right {
+    background: var(--accent-light);
+  }
+  .party-role {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--blue);
+    margin-bottom: 6px;
+  }
+  .party-card.right .party-role {
+    color: #92400e;
+  }
+  .party-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 3px;
+  }
+  .party-info {
+    font-size: 11px;
+    color: var(--gray-600);
+  }
+  .party-divider {
+    text-align: center;
+    font-size: 24px;
+    color: var(--gray-400);
+  }
+
+  /* MAIN CONTENT */
+  .content {
+    padding: 0 56px;
+  }
+
+  /* SECTION */
+  .section {
+    margin: 0;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 24px 0 16px;
+    cursor: default;
+  }
+  .section-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--blue-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+  }
+  .section-icon.green { background: var(--green-light); }
+  .section-icon.amber { background: var(--accent-light); }
+  .section-icon.red { background: var(--red-light); }
+  .section-num {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gray-400);
+  }
+  .section-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gray-900);
+  }
+  .section-body {
+    padding-bottom: 24px;
+    padding-left: 50px;
+  }
+
+  /* CLAUSE */
+  .clause {
+    margin-bottom: 10px;
+    display: flex;
+    gap: 10px;
+  }
+  .clause-num {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--blue);
+    min-width: 32px;
+    padding-top: 1px;
+    flex-shrink: 0;
+  }
+  .clause-text {
+    font-size: 12.5px;
+    color: var(--gray-700);
+    line-height: 1.6;
+  }
+  .clause-text strong {
+    font-weight: 600;
+    color: var(--gray-900);
+  }
+
+  /* HIGHLIGHT BOX */
+  .highlight {
+    background: var(--blue-light);
+    border-left: 3px solid var(--blue);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 12.5px;
+    color: var(--gray-700);
+  }
+  .highlight.amber {
+    background: var(--accent-light);
+    border-color: var(--accent);
+  }
+  .highlight.red {
+    background: var(--red-light);
+    border-color: var(--red);
+  }
+  .highlight.green {
+    background: var(--green-light);
+    border-color: var(--green);
+  }
+  .highlight-title {
+    font-weight: 700;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--gray-900);
+  }
+
+  /* TABLE */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--gray-200);
+    font-size: 12.5px;
+  }
+  .data-table thead tr {
+    background: var(--navy);
+    color: white;
+  }
+  .data-table thead th {
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .data-table tbody tr:nth-child(even) {
+    background: var(--gray-50);
+  }
+  .data-table tbody td {
+    padding: 10px 14px;
+    border-top: 1px solid var(--gray-200);
+    color: var(--gray-700);
+  }
+  .data-table td strong {
+    color: var(--gray-900);
+    font-weight: 600;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 10.5px;
+    font-weight: 600;
+  }
+  .badge-blue { background: var(--blue-light); color: var(--blue); }
+  .badge-amber { background: var(--accent-light); color: #92400e; }
+  .badge-green { background: var(--green-light); color: var(--green); }
+  .badge-red { background: var(--red-light); color: var(--red); }
+
+  /* RIGHTS & OBLIGATIONS LIST */
+  .checklist {
+    list-style: none;
+    margin: 8px 0;
+  }
+  .checklist li {
+    display: flex;
+    gap: 8px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--gray-100);
+    font-size: 12.5px;
+    color: var(--gray-700);
+    line-height: 1.5;
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before {
+    content: '';
+    color: var(--blue);
+    font-size: 8px;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+  .checklist.obligations li::before { color: var(--accent); content: ''; font-size: 7px; margin-top: 5px; }
+  .checklist.rights li::before { color: var(--green); content: '▶'; font-size: 8px; margin-top: 4px; }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+    border-left: 2px solid var(--blue-light);
+    margin: 12px 0;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 14px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -28px;
+    top: 5px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--blue);
+  }
+  .timeline-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--blue);
+    margin-bottom: 2px;
+  }
+  .timeline-text {
+    font-size: 12.5px;
+    color: var(--gray-700);
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--navy);
+    color: white;
+    padding: 32px 56px;
+    margin-top: 16px;
+  }
+  .footer-title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 20px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  .footer-party-role {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 6px;
+  }
+  .footer-party-name {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .footer-field {
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 4px;
+    margin-bottom: 14px;
+    min-height: 28px;
+  }
+  .footer-field-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 2px;
+  }
+
+  /* PAGE BREAK */
+  @media print {
+    .page-break { page-break-before: always; }
+    body { font-size: 12px; }
+    .cover { padding: 36px 44px 32px; }
+    .summary, .parties, .content { padding-left: 44px; padding-right: 44px; }
+    .footer { padding: 24px 44px; }
+  }
+
+
+  .ico { display:inline-block; width:18px; height:18px; border-radius:4px;
+         font-size:12px; text-align:center; line-height:18px; font-weight:700; margin-right:4px; }
+  .ico-blue  { background:var(--blue-light); color:var(--blue); }
+  .ico-green { background:var(--green-light); color:var(--green); }
+  .ico-amber { background:var(--accent-light); color:#92400e; }
+  .ico-red   { background:var(--red-light); color:var(--red); }
+  .section-divider {
+    height: 1px;
+    background: var(--gray-100);
+    margin: 0 56px;
+  }
+
+  .page-header {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gray-400);
+    padding: 16px 56px 8px;
+  }
+</style>
+</head>
+<body>
+
+
+<div class="cover">
+  <div class="cover-doc-num">
+    <div class="cover-doc-num-label">Договор №</div>
+    <div class="cover-doc-num-value">_______</div>
+  </div>
+  <div class="cover-badge">Субаренда нежилого помещения</div>
+  <div class="cover-title">Договор субаренды</div>
+  <div class="cover-subtitle">нежилого помещения · пекарня</div>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <span class="cover-meta-label">Дата</span>
+      <span class="cover-meta-value">«___» ________ 2025 г.</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="cover-meta-label">Площадь</span>
+      <span class="cover-meta-value">___ кв.м</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="cover-meta-label">Срок</span>
+      <span class="cover-meta-value">11 месяцев</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="cover-meta-label">Период</span>
+      <span class="cover-meta-value">01.11.2025 — 01.10.2026</span>
+    </div>
+  </div>
+</div>
+
+
+<div class="summary">
+  <div class="summary-title">Ключевые условия договора</div>
+  <div class="summary-grid">
+    <div class="summary-card">
+      <div class="summary-card-icon"></div>
+      <div class="summary-card-label">Аренда до конца 2025</div>
+      <div class="summary-card-value">360 000 ₽/мес</div>
+      <div class="summary-card-sub">авансом, до 1-го числа</div>
+    </div>
+    <div class="summary-card accent">
+      <div class="summary-card-icon"></div>
+      <div class="summary-card-label">Аренда с 2026</div>
+      <div class="summary-card-value">378 000 ₽/мес</div>
+      <div class="summary-card-sub">+ переменная часть (коммуналка)</div>
+    </div>
+    <div class="summary-card green">
+      <div class="summary-card-icon"></div>
+      <div class="summary-card-label">Обеспечительный платёж</div>
+      <div class="summary-card-value">378 000 ₽</div>
+      <div class="summary-card-sub">в день подписания договора</div>
+    </div>
+    <div class="summary-card red">
+      <div class="summary-card-icon"></div>
+      <div class="summary-card-label">Пеня за просрочку</div>
+      <div class="summary-card-value">1% в день</div>
+      <div class="summary-card-sub">от суммы долга по аренде</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="parties">
+  <div class="summary-title" style="margin-bottom:20px">Стороны договора</div>
+  <div class="parties-grid">
+    <div class="party-card">
+      <div class="party-role"> Арендатор</div>
+      <div class="party-name">ООО «__________»</div>
+      <div class="party-info">
+        ОГРН: ___________<br>
+        ИНН: _________<br>
+        Генеральный директор: _____________<br>
+        Действует на основании Устава
+      </div>
+    </div>
+    <div class="party-divider"></div>
+    <div class="party-card right">
+      <div class="party-role" style="color:#92400e"> Субарендатор</div>
+      <div class="party-name">ИП _______________</div>
+      <div class="party-info">
+        ИНН: _______<br>
+        ОГРНИП: _______________<br>
+        Действует от своего имени
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="content">
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon">1</div>
+    <div>
+      <div class="section-num">Раздел 1</div>
+      <div class="section-title">Предмет договора</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <div class="clause">
+      <span class="clause-num">1.1</span>
+      <span class="clause-text">Арендатор передаёт Субарендатору во временное владение и пользование <strong>нежилое помещение площадью ___ кв.м</strong> по Акту приёма-передачи.</span>
+    </div>
+    <div class="clause">
+      <span class="clause-num">1.2</span>
+      <span class="clause-text">Назначение помещения: <strong>размещение пекарни</strong>. Иное использование — только с письменного согласия Арендатора.</span>
+    </div>
+
+    <div class="highlight green">
+      <div class="highlight-title">Сроки субаренды</div>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-label">01 ноября 2025</div>
+        <div class="timeline-text">Начало срока субаренды (дата подписания договора)</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-label">В течение 3 рабочих дней</div>
+        <div class="timeline-text">Передача помещения по Акту приёма-передачи</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-label">01 октября 2026</div>
+        <div class="timeline-text">Окончание срока субаренды (включительно) · всего 11 месяцев</div>
+      </div>
+    </div>
+
+    <div class="clause">
+      <span class="clause-num">1.4</span>
+      <span class="clause-text">Помещение принадлежит Арендатору по Договору аренды № _______ от ________ г. Субарендатор уведомлён об этом.</span>
+    </div>
+    <div class="clause">
+      <span class="clause-num">1.7</span>
+      <span class="clause-text">Арендатор гарантирует: помещение <strong>не заложено, не арестовано</strong>, не обременено правами третьих лиц.</span>
+    </div>
+  </div>
+</div>
+
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon green">2</div>
+    <div>
+      <div class="section-num">Раздел 2</div>
+      <div class="section-title">Порядок передачи помещения</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="clause">
+      <span class="clause-num">2.1</span>
+      <span class="clause-text">Помещение передаётся <strong>в течение 3 рабочих дней</strong> с момента подписания договора. Помещение должно быть чистым и освобождённым от имущества Арендатора.</span>
+    </div>
+    <div class="clause">
+      <span class="clause-num">2.2</span>
+      <span class="clause-text">В последний день срока Субарендатор <strong>возвращает помещение</strong> в исходном состоянии (нормальный износ допускается).</span>
+    </div>
+
+    <div class="highlight amber">
+      <div class="highlight-title">Просрочка освобождения помещения</div>
+      При задержке более <strong>5 календарных дней</strong>: Арендатор вправе переместить имущество Субарендатора на склад ответственного хранения. Стоимость хранения: <strong>36 000 ₽ за каждый кв.м в месяц</strong>. По истечении 2 месяцев — имущество переходит в собственность Арендатора.
+    </div>
+
+    <div class="clause">
+      <span class="clause-num">2.6</span>
+      <span class="clause-text">Все <strong>неотделимые улучшения</strong> переходят в собственность Арендатора без компенсации.</span>
+    </div>
+  </div>
+</div>
+
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon amber">3</div>
+    <div>
+      <div class="section-num">Раздел 3</div>
+      <div class="section-title">Права и обязанности сторон</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <table style="width:100%; border-collapse:collapse; margin-bottom:16px;">
+      <tr>
+        <td style="width:50%; vertical-align:top; padding-right:12px; background:#dbeafe; border-radius:8px; padding:14px;">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#2563eb; margin-bottom:10px;">Арендатор обязан</div>
+          <ul class="checklist obligations">
+            <li>Передать помещение по Акту в срок</li>
+            <li>Обеспечить круглосуточный доступ к помещению</li>
+            <li>Принять помещение при возврате</li>
+            <li>Предоставить копии правоустанавливающих документов по запросу</li>
+            <li>Уведомлять об изменении реквизитов</li>
+            <li>Проводить капитальный ремонт за свой счёт</li>
+          </ul>
+        </td>
+        <td style="width:8px;"></td>
+        <td style="width:50%; vertical-align:top; background:#fef3c7; border-radius:8px; padding:14px;">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#92400e; margin-bottom:10px;">Субарендатор обязан</div>
+          <ul class="checklist obligations">
+            <li>Принять помещение по Акту</li>
+            <li>Своевременно вносить арендную плату</li>
+            <li>Использовать помещение только как пекарню</li>
+            <li>Поддерживать чистоту и порядок</li>
+            <li>Самостоятельно получать все лицензии и разрешения</li>
+            <li>Не хранить опасные вещества</li>
+            <li>Соблюдать пожарную и санитарную безопасность</li>
+            <li>Не передавать помещение в субаренду третьим лицам</li>
+            <li>Не использовать адрес как юридический адрес ЮЛ</li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+
+    <table style="width:100%; border-collapse:collapse; margin-bottom:8px;">
+      <tr>
+        <td style="width:50%; vertical-align:top; padding-right:12px; background:#d1fae5; border-radius:8px; padding:14px;">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#059669; margin-bottom:10px;">Арендатор вправе</div>
+          <ul class="checklist rights">
+            <li>Входить для проверки (без вмешательства в деятельность)</li>
+            <li>Запрашивать документы о деятельности Субарендатора</li>
+            <li>Приостанавливать коммунальные услуги при задолженности</li>
+            <li>Привлекать управляющие организации</li>
+          </ul>
+        </td>
+        <td style="width:8px;"></td>
+        <td style="width:50%; vertical-align:top; background:#d1fae5; border-radius:8px; padding:14px;">
+          <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:#059669; margin-bottom:10px;">Субарендатор вправе</div>
+          <ul class="checklist rights">
+            <li>Вести хозяйственную деятельность (пекарня)</li>
+            <li>Проводить ремонт с письменного согласия Арендатора</li>
+            <li>Размещать рекламу с письменного согласия</li>
+            <li>Вывезти отделимые улучшения с согласия Арендатора</li>
+            <li>Преимущественное право на продление договора</li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon">4</div>
+    <div>
+      <div class="section-num">Раздел 4</div>
+      <div class="section-title">Платежи и расчёты</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Платёж</th>
+          <th>Период</th>
+          <th>Сумма</th>
+          <th>Срок оплаты</th>
+          <th>Статус</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Аренда (постоянная)</strong></td>
+          <td>до конца 2025 г.</td>
+          <td><strong>360 000 ₽/мес</strong></td>
+          <td>до 1-го числа каждого месяца</td>
+          <td><span class="badge badge-blue">Авансом</span></td>
+        </tr>
+        <tr>
+          <td><strong>Аренда (постоянная)</strong></td>
+          <td>с января 2026 г.</td>
+          <td><strong>378 000 ₽/мес</strong></td>
+          <td>до 1-го числа каждого месяца</td>
+          <td><span class="badge badge-amber">Индексирована</span></td>
+        </tr>
+        <tr>
+          <td><strong>Аренда (переменная)</strong></td>
+          <td>ежемесячно</td>
+          <td>по счёту (коммуналка)</td>
+          <td>в течение 3 банковских дней с выставления счёта</td>
+          <td><span class="badge badge-blue">По факту</span></td>
+        </tr>
+        <tr>
+          <td><strong>Обеспечительный платёж</strong></td>
+          <td>разовый</td>
+          <td><strong>378 000 ₽</strong></td>
+          <td>в день подписания договора</td>
+          <td><span class="badge badge-green">Возвратный</span></td>
+        </tr>
+        <tr>
+          <td><strong>Аренда за 1-й месяц</strong></td>
+          <td>разовый</td>
+          <td><strong>360 000 ₽</strong></td>
+          <td>в день подписания договора</td>
+          <td><span class="badge badge-blue">Авансом</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight amber">
+      <div class="highlight-title">Итого к оплате в день подписания</div>
+      Аренда за 1-й месяц <strong>360 000 ₽</strong> + Обеспечительный платёж <strong>378 000 ₽</strong> = <strong>738 000 ₽</strong>
+    </div>
+
+    <div class="clause" style="margin-top:12px">
+      <span class="clause-num">4.1.3</span>
+      <span class="clause-text">Арендатор вправе <strong>ежегодно индексировать</strong> постоянную часть арендной платы в одностороннем порядке, направив уведомление за 30 дней (без доп. соглашения).</span>
+    </div>
+  </div>
+</div>
+
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon green">5</div>
+    <div>
+      <div class="section-num">Раздел 5</div>
+      <div class="section-title">Обеспечительный платёж</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Сценарий</th>
+          <th>Что происходит с платежом</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Нормальное окончание договора</td>
+          <td><span class="badge badge-green">Возвращается</span> в течение 30 дней после возврата помещения</td>
+        </tr>
+        <tr>
+          <td>Досрочный выход по инициативе Субарендатора</td>
+          <td><span class="badge badge-red">Удерживается</span> полностью</td>
+        </tr>
+        <tr>
+          <td>Расторжение за нарушения Субарендатора (п.7.5)</td>
+          <td><span class="badge badge-red">Удерживается</span> полностью</td>
+        </tr>
+        <tr>
+          <td>Задолженность по платежам</td>
+          <td><span class="badge badge-amber">Зачитывается</span> в счёт долга, остаток восстанавливается</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight red">
+      <div class="highlight-title">Просрочка пополнения обеспечительного платежа</div>
+      Пеня: <strong>1% в день</strong> от суммы ежемесячной аренды. При просрочке более <strong>7 дней</strong> — Арендатор вправе расторгнуть договор.
+    </div>
+  </div>
+</div>
+
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon red">6</div>
+    <div>
+      <div class="section-num">Раздел 6</div>
+      <div class="section-title">Ответственность сторон</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Нарушение</th>
+          <th>Ответственная сторона</th>
+          <th>Санкция</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Просрочка арендной платы</td>
+          <td>Субарендатор</td>
+          <td><strong>1%/день</strong> от просроченной суммы</td>
+        </tr>
+        <tr>
+          <td>Непередача помещения в срок</td>
+          <td>Арендатор</td>
+          <td>Возмещение убытков</td>
+        </tr>
+        <tr>
+          <td>Непринятие помещения в срок</td>
+          <td>Субарендатор</td>
+          <td>Возмещение убытков</td>
+        </tr>
+        <tr>
+          <td>Просрочка возврата помещения</td>
+          <td>Субарендатор</td>
+          <td>Аренда за всё время просрочки + пеня</td>
+        </tr>
+        <tr>
+          <td>Повреждение имущества</td>
+          <td>Субарендатор</td>
+          <td>Полное возмещение + возможно расторжение</td>
+        </tr>
+        <tr>
+          <td>Уклонение Арендатора от приёмки</td>
+          <td>Арендатор</td>
+          <td><strong>1%/день</strong> от суммы ежемесячной аренды</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="clause">
+      <span class="clause-num">6.9</span>
+      <span class="clause-text">Уплата неустоек и штрафов <strong>не освобождает</strong> от исполнения обязательств.</span>
+    </div>
+  </div>
+</div>
+
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon red">7</div>
+    <div>
+      <div class="section-num">Раздел 7</div>
+      <div class="section-title">Расторжение договора</div>
+    </div>
+  </div>
+  <div class="section-body">
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div>
+        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--red); margin-bottom:8px;"> Арендатор может расторгнуть если Субарендатор:</div>
+        <ul class="checklist">
+          <li>Использует помещение не по назначению или с нарушениями</li>
+          <li>Два раза подряд просрочил арендную плату</li>
+          <li>Существенно ухудшил помещение</li>
+          <li>Допустил 2+ нарушений п.3.3 за 6 месяцев</li>
+        </ul>
+        <div style="font-size:11px; color:var(--gray-600); margin-top:8px">
+           Уведомление → договор расторгается через <strong>15 дней</strong>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--blue); margin-bottom:8px;"> Субарендатор может расторгнуть:</div>
+        <ul class="checklist">
+          <li>В любое время с уведомлением <strong>за 2 месяца</strong></li>
+          <li>Письменное уведомление по адресу Арендатора</li>
+        </ul>
+        <div class="highlight red" style="margin-top:12px;">
+          <div class="highlight-title">При досрочном выходе</div>
+          Обеспечительный платёж (378 000 ₽) — <strong>не возвращается</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon">8-9</div>
+    <div>
+      <div class="section-num">Разделы 8–9</div>
+      <div class="section-title">Форс-мажор и заключительные положения</div>
+    </div>
+  </div>
+  <div class="section-body">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+      <div>
+        <div class="highlight">
+          <div class="highlight-title">Форс-мажор</div>
+          Стороны освобождаются от ответственности при обстоятельствах, которые нельзя предвидеть (стихийные бедствия, войны и т.д.). Уведомить другую сторону в течение <strong>3 дней</strong>.
+          <br><br>
+          <strong>Важно:</strong> COVID-19 <em>не признаётся</em> форс-мажором по данному договору.
+        </div>
+      </div>
+      <div>
+        <ul class="checklist">
+          <li>Претензионный порядок обязателен · срок ответа — 15 дней</li>
+          <li>Споры — Арбитражный суд г. Москвы</li>
+          <li>Уведомления: заказное письмо, ценное письмо, email или под расписку</li>
+          <li>Договор составлен в 2 экземплярах (по одному для каждой стороны)</li>
+          <li>Все изменения — только в письменной форме (доп. соглашение)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+<div class="footer">
+  <div class="footer-title">Адреса, реквизиты и подписи сторон</div>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-party-role"> Арендатор</div>
+      <div class="footer-party-name">ООО «__________»</div>
+      <div class="footer-field-label">Юридический адрес</div>
+      <div class="footer-field"></div>
+      <div class="footer-field-label">ИНН / ОГРН</div>
+      <div class="footer-field"></div>
+      <div class="footer-field-label">Расчётный счёт</div>
+      <div class="footer-field"></div>
+      <div class="footer-field-label">Банк</div>
+      <div class="footer-field"></div>
+      <div style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.2); padding-top:14px;">
+        <div class="footer-field-label">Генеральный директор</div>
+        <div class="footer-field" style="min-height:40px"></div>
+        <div style="font-size:10px; color:rgba(255,255,255,0.35)">_____________ / подпись / печать</div>
+      </div>
+    </div>
+    <div>
+      <div class="footer-party-role"> Субарендатор</div>
+      <div class="footer-party-name">ИП _______________</div>
+      <div class="footer-field-label">Адрес регистрации</div>
+      <div class="footer-field"></div>
+      <div class="footer-field-label">ИНН / ОГРНИП</div>
+      <div class="footer-field"></div>
+      <div class="footer-field-label">Расчётный счёт</div>
+      <div class="footer-field"></div>
+      <div class="footer-field-label">Банк</div>
+      <div class="footer-field"></div>
+      <div style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.2); padding-top:14px;">
+        <div class="footer-field-label">Индивидуальный предприниматель</div>
+        <div class="footer-field" style="min-height:40px"></div>
+        <div style="font-size:10px; color:rgba(255,255,255,0.35)">ФИО / подпись / печать (при наличии)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

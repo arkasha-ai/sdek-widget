@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Презентация — Воробьев А.А. — Кейс №5</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#1a1a2e; font-family:'Inter',sans-serif; }
+
+  .slide {
+    width: 297mm;
+    height: 167mm;
+    position: relative;
+    overflow: hidden;
+    background: #0f1b35;
+    page-break-after: always;
+    break-after: page;
+  }
+
+  /* Common elements */
+  .slide-logo {
+    position: absolute;
+    top: 12px; left: 20px;
+    font-size: 9px; font-weight: 800;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1.3;
+  }
+  .slide-num {
+    position: absolute;
+    bottom: 10px; right: 18px;
+    font-size: 10px; color: rgba(255,255,255,0.25);
+    font-weight: 600;
+  }
+  .red-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: #FF0040;
+  }
+  .tri {
+    position: absolute;
+    top: 0; right: 0;
+    width: 0; height: 0;
+    border-style: solid;
+    border-width: 167mm 60mm 0 0;
+    border-color: rgba(255,0,64,0.12) transparent transparent transparent;
+  }
+  .bottom-line {
+    position: absolute;
+    bottom: 28px; left: 20px; right: 20px;
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+  }
+  .slide-author {
+    position: absolute;
+    bottom: 10px; left: 20px;
+    font-size: 8.5px; color: rgba(255,255,255,0.3);
+    font-weight: 500;
+  }
+  .sec-badge {
+    display: inline-block;
+    background: rgba(255,0,64,0.18);
+    border: 1px solid rgba(255,0,64,0.35);
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 9px; font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #FF0040;
+    margin-bottom: 10px;
+  }
+
+  /* ===== SLIDE 1: TITLE ===== */
+  .s1 { background: linear-gradient(135deg, #0f1b35 0%, #1a2d55 60%, #0f1b35 100%); }
+  .s1 .main-area { position: absolute; left: 30px; top: 35px; width: 65%; }
+  .s1 .dir-badge {
+    background: rgba(255,0,64,0.15);
+    border: 1px solid rgba(255,0,64,0.3);
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 9px; font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    display: inline-block;
+    margin-bottom: 14px;
+  }
+  .s1 .big-title { font-size: 26px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 6px; }
+  .s1 .big-title span { color: #FF0040; }
+  .s1 .subtitle { font-size: 13px; color: rgba(255,255,255,0.55); margin-bottom: 20px; font-weight: 400; }
+  .s1 .keis-box {
+    background: rgba(255,0,64,0.12);
+    border-left: 3px solid #FF0040;
+    border-radius: 0 6px 6px 0;
+    padding: 8px 14px;
+    display: inline-block;
+    font-size: 14px; font-weight: 700; color: #FF0040;
+    margin-bottom: 20px;
+  }
+  .s1 .author-box { font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.8; }
+  .s1 .author-box strong { color: #fff; font-weight: 600; }
+  .s1 .right-panel {
+    position: absolute; right: 0; top: 0; bottom: 0; width: 32%;
+    background: linear-gradient(180deg, rgba(255,0,64,0.08) 0%, rgba(255,0,64,0.02) 100%);
+    border-left: 1px solid rgba(255,0,64,0.15);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding: 20px;
+  }
+  .s1 .univ { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.35); text-align: center; line-height: 1.7; }
+  .s1 .year-big { font-size: 48px; font-weight: 800; color: rgba(255,255,255,0.06); margin-top: 8px; }
+
+  /* ===== SLIDE 2: AGENDA ===== */
+  .s-title { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 14px; }
+  .s-title span { color: #FF0040; }
+  .s-area { position: absolute; left: 30px; right: 30px; top: 42px; bottom: 40px; }
+  .agenda-grid { display: table; width: 100%; border-collapse: separate; border-spacing: 8px 6px; margin-top: 6px; }
+  .agenda-grid td { display: table-cell; vertical-align: top; width: 50%; }
+  .agenda-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 8px 12px;
+    display: flex; align-items: flex-start; gap: 10px;
+    margin-bottom: 6px;
+  }
+  .ag-num {
+    min-width: 24px; height: 24px;
+    border-radius: 50%;
+    background: rgba(255,0,64,0.2);
+    border: 1px solid rgba(255,0,64,0.4);
+    color: #FF0040; font-size: 10px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .ag-text { font-size: 10px; color: rgba(255,255,255,0.75); line-height: 1.5; }
+  .ag-text strong { color: #fff; display: block; font-size: 10.5px; margin-bottom: 1px; }
+
+  /* ===== CONTENT SLIDES ===== */
+  .s-header {
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 52px;
+    background: rgba(255,0,64,0.08);
+    border-bottom: 1px solid rgba(255,0,64,0.2);
+    display: flex; align-items: center;
+    padding: 0 30px;
+    gap: 14px;
+  }
+  .s-header-num {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: #FF0040;
+    color: #fff; font-size: 13px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .s-header-title { font-size: 16px; font-weight: 700; color: #fff; }
+  .s-header-sub { font-size: 10px; color: rgba(255,255,255,0.45); margin-left: 4px; }
+  .s-content { position: absolute; left: 30px; right: 30px; top: 62px; bottom: 40px; }
+
+  /* Law cards */
+  .law-grid { display: table; width: 100%; border-collapse: separate; border-spacing: 0 5px; }
+  .law-row { display: table-row; }
+  .law-num { display: table-cell; width: 28px; vertical-align: top; padding-top: 2px; }
+  .law-num-badge {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    background: rgba(255,0,64,0.15);
+    border: 1px solid rgba(255,0,64,0.3);
+    color: #FF0040; font-size: 9px; font-weight: 800;
+    text-align: center; line-height: 22px;
+  }
+  .law-body { display: table-cell; vertical-align: top; padding-left: 6px; }
+  .law-name { font-size: 10.5px; font-weight: 700; color: #fff; margin-bottom: 1px; }
+  .law-desc { font-size: 9.5px; color: rgba(255,255,255,0.55); line-height: 1.4; }
+
+  /* Two-column layout */
+  .two-col { display: table; width: 100%; border-collapse: separate; border-spacing: 10px 0; }
+  .two-col td { display: table-cell; vertical-align: top; width: 50%; }
+  .col-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 8px;
+    padding: 12px;
+    height: 100%;
+  }
+  .col-head { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #FF0040; margin-bottom: 8px; }
+  .col-list { list-style: none; }
+  .col-list li { font-size: 10px; color: rgba(255,255,255,0.7); padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; gap: 6px; }
+  .col-list li:last-child { border-bottom: none; }
+  .col-list li::before { content: '-'; color: #FF0040; font-weight: 700; flex-shrink: 0; }
+
+  /* Data table */
+  .dtable { width: 100%; border-collapse: collapse; font-size: 9.5px; }
+  .dtable thead tr { background: rgba(255,0,64,0.2); }
+  .dtable thead th { padding: 6px 10px; text-align: left; font-weight: 700; color: #fff; font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .dtable tbody tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+  .dtable tbody td { padding: 5px 10px; color: rgba(255,255,255,0.7); border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .dtable tbody td:first-child { color: #fff; font-weight: 600; }
+
+  /* Conclusion box */
+  .concl {
+    background: rgba(255,0,64,0.08);
+    border-left: 3px solid #FF0040;
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.6;
+  }
+  .concl strong { color: #fff; }
+  .concl-title { font-size: 10.5px; font-weight: 700; color: #FF0040; margin-bottom: 5px; }
+
+  /* Verdict badge */
+  .verdict-yes { background: rgba(5,150,105,0.2); border: 1px solid rgba(5,150,105,0.4); color: #34d399; border-radius: 4px; padding: 2px 8px; font-size: 9px; font-weight: 700; display: inline-block; }
+  .verdict-no  { background: rgba(220,38,38,0.2);  border: 1px solid rgba(220,38,38,0.4);  color: #f87171; border-radius: 4px; padding: 2px 8px; font-size: 9px; font-weight: 700; display: inline-block; }
+
+  .highlight-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+  }
+  .hb-title { font-size: 10.5px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .hb-text  { font-size: 9.5px; color: rgba(255,255,255,0.65); line-height: 1.5; }
+
+  @media print {
+    body { background: #0f1b35; }
+    .slide { width: 297mm !important; height: 167mm !important; page-break-after: always; break-after: page; }
+    @page { size: 297mm 167mm landscape; margin: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: TITLE -->
+<div class="slide s1">
+  <div class="red-bar"></div>
+  <div class="main-area">
+    <div class="s1 dir-badge" style="position:static;background:rgba(255,0,64,0.15);border:1px solid rgba(255,0,64,0.3);border-radius:4px;padding:4px 10px;font-size:9px;font-weight:600;color:rgba(255,255,255,0.7);display:inline-block;margin-bottom:14px;">40.03.01 Юриспруденция &nbsp;|&nbsp; Гражданско-правовой профиль</div>
+    <div style="font-size:24px;font-weight:800;color:#fff;line-height:1.2;margin-bottom:6px;">Производственная<br><span style="color:#FF0040;">(правоприменительная)</span><br>практика</div>
+    <div style="margin:12px 0;">
+      <div style="background:rgba(255,0,64,0.12);border-left:3px solid #FF0040;border-radius:0 6px 6px 0;padding:8px 14px;display:inline-block;font-size:14px;font-weight:700;color:#FF0040;">Кейс-задача №5 — Итоговая презентация</div>
+    </div>
+    <div style="font-size:10.5px;color:rgba(255,255,255,0.6);line-height:2;">
+      <div><strong style="color:#fff;">Обучающийся:</strong> Воробьев Александр Алексеевич</div>
+      <div><strong style="color:#fff;">Группа:</strong> ОБЮз-12206МОгп</div>
+      <div><strong style="color:#fff;">Место практики:</strong> Юридическая клиника НОЧУ ВО «Синергия»</div>
+      <div><strong style="color:#fff;">Срок:</strong> 19 апреля – 16 мая 2025 г.</div>
+    </div>
+  </div>
+  <div class="s1 right-panel" style="position:absolute;right:0;top:0;bottom:0;width:30%;background:linear-gradient(180deg,rgba(255,0,64,0.08)0%,rgba(255,0,64,0.02)100%);border-left:1px solid rgba(255,0,64,0.15);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:16px;">
+    <div style="font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.3);text-align:center;line-height:1.8;">Московский<br>университет<br>«Синергия»<br><br>Юридический<br>факультет</div>
+    <div style="font-size:44px;font-weight:800;color:rgba(255,255,255,0.06);margin-top:10px;">2025</div>
+  </div>
+  <div class="bottom-line"></div>
+</div>
+
+<!-- SLIDE 2: AGENDA -->
+<div class="slide">
+  <div class="red-bar"></div>
+  <div class="tri"></div>
+  <div class="s-header">
+    <div class="s-header-num" style="font-size:11px;">&#9776;</div>
+    <div class="s-header-title">Содержание презентации</div>
+  </div>
+  <div class="s-content">
+    <table class="agenda-grid" style="width:100%;border-collapse:separate;border-spacing:8px 5px;">
+      <tr>
+        <td style="vertical-align:top;width:50%;padding:0 4px 0 0;">
+          <div class="agenda-item"><div class="ag-num">1</div><div class="ag-text"><strong>Кейс №1 — Нормативно-правовая база</strong>Федеральные законы и локальные акты, регулирующие деятельность Юридической клиники</div></div>
+          <div class="agenda-item"><div class="ag-num">2</div><div class="ag-text"><strong>Кейс №2 — Общая характеристика клиники</strong>Цели, задачи, организационная структура и документооборот</div></div>
+          <div class="agenda-item"><div class="ag-num">3</div><div class="ag-text"><strong>Кейс №3 — Практические документы</strong>Три договора, подготовленных в рамках практики</div></div>
+        </td>
+        <td style="vertical-align:top;width:50%;padding:0 0 0 4px;">
+          <div class="agenda-item"><div class="ag-num">4</div><div class="ag-text"><strong>Кейс №4 — Анализ судебных решений</strong>Два дела ВС РФ: иск удовлетворён и в иске отказано</div></div>
+          <div class="agenda-item"><div class="ag-num">5</div><div class="ag-text"><strong>Выводы по практике</strong>Приобретённые компетенции и профессиональные навыки</div></div>
+          <div style="margin-top:6px;background:rgba(255,0,64,0.06);border:1px solid rgba(255,0,64,0.15);border-radius:8px;padding:10px 12px;">
+            <div style="font-size:9px;font-weight:700;color:#FF0040;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px;">Место прохождения практики</div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.7);">Юридическая клиника НОЧУ ВО «Московский университет "Синергия"»</div>
+            <div style="font-size:9px;color:rgba(255,255,255,0.4);margin-top:3px;">19.04.2025 — 16.05.2025</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="bottom-line"></div>
+  <div class="slide-author">Воробьев А.А. | ОБЮз-12206МОгп</div>
+  <div class="slide-num">2</div>
+</div>
+
+<!-- SLIDE 3: CASE 1 — Laws overview -->
+<div class="slide">
+  <div class="red-bar"></div>
+  <div class="tri"></div>
+  <div class="s-header">
+    <div class="s-header-num">1</div>
+    <div>
+      <div class="s-header-title">Кейс №1 — Нормативно-правовая база</div>
+      <div class="s-header-sub">Правовые основы деятельности Юридической клиники</div>
+    </div>
+  </div>
+  <div class="s-content">
+    <table class="law-grid" style="width:100%;border-spacing:0 5px;">
+      <tr class="law-row">
+        <td class="law-num"><div class="law-num-badge">1</div></td>
+        <td class="law-body"><div class="law-name">Конституция Российской Федерации (1993)</div><div class="law-desc">Ст. 48 — право на квалифицированную юридическую помощь; ст. 46 — судебная защита; ст. 24 — персональные данные</div></td>
+        <td class="law-num" style="padding-left:16px;"><div class="law-num-badge">2</div></td>
+        <td class="law-body"><div class="law-name">ФЗ от 21.11.2011 №324-ФЗ «О бесплатной юридической помощи»</div><div class="law-desc">Определяет место клиники в системе бесплатной юридической помощи; ст. 23 — юридические клиники</div></td>
+      </tr>
+      <tr class="law-row">
+        <td class="law-num"><div class="law-num-badge">3</div></td>
+        <td class="law-body"><div class="law-name">ФЗ от 29.12.2012 №273-ФЗ «Об образовании в РФ»</div><div class="law-desc">Практическая подготовка студентов, база для правоприменительной практики по направлению «Юриспруденция»</div></td>
+        <td class="law-num" style="padding-left:16px;"><div class="law-num-badge">4</div></td>
+        <td class="law-body"><div class="law-name">Приказ Минобрнауки от 28.11.2012 №994</div><div class="law-desc">Порядок создания и деятельности юридических клиник вузов. Требования к участникам, видам помощи, документации</div></td>
+      </tr>
+      <tr class="law-row">
+        <td class="law-num"><div class="law-num-badge">5</div></td>
+        <td class="law-body"><div class="law-name">ФЗ от 27.07.2006 №152-ФЗ «О персональных данных»</div><div class="law-desc">Конфиденциальность данных клиентов; согласие на обработку персональных данных при приёме</div></td>
+        <td class="law-num" style="padding-left:16px;"><div class="law-num-badge">6</div></td>
+        <td class="law-body"><div class="law-name">ФЗ от 02.05.2006 №59-ФЗ «Об обращениях граждан»</div><div class="law-desc">Требования к форме/содержанию обращений, сроки рассмотрения (30 дней), права заявителей</div></td>
+      </tr>
+    </table>
+  </div>
+  <div class="bottom-line"></div>
+  <div class="slide-author">Воробьев А.А. | ОБЮз-12206МОгп</div>
+  <div class="slide-num">3</div>
+</div>
+
+<!-- SLIDE 4: CASE 1 — Local acts + conclusion -->
+<div class="slide">
+  <div class="red-bar"></div>
+  <div class="tri"></div>
+  <div class="s-header">
+    <div class="s-header-num">1</div>
+    <div>
+      <div class="s-header-title">Кейс №1 — Локальные акты и вывод</div>
+      <div class="s-header-sub">Внутренние документы Университета «Синергия»</div>
+    </div>
+  </div>
+  <div class="s-content">
+    <table style="width:100%;border-collapse:separate;border-spacing:10px 0;">
+      <tr>
+        <td style="vertical-align:top;width:55%;">
+          <table class="law-grid" style="width:100%;border-spacing:0 6px;">
+            <tr>
+              <td class="law-num"><div class="law-num-badge">7</div></td>
+              <td class="law-body"><div class="law-name">Положение о Юридической клинике (утв. 25.03.2025)</div><div class="law-desc">Главный регламент практиканта: статус, цели, структура, обязанности, документооборот, конфиденциальность</div></td>
+            </tr>
+            <tr>
+              <td class="law-num"><div class="law-num-badge">8</div></td>
+              <td class="law-body"><div class="law-name">Устав НОЧУ ВО «Московский университет "Синергия"»</div><div class="law-desc">Правовая основа создания Клиники как структурного подразделения. Права и обязанности обучающихся</div></td>
+            </tr>
+          </table>
+        </td>
+        <td style="vertical-align:top;width:45%;">
+          <div class="concl">
+            <div class="concl-title">Вывод</div>
+            Деятельность Клиники основывается на <strong>многоуровневой нормативно-правовой базе</strong>: Конституция РФ → федеральные законы → ведомственные приказы → локальные акты Университета.<br><br>
+            Центральное место занимают <strong>ФЗ №324-ФЗ</strong> и <strong>Положение о Клинике</strong>, обеспечивающие законность и эффективность её деятельности.
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="bottom-line"></div>
+  <div class="slide-author">Воробьев А.А. | ОБЮз-12206МОгп</div>
+  <div class="slide-num">4</div>
+</div>
+
+<!-- SLIDE 5: CASE 2 — Goals & Tasks -->
+<div class="slide">
+  <div class="red-bar"></div>
+  <div class="tri"></div>
+  <div class="s-header">
+    <div class="s-header-num">2</div>
+    <div>
+      <div class="s-header-title">Кейс №2 — Цели и задачи Юридической клиники</div>
+    </div>
+  </div>
+  <div class="s-content">
+    <table class="two-col">
+      <tr>
+        <td>
+          <div class="col-box">
+            <div class="col-head">Цели создания</div>
+            <ul class="col-list">
+              <li>Реализация конституционного права граждан на бесплатную юридическую помощь (ст. 48 Конституции РФ)</li>
+              <li>Обеспечение доступа граждан к правосудию</li>
+              <li>Правовое просвещение населения</li>
+              <li>Формирование у студентов профессиональных навыков оказания юридической помощи</li>
+            </ul>
+          </div>
+        </td>
+        <td>
+          <div class="col-box">
+            <div class="col-head">Задачи функционирования</div>
+            <ul class="col-list">
+              <li>Оказание бесплатной юридической помощи гражданам</li>
+              <li>Повышение качества юридического образования студентов</li>
+              <li>Развитие навыков работы с материалами реальной практики</li>
+              <li>Организация практической подготовки по направлению «Юриспруденция»</li>
+              <li>Внедрение интерактивных методик преподавания</li>
+              <li>Сотрудничество с общественными организациями и СМИ по правовым вопросам</li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <div style="margin-top:8px;background:rgba(255,255,255,0.04);border-radius:6px;padding:7px 12px;font-size:9.5px;color:rgba(255,255,255,0.6);">
+      Клиника оказывает помощь по вопросам <strong style="color:#fff;">гражданского, семейного, трудового, жилищного, наследственного</strong> и иных отраслей права.<br>
+      Помощь по вопросам уголовного и административного права — <strong style="color:#FF0040;">не оказывается.</strong>
+    </div>
+  </div>
+  <div class="bottom-line"></div>
+  <div class="slide-author">Воробьев А.А. | ОБЮз-12206МОгп</div>
+  <div class="slide-num">5</div>
+</div>
+
+<!-- SLIDE 6: CASE 2 — Org structure -->
+<div class="slide">
+  <div class="red-bar"></div>
+  <div class="tri"></div>
+  <div class="s-header">
+    <div class="s-header-num">2</div>
+    <div>
+      <div class="s-header-title">Кейс №2 — Организационная структура и обязанности</div>
+    </div>
+  </div>
+  <div class="s-content">
+    <table style="width:100%;border-collapse:separate;border-spacing:6px 0;">
+      <tr>
+        <td style="vertical-align:top;width:22%;text-align:center;">
+          <div style="background:#FF0040;border-radius:8px;padding:8px 6px;margin-bottom:6px;font-size:9px;font-weight:700;color:#fff;text-align:center;">Руководитель клиники</div>
+          <div style="font-size:8.5px;color:rgba(255,255,255,0.55);text-align:left;line-height:1.5;">- Общее управление<br>- Контроль деятельности<br>- График приёма граждан<br>- Представительство клиники</div>
+        </td>
+        <td style="vertical-align:top;width:26%;text-align:center;">
+          <div style="background:rgba(255,0,64,0.3);border:1px solid rgba(255,0,64,0.5);border-radius:8px;padding:8px 6px;margin-bottom:6px;font-size:9px;font-weight:700;color:#fff;">Преподаватели-кураторы</div>
+          <div style="font-size:8.5px;color:rgba(255,255,255,0.55);text-align:left;line-height:1.5;">- Консультирование студентов<br>- Контроль учётной документации<br>- Контроль качества помощи</div>
+        </td>
+        <td style="vertical-align:top;width:26%;text-align:center;">
+          <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:8px 6px;margin-bottom:6px;font-size:9px;font-weight:700;color:#fff;">Студенты-консультанты</div>
+          <div style="font-size:8.5px;color:rgba(255,255,255,0.55);text-align:left;line-height:1.5;">- Консультирование граждан<br>- Составление документов<br>- Учебно-методические занятия<br>- Отчёты о практике</div>
+        </td>
+        <td style="vertical-align:top;width:26%;text-align:center;">
+          <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px 6px;margin-bottom:6px;font-size:9px;font-weight:700;color:rgba(255,255,255,0.7);">Секретарь + Юристы-практики</div>
+          <div style="font-size:8.5px;color:rgba(255,255,255,0.55);text-align:left;line-height:1.5;">Секр.: делопроизводство, журнал регистрации, архив<br>Юристы: лекции, семинары, тренинги (безвозмездно)</div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="bottom-line"></div>
+  <div class="slide-author">Воробьев А.А. | ОБЮз-12206МОгп</div>
+  <div class="slide-num">6</div>
+</div>
+
+<!-- SLIDE 7: CASE 2 — Document flow -->
+<div class="slide">
+  <div class="red-bar"></div>
+  <div class="tri"></div>
+  <div class="s-header">
+    <div class="s-header-num">2</div>
+    <div>
+      <div class="s-header-title">Кейс №2 — Схема документооборота</div>
+    </div>
+  </div>
+  <div class="s-content">
+    <table class="dtable">
+      <thead>
+        <tr>
+          <th style="width:28%;">Этап</th>
+          <th style="width:45%;">Документ</th>
+          <th style="width:27%;">Ответственный</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1. Первичный приём гражданина</td><td>Заявление об оказании помощи; Согласие на обработку персональных данных</td><td>Секретарь Клиники</td></tr>
+        <tr><td>2. Регистрация обращения</td><td>Журнал регистрации; Карточка обратившегося</td><td>Секретарь Клиники</td></tr>
+        <tr><td>3. Распределение обращения</td><td>Резолюция руководителя / куратора; Направление к студенту</td><td>Руководитель / Куратор</td></tr>
+        <tr><td>4. Подготовка позиции</td><td>Рабочие материалы; черновик консультации / документа</td><td>Студент-консультант</td></tr>
+        <tr><td>5. Оказание помощи</td><td>Письменная консультация / заявление / жалоба / ходатайство</td><td>Студент-консультант</td></tr>
+        <tr><td>6. Архивирование</td><td>Итоговая запись в журнале; Дело → архив Клиники</td><td>Секретарь Клиники</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="bottom-line"></div>
+  <div class="slide-author">Воробьев А.А. | ОБЮз-12206МОгп</div>
+  <div class="slide-num">7</div>
+</div>
+
+<!-- SLIDE 8: CASE 3 — Documents -->
+<div class="slide">
+  <div class="red-bar"></div>
+  <div class="tri"></div>
+  <div class="s-header">
+    <div class="s-header-num">3</div>
+    <div>
+      <div class="s-header-title">Кейс №3 — Практические документы</div>
+      <div class="s-header-sub">Три договора, подготовленных в рамках практики</div>
+    </div>
+  </div>
+  <div class="s-content">
+    <table style="width:100%;border-collapse:separate;border-spacing:8px 0;">
+      <tr>
+        <td style="vertical-align:top;width:33%;">
+          <div style="background:rgba(37,99,235,0.12);border:1px solid rgba(37,99,235,0.3);border-radius:10px;padding:14px;height:100%;">
+            <div style="width:28px;height:28px;background:rgba(37,99,235,0.3);border-radius:8px;text-align:center;line-height:28px;font-size:13px;font-weight:800;color:#60a5fa;margin-bottom:8px;">A</div>
+            <div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:6px;">Договор субаренды нежилого помещения</div>
+            <div style="font-size:9px;color:rgba(255,255,255,0.55);line-height:1.6;">Регулирует передачу нежилого помещения (пекарня) в субаренду. Включает условия о цене, сроке, обеспечительном платеже (378 000 руб.), ответственности и порядке расторжения.</div>
+            <div style="margin-top:8px;font-size:8.5px;color:rgba(255,255,255,0.35);">Ст. 615 ГК РФ | Срок: 11 мес.</div>
+          </div>
+        </td>
+        <td style="vertical-align:top;width:33%;">
+          <div style="background:rgba(5,150,105,0.12);border:1px solid rgba(5,150,105,0.3);border-radius:10px;padding:14px;height:100%;">
+            <div style="width:28px;height:28px;background:rgba(5,150,105,0.3);border-radius:8px;text-align:center;line-height:28px;font-size:13px;font-weight:800;color:#34d399;margin-bottom:8px;">Б</div>
+            <div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:6px;">Договор купли-продажи транспортного средства</div>
+            <div style="font-size:9px;color:rgba(255,255,255,0.55);line-height:1.6;">Договор на автомобиль LADA 4X4, 2024 г.в. Цена: 1 000 000 руб. Включает Акт приёма-передачи с проверкой VIN, розыска и ограничений.</div>
+            <div style="margin-top:8px;font-size:8.5px;color:rgba(255,255,255,0.35);">Ст. 454 ГК РФ | Оплата: 1 день</div>
+          </div>
+        </td>
+        <td style="vertical-align:top;width:33%;">
+          <div style="background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.3);border-radius:10px;padding:14px;height:100%;">
+            <div style="width:28px;height:28px;background:rgba(245,158,11,0.3);border-radius:8px;text-align:center;line-height:28px;font-size:13px;font-weight:800;color:#fbbf24;margin-bottom:8px;">В</div>
+            <div style="font-size:11px;font-weight:700;color:#fff;margin-bottom:6px;">Договор займа между физическими лицами</div>
+            <div style="font-size:9px;color:rgba(255,255,255,0.55);line-height:1.6;">Процентный договор займа. Содержит условия о сроке возврата, процентах, порядке расчётов, неустойке за просрочку и расписку о получении средств.</div>
+            <div style="margin-top:8px;font-size:8.5px;color:rgba(255,255,255,0.35);">Ст. 807–818 ГК РФ | 2 экземпляра</div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="bottom-line"></div>
+  <div class="slide-author">Воробьев А.А. | ОБЮз-12206МОгп</div>
+  <div class="slide-num">8</div>
+</div>
+
+<!-- SLIDE 9: CASE 4 — Court case 1 -->
+<div class="slide">
+  <div class="red-bar"></div>
+  <div class="tri"></div>
+  <div class="s-header">
+    <div class="s-header-num">4</div>
+    <div>
+      <div class="s-header-title">Кейс №4 — Анализ судебных решений</div>
+      <div class="s-header-sub">Дело №1: Кузнецова С.Г. против АО «Русская телефонная компания»</div>
+    </div>
+  </div>
+  <div class="s-content">
+    <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;">
+      <div class="verdict-yes">ИСК УДОВЛЕТВОРЁН</div>
+      <div style="font-size:9px;color:rgba(255,255,255,0.45);padding-top:3px;">Определение ВС РФ, Коллегия по гражданским делам</div>
+    </div>
+    <table style="width:100%;border-collapse:separate;border-spacing:10px 0;">
+      <tr>
+        <td style="vertical-align:top;width:50%;">
+          <div class="highlight-box">
+            <div class="hb-title">Фабула дела</div>
+            <div class="hb-text">12.02.2022 г. Кузнецова С.Г. оформила предзаказ Samsung Galaxy S22 Ultra на сумму <strong>87 493 руб.</strong> 17.03.2022 продавец (АО «РТК») в одностороннем порядке аннулировал заказ, сославшись на приостановку поставок Samsung в РФ. Покупатель лишилась товара по акционной цене.</div>
+          </div>
+          <div class="highlight-box">
+            <div class="hb-title">Позиция истца</div>
+            <div class="hb-text">Взыскать убытки (разница цен — 100 087 руб.), неустойку, компенсацию морального вреда, штраф по Закону «О защите прав потребителей».</div>
+          </div>
+        </td>
+        <td style="vertical-align:top;width:50%;">
+          <div class="concl">
+            <div class="concl-title">Позиция Верховного Суда РФ</div>
+            ВС указал: договор был <strong>заключён в момент акцепта заказа и оплаты</strong> (ст. 8, 420 ГК РФ). Санкционные ограничения — не форс-мажор для профессионального продавца.<br><br>
+            По ст. 23.1 Закона «О ЗПП» продавец, получивший предоплату, обязан передать товар либо возместить разницу в цене. <strong>Предпринимательский риск не перекладывается на потребителя.</strong><br><br>
+            Применённые нормы: ст. 8, 420 ГК РФ; ст. 23.1 Закона №2300-1; ст. 401 ГК РФ (форс-мажор).
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="bottom-line"></div>
+  <div class="slide-author">Воробьев А.А. | ОБЮз-12206МОгп</div>
+  <div class="slide-num">9</div>
+</div>
+
+<!-- SLIDE 10: CASE 4 — Court case 2 -->
+<div class="slide">
+  <div class="red-bar"></div>
+  <div class="tri"></div>
+  <div class="s-header">
+    <div class="s-header-num">4</div>
+    <div>
+      <div class="s-header-title">Кейс №4 — Анализ судебных решений</div>
+      <div class="s-header-sub">Дело №2: ГУП «Московский метрополитен» против Плотникова В.Е.</div>
+    </div>
+  </div>
+  <div class="s-content">
+    <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;">
+      <div class="verdict-no">В ИСКЕ ОТКАЗАНО</div>
+      <div style="font-size:9px;color:rgba(255,255,255,0.45);padding-top:3px;">Определение ВС РФ, 2025 г. (дело №77RS0002-02-2021-015478-67)</div>
+    </div>
+    <table style="width:100%;border-collapse:separate;border-spacing:10px 0;">
+      <tr>
+        <td style="vertical-align:top;width:50%;">
+          <div class="highlight-box">
+            <div class="hb-title">Фабула дела</div>
+            <div class="hb-text">16.04.2021 ДТП на ул. Лесной в Москве: водитель Плотников В.Е. (нарушение п. 8.4 ПДД) заблокировал трамвайные пути. Задержаны 35 рейсов маршрутов №7 и №9. ГУП «Метрополитен» предъявил иск о взыскании упущенной выгоды — <strong>696 630,65 руб.</strong></div>
+          </div>
+          <div class="highlight-box">
+            <div class="hb-title">Позиция нижестоящих судов</div>
+            <div class="hb-text">Суды 3 инстанций удовлетворили иск, констатировав вину ответчика и причинно-следственную связь.</div>
+          </div>
+        </td>
+        <td style="vertical-align:top;width:50%;">
+          <div class="concl">
+            <div class="concl-title">Позиция Верховного Суда РФ</div>
+            ВС отменил решения: суды не исследовали, <strong>является ли деятельность ГУП коммерческой</strong> и покрываются ли убытки из <strong>бюджетных источников</strong> (субсидии на перевозку).<br><br>
+            По ст. 15 и 1064 ГК РФ: упущенная выгода — это <strong>реально недополученный доход</strong>, не компенсированный из иных источников. Без доказательства реального ущерба взыскание невозможно.<br><br>
+            Применённые нормы: ст. 15, 393, 1064, 1082 ГК РФ; п. 8.4 ПДД; ст. 390.14 ГПК РФ.
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="bottom-line"></div>
+  <div class="slide-author">Воробьев А.А. | ОБЮз-12206МОгп</div>
+  <div class="slide-num">10</div>
+</div>
+
+<!-- SLIDE 11: CASE 4 — Comparative analysis -->
+<div class="slide">
+  <div class="red-bar"></div>
+  <div class="tri"></div>
+  <div class="s-header">
+    <div class="s-header-num">4</div>
+    <div>
+      <div class="s-header-title">Кейс №4 — Сравнительный правовой анализ</div>
+    </div>
+  </div>
+  <div class="s-content">
+    <table class="dtable" style="margin-bottom:10px;">
+      <thead><tr><th>Критерий</th><th>Дело Кузнецовой (иск удовлетворён)</th><th>Дело Метрополитена (отказ)</th></tr></thead>
+      <tbody>
+        <tr><td>Вид ответственности</td><td>Договорная (ст. 23.1 Закона о ЗПП)</td><td>Деликтная — упущенная выгода (ст. 1064 ГК)</td></tr>
+        <tr><td>Ключевой вопрос</td><td>Является ли санкционный запрет форс-мажором?</td><td>Является ли потеря выручки реальным убытком?</td></tr>
+        <tr><td>Позиция ВС РФ</td><td>Санкции — предпринимательский риск, не форс-мажор</td><td>Бюджетное финансирование перекрывает упущенную выгоду</td></tr>
+        <tr><td>Принцип</td><td>Защита слабой стороны — потребителя</td><td>Доказанность реального ущерба обязательна</td></tr>
+      </tbody>
+    </table>
+    <div class="concl">
+      <div class="concl-title">Вывод</div>
+      Оба решения отражают принципиальную позицию ВС РФ: <strong>строгая доказанность оснований и размера гражданско-правовой ответственности.</strong> В деле Кузнецовой — защита потребителя от переложения предпринимательских рисков. В деле Метрополитена — недопущение необоснованного обогащения при наличии бюджетного финансирования.
+    </div>
+  </div>
+  <div class="bottom-line"></div>
+  <div class="slide-author">Воробьев А.А. | ОБЮз-12206МОгп</div>
+  <div class="slide-num">11</div>
+</div>
+
+<!-- SLIDE 12: CONCLUSION -->
+<div class="slide">
+  <div class="red-bar"></div>
+  <div class="tri"></div>
+  <div class="s-header">
+    <div class="s-header-num" style="background:rgba(255,255,255,0.1);font-size:12px;">&#10003;</div>
+    <div>
+      <div class="s-header-title">Выводы по результатам практики</div>
+      <div class="s-header-sub">Приобретённые компетенции и профессиональные навыки</div>
+    </div>
+  </div>
+  <div class="s-content">
+    <table style="width:100%;border-collapse:separate;border-spacing:8px 0;">
+      <tr>
+        <td style="vertical-align:top;width:50%;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#FF0040;margin-bottom:8px;">Освоенные компетенции</div>
+          <ul class="col-list" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px 12px;">
+            <li>Анализ многоуровневой нормативно-правовой базы организации</li>
+            <li>Составление гражданско-правовых договоров (субаренда, купля-продажа, заём)</li>
+            <li>Правовой анализ судебной практики ВС РФ</li>
+            <li>Применение норм материального права при решении практических задач</li>
+            <li>Работа с реальными клиентами под контролем куратора</li>
+            <li>Соблюдение конфиденциальности персональных данных (ФЗ №152-ФЗ)</li>
+          </ul>
+        </td>
+        <td style="vertical-align:top;width:50%;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#FF0040;margin-bottom:8px;">Итоги практики</div>
+          <table style="width:100%;border-collapse:collapse;">
+            <tr>
+              <td style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+                <div style="font-size:9.5px;color:rgba(255,255,255,0.5);">Место практики</div>
+                <div style="font-size:10px;color:#fff;font-weight:600;">Юридическая клиника НОЧУ ВО «Синергия»</div>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+                <div style="font-size:9.5px;color:rgba(255,255,255,0.5);">Период</div>
+                <div style="font-size:10px;color:#fff;font-weight:600;">19 апреля – 16 мая 2025 г.</div>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
+                <div style="font-size:9.5px;color:rgba(255,255,255,0.5);">Направление</div>
+                <div style="font-size:10px;color:#fff;font-weight:600;">40.03.01 Юриспруденция, гражданско-правовой профиль</div>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:5px 0;">
+                <div style="font-size:9.5px;color:rgba(255,255,255,0.5);">Подготовлено документов</div>
+                <div style="font-size:10px;color:#fff;font-weight:600;">3 гражданско-правовых договора</div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="bottom-line"></div>
+  <div class="slide-author">Воробьев А.А. | ОБЮз-12206МОгп</div>
+  <div class="slide-num">12</div>
+</div>
+
+<!-- SLIDE 13: FINAL -->
+<div class="slide" style="background:linear-gradient(135deg,#0f1b35 0%,#1a2d55 60%,#0f1b35 100%);">
+  <div class="red-bar"></div>
+  <div style="position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:167mm 80mm 0 0;border-color:rgba(255,0,64,0.08) transparent transparent transparent;"></div>
+  <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-55%);text-align:center;width:80%;">
+    <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:rgba(255,255,255,0.35);margin-bottom:16px;">Спасибо за внимание</div>
+    <div style="font-size:32px;font-weight:800;color:#fff;line-height:1.2;margin-bottom:12px;">Производственная практика<br><span style="color:#FF0040;">завершена</span></div>
+    <div style="width:60px;height:3px;background:#FF0040;margin:0 auto 16px;border-radius:2px;"></div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.5);line-height:2;">
+      Воробьев Александр Алексеевич<br>
+      Группа ОБЮз-12206МОгп<br>
+      НОЧУ ВО «Московский университет "Синергия"»<br>
+      Юридический факультет · 40.03.01 Юриспруденция
+    </div>
+  </div>
+  <div class="slide-num">13</div>
+</div>
+
+</body>
+</html>

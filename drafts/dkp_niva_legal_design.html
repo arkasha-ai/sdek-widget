@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Договор купли-продажи ТС</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  :root {
+    --navy:  #1a2744;
+    --blue:  #2563eb;
+    --bl:    #dbeafe;
+    --amber: #f59e0b;
+    --aml:   #fef3c7;
+    --green: #059669;
+    --grl:   #d1fae5;
+    --red:   #dc2626;
+    --rdl:   #fee2e2;
+    --g50:   #f9fafb;
+    --g100:  #f3f4f6;
+    --g200:  #e5e7eb;
+    --g400:  #9ca3af;
+    --g600:  #4b5563;
+    --g700:  #374151;
+    --g900:  #111827;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',sans-serif; background:#fff; color:var(--g900); font-size:13px; line-height:1.6; }
+
+  /* COVER */
+  .cover { background:linear-gradient(135deg,#1a2744 0%,#243b6e 100%); color:#fff; padding:44px 52px 36px; position:relative; overflow:hidden; }
+  .cover::before { content:''; position:absolute; top:-60px; right:-60px; width:280px; height:280px; border-radius:50%; background:rgba(255,255,255,.04); }
+  .badge { display:inline-block; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); border-radius:20px; padding:4px 14px; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:18px; color:rgba(255,255,255,.8); }
+  .cover-title { font-size:28px; font-weight:800; margin-bottom:6px; letter-spacing:-.4px; }
+  .cover-sub { font-size:13px; color:rgba(255,255,255,.55); margin-bottom:30px; }
+  .cover-meta { display:table; width:100%; }
+  .cover-meta td { padding-right:28px; vertical-align:top; }
+  .meta-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.45); margin-bottom:3px; }
+  .meta-value { font-size:13px; font-weight:700; color:#fff; }
+  .docnum { position:absolute; top:44px; right:52px; text-align:right; }
+  .docnum-label { font-size:9px; color:rgba(255,255,255,.35); text-transform:uppercase; letter-spacing:.08em; }
+  .docnum-val { font-size:26px; font-weight:800; color:rgba(255,255,255,.1); }
+
+  /* SUMMARY CARDS */
+  .summary { background:var(--g50); border-bottom:1px solid var(--g200); padding:28px 52px; }
+  .summary-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--g400); margin-bottom:16px; }
+  .cards { width:100%; border-collapse:collapse; }
+  .cards td { padding:0 8px 0 0; vertical-align:top; width:25%; }
+  .cards td:last-child { padding-right:0; }
+  .card { background:#fff; border:1px solid var(--g200); border-radius:10px; padding:14px; position:relative; overflow:hidden; }
+  .card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:10px 10px 0 0; }
+  .card.blue::before  { background:var(--blue); }
+  .card.amber::before { background:var(--amber); }
+  .card.green::before { background:var(--green); }
+  .card.red::before   { background:var(--red); }
+  .card-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--g400); margin-bottom:4px; }
+  .card-value { font-size:15px; font-weight:800; color:var(--g900); }
+  .card-sub   { font-size:10px; color:var(--g400); margin-top:2px; }
+
+  /* VEHICLE TABLE */
+  .vehicle { padding:24px 52px; border-bottom:1px solid var(--g200); }
+  .vehicle-title { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--g400); margin-bottom:14px; }
+  .vtable { width:100%; border-collapse:collapse; border-radius:10px; overflow:hidden; border:1px solid var(--g200); }
+  .vtable td { padding:8px 14px; border-top:1px solid var(--g200); font-size:12px; }
+  .vtable tr:first-child td { border-top:none; }
+  .vtable tr:nth-child(even) td { background:var(--g50); }
+  .vtable .vt-label { color:var(--g400); font-weight:600; width:220px; }
+  .vtable .vt-value { color:var(--g900); font-weight:600; }
+
+  /* PARTIES */
+  .parties { padding:20px 52px 24px; border-bottom:1px solid var(--g200); }
+  .parties-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--g400); margin-bottom:14px; }
+  .ptable { width:100%; border-collapse:collapse; }
+  .ptable td { vertical-align:top; width:50%; padding:0; }
+  .ptable td:first-child { padding-right:8px; }
+  .party-box { border-radius:10px; padding:16px; }
+  .pb-blue  { background:var(--bl); }
+  .pb-amber { background:var(--aml); }
+  .party-role  { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; margin-bottom:6px; }
+  .role-blue  { color:var(--blue); }
+  .role-amber { color:#92400e; }
+  .party-name { font-size:13px; font-weight:700; margin-bottom:4px; }
+  .party-info { font-size:11px; color:var(--g600); line-height:1.7; }
+
+  /* SECTION */
+  .content { padding:0 52px; }
+  .section { border-bottom:1px solid var(--g100); }
+  .sec-header { display:table; width:100%; padding:20px 0 12px; }
+  .sec-icon-cell { display:table-cell; vertical-align:middle; width:44px; }
+  .sec-icon { width:36px; height:36px; border-radius:10px; display:table-cell; text-align:center; vertical-align:middle; font-size:14px; font-weight:800; color:#fff; }
+  .si-blue  { background:var(--blue); }
+  .si-green { background:var(--green); }
+  .si-amber { background:var(--amber); }
+  .si-red   { background:var(--red); }
+  .sec-title-cell { display:table-cell; vertical-align:middle; }
+  .sec-num   { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--g400); }
+  .sec-title { font-size:14px; font-weight:700; color:var(--navy); }
+  .sec-body  { padding-bottom:20px; padding-left:44px; }
+
+  /* CLAUSE */
+  .clause { display:table; width:100%; margin-bottom:8px; }
+  .cl-num  { display:table-cell; font-size:11px; font-weight:700; color:var(--blue); width:36px; vertical-align:top; padding-top:2px; }
+  .cl-text { display:table-cell; font-size:12.5px; color:var(--g600); line-height:1.6; }
+  .cl-text strong { color:var(--g900); font-weight:600; }
+
+  /* HIGHLIGHT */
+  .hl { border-left:3px solid var(--blue); background:var(--bl); border-radius:0 8px 8px 0; padding:10px 14px; margin:10px 0; font-size:12px; color:var(--g600); }
+  .hl.amber { border-color:var(--amber); background:var(--aml); }
+  .hl.red   { border-color:var(--red);   background:var(--rdl); }
+  .hl.green { border-color:var(--green); background:var(--grl); }
+  .hl-title { font-weight:700; color:var(--g900); margin-bottom:4px; }
+
+  /* 2-COLUMN TABLE LAYOUT */
+  .cols { width:100%; border-collapse:collapse; margin:10px 0; }
+  .cols td { vertical-align:top; padding:0; }
+  .col-gap { width:10px; }
+  .col-box { border-radius:8px; padding:14px; }
+  .col-blue  { background:var(--bl); }
+  .col-amber { background:var(--aml); }
+  .col-green { background:var(--grl); }
+  .col-red   { background:var(--rdl); }
+  .col-head  { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px; }
+  .ch-blue  { color:var(--blue); }
+  .ch-amber { color:#92400e; }
+  .ch-green { color:var(--green); }
+  .ch-red   { color:var(--red); }
+  .col-list { list-style:none; }
+  .col-list li { padding:4px 0; font-size:12px; color:var(--g600); border-bottom:1px solid rgba(0,0,0,.06); display:table; width:100%; }
+  .col-list li:last-child { border-bottom:none; }
+  .col-list li .blt { display:table-cell; width:14px; color:var(--blue); font-size:10px; vertical-align:top; padding-top:3px; }
+  .col-list.amber li .blt { color:var(--amber); }
+  .col-list.green li .blt { color:var(--green); }
+  .col-list li .blt-text { display:table-cell; }
+
+  /* DATA TABLE */
+  .dt { width:100%; border-collapse:collapse; margin:10px 0; border-radius:10px; overflow:hidden; border:1px solid var(--g200); font-size:12px; }
+  .dt thead tr { background:var(--navy); color:#fff; }
+  .dt thead th { padding:9px 12px; text-align:left; font-weight:600; font-size:10px; text-transform:uppercase; letter-spacing:.06em; }
+  .dt tbody tr:nth-child(even) td { background:var(--g50); }
+  .dt tbody td { padding:9px 12px; border-top:1px solid var(--g200); color:var(--g600); }
+  .dt tbody td:first-child { font-weight:600; color:var(--g900); }
+
+  /* TIMELINE */
+  .tl { border-left:2px solid var(--bl); padding-left:20px; margin:10px 0; }
+  .tl-item { margin-bottom:12px; position:relative; }
+  .tl-item::before { content:''; position:absolute; left:-25px; top:4px; width:9px; height:9px; border-radius:50%; background:var(--blue); border:2px solid #fff; box-shadow:0 0 0 2px var(--blue); }
+  .tl-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--blue); margin-bottom:2px; }
+  .tl-text  { font-size:12px; color:var(--g700); }
+
+  /* SEPARATOR */
+  .sep { border:none; border-top:1px solid var(--g100); margin:0; }
+
+  /* FOOTER */
+  .footer { background:var(--navy); color:#fff; padding:28px 52px; margin-top:12px; }
+  .footer-title { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.4); margin-bottom:18px; }
+  .ftable { width:100%; border-collapse:collapse; }
+  .ftable td { vertical-align:top; width:50%; padding:0; }
+  .ftable td:first-child { padding-right:40px; }
+  .f-role { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.35); margin-bottom:6px; }
+  .f-name { font-size:13px; font-weight:700; margin-bottom:14px; }
+  .f-field-label { font-size:9px; color:rgba(255,255,255,.35); margin-bottom:2px; }
+  .f-field { border-bottom:1px solid rgba(255,255,255,.15); min-height:22px; margin-bottom:12px; }
+  .f-sign { margin-top:18px; border-top:1px solid rgba(255,255,255,.15); padding-top:12px; }
+  .f-sign-line { border-bottom:1px solid rgba(255,255,255,.25); height:32px; margin-bottom:6px; }
+  .f-sign-hint { font-size:9px; color:rgba(255,255,255,.3); }
+
+  /* PAGE BREAK */
+  .pb { page-break-before:always; }
+
+  /* ACT */
+  .act-header { background:linear-gradient(135deg,#059669,#047857); color:#fff; padding:36px 52px 28px; }
+  .act-badge { display:inline-block; background:rgba(255,255,255,.15); border-radius:20px; padding:4px 14px; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:14px; color:rgba(255,255,255,.85); }
+  .act-title { font-size:22px; font-weight:800; margin-bottom:4px; }
+  .act-sub   { font-size:12px; color:rgba(255,255,255,.6); }
+
+  @media print {
+    .cover, .summary, .vehicle, .parties, .content, .footer, .act-header { padding-left:40px; padding-right:40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="docnum">
+    <div class="docnum-label">ДКП</div>
+    <div class="docnum-val">ТС</div>
+  </div>
+  <div class="badge">Купля-продажа транспортного средства</div>
+  <div class="cover-title">Договор купли-продажи ТС</div>
+  <div class="cover-sub">г. Москва</div>
+  <table class="cover-meta">
+    <tr>
+      <td><div class="meta-label">Дата</div><div class="meta-value">«___» __________ 2026 г.</div></td>
+      <td><div class="meta-label">Марка / Модель</div><div class="meta-value">[Марка, модель ТС]</div></td>
+      <td><div class="meta-label">Год выпуска</div><div class="meta-value">____</div></td>
+      <td><div class="meta-label">Цвет</div><div class="meta-value">_______</div></td>
+    </tr>
+  </table>
+</div>
+
+<!-- KEY TERMS -->
+<div class="summary">
+  <div class="summary-label">Ключевые условия</div>
+  <table class="cards">
+    <tr>
+      <td><div class="card blue"><div class="card-label">Цена ТС</div><div class="card-value">1 000 000 &#8381;</div><div class="card-sub">Один миллион рублей</div></div></td>
+      <td><div class="card amber"><div class="card-label">Срок оплаты</div><div class="card-value">1 день</div><div class="card-sub">с даты подписания договора</div></div></td>
+      <td><div class="card green"><div class="card-label">Передача ТС</div><div class="card-value">день оплаты</div><div class="card-sub">после получения полной оплаты</div></div></td>
+      <td><div class="card red"><div class="card-label">Экземпляров</div><div class="card-value">3 шт.</div><div class="card-sub">1 Продавцу, 2 Покупателю</div></div></td>
+    </tr>
+  </table>
+</div>
+
+<!-- VEHICLE INFO -->
+<div class="vehicle">
+  <div class="vehicle-title">Сведения о транспортном средстве</div>
+  <table class="vtable">
+    <tr><td class="vt-label">Марка, модель</td><td class="vt-value">[Марка, модель ТС]</td></tr>
+    <tr><td class="vt-label">VIN</td><td class="vt-value">_________________</td></tr>
+    <tr><td class="vt-label">Год выпуска</td><td class="vt-value">____</td></tr>
+    <tr><td class="vt-label">Тип ТС</td><td class="vt-value">Легковой универсал</td></tr>
+    <tr><td class="vt-label">Номер шасси</td><td class="vt-value">Отсутствует</td></tr>
+    <tr><td class="vt-label">Номер кузова</td><td class="vt-value">_________________</td></tr>
+    <tr><td class="vt-label">Цвет</td><td class="vt-value">_______</td></tr>
+    <tr><td class="vt-label">ПТС серия / номер</td><td class="vt-value">_____ / ___________</td></tr>
+    <tr><td class="vt-label">СТС серия / номер</td><td class="vt-value">_______ / _______</td></tr>
+    <tr><td class="vt-label">Госномер</td><td class="vt-value">_________</td></tr>
+  </table>
+</div>
+
+<!-- PARTIES -->
+<div class="parties">
+  <div class="parties-label">Стороны договора</div>
+  <table class="ptable">
+    <tr>
+      <td>
+        <div class="party-box pb-blue">
+          <div class="party-role role-blue">Продавец</div>
+          <div class="party-name">___________________________</div>
+          <div class="party-info">
+            Дата рождения: ________________<br>
+            Паспорт: серия ______ No ____________<br>
+            Выдан: ____________________________<br>
+            Код подразделения: ___-___<br>
+            Адрес регистрации: _________________
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="party-box pb-amber">
+          <div class="party-role role-amber">Покупатель</div>
+          <div class="party-name">___________________________</div>
+          <div class="party-info">
+            Дата рождения: ________________<br>
+            Паспорт: серия ______ No ____________<br>
+            Выдан: ____________________________<br>
+            Код подразделения: ___-___<br>
+            Адрес регистрации: _________________
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- SECTION 1 -->
+<div class="section">
+  <div class="sec-header">
+    <table width="100%"><tr>
+      <td width="44"><div class="sec-icon si-blue" style="width:36px;height:36px;border-radius:10px;text-align:center;line-height:36px;font-size:14px;font-weight:800;color:#fff;background:#2563eb;">1</div></td>
+      <td><div class="sec-num">Раздел 1</div><div class="sec-title">Предмет договора</div></td>
+    </tr></table>
+  </div>
+  <div class="sec-body">
+    <div class="clause"><span class="cl-num">1.1</span><span class="cl-text">Продавец продаёт, а Покупатель покупает транспортное средство <strong>[Марка, модель ТС], VIN _________________, ____ г.в., _______</strong>, г/з _________, в соответствии с характеристиками, указанными выше.</span></div>
+    <div class="hl green"><div class="hl-title">Право собственности</div>ТС принадлежит Продавцу на основании <strong>Договора купли-продажи от __.__._____ г.</strong></div>
+  </div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section">
+  <div class="sec-header">
+    <table width="100%"><tr>
+      <td width="44"><div style="width:36px;height:36px;border-radius:10px;text-align:center;line-height:36px;font-size:14px;font-weight:800;color:#fff;background:#f59e0b;">2</div></td>
+      <td><div class="sec-num">Раздел 2</div><div class="sec-title">Цена и условия оплаты</div></td>
+    </tr></table>
+  </div>
+  <div class="sec-body">
+    <div class="clause"><span class="cl-num">2.1</span><span class="cl-text">Стоимость ТС: <strong>1 000 000 рублей 00 копеек</strong> (Один миллион рублей).</span></div>
+    <div class="clause"><span class="cl-num">2.2</span><span class="cl-text">Покупатель обязуется полностью оплатить стоимость ТС <strong>не позднее 1 (одного) календарного дня</strong> с даты заключения Договора.</span></div>
+    <div class="hl amber"><div class="hl-title">Последствие неоплаты</div>Если Покупатель не произвёл оплату в срок по п. 2.2 — Договор считается <strong>расторгнутым</strong>, если иное не согласовано Сторонами доп. соглашением.</div>
+  </div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section">
+  <div class="sec-header">
+    <table width="100%"><tr>
+      <td width="44"><div style="width:36px;height:36px;border-radius:10px;text-align:center;line-height:36px;font-size:14px;font-weight:800;color:#fff;background:#2563eb;">3</div></td>
+      <td><div class="sec-num">Раздел 3</div><div class="sec-title">Обязанности сторон</div></td>
+    </tr></table>
+  </div>
+  <div class="sec-body">
+    <table class="cols">
+      <tr>
+        <td>
+          <div class="col-box col-blue">
+            <div class="col-head ch-blue">Продавец обязан</div>
+            <ul class="col-list">
+              <li><span class="blt">-</span><span class="blt-text">Передать ТС Покупателю в день получения полной оплаты</span></li>
+              <li><span class="blt">-</span><span class="blt-text">Передать ПТС и СТС вместе с ТС</span></li>
+              <li><span class="blt">-</span><span class="blt-text">Подписать Акт приёма-передачи ТС</span></li>
+              <li><span class="blt">-</span><span class="blt-text">Предоставить возможность проверить ТС до подписания договора</span></li>
+            </ul>
+          </div>
+        </td>
+        <td class="col-gap"></td>
+        <td>
+          <div class="col-box col-amber">
+            <div class="col-head ch-amber">Покупатель обязан</div>
+            <ul class="col-list amber">
+              <li><span class="blt">-</span><span class="blt-text">Самостоятельно проверить ТС: ограничения ФССП, розыск, пробег, ДТП</span></li>
+              <li><span class="blt">-</span><span class="blt-text">Оплатить стоимость ТС в полном объёме (п. 2.1)</span></li>
+              <li><span class="blt">-</span><span class="blt-text">Принять ТС и подписать Акт приёма-передачи</span></li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- SECTION 4 -->
+<div class="section">
+  <div class="sec-header">
+    <table width="100%"><tr>
+      <td width="44"><div style="width:36px;height:36px;border-radius:10px;text-align:center;line-height:36px;font-size:14px;font-weight:800;color:#fff;background:#059669;">4</div></td>
+      <td><div class="sec-num">Раздел 4</div><div class="sec-title">Заверения об обстоятельствах</div></td>
+    </tr></table>
+  </div>
+  <div class="sec-body">
+    <div class="hl green"><div class="hl-title">Гарантия Продавца</div>ТС принадлежит Продавцу на законном основании (Договор купли-продажи от __.__._____ г.). Продавец гарантирует отсутствие прав третьих лиц, обременений и ограничений.</div>
+  </div>
+</div>
+
+<!-- SECTION 5 -->
+<div class="section">
+  <div class="sec-header">
+    <table width="100%"><tr>
+      <td width="44"><div style="width:36px;height:36px;border-radius:10px;text-align:center;line-height:36px;font-size:14px;font-weight:800;color:#fff;background:#f59e0b;">5</div></td>
+      <td><div class="sec-num">Раздел 5</div><div class="sec-title">Особые условия</div></td>
+    </tr></table>
+  </div>
+  <div class="sec-body">
+    <table class="dt">
+      <thead><tr><th>Событие</th><th>Что происходит</th></tr></thead>
+      <tbody>
+        <tr><td>Подписание Договора и Акта приёма-передачи</td><td>Право собственности переходит к Покупателю</td></tr>
+        <tr><td>Подписание Акта приёма-передачи</td><td>Риск случайной гибели/повреждения ТС переходит к Покупателю</td></tr>
+        <tr><td>Неоплата в срок (п. 2.2)</td><td>Договор считается расторгнутым (если нет доп. соглашения)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SECTION 6 -->
+<div class="section">
+  <div class="sec-header">
+    <table width="100%"><tr>
+      <td width="44"><div style="width:36px;height:36px;border-radius:10px;text-align:center;line-height:36px;font-size:14px;font-weight:800;color:#fff;background:#059669;">6</div></td>
+      <td><div class="sec-num">Раздел 6</div><div class="sec-title">Передача и приём ТС</div></td>
+    </tr></table>
+  </div>
+  <div class="sec-body">
+    <div class="clause"><span class="cl-num">6.1</span><span class="cl-text">Покупатель проверяет состояние ТС непосредственно при приёмке.</span></div>
+    <div class="clause"><span class="cl-num">6.2</span><span class="cl-text">Подписанием Акта Покупатель подтверждает <strong>отсутствие претензий</strong> к комплектации, техническому состоянию и цвету ТС.</span></div>
+    <div class="hl red"><div class="hl-title">Пробная поездка</div>Если Покупатель совершает пробную поездку при приёмке — <strong>вся ответственность</strong> за вред имуществу/здоровью третьих лиц и повреждение ТС возлагается на Покупателя.</div>
+  </div>
+</div>
+
+<!-- SECTION 7 -->
+<div class="section">
+  <div class="sec-header">
+    <table width="100%"><tr>
+      <td width="44"><div style="width:36px;height:36px;border-radius:10px;text-align:center;line-height:36px;font-size:14px;font-weight:800;color:#fff;background:#dc2626;">7</div></td>
+      <td><div class="sec-num">Раздел 7</div><div class="sec-title">Ответственность и разрешение споров</div></td>
+    </tr></table>
+  </div>
+  <div class="sec-body">
+    <div class="clause"><span class="cl-num">7.1</span><span class="cl-text">Покупатель несёт ответственность за штрафы и требования государственных органов, возникшие <strong>после перехода права собственности</strong> и начала эксплуатации ТС Покупателем.</span></div>
+  </div>
+</div>
+
+<!-- SECTION 8 -->
+<div class="section">
+  <div class="sec-header">
+    <table width="100%"><tr>
+      <td width="44"><div style="width:36px;height:36px;border-radius:10px;text-align:center;line-height:36px;font-size:14px;font-weight:800;color:#fff;background:#2563eb;">8</div></td>
+      <td><div class="sec-num">Раздел 8</div><div class="sec-title">Заключительные положения</div></td>
+    </tr></table>
+  </div>
+  <div class="sec-body">
+    <div class="clause"><span class="cl-num">8.1</span><span class="cl-text">Договор вступает в силу с даты подписания обеими Сторонами и действует до полного исполнения обязательств.</span></div>
+    <div class="clause"><span class="cl-num">8.2</span><span class="cl-text">Договор составлен в <strong>3 (трёх) экземплярах</strong>, имеющих равную юридическую силу: 1 — Продавцу, 2 — Покупателю.</span></div>
+  </div>
+</div>
+
+</div><!-- end content -->
+
+<!-- SIGNATURES -->
+<div class="footer">
+  <div class="footer-title">Подписи сторон</div>
+  <table class="ftable">
+    <tr>
+      <td>
+        <div class="f-role">Продавец</div>
+        <div class="f-name">___________________________</div>
+        <div class="f-field-label">Паспортные данные</div><div class="f-field"></div>
+        <div class="f-field-label">Адрес регистрации</div><div class="f-field"></div>
+        <div class="f-sign">
+          <div class="f-field-label">Подпись / дата</div>
+          <div class="f-sign-line"></div>
+          <div class="f-sign-hint">«___» __________ 2026 г.</div>
+        </div>
+      </td>
+      <td>
+        <div class="f-role">Покупатель</div>
+        <div class="f-name">___________________________</div>
+        <div class="f-field-label">Паспортные данные</div><div class="f-field"></div>
+        <div class="f-field-label">Адрес регистрации</div><div class="f-field"></div>
+        <div class="f-sign">
+          <div class="f-field-label">Подпись / дата</div>
+          <div class="f-sign-line"></div>
+          <div class="f-sign-hint">«___» __________ 2026 г.</div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- ACT PAGE -->
+<div class="pb"></div>
+
+<div class="act-header">
+  <div class="act-badge">Приложение No 1 к ДКП</div>
+  <div class="act-title">Акт приёма-передачи ТС</div>
+  <div class="act-sub">г. Москва &nbsp;&nbsp;·&nbsp;&nbsp; «___» __________ 2026 г.</div>
+</div>
+
+<div class="summary" style="background:#f0fdf4; border-color:#bbf7d0;">
+  <div class="summary-label">Передаваемое транспортное средство</div>
+  <table class="vtable">
+    <tr><td class="vt-label">Марка, модель</td><td class="vt-value">[Марка, модель ТС]</td></tr>
+    <tr><td class="vt-label">VIN (сверен)</td><td class="vt-value">_________________</td></tr>
+    <tr><td class="vt-label">Маркировочная табличка VIN</td><td class="vt-value">_________________ — совпадает</td></tr>
+    <tr><td class="vt-label">Год выпуска</td><td class="vt-value">____</td></tr>
+    <tr><td class="vt-label">Цвет</td><td class="vt-value">_______</td></tr>
+    <tr><td class="vt-label">ПТС серия / номер</td><td class="vt-value">_____ / ___________</td></tr>
+    <tr><td class="vt-label">Госномер</td><td class="vt-value">_________</td></tr>
+  </table>
+</div>
+
+<div class="content" style="padding-top:16px;">
+
+  <div class="section">
+    <div class="sec-header">
+      <table width="100%"><tr>
+        <td width="44"><div style="width:36px;height:36px;border-radius:10px;text-align:center;line-height:36px;font-size:14px;font-weight:800;color:#fff;background:#059669;">A</div></td>
+        <td><div class="sec-num">Проверки Покупателя</div><div class="sec-title">Покупателем проверено и подтверждено</div></td>
+      </tr></table>
+    </div>
+    <div class="sec-body">
+      <table class="dt">
+        <thead><tr><th>Параметр проверки</th><th>Результат</th></tr></thead>
+        <tbody>
+          <tr><td>Федеральный розыск ТС</td><td>Не числится</td></tr>
+          <tr><td>Ограничения на регистрационные действия</td><td>Отсутствуют</td></tr>
+          <tr><td>VIN совпадает с маркировочной табличкой</td><td>Подтверждено</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-header">
+      <table width="100%"><tr>
+        <td width="44"><div style="width:36px;height:36px;border-radius:10px;text-align:center;line-height:36px;font-size:14px;font-weight:800;color:#fff;background:#059669;">Б</div></td>
+        <td><div class="sec-num">Комплектность</div><div class="sec-title">Документы и предметы, переданные вместе с ТС</div></td>
+      </tr></table>
+    </div>
+    <div class="sec-body">
+      <table class="dt">
+        <thead><tr><th>Наименование</th><th>Кол-во (шт.)</th></tr></thead>
+        <tbody>
+          <tr><td>Паспорт транспортного средства (ПТС)</td><td>___</td></tr>
+          <tr><td>Свидетельство о регистрации ТС (СТС)</td><td>___</td></tr>
+          <tr><td>Сервисная книжка</td><td>___</td></tr>
+          <tr><td>Ключи автомобильные</td><td>___</td></tr>
+          <tr><td>Брелок сигнализации</td><td>___</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section" style="border-bottom:none;">
+    <div class="sec-header">
+      <table width="100%"><tr>
+        <td width="44"><div style="width:36px;height:36px;border-radius:10px;text-align:center;line-height:36px;font-size:14px;font-weight:800;color:#fff;background:#2563eb;">В</div></td>
+        <td><div class="sec-num">Расчёты</div><div class="sec-title">Подтверждение оплаты</div></td>
+      </tr></table>
+    </div>
+    <div class="sec-body">
+      <div class="hl green">
+        <div class="hl-title">Продавец подтверждает получение денежных средств</div>
+        Сумма прописью: _______________________________________________<br>
+        _______________________________________________________________рублей<br><br>
+        Продавец получил указанную сумму в полном объёме. Претензий к Покупателю не имеет.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer" style="background:#064e3b;">
+  <div class="footer-title">Подписи сторон (Акт приёма-передачи)</div>
+  <table class="ftable">
+    <tr>
+      <td>
+        <div class="f-role">Продавец (передал)</div>
+        <div class="f-name">___________________________</div>
+        <div class="f-sign" style="margin-top:10px;">
+          <div class="f-sign-line"></div>
+          <div class="f-sign-hint">Подпись &nbsp;&nbsp; «___» __________ 2026 г.</div>
+        </div>
+      </td>
+      <td>
+        <div class="f-role">Покупатель (принял)</div>
+        <div class="f-name">___________________________</div>
+        <div class="f-sign" style="margin-top:10px;">
+          <div class="f-sign-line"></div>
+          <div class="f-sign-hint">Подпись &nbsp;&nbsp; «___» __________ 2026 г.</div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+</body>
+</html>

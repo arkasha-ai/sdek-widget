@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Договор займа</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+  :root {
+    --navy:  #1a2744;
+    --blue:  #2563eb;
+    --bl:    #dbeafe;
+    --amber: #f59e0b;
+    --aml:   #fef3c7;
+    --green: #059669;
+    --grl:   #d1fae5;
+    --red:   #dc2626;
+    --rdl:   #fee2e2;
+    --g50:   #f9fafb;
+    --g100:  #f3f4f6;
+    --g200:  #e5e7eb;
+    --g400:  #9ca3af;
+    --g600:  #4b5563;
+    --g700:  #374151;
+    --g900:  #111827;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',sans-serif; background:#fff; color:var(--g900); font-size:13px; line-height:1.6; }
+
+  .cover { background:linear-gradient(135deg,#1a2744 0%,#243b6e 100%); color:#fff; padding:44px 52px 36px; }
+  .badge { display:inline-block; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); border-radius:20px; padding:4px 14px; font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; margin-bottom:18px; color:rgba(255,255,255,.8); }
+  .cover-title { font-size:28px; font-weight:800; margin-bottom:6px; }
+  .cover-sub   { font-size:13px; color:rgba(255,255,255,.5); margin-bottom:28px; }
+  .cmeta       { width:100%; border-collapse:collapse; }
+  .cmeta td    { padding:0 28px 0 0; vertical-align:top; }
+  .ml { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.4); margin-bottom:3px; }
+  .mv { font-size:13px; font-weight:700; }
+
+  .summary { background:var(--g50); border-bottom:1px solid var(--g200); padding:26px 52px; }
+  .slabel  { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:var(--g400); margin-bottom:14px; }
+  .cards   { width:100%; border-collapse:collapse; }
+  .cards td { padding:0 8px 0 0; vertical-align:top; }
+  .cards td:last-child { padding-right:0; }
+  .card { background:#fff; border:1px solid var(--g200); border-radius:10px; padding:14px; position:relative; }
+  .card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:10px 10px 0 0; }
+  .cb::before { background:var(--blue); }
+  .ca::before { background:var(--amber); }
+  .cg::before { background:var(--green); }
+  .cr::before { background:var(--red); }
+  .clabel { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--g400); margin-bottom:4px; }
+  .cvalue { font-size:15px; font-weight:800; color:var(--g900); }
+  .csub   { font-size:10px; color:var(--g400); margin-top:2px; }
+
+  .parties { padding:20px 52px 22px; border-bottom:1px solid var(--g200); }
+  .ptable  { width:100%; border-collapse:collapse; }
+  .ptable td { vertical-align:top; width:50%; }
+  .ptable td:first-child { padding-right:8px; }
+  .pbox { border-radius:10px; padding:16px; }
+  .pb-bl  { background:var(--bl); }
+  .pb-am  { background:var(--aml); }
+  .prole  { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; margin-bottom:6px; }
+  .r-bl   { color:var(--blue); }
+  .r-am   { color:#92400e; }
+  .pname  { font-size:13px; font-weight:700; margin-bottom:4px; }
+  .pinfo  { font-size:11px; color:var(--g600); line-height:1.8; }
+
+  .content { padding:0 52px; }
+
+  .section { border-bottom:1px solid var(--g100); }
+  .sh { padding:18px 0 10px; }
+  .sh table { width:100%; border-collapse:collapse; }
+  .si { width:36px; height:36px; border-radius:10px; text-align:center; line-height:36px; font-size:14px; font-weight:800; color:#fff; display:block; }
+  .si-bl  { background:var(--blue); }
+  .si-gr  { background:var(--green); }
+  .si-am  { background:var(--amber); }
+  .si-rd  { background:var(--red); }
+  .snum   { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--g400); }
+  .stitle { font-size:14px; font-weight:700; color:var(--navy); }
+  .sb     { padding-bottom:18px; padding-left:44px; }
+
+  .cl      { display:table; width:100%; margin-bottom:8px; }
+  .clnum   { display:table-cell; font-size:11px; font-weight:700; color:var(--blue); width:36px; vertical-align:top; padding-top:2px; white-space:nowrap; }
+  .cltext  { display:table-cell; font-size:12.5px; color:var(--g600); line-height:1.65; }
+  .cltext strong { color:var(--g900); font-weight:600; }
+
+  .hl      { border-left:3px solid var(--blue); background:var(--bl); border-radius:0 8px 8px 0; padding:10px 14px; margin:8px 0; font-size:12px; color:var(--g600); }
+  .hl.am   { border-color:var(--amber); background:var(--aml); }
+  .hl.rd   { border-color:var(--red);   background:var(--rdl); }
+  .hl.gr   { border-color:var(--green); background:var(--grl); }
+  .hlt     { font-weight:700; color:var(--g900); margin-bottom:4px; }
+
+  .cols    { width:100%; border-collapse:collapse; margin:8px 0; }
+  .cols td { vertical-align:top; }
+  .gap     { width:10px; }
+  .cbox    { border-radius:8px; padding:14px; }
+  .cbox-bl { background:var(--bl); }
+  .cbox-am { background:var(--aml); }
+  .cbox-gr { background:var(--grl); }
+  .cbox-rd { background:var(--rdl); }
+  .chead   { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; margin-bottom:10px; }
+  .ch-bl   { color:var(--blue); }
+  .ch-am   { color:#92400e; }
+  .ch-gr   { color:var(--green); }
+  .ch-rd   { color:var(--red); }
+  .clist   { list-style:none; }
+  .clist li { display:table; width:100%; padding:4px 0; font-size:12px; color:var(--g600); border-bottom:1px solid rgba(0,0,0,.05); }
+  .clist li:last-child { border-bottom:none; }
+  .clist li .b { display:table-cell; width:14px; color:var(--blue); font-weight:700; vertical-align:top; }
+  .clist li .t { display:table-cell; }
+
+  .dt      { width:100%; border-collapse:collapse; margin:8px 0; border-radius:10px; overflow:hidden; border:1px solid var(--g200); }
+  .dt thead tr { background:var(--navy); }
+  .dt thead th { padding:9px 12px; text-align:left; font-weight:600; font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:#fff; }
+  .dt tbody tr:nth-child(even) td { background:var(--g50); }
+  .dt tbody td { padding:9px 12px; border-top:1px solid var(--g200); font-size:12px; color:var(--g600); }
+  .dt tbody td:first-child { font-weight:600; color:var(--g900); }
+
+  .footer { background:var(--navy); color:#fff; padding:28px 52px; margin-top:12px; }
+  .ftitle { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.35); margin-bottom:18px; }
+  .ft     { width:100%; border-collapse:collapse; }
+  .ft td  { vertical-align:top; width:50%; }
+  .ft td:first-child { padding-right:40px; }
+  .frole  { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:rgba(255,255,255,.35); margin-bottom:5px; }
+  .fname  { font-size:13px; font-weight:700; margin-bottom:12px; }
+  .flabel { font-size:9px; color:rgba(255,255,255,.3); margin-bottom:2px; }
+  .ffield { border-bottom:1px solid rgba(255,255,255,.15); min-height:20px; margin-bottom:10px; }
+  .fsign  { margin-top:16px; border-top:1px solid rgba(255,255,255,.15); padding-top:12px; }
+  .fsline { border-bottom:1px solid rgba(255,255,255,.25); height:32px; margin-bottom:5px; }
+  .fshint { font-size:9px; color:rgba(255,255,255,.28); }
+
+  .pb { page-break-before:always; }
+  .sep { border:none; border-top:1px solid var(--g100); margin:0; }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="badge">Договор займа между физическими лицами</div>
+  <div class="cover-title">Договор займа</div>
+  <div class="cover-sub">г. _______________</div>
+  <table class="cmeta">
+    <tr>
+      <td><div class="ml">Дата</div><div class="mv">«___» __________ 20__ г.</div></td>
+      <td><div class="ml">Сумма займа</div><div class="mv">___________ руб.</div></td>
+      <td><div class="ml">Срок возврата</div><div class="mv">«___» __________ 20__ г.</div></td>
+      <td><div class="ml">Процентная ставка</div><div class="mv">___% годовых</div></td>
+    </tr>
+  </table>
+</div>
+
+<!-- SUMMARY CARDS -->
+<div class="summary">
+  <div class="slabel">Ключевые условия</div>
+  <table class="cards">
+    <tr>
+      <td><div class="card cb"><div class="clabel">Сумма займа</div><div class="cvalue">___________ &#8381;</div><div class="csub">прописью: __________________</div></div></td>
+      <td><div class="card ca"><div class="clabel">Срок возврата</div><div class="cvalue">«___» ____ 20__ г.</div><div class="csub">или иной согласованный срок</div></div></td>
+      <td><div class="card cg"><div class="clabel">Проценты</div><div class="cvalue">___% годовых</div><div class="csub">начисляются ежемесячно</div></div></td>
+      <td><div class="card cr"><div class="clabel">Пеня за просрочку</div><div class="cvalue">___% в день</div><div class="csub">от суммы долга за каждый день</div></div></td>
+    </tr>
+  </table>
+</div>
+
+<!-- PARTIES -->
+<div class="parties">
+  <div class="slabel" style="margin-bottom:14px;">Стороны договора</div>
+  <table class="ptable">
+    <tr>
+      <td>
+        <div class="pbox pb-bl">
+          <div class="prole r-bl">Займодавец</div>
+          <div class="pname">___________________________</div>
+          <div class="pinfo">
+            Дата рождения: ________________<br>
+            Паспорт: серия ______ No ___________<br>
+            Выдан: ___________________________<br>
+            Код подразделения: ___-___<br>
+            Адрес регистрации: ________________
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="pbox pb-am">
+          <div class="prole r-am">Заёмщик</div>
+          <div class="pname">___________________________</div>
+          <div class="pinfo">
+            Дата рождения: ________________<br>
+            Паспорт: серия ______ No ___________<br>
+            Выдан: ___________________________<br>
+            Код подразделения: ___-___<br>
+            Адрес регистрации: ________________
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- SECTION 1 -->
+<div class="section">
+  <div class="sh"><table><tr>
+    <td style="width:44px;vertical-align:middle;"><span class="si si-bl">1</span></td>
+    <td><div class="snum">Раздел 1</div><div class="stitle">Предмет договора</div></td>
+  </tr></table></div>
+  <div class="sb">
+    <div class="cl"><span class="clnum">1.1</span><span class="cltext">Займодавец передаёт в собственность Заёмщику денежные средства в размере <strong>___________ рублей __ копеек (________________)</strong>, а Заёмщик обязуется вернуть указанную сумму в установленный Договором срок.</span></div>
+    <div class="cl"><span class="clnum">1.2</span><span class="cltext">Заём является <strong>процентным</strong>. Процентная ставка: <strong>___% годовых</strong>.</span></div>
+    <div class="cl"><span class="clnum">1.3</span><span class="cltext">Договор считается заключённым <strong>с момента передачи денежных средств</strong> Заёмщику. Факт передачи подтверждается распиской или иным письменным документом.</span></div>
+    <div class="hl gr"><div class="hlt">Правовая основа</div>Договор заключён в соответствии со ст. 807-818 Гражданского кодекса Российской Федерации.</div>
+  </div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section">
+  <div class="sh"><table><tr>
+    <td style="width:44px;vertical-align:middle;"><span class="si si-am">2</span></td>
+    <td><div class="snum">Раздел 2</div><div class="stitle">Порядок выдачи и возврата займа</div></td>
+  </tr></table></div>
+  <div class="sb">
+    <div class="cl"><span class="clnum">2.1</span><span class="cltext">Займодавец обязуется предоставить сумму займа <strong>наличными денежными средствами / безналичным переводом</strong> не позднее __ рабочих дней с даты подписания Договора.</span></div>
+    <div class="cl"><span class="clnum">2.2</span><span class="cltext">Заёмщик обязуется возвратить сумму займа <strong>не позднее «___» __________ 20__ г.</strong></span></div>
+    <div class="cl"><span class="clnum">2.3</span><span class="cltext">Проценты начисляются на остаток задолженности <strong>ежемесячно</strong> и уплачиваются одновременно с возвратом суммы займа (либо согласно графику платежей — Приложение No 1).</span></div>
+    <div class="cl"><span class="clnum">2.4</span><span class="cltext">Заёмщик вправе вернуть заём <strong>досрочно</strong>, уведомив Займодавца не менее чем за __ дней. При досрочном возврате проценты начисляются за фактический срок пользования займом.</span></div>
+
+    <table class="dt" style="margin-top:12px;">
+      <thead><tr><th>Способ выдачи / возврата</th><th>Детали</th></tr></thead>
+      <tbody>
+        <tr><td>Наличными</td><td>Передача под расписку с указанием суммы прописью и даты</td></tr>
+        <tr><td>Безналичным переводом</td><td>На банковские реквизиты, указанные в разделе 9 Договора</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section">
+  <div class="sh"><table><tr>
+    <td style="width:44px;vertical-align:middle;"><span class="si si-bl">3</span></td>
+    <td><div class="snum">Раздел 3</div><div class="stitle">Права и обязанности сторон</div></td>
+  </tr></table></div>
+  <div class="sb">
+    <table class="cols">
+      <tr>
+        <td>
+          <div class="cbox cbox-bl">
+            <div class="chead ch-bl">Займодавец обязан</div>
+            <ul class="clist">
+              <li><span class="b">-</span><span class="t">Предоставить сумму займа в срок и порядке, установленных Договором</span></li>
+              <li><span class="b">-</span><span class="t">Принять возврат займа и подтвердить его получение</span></li>
+              <li><span class="b">-</span><span class="t">Уведомить об изменении реквизитов в течение 3 дней</span></li>
+            </ul>
+            <div class="chead ch-gr" style="margin-top:12px;">Займодавец вправе</div>
+            <ul class="clist">
+              <li><span class="b">-</span><span class="t">Требовать досрочного возврата займа при просрочке более 30 дней</span></li>
+              <li><span class="b">-</span><span class="t">Требовать уплаты неустойки за просрочку</span></li>
+              <li><span class="b">-</span><span class="t">Уступить право требования третьему лицу</span></li>
+            </ul>
+          </div>
+        </td>
+        <td class="gap"></td>
+        <td>
+          <div class="cbox cbox-am">
+            <div class="chead ch-am">Заёмщик обязан</div>
+            <ul class="clist">
+              <li><span class="b">-</span><span class="t">Возвратить сумму займа в установленный срок</span></li>
+              <li><span class="b">-</span><span class="t">Уплатить проценты за пользование займом</span></li>
+              <li><span class="b">-</span><span class="t">Уведомить об изменении реквизитов / места жительства</span></li>
+              <li><span class="b">-</span><span class="t">Использовать заём по целевому назначению (если оговорено)</span></li>
+            </ul>
+            <div class="chead ch-gr" style="margin-top:12px;">Заёмщик вправе</div>
+            <ul class="clist">
+              <li><span class="b">-</span><span class="t">Вернуть заём досрочно с уведомлением за __ дней</span></li>
+              <li><span class="b">-</span><span class="t">Требовать расписку о получении займа Займодавцем</span></li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- SECTION 4 -->
+<div class="section">
+  <div class="sh"><table><tr>
+    <td style="width:44px;vertical-align:middle;"><span class="si si-am">4</span></td>
+    <td><div class="snum">Раздел 4</div><div class="stitle">Проценты</div></td>
+  </tr></table></div>
+  <div class="sb">
+    <div class="cl"><span class="clnum">4.1</span><span class="cltext">За пользование займом Заёмщик уплачивает проценты из расчёта <strong>___% годовых</strong> на сумму фактической задолженности.</span></div>
+    <div class="cl"><span class="clnum">4.2</span><span class="cltext">Проценты начисляются начиная со дня, следующего за днём получения займа, по день фактического возврата включительно.</span></div>
+    <div class="cl"><span class="clnum">4.3</span><span class="cltext">Порядок уплаты процентов: <strong>единовременно при возврате займа / ежемесячно не позднее __ числа каждого месяца</strong>.</span></div>
+    <div class="hl am"><div class="hlt">Если проценты не указаны</div>При отсутствии в Договоре условия о процентах — применяется ставка Банка России (ключевая ставка) на дату уплаты (ст. 809 ГК РФ).</div>
+  </div>
+</div>
+
+<!-- SECTION 5 -->
+<div class="section">
+  <div class="sh"><table><tr>
+    <td style="width:44px;vertical-align:middle;"><span class="si si-rd">5</span></td>
+    <td><div class="snum">Раздел 5</div><div class="stitle">Ответственность сторон</div></td>
+  </tr></table></div>
+  <div class="sb">
+    <table class="dt">
+      <thead><tr><th>Нарушение</th><th>Ответственная сторона</th><th>Санкция</th></tr></thead>
+      <tbody>
+        <tr><td>Просрочка возврата займа</td><td>Заёмщик</td><td>___% в день от суммы долга (ст. 395 ГК РФ)</td></tr>
+        <tr><td>Просрочка уплаты процентов</td><td>Заёмщик</td><td>Неустойка ___% в день от суммы задолженности</td></tr>
+        <tr><td>Непредоставление займа в срок</td><td>Займодавец</td><td>Заёмщик вправе отказаться от Договора и требовать убытков</td></tr>
+      </tbody>
+    </table>
+    <div class="cl" style="margin-top:8px;"><span class="clnum">5.2</span><span class="cltext">Уплата неустойки <strong>не освобождает</strong> виновную сторону от исполнения основного обязательства.</span></div>
+    <div class="cl"><span class="clnum">5.3</span><span class="cltext">При просрочке более <strong>30 календарных дней</strong> Займодавец вправе потребовать <strong>досрочного возврата всей суммы</strong> займа с причитающимися процентами.</span></div>
+    <div class="hl rd"><div class="hlt">Важно</div>Проценты за просрочку (ст. 395 ГК РФ) и договорная неустойка взыскиваются <strong>одновременно</strong>, если не предусмотрено иное.</div>
+  </div>
+</div>
+
+<!-- SECTION 6 -->
+<div class="section">
+  <div class="sh"><table><tr>
+    <td style="width:44px;vertical-align:middle;"><span class="si si-bl">6</span></td>
+    <td><div class="snum">Раздел 6</div><div class="stitle">Форс-мажор</div></td>
+  </tr></table></div>
+  <div class="sb">
+    <div class="cl"><span class="clnum">6.1</span><span class="cltext">Стороны освобождаются от ответственности при наступлении обстоятельств непреодолимой силы (стихийные бедствия, военные действия и т.п.), которые нельзя было предвидеть и предотвратить.</span></div>
+    <div class="cl"><span class="clnum">6.2</span><span class="cltext">Сторона, на которую действует форс-мажор, обязана <strong>уведомить другую сторону в течение 3 рабочих дней</strong> с приложением подтверждающих документов.</span></div>
+    <div class="cl"><span class="clnum">6.3</span><span class="cltext">Срок исполнения обязательств продлевается на период действия форс-мажорных обстоятельств. Если форс-мажор длится более <strong>3 месяцев</strong> — каждая из Сторон вправе расторгнуть Договор.</span></div>
+  </div>
+</div>
+
+<!-- SECTION 7 -->
+<div class="section">
+  <div class="sh"><table><tr>
+    <td style="width:44px;vertical-align:middle;"><span class="si si-gr">7</span></td>
+    <td><div class="snum">Раздел 7</div><div class="stitle">Порядок разрешения споров</div></td>
+  </tr></table></div>
+  <div class="sb">
+    <div class="cl"><span class="clnum">7.1</span><span class="cltext">Все споры разрешаются путём <strong>переговоров</strong>. Претензионный порядок обязателен. Срок ответа на претензию — <strong>15 календарных дней</strong>.</span></div>
+    <div class="cl"><span class="clnum">7.2</span><span class="cltext">При недостижении согласия — спор передаётся в <strong>суд общей юрисдикции по месту жительства Ответчика</strong> (ст. 28 ГПК РФ).</span></div>
+    <div class="cl"><span class="clnum">7.3</span><span class="cltext">Применимое право: <strong>законодательство Российской Федерации</strong>.</span></div>
+  </div>
+</div>
+
+<!-- SECTION 8 -->
+<div class="section">
+  <div class="sh"><table><tr>
+    <td style="width:44px;vertical-align:middle;"><span class="si si-bl">8</span></td>
+    <td><div class="snum">Раздел 8</div><div class="stitle">Заключительные положения</div></td>
+  </tr></table></div>
+  <div class="sb">
+    <div class="cl"><span class="clnum">8.1</span><span class="cltext">Договор вступает в силу <strong>с момента передачи суммы займа</strong> Заёмщику и действует до полного исполнения обязательств.</span></div>
+    <div class="cl"><span class="clnum">8.2</span><span class="cltext">Все изменения и дополнения к Договору действительны только при <strong>письменном оформлении и подписании обеими Сторонами</strong>.</span></div>
+    <div class="cl"><span class="clnum">8.3</span><span class="cltext">Договор составлен в <strong>2 (двух) экземплярах</strong>, имеющих одинаковую юридическую силу, — по одному для каждой Стороны.</span></div>
+    <div class="cl"><span class="clnum">8.4</span><span class="cltext">Во всём, что не предусмотрено настоящим Договором, Стороны руководствуются законодательством РФ.</span></div>
+  </div>
+</div>
+
+</div><!-- end content -->
+
+<!-- SIGNATURES -->
+<div class="footer">
+  <div class="ftitle">Раздел 9 — Реквизиты и подписи сторон</div>
+  <table class="ft">
+    <tr>
+      <td>
+        <div class="frole">Займодавец</div>
+        <div class="fname">___________________________</div>
+        <div class="flabel">ФИО полностью</div><div class="ffield"></div>
+        <div class="flabel">Паспорт серия / номер / выдан</div><div class="ffield"></div>
+        <div class="flabel">Адрес регистрации</div><div class="ffield"></div>
+        <div class="flabel">Телефон / Email</div><div class="ffield"></div>
+        <div class="flabel">Банковские реквизиты для возврата</div><div class="ffield"></div>
+        <div class="fsign">
+          <div class="flabel">Подпись</div>
+          <div class="fsline"></div>
+          <div class="fshint">«___» __________ 20__ г.</div>
+        </div>
+      </td>
+      <td>
+        <div class="frole">Заёмщик</div>
+        <div class="fname">___________________________</div>
+        <div class="flabel">ФИО полностью</div><div class="ffield"></div>
+        <div class="flabel">Паспорт серия / номер / выдан</div><div class="ffield"></div>
+        <div class="flabel">Адрес регистрации</div><div class="ffield"></div>
+        <div class="flabel">Телефон / Email</div><div class="ffield"></div>
+        <div class="flabel">Банковские реквизиты</div><div class="ffield"></div>
+        <div class="fsign">
+          <div class="flabel">Подпись</div>
+          <div class="fsline"></div>
+          <div class="fshint">«___» __________ 20__ г.</div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<!-- APPENDIX: RECEIPT -->
+<div class="pb"></div>
+
+<div style="background:linear-gradient(135deg,#059669,#047857);color:#fff;padding:36px 52px 28px;">
+  <div style="display:inline-block;background:rgba(255,255,255,.15);border-radius:20px;padding:4px 14px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;color:rgba(255,255,255,.85);">Приложение No 1</div>
+  <div style="font-size:22px;font-weight:800;margin-bottom:4px;">Расписка о получении денежных средств</div>
+  <div style="font-size:12px;color:rgba(255,255,255,.55);">к Договору займа от «___» __________ 20__ г.</div>
+</div>
+
+<div style="padding:28px 52px;">
+  <div class="hl gr" style="margin-bottom:16px;">
+    <div class="hlt">Расписка</div>
+    Я, _________________________ (ФИО Заёмщика), паспорт серия ______ No ___________, получил(а) от
+    _________________________ (ФИО Займодавца) денежные средства в размере <strong>___________ рублей __ копеек
+    (_________________ рублей)</strong> по Договору займа от «___» __________ 20__ г.<br><br>
+    Обязуюсь возвратить указанную сумму не позднее «___» __________ 20__ г. с уплатой процентов в
+    соответствии с условиями Договора.
+  </div>
+
+  <table class="dt">
+    <thead><tr><th>Параметр</th><th>Значение</th></tr></thead>
+    <tbody>
+      <tr><td>Сумма получена</td><td>___________ руб. (_________________ рублей)</td></tr>
+      <tr><td>Дата получения</td><td>«___» __________ 20__ г.</td></tr>
+      <tr><td>Форма передачи</td><td>Наличными / Безналичным переводом</td></tr>
+      <tr><td>Срок возврата</td><td>«___» __________ 20__ г.</td></tr>
+      <tr><td>Проценты</td><td>___% годовых, уплачиваются при возврате / ежемесячно</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:24px;">
+    <table style="width:100%;border-collapse:collapse;">
+      <tr>
+        <td style="width:50%;padding-right:40px;vertical-align:top;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--g400);margin-bottom:8px;">Заёмщик (получил деньги)</div>
+          <div style="font-size:13px;font-weight:700;margin-bottom:14px;">___________________________</div>
+          <div style="border-bottom:1px solid var(--g200);height:36px;margin-bottom:4px;"></div>
+          <div style="font-size:9px;color:var(--g400);">Подпись &nbsp;&nbsp; «___» __________ 20__ г.</div>
+        </td>
+        <td style="width:50%;vertical-align:top;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--g400);margin-bottom:8px;">Займодавец (передал деньги)</div>
+          <div style="font-size:13px;font-weight:700;margin-bottom:14px;">___________________________</div>
+          <div style="border-bottom:1px solid var(--g200);height:36px;margin-bottom:4px;"></div>
+          <div style="font-size:9px;color:var(--g400);">Подпись &nbsp;&nbsp; «___» __________ 20__ г.</div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>
