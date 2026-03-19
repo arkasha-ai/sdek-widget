@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Юридический AI-ассистент</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0f1623;
+  --bg-card: #161d2e;
+  --bg-card-hover: #1c2540;
+  --gold: #c9a84c;
+  --gold-dim: rgba(201, 168, 76, 0.15);
+  --gold-border: rgba(201, 168, 76, 0.25);
+  --white: #f0f0f0;
+  --gray: #8a94a6;
+  --gray-light: #b0b8c9;
+}
+
+@page {
+  size: 1280px 720px;
+  margin: 0;
+}
+
+@media print {
+  html, body {
+    width: 1280px;
+    height: 720px;
+    overflow: visible !important;
+  }
+  .slides-wrapper {
+    transform: none !important;
+    flex-direction: column;
+    width: 1280px;
+    height: auto;
+  }
+  .slide {
+    width: 1280px !important;
+    height: 720px !important;
+    page-break-after: always;
+    break-after: page;
+  }
+  .nav-fixed, .slide-counter, .kbd-hint { display: none !important; }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  overflow: hidden;
+  line-height: 1.6;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Horizontal slider */
+.slides-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: calc(8 * 100vw);
+  height: 100vh;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Slides — 16:9 format */
+.slide {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 80px;
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+  break-after: page;
+}
+
+.slide-inner {
+  max-width: 1100px;
+  width: 100%;
+}
+
+/* Navigation */
+.nav-fixed {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  display: flex;
+  gap: 8px;
+  z-index: 100;
+}
+
+.nav-fixed a {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--gold-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 18px;
+  transition: all 0.2s;
+  background: rgba(15, 22, 35, 0.85);
+  backdrop-filter: blur(8px);
+}
+
+.nav-fixed a:hover {
+  background: var(--gold);
+  color: var(--bg);
+}
+
+.slide-counter {
+  position: fixed;
+  bottom: 40px;
+  left: 32px;
+  font-size: 13px;
+  color: var(--gray);
+  letter-spacing: 2px;
+  z-index: 100;
+  font-weight: 500;
+}
+
+/* Slide 1 — Cover */
+.slide-cover {
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 30%, rgba(201,168,76,0.06) 0%, transparent 70%);
+}
+
+.slide-cover .logo-mark {
+  width: 64px;
+  height: 64px;
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 40px;
+  font-size: 28px;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.slide-cover h1 {
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -1.5px;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.slide-cover h1 span { color: var(--gold); }
+
+.slide-cover .subtitle {
+  font-size: 20px;
+  color: var(--gray-light);
+  font-weight: 400;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.slide-cover .tag {
+  display: inline-block;
+  margin-top: 48px;
+  padding: 8px 20px;
+  border: 1px solid var(--gold-border);
+  border-radius: 100px;
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Slide 2 — Problem */
+.section-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.slide h2 {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 48px;
+  line-height: 1.2;
+}
+
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.problem-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 36px 28px;
+  transition: border-color 0.3s;
+}
+
+.problem-card:hover { border-color: var(--gold-border); }
+
+.problem-card .icon {
+  font-size: 32px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.problem-card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.problem-card p {
+  font-size: 15px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+.problem-stat {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.problem-stat span {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--gray);
+  display: block;
+  margin-top: 4px;
+}
+
+/* Slide 3 — Solution */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  position: relative;
+}
+
+.steps::before {
+  content: '';
+  position: absolute;
+  top: 44px;
+  left: calc(33.33% - 16px);
+  right: calc(33.33% - 16px);
+  height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-border));
+  z-index: 0;
+}
+
+.step {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.step-num {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--gold-dim);
+  border: 2px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--gold);
+  margin: 0 auto 24px;
+}
+
+.step h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.step p {
+  font-size: 15px;
+  color: var(--gray);
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+/* Slide 4 — Examples */
+.examples {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.example-row {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  align-items: center;
+  gap: 0;
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.example-before, .example-after {
+  padding: 28px 32px;
+}
+
+.example-before {
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+
+.example-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.example-before .example-label { color: var(--gray); }
+.example-after .example-label { color: var(--gold); }
+
+.example-before .text {
+  font-size: 15px;
+  color: var(--gray-light);
+  font-style: italic;
+}
+
+.example-after .text {
+  font-size: 15px;
+  color: var(--white);
+}
+
+.example-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  font-size: 22px;
+}
+
+.example-type {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.example-time {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--gray);
+}
+
+/* Slide 5 — Features */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.feature-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  transition: border-color 0.3s;
+}
+
+.feature-card:hover { border-color: var(--gold-border); }
+
+.feature-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  background: var(--gold-dim);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.feature-card h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.feature-card p {
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1.5;
+}
+
+/* Slide 6 — Economy */
+.economy-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.economy-comparison {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.eco-item {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 28px 32px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.eco-item.highlight {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, rgba(201,168,76,0.08), transparent);
+}
+
+.eco-item .label {
+  font-size: 13px;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.eco-item .value {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.eco-item.highlight .value { color: var(--gold); }
+
+.eco-item .detail {
+  font-size: 14px;
+  color: var(--gray);
+  margin-top: 8px;
+}
+
+.economy-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.stat-row:last-child { border-bottom: none; }
+
+.stat-label {
+  font-size: 15px;
+  color: var(--gray-light);
+}
+
+.stat-value {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.stat-value.old {
+  color: var(--gray);
+  text-decoration: line-through;
+}
+
+.stat-value.new { color: var(--gold); }
+
+.economy-bottom {
+  margin-top: 32px;
+  padding: 24px 32px;
+  background: linear-gradient(135deg, rgba(201,168,76,0.1), transparent);
+  border: 1px solid var(--gold-border);
+  border-radius: 16px;
+  text-align: center;
+}
+
+.economy-bottom .big {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.economy-bottom .desc {
+  font-size: 14px;
+  color: var(--gray-light);
+  margin-top: 4px;
+}
+
+/* Slide 7 — Security */
+.security-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.security-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 36px 28px;
+  text-align: center;
+  transition: border-color 0.3s;
+}
+
+.security-card:hover { border-color: var(--gold-border); }
+
+.security-icon {
+  width: 64px;
+  height: 64px;
+  background: var(--gold-dim);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 28px;
+}
+
+.security-card h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.security-card p {
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1.5;
+}
+
+.security-note {
+  text-align: center;
+  padding: 20px;
+  border: 1px solid var(--gold-border);
+  border-radius: 12px;
+  font-size: 15px;
+  color: var(--gray-light);
+  background: rgba(201,168,76,0.04);
+}
+
+/* Slide 8 — CTA */
+.slide-cta {
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 60%, rgba(201,168,76,0.06) 0%, transparent 70%);
+}
+
+.slide-cta h2 {
+  font-size: 44px;
+  margin-bottom: 16px;
+}
+
+.slide-cta h2 span { color: var(--gold); }
+
+.slide-cta .cta-sub {
+  font-size: 18px;
+  color: var(--gray-light);
+  margin-bottom: 48px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 16px 48px;
+  background: var(--gold);
+  color: var(--bg);
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 100px;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: all 0.3s;
+  margin-bottom: 40px;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(201,168,76,0.3);
+}
+
+.cta-contact {
+  font-size: 15px;
+  color: var(--gray);
+}
+
+.cta-contact a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+.divider {
+  width: 48px;
+  height: 2px;
+  background: var(--gold);
+  margin: 0 auto 16px;
+}
+
+/* Keyboard nav hint */
+.kbd-hint {
+  position: fixed;
+  top: 32px;
+  right: 32px;
+  font-size: 12px;
+  color: var(--gray);
+  z-index: 100;
+  opacity: 0.6;
+}
+
+.kbd-hint kbd {
+  display: inline-block;
+  padding: 2px 8px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 11px;
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<div class="nav-fixed">
+  <a href="#" id="nav-prev" title="Назад">&#8592;</a>
+  <a href="#" id="nav-next" title="Далее">&#8594;</a>
+</div>
+<div class="slide-counter" id="counter">01 / 08</div>
+<div class="kbd-hint"><kbd>&#8592;</kbd> <kbd>&#8594;</kbd> навигация</div>
+
+<div class="slides-wrapper" id="slides-wrapper">
+
+<!-- Slide 1: Cover -->
+<section class="slide slide-cover" id="slide-1">
+  <div class="slide-inner">
+    <div class="logo-mark">AI</div>
+    <h1>Юридический<br><span>AI-ассистент</span></h1>
+    <p class="subtitle">Генерация юридических документов по описанию ситуации. 20+ шаблонов, секунды вместо часов.</p>
+    <div class="tag">Работает уже сейчас</div>
+  </div>
+</section>
+
+<!-- Slide 2: Problem -->
+<section class="slide" id="slide-2">
+  <div class="slide-inner">
+    <div class="section-label">Проблема</div>
+    <h2>На что уходит время юриста</h2>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <span class="icon">&#9998;</span>
+        <h3>Ручное заполнение</h3>
+        <p>Каждый документ — это открыть шаблон, вручную вписать данные, проверить формат, сохранить. Каждый раз заново.</p>
+        <div class="problem-stat">40%<span>рабочего времени на рутину</span></div>
+      </div>
+      <div class="problem-card">
+        <span class="icon">&#8635;</span>
+        <h3>Повторяющиеся документы</h3>
+        <p>Исковые, претензии, договоры — одни и те же типы, разные данные. Копипаст → опечатки → правки → потеря времени.</p>
+        <div class="problem-stat">70%<span>документов — типовые</span></div>
+      </div>
+      <div class="problem-card">
+        <span class="icon">&#9888;</span>
+        <h3>Ошибки при заполнении</h3>
+        <p>Неверная дата, не тот суд, пропущенный реквизит. Мелочь, которая ведёт к возврату или отказу.</p>
+        <div class="problem-stat">15%<span>документов с ошибками</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 3: Solution -->
+<section class="slide" id="slide-3">
+  <div class="slide-inner">
+    <div class="section-label">Решение</div>
+    <h2>Как это работает</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Загрузите шаблоны</h3>
+        <p>Ваши бланки, ваш стиль, ваши реквизиты. Один раз — и бот знает все форматы фирмы.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Опишите ситуацию</h3>
+        <p>Обычным языком: «Клиент купил телефон, не работает, хочет вернуть деньги». Без формализма.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Получите документ</h3>
+        <p>Готовый документ с правильными реквизитами, датами, ссылками на статьи. Проверен и отформатирован.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 4: Examples -->
+<section class="slide" id="slide-4">
+  <div class="slide-inner">
+    <div class="section-label">Примеры</div>
+    <h2>До и после</h2>
+    <div class="examples">
+      <div class="example-row">
+        <div class="example-before">
+          <div class="example-label">Вы пишете</div>
+          <div class="example-type">Исковое заявление</div>
+          <div class="text">«Клиент купил телефон Samsung в DNS за 45 000 р. Через неделю перестал включаться. Магазин отказал в возврате.»</div>
+        </div>
+        <div class="example-arrow">&#10132;</div>
+        <div class="example-after">
+          <div class="example-label">Бот генерирует</div>
+          <div class="text">Исковое заявление о защите прав потребителя с указанием суда, статей ЗоЗПП, расчётом неустойки и штрафа</div>
+          <div class="example-time">&#9201; 30 секунд вместо 45 минут</div>
+        </div>
+      </div>
+      <div class="example-row">
+        <div class="example-before">
+          <div class="example-label">Вы пишете</div>
+          <div class="example-type">Договор аренды</div>
+          <div class="text">«Аренда офиса 50 м², арендатор ООО "Вектор", на год, 80 000 руб/мес, Москва, ул. Тверская 12»</div>
+        </div>
+        <div class="example-arrow">&#10132;</div>
+        <div class="example-after">
+          <div class="example-label">Бот генерирует</div>
+          <div class="text">Договор аренды нежилого помещения со всеми существенными условиями, графиком платежей, ответственностью сторон</div>
+          <div class="example-time">&#9201; 1 минута вместо 1.5 часов</div>
+        </div>
+      </div>
+      <div class="example-row">
+        <div class="example-before">
+          <div class="example-label">Вы пишете</div>
+          <div class="example-type">Претензия</div>
+          <div class="text">«Подрядчик "СтройМастер" не выполнил ремонт квартиры в срок, договор от 15.01.2026, просрочка 2 месяца»</div>
+        </div>
+        <div class="example-arrow">&#10132;</div>
+        <div class="example-after">
+          <div class="example-label">Бот генерирует</div>
+          <div class="text">Досудебная претензия с расчётом пени, ссылками на ГК РФ и ЗоЗПП, требованиями и сроком ответа</div>
+          <div class="example-time">&#9201; 40 секунд вместо 30 минут</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 5: Features -->
+<section class="slide" id="slide-5">
+  <div class="slide-inner">
+    <div class="section-label">Возможности</div>
+    <h2>Что умеет ассистент</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">20+</div>
+        <div>
+          <h3>Шаблонов документов</h3>
+          <p>Исковые, претензии, договоры, жалобы, ходатайства, доверенности и другие типовые формы</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#9998;</div>
+        <div>
+          <h3>Любой тип документа</h3>
+          <p>Не ограничен шаблонами — может сгенерировать нестандартный документ по описанию ситуации</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#9745;</div>
+        <div>
+          <h3>Корпоративный стиль</h3>
+          <p>Реквизиты фирмы, фирменное оформление, стандарты вашей компании — всё учитывается автоматически</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">&#10003;</div>
+        <div>
+          <h3>Проверка на ошибки</h3>
+          <p>Автоматическая валидация: правильность ссылок на статьи, полнота реквизитов, формат дат и сумм</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 6: Economy -->
+<section class="slide" id="slide-6">
+  <div class="slide-inner">
+    <div class="section-label">Экономия</div>
+    <h2>Время — деньги. Буквально.</h2>
+    <div class="economy-layout">
+      <div class="economy-comparison">
+        <div class="eco-item">
+          <div class="label">Без ассистента</div>
+          <div class="value">3–4 ч</div>
+          <div class="detail">в день на подготовку документов</div>
+        </div>
+        <div class="eco-item highlight">
+          <div class="label">С ассистентом</div>
+          <div class="value">20 мин</div>
+          <div class="detail">на тот же объём работы</div>
+        </div>
+      </div>
+      <div class="economy-stats">
+        <div class="stat-row">
+          <span class="stat-label">Исковое заявление</span>
+          <span class="stat-value old">45 мин</span>
+          <span class="stat-value new">30 сек</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Договор аренды</span>
+          <span class="stat-value old">1.5 часа</span>
+          <span class="stat-value new">1 мин</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Досудебная претензия</span>
+          <span class="stat-value old">30 мин</span>
+          <span class="stat-value new">40 сек</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Доверенность</span>
+          <span class="stat-value old">20 мин</span>
+          <span class="stat-value new">20 сек</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Жалоба в прокуратуру</span>
+          <span class="stat-value old">40 мин</span>
+          <span class="stat-value new">35 сек</span>
+        </div>
+      </div>
+    </div>
+    <div class="economy-bottom">
+      <div class="big">+60 часов в месяц</div>
+      <div class="desc">Высвобождается на работу с клиентами, консультации и стратегию</div>
+    </div>
+  </div>
+</section>
+
+<!-- Slide 7: Security -->
+<section class="slide" id="slide-7">
+  <div class="slide-inner">
+    <div class="section-label">Безопасность</div>
+    <h2>Ваши данные — только ваши</h2>
+    <div class="security-grid">
+      <div class="security-card">
+        <div class="security-icon">&#128274;</div>
+        <h3>Локальное размещение</h3>
+        <p>Система работает на серверах вашей фирмы. Никакие данные не покидают вашу инфраструктуру.</p>
+      </div>
+      <div class="security-card">
+        <div class="security-icon">&#128101;</div>
+        <h3>Контроль доступа</h3>
+        <p>Только авторизованные сотрудники. Разграничение прав, журнал действий, аудит использования.</p>
+      </div>
+      <div class="security-card">
+        <div class="security-icon">&#128196;</div>
+        <h3>Адвокатская тайна</h3>
+        <p>Архитектура спроектирована с учётом требований к конфиденциальности юридической практики.</p>
+      </div>
+    </div>
+    <div class="security-note">
+      Облачные AI-сервисы не подходят для юрфирм — данные клиентов нельзя отправлять на чужие серверы.<br>Наше решение работает полностью внутри вашей сети.
+    </div>
+  </div>
+</section>
+
+<!-- Slide 8: CTA -->
+<section class="slide slide-cta" id="slide-8">
+  <div class="slide-inner">
+    <div class="divider"></div>
+    <h2>Готовы <span>попробовать</span>?</h2>
+    <p class="cta-sub">Покажем как ассистент работает на ваших документах. Бесплатная демонстрация — 30 минут.</p>
+    <a href="mailto:d.parmeev@jakeberrimor.com" class="cta-button">Запросить демо</a>
+    <div class="cta-contact">
+      <p>Денис Пармеев</p>
+      <p style="margin-top: 4px;"><a href="mailto:d.parmeev@jakeberrimor.com">d.parmeev@jakeberrimor.com</a></p>
+    </div>
+  </div>
+</section>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const counter = document.getElementById('counter');
+const navPrev = document.getElementById('nav-prev');
+const navNext = document.getElementById('nav-next');
+let current = 0;
+const wrapper = document.getElementById('slides-wrapper');
+
+function updateCounter() {
+  counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+}
+
+function goTo(n) {
+  n = Math.max(0, Math.min(n, slides.length - 1));
+  current = n;
+  wrapper.style.transform = `translateX(-${n * 100}vw)`;
+  updateCounter();
+}
+
+navPrev.addEventListener('click', e => { e.preventDefault(); goTo(current - 1); });
+navNext.addEventListener('click', e => { e.preventDefault(); goTo(current + 1); });
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goTo(current - 1); }
+  if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+  if (e.key === 'End') { e.preventDefault(); goTo(slides.length - 1); }
+});
+
+let touchStartX = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchend', e => {
+  const diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) goTo(diff > 0 ? current + 1 : current - 1);
+});
+
+updateCounter();
+</script>
+</div><!-- /slides-wrapper -->
+</body>
+</html>
