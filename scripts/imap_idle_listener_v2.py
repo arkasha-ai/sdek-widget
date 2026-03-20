@@ -88,11 +88,11 @@ def load_secrets():
             ACCOUNTS[name]["password"] = imap_password
 
 def trigger_webhook(account, from_addr, subject):
-    """Send webhook to OpenClaw"""
-    text = f"📧 New email in {account}: {from_addr} - {subject}"
+    """Send webhook to OpenClaw main session"""
+    text = f"📧 New email in {account}: from={from_addr} subject={subject}"
     
     payload = {
-        "text": text[:500],  # Limit length
+        "text": text[:500],
         "mode": "now"
     }
     
@@ -108,13 +108,11 @@ def trigger_webhook(account, from_addr, subject):
             headers=headers,
             method='POST'
         )
-        
         with urllib.request.urlopen(req, timeout=5) as response:
             if response.status == 200:
                 print(f"✅ Webhook sent for {account}: {subject[:50]}")
             else:
                 print(f"⚠️  Webhook failed ({response.status}) for {account}")
-    
     except Exception as e:
         print(f"❌ Webhook error for {account}: {e}")
 
@@ -142,9 +140,22 @@ def listen_account(name, config):
             if messages:
                 latest_uid = max(messages)
                 if last_seen_uid is None:
-                    # First connect — just record current state
+                    # First connect — notify only about the latest unread message (if any)
+                    unread = client.search(['UNSEEN'])
+                    if unread:
+                        uid = max(unread)  # only the most recent
+                        msg_data = client.fetch([uid], ['BODY.PEEK[HEADER.FIELDS (FROM SUBJECT)]'])
+                        if uid in msg_data:
+                            raw_headers = msg_data[uid][b'BODY[HEADER.FIELDS (FROM SUBJECT)]'].decode('utf-8', errors='ignore')
+                            from_addr, subject = "", ""
+                            for line in raw_headers.split('\n'):
+                                if line.lower().startswith('from:'):
+                                    from_addr = line[5:].strip()
+                                elif line.lower().startswith('subject:'):
+                                    subject = line[8:].strip()
+                            trigger_webhook(name, from_addr, subject)
                     last_seen_uid = latest_uid
-                    print(f"📫 {name}: Starting from UID {last_seen_uid}")
+                    print(f"📫 {name}: Starting from UID {last_seen_uid} (unread: {len(unread) if unread else 0})")
                 elif latest_uid > last_seen_uid:
                     # Reconnect after outage — process missed messages
                     print(f"📬 {name}: Missed message(s) during outage (UID {last_seen_uid} → {latest_uid})")

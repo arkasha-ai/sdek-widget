@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ЗНАЕМ AI — Делаем AI, который работает</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --white: #FFFFFF;
+  --black: #000000;
+  --red: #E63329;
+  --gray: #666;
+  --light-gray: #E0E0E0;
+  --heading: 'Bebas Neue', sans-serif;
+  --body: 'Manrope', sans-serif;
+  --border: 2px solid var(--black);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--body);
+  background: var(--white);
+  color: var(--black);
+  line-height: 1.5;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* Header */
+header {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: var(--white);
+  border-bottom: var(--border);
+  z-index: 100;
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 1200px; margin: 0 auto; padding: 16px 24px;
+}
+.logo {
+  font-family: var(--heading); font-size: 28px;
+  color: var(--black); text-decoration: none;
+  letter-spacing: 2px;
+}
+.btn-header {
+  font-family: var(--body); font-size: 14px; font-weight: 700;
+  padding: 12px 24px; background: var(--black); color: var(--white);
+  border: var(--border); cursor: pointer;
+  text-decoration: none; transition: all 0.15s;
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.btn-header:hover { background: var(--red); border-color: var(--red); }
+
+/* Hero */
+.hero {
+  padding: 120px 0 0;
+  border-bottom: var(--border);
+}
+.hero-inner {
+  display: grid; grid-template-columns: 1.4fr 0.6fr; min-height: 70vh;
+}
+.hero-left {
+  padding: 60px 40px 60px 0;
+  border-right: var(--border);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.hero-right {
+  padding: 60px 0 60px 40px;
+  display: flex; flex-direction: column; justify-content: space-between;
+}
+.hero h1 {
+  font-family: var(--heading); font-size: clamp(60px, 9vw, 120px);
+  line-height: 0.95; margin-bottom: 24px;
+  letter-spacing: 2px;
+}
+.hero h1 .red { color: var(--red); }
+.hero-sub {
+  font-size: 18px; font-weight: 400; color: var(--gray);
+  max-width: 500px; margin-bottom: 40px; line-height: 1.7;
+}
+.hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+.btn-primary {
+  font-family: var(--body); font-size: 15px; font-weight: 700;
+  padding: 16px 32px; background: var(--red); color: var(--white);
+  border: 2px solid var(--red); cursor: pointer;
+  text-decoration: none; transition: all 0.15s;
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.btn-primary:hover { background: var(--black); border-color: var(--black); }
+.btn-outline {
+  font-family: var(--body); font-size: 15px; font-weight: 700;
+  padding: 16px 32px; background: transparent; color: var(--black);
+  border: var(--border); cursor: pointer;
+  text-decoration: none; transition: all 0.15s;
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.btn-outline:hover { background: var(--black); color: var(--white); }
+
+.stat-block { border-top: var(--border); padding-top: 24px; }
+.stat-block + .stat-block { margin-top: 24px; }
+.stat-value {
+  font-family: var(--heading); font-size: 48px;
+  letter-spacing: 2px; line-height: 1;
+}
+.stat-value .red { color: var(--red); }
+.stat-label { font-size: 14px; color: var(--gray); margin-top: 4px; font-weight: 500; }
+
+/* Ticker */
+.ticker {
+  background: var(--black); color: var(--white);
+  padding: 16px 0; overflow: hidden;
+  border-bottom: var(--border);
+}
+.ticker-track {
+  display: flex; white-space: nowrap;
+  animation: ticker-scroll 25s linear infinite;
+}
+.ticker-item {
+  font-family: var(--heading); font-size: 20px;
+  letter-spacing: 3px; padding: 0 24px;
+  display: flex; align-items: center; gap: 24px;
+}
+.ticker-item::after {
+  content: '//';
+  color: var(--red);
+}
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Section */
+.section { padding: 80px 0; border-bottom: var(--border); }
+.section-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 48px; flex-wrap: wrap; gap: 16px;
+}
+.section-title {
+  font-family: var(--heading); font-size: clamp(40px, 5vw, 64px);
+  letter-spacing: 2px; line-height: 1;
+}
+.section-count {
+  font-family: var(--heading); font-size: 24px;
+  color: var(--gray); letter-spacing: 2px;
+}
+
+/* Cases */
+.cases-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-top: var(--border); border-left: var(--border);
+}
+.case-card {
+  border-right: var(--border); border-bottom: var(--border);
+  padding: 40px; position: relative; overflow: hidden;
+  transition: all 0.2s;
+}
+.case-card:hover { background: #FAFAFA; }
+.case-bg-num {
+  font-family: var(--heading); font-size: 200px;
+  color: rgba(0,0,0,0.04); position: absolute;
+  top: -30px; right: -10px; line-height: 1;
+  letter-spacing: -5px; pointer-events: none;
+}
+.case-card:hover .case-bg-num { color: rgba(230,51,41,0.06); }
+.case-label {
+  font-size: 12px; font-weight: 700; color: var(--red);
+  text-transform: uppercase; letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+.case-title {
+  font-family: var(--heading); font-size: 32px;
+  letter-spacing: 1px; margin-bottom: 12px; line-height: 1.1;
+}
+.case-desc {
+  font-size: 15px; color: var(--gray); margin-bottom: 20px;
+  line-height: 1.7;
+}
+.case-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.case-tag {
+  font-size: 11px; font-weight: 700; padding: 5px 10px;
+  border: 1px solid var(--black); text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Services */
+.services-row {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: var(--border); border-left: var(--border);
+}
+.service-card {
+  border-right: var(--border); border-bottom: var(--border);
+  padding: 32px; transition: all 0.2s;
+}
+.service-card:hover { background: var(--black); color: var(--white); }
+.service-card:hover .service-unit { color: rgba(255,255,255,0.5); }
+.service-name {
+  font-family: var(--heading); font-size: 22px;
+  letter-spacing: 1px; margin-bottom: 16px; line-height: 1.1;
+}
+.service-price {
+  font-family: var(--heading); font-size: 36px;
+  color: var(--red); letter-spacing: 1px; margin-bottom: 4px;
+}
+.service-unit { font-size: 13px; color: var(--gray); transition: color 0.2s; }
+
+/* Team */
+.team-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-top: var(--border); border-left: var(--border);
+}
+.team-member {
+  border-right: var(--border); border-bottom: var(--border);
+  padding: 40px; text-align: center; transition: all 0.2s;
+}
+.team-member:hover { background: #FAFAFA; }
+.team-avatar {
+  width: 80px; height: 80px; margin: 0 auto 20px;
+  border: var(--border); display: flex; align-items: center; justify-content: center;
+  font-family: var(--heading); font-size: 32px;
+}
+.team-avatar.ai { border-color: var(--red); color: var(--red); }
+.team-name {
+  font-family: var(--heading); font-size: 28px;
+  letter-spacing: 1px; margin-bottom: 4px;
+}
+.team-role { font-size: 14px; color: var(--gray); }
+.team-badge {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  padding: 4px 10px; background: var(--red); color: var(--white);
+  text-transform: uppercase; letter-spacing: 1px; margin-top: 10px;
+}
+
+/* Contact */
+.contact-section { padding: 80px 0; border-bottom: var(--border); }
+.contact-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border: var(--border);
+}
+.contact-left {
+  padding: 48px; border-right: var(--border);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.contact-left h3 {
+  font-family: var(--heading); font-size: 48px;
+  letter-spacing: 2px; margin-bottom: 20px; line-height: 1;
+}
+.contact-left p { font-size: 16px; color: var(--gray); margin-bottom: 32px; line-height: 1.7; }
+.tg-link {
+  display: inline-block; font-family: var(--heading); font-size: 24px;
+  color: var(--red); text-decoration: none; letter-spacing: 2px;
+  transition: all 0.2s;
+}
+.tg-link:hover { color: var(--black); }
+
+.contact-right { padding: 48px; }
+.form-group { margin-bottom: 20px; }
+.form-group label {
+  display: block; font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 2px;
+  margin-bottom: 8px; color: var(--gray);
+}
+.form-group input, .form-group textarea, .form-group select {
+  width: 100%; padding: 14px; border: var(--border);
+  font-family: var(--body); font-size: 15px;
+  background: var(--white); outline: none; transition: all 0.2s;
+}
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+  border-color: var(--red);
+}
+.form-group textarea { resize: vertical; min-height: 80px; }
+.btn-submit {
+  width: 100%; padding: 16px; background: var(--red); color: var(--white);
+  border: 2px solid var(--red); font-family: var(--body);
+  font-size: 15px; font-weight: 700; cursor: pointer;
+  text-transform: uppercase; letter-spacing: 2px; transition: all 0.15s;
+}
+.btn-submit:hover { background: var(--black); border-color: var(--black); }
+
+/* Footer */
+footer {
+  padding: 32px 0; text-align: center;
+  font-size: 14px; color: var(--gray);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-left { border-right: none; border-bottom: var(--border); padding: 40px 0; }
+  .hero-right { padding: 40px 0; }
+  .cases-grid { grid-template-columns: 1fr; }
+  .services-row { grid-template-columns: 1fr 1fr; }
+  .team-row, .contact-grid { grid-template-columns: 1fr; }
+  .contact-left { border-right: none; border-bottom: var(--border); }
+  .section { padding: 60px 0; }
+}
+@media (max-width: 375px) {
+  .container { padding: 0 16px; }
+  .hero h1 { font-size: 52px; }
+  .services-row { grid-template-columns: 1fr; }
+  .hero-ctas { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">ЗНАЕМ AI</a>
+    <a href="#contact" class="btn-header">Обсудить задачу</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <h1>ДЕЛАЕМ AI,<br>КОТОРЫЙ<br><span class="red">РАБОТАЕТ</span></h1>
+        <p class="hero-sub">Персональные агенты, автоматизация бизнеса, синхронный перевод, базы знаний. Под ключ — от задачи до продакшена.</p>
+        <div class="hero-ctas">
+          <a href="#contact" class="btn-primary">Обсудить задачу →</a>
+          <a href="#contact" class="btn-outline">AI-аудит — бесплатно</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="stat-block">
+          <div class="stat-value"><span class="red">4+</span></div>
+          <div class="stat-label">Продукта в продакшене</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-value">2 ГОДА</div>
+          <div class="stat-label">В AI-разработке</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-value">ON-<span class="red">PREM</span></div>
+          <div class="stat-label">Без утечки данных</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">LLM-ИНТЕГРАЦИЯ</span>
+    <span class="ticker-item">RAG-СИСТЕМЫ</span>
+    <span class="ticker-item">STT/TTS</span>
+    <span class="ticker-item">СЕМАНТИЧЕСКИЙ ПОИСК</span>
+    <span class="ticker-item">GPT-4O</span>
+    <span class="ticker-item">GEMINI</span>
+    <span class="ticker-item">CLAUDE</span>
+    <span class="ticker-item">ON-PREMISE</span>
+    <span class="ticker-item">PYTHON</span>
+    <span class="ticker-item">FASTAPI</span>
+    <span class="ticker-item">LANGCHAIN</span>
+    <span class="ticker-item">WHISPER</span>
+    <span class="ticker-item">VECTOR DB</span>
+    <span class="ticker-item">LLM-ИНТЕГРАЦИЯ</span>
+    <span class="ticker-item">RAG-СИСТЕМЫ</span>
+    <span class="ticker-item">STT/TTS</span>
+    <span class="ticker-item">СЕМАНТИЧЕСКИЙ ПОИСК</span>
+    <span class="ticker-item">GPT-4O</span>
+    <span class="ticker-item">GEMINI</span>
+    <span class="ticker-item">CLAUDE</span>
+    <span class="ticker-item">ON-PREMISE</span>
+    <span class="ticker-item">PYTHON</span>
+    <span class="ticker-item">FASTAPI</span>
+    <span class="ticker-item">LANGCHAIN</span>
+    <span class="ticker-item">WHISPER</span>
+    <span class="ticker-item">VECTOR DB</span>
+  </div>
+</div>
+
+<section class="section" id="cases">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">КЕЙСЫ</h2>
+      <span class="section-count">04 ПРОЕКТА</span>
+    </div>
+    <div class="cases-grid">
+      <div class="case-card">
+        <span class="case-bg-num">01</span>
+        <div class="case-label">Агент для юриста</div>
+        <div class="case-title">ЮРИДИЧЕСКИЙ AI-АССИСТЕНТ</div>
+        <div class="case-desc">Поиск судебной практики в открытых базах, анализ договоров и документов, автоматические запросы в Росреестр. Юрист задаёт вопрос голосом — агент готовит выжимку за секунды.</div>
+        <div class="case-tags">
+          <span class="case-tag">RAG</span>
+          <span class="case-tag">Парсинг</span>
+          <span class="case-tag">Росреестр API</span>
+          <span class="case-tag">Voice</span>
+          <span class="case-tag">Document AI</span>
+        </div>
+      </div>
+      <div class="case-card">
+        <span class="case-bg-num">02</span>
+        <div class="case-label">SyncVoice</div>
+        <div class="case-title">СИНХРОННЫЙ ПЕРЕВОД</div>
+        <div class="case-desc">Система синхронного перевода речи в реальном времени. STT → перевод → TTS с задержкой менее двух секунд. 4 языка, on-premise — данные не покидают периметр.</div>
+        <div class="case-tags">
+          <span class="case-tag">STT</span>
+          <span class="case-tag">TTS</span>
+          <span class="case-tag">4 языка</span>
+          <span class="case-tag">On-premise</span>
+          <span class="case-tag">&lt;2 сек</span>
+        </div>
+      </div>
+      <div class="case-card">
+        <span class="case-bg-num">03</span>
+        <div class="case-label">Logera</div>
+        <div class="case-title">КОРПОРАТИВНАЯ БАЗА ЗНАНИЙ</div>
+        <div class="case-desc">Загрузи документы и записи звонков — Logera найдёт ответ на любой вопрос, понимая смысл, а не ключевые слова.</div>
+        <div class="case-tags">
+          <span class="case-tag">Vector Search</span>
+          <span class="case-tag">Whisper</span>
+          <span class="case-tag">Embeddings</span>
+          <span class="case-tag">Enterprise</span>
+        </div>
+      </div>
+      <div class="case-card">
+        <span class="case-bg-num">04</span>
+        <div class="case-label">Sales Coach</div>
+        <div class="case-title">AI-ТРЕНЕР ДЛЯ ПРОДАЖ</div>
+        <div class="case-desc">Анализирует разговор в реальном времени и шепчет подсказки в наушник: возражение — контраргумент, пауза — следующий шаг.</div>
+        <div class="case-tags">
+          <span class="case-tag">Real-time STT</span>
+          <span class="case-tag">LLM</span>
+          <span class="case-tag">In-ear</span>
+          <span class="case-tag">CRM</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">УСЛУГИ И ЦЕНЫ</h2>
+    </div>
+    <div class="services-row">
+      <div class="service-card">
+        <div class="service-name">АГЕНТ ПОД КЛЮЧ</div>
+        <div class="service-price">150–300К ₽</div>
+        <div class="service-unit">за проект</div>
+      </div>
+      <div class="service-card">
+        <div class="service-name">AI-АВТОМАТИЗАЦИЯ</div>
+        <div class="service-price">100–200К ₽</div>
+        <div class="service-unit">за проект</div>
+      </div>
+      <div class="service-card">
+        <div class="service-name">WHITE-LABEL</div>
+        <div class="service-price">30К ₽/МЕС</div>
+        <div class="service-unit">+ токены</div>
+      </div>
+      <div class="service-card">
+        <div class="service-name">AI-АУДИТ</div>
+        <div class="service-price" style="color: var(--black);">БЕСПЛАТНО</div>
+        <div class="service-unit">разберём процессы</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="team">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">КОМАНДА</h2>
+    </div>
+    <div class="team-row">
+      <div class="team-member">
+        <div class="team-avatar">Д</div>
+        <div class="team-name">ДЕНИС</div>
+        <div class="team-role">Архитектор / Разработчик</div>
+      </div>
+      <div class="team-member">
+        <div class="team-avatar">М</div>
+        <div class="team-name">МИША</div>
+        <div class="team-role">Продажи</div>
+      </div>
+      <div class="team-member">
+        <div class="team-avatar ai">А</div>
+        <div class="team-name">АРКАША</div>
+        <div class="team-role">AI-агент / Сооснователь</div>
+        <div class="team-badge">AI-ЧЛЕН КОМАНДЫ</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">КОНТАКТ</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-left">
+        <h3>РАССКАЖИТЕ О ЗАДАЧЕ</h3>
+        <p>Напишите в Telegram или заполните форму. Обычно отвечаем в течение нескольких часов.</p>
+        <a href="https://t.me/znaem_ai" class="tg-link" target="_blank">@ZNAEM_AI →</a>
+      </div>
+      <div class="contact-right">
+        <form onsubmit="event.preventDefault()">
+          <div class="form-group">
+            <label>Имя</label>
+            <input type="text" placeholder="Как к вам обращаться">
+          </div>
+          <div class="form-group">
+            <label>Telegram или Email</label>
+            <input type="text" placeholder="@username или email">
+          </div>
+          <div class="form-group">
+            <label>Формат</label>
+            <select>
+              <option value="">Выберите формат</option>
+              <option>Агент под ключ</option>
+              <option>AI-автоматизация</option>
+              <option>White-label</option>
+              <option>AI-аудит (бесплатно)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Задача</label>
+            <textarea placeholder="Опишите вашу задачу или проблему"></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Отправить заявку →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2025 znaem.ai — Студия AI-решений. Пенза / Удалённо.</p>
+  </div>
+</footer>
+
+</body>
+</html>

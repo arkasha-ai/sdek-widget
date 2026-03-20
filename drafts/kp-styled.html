@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>КП — Знаем AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Manrope', Arial, sans-serif;
+    background: #fff;
+    color: #000;
+    font-size: 10pt;
+    line-height: 1.6;
+  }
+
+  .display { font-family: 'Russo One', Arial, sans-serif; }
+
+  /* COVER PAGE */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 48px;
+    border-bottom: 2px solid #000;
+    margin-bottom: 48px;
+  }
+
+  .cover-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .logo {
+    font-family: 'Russo One', Arial, sans-serif;
+    font-size: 13pt;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .cover-meta {
+    font-size: 8pt;
+    color: rgba(0,0,0,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  .cover-title {
+    font-family: 'Russo One', Arial, sans-serif;
+    font-size: 56pt;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .cover-sub {
+    font-size: 11pt;
+    color: rgba(0,0,0,0.5);
+    max-width: 420px;
+    line-height: 1.7;
+  }
+
+  .cover-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 1px solid rgba(0,0,0,0.15);
+    padding-top: 24px;
+  }
+
+  .cover-tag {
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(0,0,0,0.35);
+  }
+
+  /* CONTENT */
+  .content {
+    padding: 48px;
+  }
+
+  .section {
+    margin-bottom: 64px;
+    page-break-inside: avoid;
+  }
+
+  .section-label {
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(0,0,0,0.35);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Russo One', Arial, sans-serif;
+    font-size: 28pt;
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  .section-body {
+    font-size: 10pt;
+    color: rgba(0,0,0,0.65);
+    max-width: 600px;
+    line-height: 1.7;
+  }
+
+  /* PRODUCT CARDS */
+  .products {
+    margin-bottom: 48px;
+  }
+
+  .product {
+    padding: 32px 36px;
+    border-bottom: 2px solid #000;
+  }
+
+  .product-page {
+    padding: 0;
+  }
+
+  .products-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 2px solid #000;
+    page-break-before: always;
+    page-break-inside: avoid;
+  }
+
+  .products-2col .product {
+    border-right: 2px solid #000;
+    border-bottom: none;
+  }
+
+  .products-2col .product:last-child {
+    border-right: none;
+  }
+
+  .product:last-child {
+    border-bottom: none;
+  }
+
+  .product-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+
+  .product-num {
+    font-size: 8pt;
+    letter-spacing: 0.15em;
+    color: rgba(0,0,0,0.3);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .product-title {
+    font-family: 'Russo One', Arial, sans-serif;
+    font-size: 16pt;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+
+  .product-price {
+    font-family: 'Manrope', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 18pt;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .product-price-sub {
+    font-size: 8pt;
+    color: rgba(0,0,0,0.4);
+    text-align: right;
+    margin-top: 4px;
+  }
+
+  .product-desc {
+    font-size: 9.5pt;
+    color: rgba(0,0,0,0.6);
+    margin-bottom: 14px;
+    line-height: 1.65;
+  }
+
+  .product-benefits {
+    list-style: none;
+    padding: 0;
+  }
+
+  .product-benefits li {
+    font-size: 9pt;
+    color: rgba(0,0,0,0.55);
+    padding: 4px 0 4px 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .product-benefits li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: rgba(0,0,0,0.3);
+  }
+
+  .product-badge {
+    display: inline-block;
+    font-size: 7pt;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: 1px solid rgba(0,0,0,0.25);
+    padding: 3px 10px;
+    margin-top: 14px;
+    color: rgba(0,0,0,0.5);
+  }
+
+  /* PACKAGE */
+  .package {
+    background: #000;
+    color: #fff;
+    padding: 40px 48px;
+    margin-bottom: 0;
+    page-break-inside: avoid;
+  }
+
+  .package-label {
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 16px;
+  }
+
+  .package-title {
+    font-family: 'Russo One', Arial, sans-serif;
+    font-size: 22pt;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+
+  .package-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 24px;
+  }
+
+  .package-table th {
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.35);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    text-align: left;
+  }
+
+  .package-table td {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-size: 10pt;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .package-table .total td {
+    font-family: 'Manrope', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 13pt;
+    color: #fff;
+    border-bottom: none;
+    padding-top: 16px;
+  }
+
+  .package-table .price-discount {
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .package-note {
+    font-size: 8.5pt;
+    color: rgba(255,255,255,0.4);
+    border-top: 1px solid rgba(255,255,255,0.15);
+    padding-top: 16px;
+    line-height: 1.6;
+  }
+
+  /* CONDITIONS */
+  .conditions {
+    border: 2px solid #000;
+    border-top: none;
+    padding: 36px;
+    margin-top: 0;
+    margin-bottom: 48px;
+  }
+
+  .package-page {
+    padding: 0;
+    page-break-before: always;
+  }
+
+  .conditions-title {
+    font-family: 'Russo One', Arial, sans-serif;
+    font-size: 14pt;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  .conditions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .condition-item {
+    padding: 16px 20px 16px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .condition-item:nth-last-child(-n+2) {
+    border-bottom: none;
+  }
+
+  .condition-key {
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(0,0,0,0.35);
+    margin-bottom: 4px;
+  }
+
+  .condition-val {
+    font-size: 9.5pt;
+    color: rgba(0,0,0,0.75);
+    line-height: 1.5;
+  }
+
+  /* CONTACTS */
+  .contacts {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 2px solid #000;
+    padding-top: 32px;
+  }
+
+  .contacts-title {
+    font-family: 'Russo One', Arial, sans-serif;
+    font-size: 32pt;
+    text-transform: uppercase;
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+  }
+
+  .contacts-info {
+    text-align: right;
+  }
+
+  .contacts-label {
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(0,0,0,0.35);
+    margin-bottom: 8px;
+  }
+
+  .contacts-tg {
+    font-size: 12pt;
+    font-weight: 600;
+  }
+
+  @media print {
+    .cover { page-break-after: always; min-height: auto; height: 100vh; }
+    .section { page-break-inside: avoid; }
+    .product { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-top">
+    <div class="logo">Знаем AI</div>
+    <div class="cover-meta">
+      Коммерческое предложение<br>
+      19 марта 2026 г.<br>
+      Конфиденциально
+    </div>
+  </div>
+
+  <div>
+    <div class="cover-title">
+      КОММЕР-<br>ЧЕСКОЕ<br>ПРЕДЛО-<br>ЖЕНИЕ
+    </div>
+    <div class="cover-sub">
+      Три AI-продукта для внедрения на инфраструктуре заказчика. Пожизненная лицензия. Данные не покидают периметр.
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-tag">Знаем AI — B2B AI-студия</div>
+    <div class="cover-tag">t.me/JakeBerrimor</div>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- INTRO -->
+  <div class="section">
+    <div class="section-label">О студии</div>
+    <div class="section-title">МЫ ЗНАЕМ<br>КАК ЭТО<br>РАБОТАЕТ</div>
+    <div class="section-body">
+      Студия «Знаем AI» проектирует и внедряет AI-системы под ключ. Корпоративные базы знаний, агенты для сотрудников, системы анализа звонков — от задачи до продакшена. Все решения разворачиваются на инфраструктуре заказчика без облачных зависимостей.
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <div class="product-page">
+  <div class="section-label" style="margin-bottom:16px;">Продукт 01</div>
+  <div class="products">
+    <div class="product">
+      <div class="product-num">01</div>
+      <div class="product-header">
+        <div>
+          <div class="product-title">Logera</div>
+          <div style="font-size:9pt;color:rgba(0,0,0,0.4);margin-top:4px;">Корпоративная база знаний</div>
+        </div>
+        <div>
+          <div class="product-price">2 500 000 руб.</div>
+          <div class="product-price-sub">пожизненная лицензия</div>
+        </div>
+      </div>
+      <div class="product-desc">
+        Веб-платформа для загрузки, индексации и семантического поиска по корпоративным документам. Транскрипция совещаний, AI-ответы с цитированием источников, генерация документов на основе базы знаний.
+      </div>
+      <ul class="product-benefits">
+        <li>Единый поиск по всем документам: PDF, DOCX, аудио и видео совещаний</li>
+        <li>Ответы на вопросы с цитированием источников — нужное за секунды, а не часы</li>
+        <li>Генерация документов и отчётов на основе накопленных знаний</li>
+        <li>Защита от потери знаний при ротации кадров</li>
+      </ul>
+      <div class="product-badge">On-premise · Веб-интерфейс · Обучение персонала</div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Products 02 + 03 on one page, vertical -->
+  <div style="page-break-before: always;">
+  <div class="products">
+    <div class="product" style="page-break-inside: avoid;">
+      <div class="product-num">02</div>
+      <div class="product-header">
+        <div>
+          <div class="product-title">Sales Coach</div>
+          <div style="font-size:9pt;color:rgba(0,0,0,0.4);margin-top:4px;">AI-тренер для менеджеров</div>
+        </div>
+        <div>
+          <div class="product-price">2 500 000 руб.</div>
+          <div class="product-price-sub">пожизненная лицензия</div>
+        </div>
+      </div>
+      <div class="product-desc">
+        Система реального времени: распознаёт речь во время звонка, анализирует диалог и выдаёт менеджеру подсказки — аргументы, ответы на возражения, данные из CRM. Работает в наушник, не мешает разговору.
+      </div>
+      <ul class="product-benefits">
+        <li>Рост конверсии звонков за счёт мгновенных подсказок по скриптам</li>
+        <li>Ускорение онбординга — AI компенсирует нехватку опыта новых менеджеров</li>
+        <li>Аналитика: автоматическое выявление паттернов успешных сделок</li>
+        <li>Интеграция с CRM — контекст клиента подтягивается автоматически</li>
+      </ul>
+      <div class="product-badge">On-premise · Интеграция с CRM · Real-time</div>
+    </div>
+    <div class="product" style="page-break-inside: avoid; border-bottom: none;">
+      <div class="product-num">03</div>
+      <div class="product-header">
+        <div>
+          <div class="product-title">Персональный AI-агент</div>
+          <div style="font-size:9pt;color:rgba(0,0,0,0.4);margin-top:4px;">Ассистент для сотрудников</div>
+        </div>
+        <div>
+          <div class="product-price">1 500 000 руб.</div>
+          <div class="product-price-sub">лицензия + веб-интерфейс</div>
+        </div>
+      </div>
+      <div class="product-desc">
+        Персональный AI-ассистент с долгосрочной памятью и интеграциями. Понимает голосовые сообщения, работает с документами, задачами, внутренними системами. Кастомизируется под сотрудника или отдел.
+      </div>
+      <ul class="product-benefits">
+        <li>Автоматизация рутины руководителей и ключевых сотрудников</li>
+        <li>Работа с внутренними системами через единый веб-интерфейс</li>
+        <li>Агент помнит контекст проектов, встреч, решений</li>
+        <li>Масштабируется на весь отдел или компанию</li>
+      </ul>
+      <div class="product-badge">On-premise · Веб-интерфейс · Сопровождение</div>
+    </div>
+  </div>
+  </div>
+
+  <!-- PACKAGE -->
+  <div class="package-page">
+  <div class="package">
+    <div class="package-label">Пакетное предложение</div>
+    <div class="package-title">ВСЕ ТРИ ПРОДУКТА<br>СО СКИДКОЙ 20%</div>
+
+    <table class="package-table">
+      <thead>
+        <tr>
+          <th>Продукт</th>
+          <th>Стоимость</th>
+          <th>Со скидкой −20%</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Logera</td>
+          <td>2 500 000 руб.</td>
+          <td class="price-discount">2 000 000 руб.</td>
+        </tr>
+        <tr>
+          <td>Sales Coach</td>
+          <td>2 500 000 руб.</td>
+          <td class="price-discount">2 000 000 руб.</td>
+        </tr>
+        <tr>
+          <td>Персональный AI-агент</td>
+          <td>1 500 000 руб.</td>
+          <td class="price-discount">1 200 000 руб.</td>
+        </tr>
+        <tr class="total">
+          <td>Итого</td>
+          <td>6 500 000 руб.</td>
+          <td>5 200 000 руб.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="package-note">
+      Экономия при пакетном заказе — 1 300 000 руб. · Стоимость сопровождения обсуждается индивидуально.
+    </div>
+  </div>
+
+  </div>
+  <!-- CONDITIONS -->
+  <div class="conditions">
+    <div class="conditions-title">Условия</div>
+    <div class="conditions-grid">
+      <div class="condition-item">
+        <div class="condition-key">Лицензия</div>
+        <div class="condition-val">Пожизненная, без ограничений по пользователям</div>
+      </div>
+      <div class="condition-item">
+        <div class="condition-key">Развёртывание</div>
+        <div class="condition-val">На инфраструктуре заказчика, данные не покидают периметр</div>
+      </div>
+      <div class="condition-item">
+        <div class="condition-key">Обучение</div>
+        <div class="condition-val">Администраторов и пользователей, до 2 дней на продукт</div>
+      </div>
+      <div class="condition-item">
+        <div class="condition-key">Поддержка (SLA)</div>
+        <div class="condition-val">8×5, рабочие дни, 09:00–18:00 МСК</div>
+      </div>
+      <div class="condition-item">
+        <div class="condition-key">Обновления</div>
+        <div class="condition-val">12 месяцев с момента поставки</div>
+      </div>
+      <div class="condition-item">
+        <div class="condition-key">Конфиденциальность</div>
+        <div class="condition-val">NDA, полная изоляция данных внутри периметра</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HARDWARE -->
+  <div style="page-break-before: always; min-height: 100vh; display: flex; align-items: center; padding: 48px;">
+  <div class="conditions" style="margin-top: 0; border-top: 2px solid #000; width: 100%;">
+    <div class="conditions-title">Требования к оборудованию</div>
+    <p style="font-size:9pt; color:rgba(0,0,0,0.55); margin-bottom: 28px; line-height:1.6;">Все продукты разворачиваются на серверах заказчика. Ниже — ориентировочные требования к инфраструктуре.</p>
+
+    <div style="margin-bottom: 28px;">
+      <div class="condition-key" style="margin-bottom: 10px;">Logera + AI-агент (общий LLM-сервер)</div>
+      <div class="conditions-grid">
+        <div class="condition-item">
+          <div class="condition-key">GPU</div>
+          <div class="condition-val">2× NVIDIA A100 80GB или 1× H100 80GB</div>
+        </div>
+        <div class="condition-item">
+          <div class="condition-key">CPU</div>
+          <div class="condition-val">32–64 ядра (AMD EPYC / Intel Xeon)</div>
+        </div>
+        <div class="condition-item">
+          <div class="condition-key">RAM</div>
+          <div class="condition-val">256–512 GB DDR5 ECC</div>
+        </div>
+        <div class="condition-item">
+          <div class="condition-key">SSD</div>
+          <div class="condition-val">4 TB NVMe + 4–8 TB хранилище</div>
+        </div>
+        <div class="condition-item">
+          <div class="condition-key">Сеть</div>
+          <div class="condition-val">10 Gbit/s внутренняя, 1 Gbit/s внешняя</div>
+        </div>
+        <div class="condition-item">
+          <div class="condition-key">Питание</div>
+          <div class="condition-val">2× 2000W (резервированное), UPS обязателен</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="condition-key" style="margin-bottom: 10px;">Sales Coach (отдельный сервер)</div>
+      <div class="conditions-grid">
+        <div class="condition-item">
+          <div class="condition-key">GPU</div>
+          <div class="condition-val">1× NVIDIA A6000 48GB или L40S 48GB</div>
+        </div>
+        <div class="condition-item">
+          <div class="condition-key">CPU</div>
+          <div class="condition-val">16–32 ядра</div>
+        </div>
+        <div class="condition-item">
+          <div class="condition-key">RAM</div>
+          <div class="condition-val">128 GB DDR5 ECC</div>
+        </div>
+        <div class="condition-item">
+          <div class="condition-key">Сеть</div>
+          <div class="condition-val">10 Gbit/s (real-time, latency-критично)</div>
+        </div>
+        <div class="condition-item">
+          <div class="condition-key">ОС</div>
+          <div class="condition-val">Ubuntu 22.04/24.04 LTS, CUDA 12.x, Docker</div>
+        </div>
+        <div class="condition-item">
+          <div class="condition-key">Охлаждение</div>
+          <div class="condition-val">Серверная 20–25°C, кондиционирование</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- CONTACTS -->
+  <div class="contacts">
+    <div class="contacts-title">ОБСУДИМ<br>ДЕТАЛИ</div>
+    <div class="contacts-info">
+      <div class="contacts-label">Студия «Знаем AI»</div>
+      <div class="contacts-tg">t.me/JakeBerrimor</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

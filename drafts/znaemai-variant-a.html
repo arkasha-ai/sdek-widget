@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ЗНАЕМ AI — Делаем AI, который работает</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #FAFAF7;
+  --blue: #2563EB;
+  --amber: #F59E0B;
+  --dark: #1A1A1A;
+  --gray: #6B7280;
+  --light-gray: #E5E5E0;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Space Grotesk', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--dark);
+  line-height: 1.6;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* Header */
+header {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: rgba(250,250,247,0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--light-gray);
+  z-index: 100;
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 1200px; margin: 0 auto; padding: 16px 24px;
+}
+.logo {
+  font-family: var(--mono); font-weight: 600; font-size: 18px;
+  color: var(--dark); text-decoration: none;
+  display: flex; align-items: center; gap: 8px;
+}
+.logo-dot { width: 8px; height: 8px; background: var(--blue); border-radius: 50%; animation: pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+.btn-header {
+  font-family: var(--mono); font-size: 14px;
+  padding: 10px 20px; background: var(--dark); color: #fff;
+  border: none; border-radius: 6px; cursor: pointer;
+  text-decoration: none; transition: all 0.2s;
+}
+.btn-header:hover { background: var(--blue); }
+
+/* Hero */
+.hero {
+  padding: 160px 0 80px; min-height: 90vh;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.hero-label {
+  font-family: var(--mono); font-size: 13px; color: var(--gray);
+  margin-bottom: 24px; letter-spacing: 1px;
+}
+.hero h1 {
+  font-size: clamp(42px, 6vw, 72px); font-weight: 700;
+  line-height: 1.1; margin-bottom: 24px; max-width: 800px;
+}
+.hero h1 .accent {
+  color: var(--blue); position: relative;
+}
+.hero h1 .accent::after {
+  content: '|'; animation: blink 1s step-end infinite;
+  color: var(--blue); margin-left: 2px;
+}
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+.hero-sub {
+  font-size: 18px; color: var(--gray); max-width: 600px;
+  margin-bottom: 40px; line-height: 1.7;
+}
+.hero-ctas { display: flex; gap: 16px; margin-bottom: 60px; flex-wrap: wrap; }
+.btn-primary {
+  font-family: var(--sans); font-size: 16px; font-weight: 600;
+  padding: 14px 28px; background: var(--blue); color: #fff;
+  border: none; border-radius: 8px; cursor: pointer;
+  text-decoration: none; transition: all 0.2s;
+}
+.btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+.btn-secondary {
+  font-family: var(--mono); font-size: 14px;
+  padding: 14px 28px; background: transparent; color: var(--dark);
+  border: 1px solid var(--light-gray); border-radius: 8px;
+  cursor: pointer; text-decoration: none; transition: all 0.2s;
+}
+.btn-secondary:hover { border-color: var(--blue); color: var(--blue); }
+
+.hero-stats { display: flex; gap: 48px; flex-wrap: wrap; }
+.stat { border-left: 2px solid var(--light-gray); padding-left: 20px; }
+.stat-value { font-family: var(--mono); font-size: 28px; font-weight: 600; color: var(--dark); }
+.stat-value .highlight { color: var(--blue); }
+.stat-label { font-size: 14px; color: var(--gray); margin-top: 4px; }
+
+/* Terminal Ticker */
+.ticker-section { padding: 40px 0; overflow: hidden; }
+.terminal {
+  background: var(--dark); border-radius: 12px; padding: 20px 24px;
+  font-family: var(--mono); font-size: 14px; color: #9CA3AF;
+  overflow: hidden; position: relative;
+}
+.terminal::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 40px; background: #111; border-radius: 12px 12px 0 0;
+  display: flex; align-items: center;
+}
+.terminal-dots {
+  display: flex; gap: 8px; padding: 12px 16px; position: relative; z-index: 1;
+}
+.terminal-dots span {
+  width: 12px; height: 12px; border-radius: 50%;
+}
+.terminal-dots span:nth-child(1) { background: #EF4444; }
+.terminal-dots span:nth-child(2) { background: var(--amber); }
+.terminal-dots span:nth-child(3) { background: #22C55E; }
+.terminal-content {
+  margin-top: 12px; white-space: nowrap;
+  animation: scroll-terminal 30s linear infinite;
+}
+.terminal-content .tag { color: var(--blue); }
+.terminal-content .sep { color: #4B5563; margin: 0 12px; }
+@keyframes scroll-terminal {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Section */
+.section { padding: 100px 0; }
+.section-num {
+  font-family: var(--mono); font-size: 13px; color: var(--blue);
+  margin-bottom: 16px; letter-spacing: 1px;
+}
+.section-title {
+  font-size: clamp(32px, 4vw, 48px); font-weight: 700;
+  margin-bottom: 16px; line-height: 1.2;
+}
+.section-sub { font-size: 18px; color: var(--gray); max-width: 600px; margin-bottom: 60px; }
+
+/* Cases */
+.cases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.case-card {
+  background: #fff; border: 1px solid var(--light-gray); border-radius: 12px;
+  padding: 32px; transition: all 0.3s; position: relative; overflow: hidden;
+}
+.case-card:hover { border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,99,235,0.08); }
+.case-num {
+  font-family: var(--mono); font-size: 48px; font-weight: 700;
+  color: rgba(37,99,235,0.08); position: absolute; top: 16px; right: 24px;
+}
+.case-name {
+  font-family: var(--mono); font-size: 14px; color: var(--blue);
+  margin-bottom: 8px; font-weight: 600;
+}
+.case-title { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
+.case-desc { font-size: 15px; color: var(--gray); margin-bottom: 20px; line-height: 1.7; }
+.case-flow {
+  font-family: var(--mono); font-size: 13px; color: var(--blue);
+  background: rgba(37,99,235,0.05); padding: 12px 16px;
+  border-radius: 8px; margin-bottom: 16px;
+}
+.case-flow .arrow { color: var(--amber); }
+.case-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag-badge {
+  font-family: var(--mono); font-size: 11px; padding: 4px 10px;
+  background: var(--bg); border: 1px solid var(--light-gray);
+  border-radius: 4px; color: var(--gray);
+}
+
+/* Services */
+.services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; background: var(--light-gray); border-radius: 12px; overflow: hidden; }
+.service-card {
+  background: #fff; padding: 40px; transition: all 0.3s;
+}
+.service-card:hover { background: rgba(37,99,235,0.02); }
+.service-name { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.service-price {
+  font-family: var(--mono); font-size: 28px; font-weight: 600; color: var(--blue);
+  margin-bottom: 4px;
+}
+.service-unit { font-size: 14px; color: var(--gray); }
+.service-free { color: var(--amber); }
+
+/* Team */
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.team-card {
+  background: #fff; border: 1px solid var(--light-gray); border-radius: 12px;
+  padding: 32px; text-align: center; transition: all 0.3s;
+}
+.team-card:hover { border-color: var(--blue); }
+.team-avatar {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue), #7C3AED);
+  margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;
+  font-size: 28px; font-weight: 700; color: #fff;
+}
+.team-avatar.ai-avatar { background: linear-gradient(135deg, var(--amber), #F97316); }
+.team-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.team-role { font-size: 14px; color: var(--gray); }
+.team-badge {
+  display: inline-block; font-family: var(--mono); font-size: 11px;
+  padding: 4px 10px; background: rgba(245,158,11,0.1);
+  color: var(--amber); border-radius: 4px; margin-top: 8px;
+}
+
+/* Contact */
+.contact-section { padding: 100px 0; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+.contact-info h3 { font-size: 32px; font-weight: 700; margin-bottom: 16px; }
+.contact-info p { font-size: 16px; color: var(--gray); margin-bottom: 24px; line-height: 1.7; }
+.tg-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 16px; color: var(--blue);
+  text-decoration: none; transition: all 0.2s;
+}
+.tg-link:hover { color: #1d4ed8; }
+
+.contact-form { background: #fff; border: 1px solid var(--light-gray); border-radius: 12px; padding: 40px; }
+.form-group { margin-bottom: 20px; }
+.form-group label {
+  display: block; font-size: 13px; font-family: var(--mono);
+  color: var(--gray); margin-bottom: 8px;
+}
+.form-group input, .form-group textarea, .form-group select {
+  width: 100%; padding: 12px 16px; border: 1px solid var(--light-gray);
+  border-radius: 8px; font-family: var(--sans); font-size: 15px;
+  background: var(--bg); transition: all 0.2s; outline: none;
+}
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+  border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+}
+.form-group textarea { resize: vertical; min-height: 100px; }
+.btn-submit {
+  width: 100%; padding: 14px; background: var(--blue); color: #fff;
+  border: none; border-radius: 8px; font-family: var(--sans);
+  font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+}
+.btn-submit:hover { background: #1d4ed8; }
+
+/* Footer */
+footer {
+  border-top: 1px solid var(--light-gray); padding: 32px 0;
+  text-align: center; font-size: 14px; color: var(--gray);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cases-grid, .services-grid, .contact-grid, .team-grid { grid-template-columns: 1fr; }
+  .hero-stats { gap: 24px; }
+  .hero { padding: 120px 0 60px; min-height: auto; }
+  .section { padding: 60px 0; }
+  .contact-grid { gap: 40px; }
+}
+@media (max-width: 375px) {
+  .container { padding: 0 16px; }
+  .hero h1 { font-size: 36px; }
+  .hero-ctas { flex-direction: column; }
+  .hero-stats { flex-direction: column; gap: 20px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo"><span class="logo-dot"></span> ЗНАЕМ AI</a>
+    <a href="#contact" class="btn-header">Обсудить задачу</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-label">// AI-СТУДИЯ ИЗ ПЕНЗЫ</div>
+    <h1>Делаем AI, который<br><span class="accent">работает</span></h1>
+    <p class="hero-sub">Персональные агенты, автоматизация бизнеса, синхронный перевод, базы знаний. Под ключ — от задачи до продакшена.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">Обсудить задачу →</a>
+      <a href="#contact" class="btn-secondary">AI-аудит — бесплатно</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-value"><span class="highlight">4+</span></div>
+        <div class="stat-label">Продукта в продакшене</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value"><span class="highlight">2</span></div>
+        <div class="stat-label">Года в AI-разработке</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value"><span class="highlight">On-prem</span></div>
+        <div class="stat-label">Без утечки данных</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ticker-section">
+  <div class="container">
+    <div class="terminal">
+      <div class="terminal-dots"><span></span><span></span><span></span></div>
+      <div class="terminal-content">
+        <span class="tag">LLM-интеграция</span><span class="sep">|</span>
+        <span class="tag">RAG-системы</span><span class="sep">|</span>
+        <span class="tag">STT/TTS</span><span class="sep">|</span>
+        <span class="tag">Семантический поиск</span><span class="sep">|</span>
+        <span class="tag">GPT-4o</span><span class="sep">|</span>
+        <span class="tag">Gemini</span><span class="sep">|</span>
+        <span class="tag">Claude</span><span class="sep">|</span>
+        <span class="tag">On-premise</span><span class="sep">|</span>
+        <span class="tag">Python</span><span class="sep">|</span>
+        <span class="tag">FastAPI</span><span class="sep">|</span>
+        <span class="tag">LangChain</span><span class="sep">|</span>
+        <span class="tag">Whisper</span><span class="sep">|</span>
+        <span class="tag">Vector DB</span><span class="sep">|</span>
+        <span class="tag">LLM-интеграция</span><span class="sep">|</span>
+        <span class="tag">RAG-системы</span><span class="sep">|</span>
+        <span class="tag">STT/TTS</span><span class="sep">|</span>
+        <span class="tag">Семантический поиск</span><span class="sep">|</span>
+        <span class="tag">GPT-4o</span><span class="sep">|</span>
+        <span class="tag">Gemini</span><span class="sep">|</span>
+        <span class="tag">Claude</span><span class="sep">|</span>
+        <span class="tag">On-premise</span><span class="sep">|</span>
+        <span class="tag">Python</span><span class="sep">|</span>
+        <span class="tag">FastAPI</span><span class="sep">|</span>
+        <span class="tag">LangChain</span><span class="sep">|</span>
+        <span class="tag">Whisper</span><span class="sep">|</span>
+        <span class="tag">Vector DB</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="cases">
+  <div class="container">
+    <div class="section-num">[01] КЕЙСЫ</div>
+    <h2 class="section-title">Что мы построили</h2>
+    <p class="section-sub">Каждый проект — от идеи до работающего продукта. Не прототипы, а production-ready системы.</p>
+    <div class="cases-grid">
+      <div class="case-card">
+        <span class="case-num">01</span>
+        <div class="case-name">Агент для юриста</div>
+        <div class="case-title">Юридический AI-ассистент</div>
+        <div class="case-desc">Поиск судебной практики в открытых базах, анализ договоров и документов, автоматические запросы в Росреестр. Юрист задаёт вопрос голосом — агент готовит выжимку за секунды.</div>
+        <div class="case-flow">Голос <span class="arrow">→</span> STT <span class="arrow">→</span> RAG <span class="arrow">→</span> Анализ <span class="arrow">→</span> Выжимка</div>
+        <div class="case-tags">
+          <span class="tag-badge">RAG</span>
+          <span class="tag-badge">Парсинг</span>
+          <span class="tag-badge">Росреестр API</span>
+          <span class="tag-badge">Голосовой ввод</span>
+          <span class="tag-badge">Document AI</span>
+        </div>
+      </div>
+      <div class="case-card">
+        <span class="case-num">02</span>
+        <div class="case-name">SyncVoice</div>
+        <div class="case-title">Синхронный перевод в реальном времени</div>
+        <div class="case-desc">Система синхронного перевода речи в реальном времени. STT → перевод → TTS с задержкой менее двух секунд. 4 языка, разворачивается on-premise — данные не покидают периметр.</div>
+        <div class="case-flow">Speech <span class="arrow">→</span> STT <span class="arrow">→</span> Translate <span class="arrow">→</span> TTS <span class="arrow">→</span> Speech</div>
+        <div class="case-tags">
+          <span class="tag-badge">STT</span>
+          <span class="tag-badge">TTS</span>
+          <span class="tag-badge">4 языка</span>
+          <span class="tag-badge">On-premise</span>
+          <span class="tag-badge">&lt;2 сек latency</span>
+        </div>
+      </div>
+      <div class="case-card">
+        <span class="case-num">03</span>
+        <div class="case-name">Logera</div>
+        <div class="case-title">Корпоративная база знаний</div>
+        <div class="case-desc">Загрузи документы и записи звонков — Logera найдёт ответ на любой вопрос, понимая смысл, а не ключевые слова. Семантический поиск по всей базе.</div>
+        <div class="case-flow">Docs <span class="arrow">→</span> Embeddings <span class="arrow">→</span> Vector DB <span class="arrow">→</span> Search</div>
+        <div class="case-tags">
+          <span class="tag-badge">Vector Search</span>
+          <span class="tag-badge">Whisper</span>
+          <span class="tag-badge">Embeddings</span>
+          <span class="tag-badge">Корпоративный</span>
+        </div>
+      </div>
+      <div class="case-card">
+        <span class="case-num">04</span>
+        <div class="case-name">Sales Coach</div>
+        <div class="case-title">AI-тренер для продаж</div>
+        <div class="case-desc">Анализирует разговор в реальном времени и шепчет подсказки в наушник: возражение — получи контраргумент, пауза — получи следующий шаг.</div>
+        <div class="case-flow">Речь <span class="arrow">→</span> STT <span class="arrow">→</span> LLM <span class="arrow">→</span> Подсказка <span class="arrow">→</span> Наушник</div>
+        <div class="case-tags">
+          <span class="tag-badge">Real-time STT</span>
+          <span class="tag-badge">LLM</span>
+          <span class="tag-badge">In-ear hints</span>
+          <span class="tag-badge">CRM-интеграция</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services" style="background: #fff;">
+  <div class="container">
+    <div class="section-num">[02] УСЛУГИ</div>
+    <h2 class="section-title">Форматы работы</h2>
+    <p class="section-sub">Прозрачное ценообразование. Без скрытых платежей и бесконечных итераций.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-name">Агент под ключ</div>
+        <div class="service-price">150–300К ₽</div>
+        <div class="service-unit">за проект</div>
+      </div>
+      <div class="service-card">
+        <div class="service-name">AI-автоматизация процесса</div>
+        <div class="service-price">100–200К ₽</div>
+        <div class="service-unit">за проект</div>
+      </div>
+      <div class="service-card">
+        <div class="service-name">White-label агент с поддержкой</div>
+        <div class="service-price">30К ₽/мес</div>
+        <div class="service-unit">+ стоимость токенов</div>
+      </div>
+      <div class="service-card">
+        <div class="service-name">AI-аудит</div>
+        <div class="service-price service-free">Бесплатно</div>
+        <div class="service-unit">разберём ваши процессы</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="team">
+  <div class="container">
+    <div class="section-num">[03] КОМАНДА</div>
+    <h2 class="section-title">Кто делает</h2>
+    <p class="section-sub">Маленькая команда — быстрые решения и прямой контакт.</p>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">Д</div>
+        <div class="team-name">Денис</div>
+        <div class="team-role">Архитектор / Разработчик</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">М</div>
+        <div class="team-name">Миша</div>
+        <div class="team-role">Продажи</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar ai-avatar">A</div>
+        <div class="team-name">Аркаша</div>
+        <div class="team-role">AI-агент / Сооснователь</div>
+        <div class="team-badge">AI-член команды</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact" style="background: #fff;">
+  <div class="container">
+    <div class="section-num">[04] КОНТАКТ</div>
+    <h2 class="section-title">Давайте обсудим</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Расскажите о задаче — мы предложим решение</h3>
+        <p>Напишите в Telegram или заполните форму. Обычно отвечаем в течение нескольких часов.</p>
+        <a href="https://t.me/znaem_ai" class="tg-link" target="_blank">→ @znaem_ai в Telegram</a>
+      </div>
+      <form class="contact-form" onsubmit="event.preventDefault()">
+        <div class="form-group">
+          <label>Имя</label>
+          <input type="text" placeholder="Как к вам обращаться">
+        </div>
+        <div class="form-group">
+          <label>Telegram или Email</label>
+          <input type="text" placeholder="@username или email">
+        </div>
+        <div class="form-group">
+          <label>Формат</label>
+          <select>
+            <option value="">Выберите формат</option>
+            <option>Агент под ключ</option>
+            <option>AI-автоматизация</option>
+            <option>White-label</option>
+            <option>AI-аудит (бесплатно)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Задача</label>
+          <textarea placeholder="Опишите вашу задачу или проблему"></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Отправить заявку →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2025 znaem.ai — Студия AI-решений. Пенза / Удалённо.</p>
+  </div>
+</footer>
+
+</body>
+</html>

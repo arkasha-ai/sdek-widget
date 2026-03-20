@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 540px;
+    height: 960px;
+    background: #F5EDD8;
+    font-family: 'Georgia', serif;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 60px 40px 0 40px;
+  }
+
+  .top {
+    width: 100%;
+    text-align: left;
+  }
+
+  .quote {
+    font-size: 26px;
+    color: #6B5240;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  .quote span {
+    font-weight: normal;
+    color: #9B7A60;
+  }
+
+  .eyes {
+    font-size: 52px;
+    margin-top: 10px;
+    text-align: center;
+    display: block;
+  }
+
+  .calendar-block {
+    position: relative;
+    width: 340px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 24px 28px 20px;
+    box-shadow: 0 6px 30px rgba(0,0,0,0.1);
+    margin: 0 auto;
+  }
+
+  .cal-header {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: #3D2B1F;
+    margin-bottom: 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    text-align: center;
+  }
+
+  .cal-day-name {
+    font-size: 11px;
+    color: #B0967A;
+    font-weight: bold;
+    padding-bottom: 6px;
+  }
+
+  .cal-day {
+    font-size: 14px;
+    color: #3D2B1F;
+    padding: 5px 2px;
+    position: relative;
+    font-family: 'Arial', sans-serif;
+  }
+
+  .cal-day.crossed {
+    color: #D9C4A8;
+    text-decoration: line-through;
+    text-decoration-color: #C0392B;
+    text-decoration-thickness: 2px;
+  }
+
+  .cal-day.empty { color: transparent; }
+
+  .cross-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+  }
+
+  .red-x {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 140px;
+    color: #C0392B;
+    opacity: 0.18;
+    font-weight: 900;
+    font-family: 'Arial Black', sans-serif;
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .oops {
+    text-align: center;
+    font-size: 15px;
+    color: #B87A5A;
+    font-style: italic;
+    margin-top: 12px;
+  }
+
+  .bottom {
+    width: calc(100% + 80px);
+    background: #3D2B1F;
+    padding: 36px 44px 44px;
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .bottom-main {
+    font-size: 26px;
+    font-weight: bold;
+    color: #F5EDD8;
+    line-height: 1.4;
+    margin-bottom: 16px;
+  }
+
+  .bottom-main em {
+    font-style: normal;
+    color: #D4A96A;
+  }
+
+  .bottom-phone {
+    font-size: 20px;
+    color: #D4A96A;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .bottom-name {
+    font-size: 14px;
+    color: #9B7A60;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+
+  <div class="top">
+    <div class="quote">
+      Все: <span>«Успеем</span><br>
+      <span>забронировать потом...»</span>
+    </div>
+    <span class="eyes">👀</span>
+  </div>
+
+  <div class="calendar-block">
+    <div class="cal-header">Апрель</div>
+    <div class="cal-grid">
+      <div class="cal-day-name">Пн</div>
+      <div class="cal-day-name">Вт</div>
+      <div class="cal-day-name">Ср</div>
+      <div class="cal-day-name">Чт</div>
+      <div class="cal-day-name">Пт</div>
+      <div class="cal-day-name">Сб</div>
+      <div class="cal-day-name">Вс</div>
+
+      <div class="cal-day empty"></div>
+      <div class="cal-day crossed">1</div>
+      <div class="cal-day crossed">2</div>
+      <div class="cal-day crossed">3</div>
+      <div class="cal-day crossed">4</div>
+      <div class="cal-day crossed">5</div>
+      <div class="cal-day crossed">6</div>
+
+      <div class="cal-day crossed">7</div>
+      <div class="cal-day crossed">8</div>
+      <div class="cal-day crossed">9</div>
+      <div class="cal-day crossed">10</div>
+      <div class="cal-day crossed">11</div>
+      <div class="cal-day crossed">12</div>
+      <div class="cal-day crossed">13</div>
+
+      <div class="cal-day crossed">14</div>
+      <div class="cal-day crossed">15</div>
+      <div class="cal-day crossed">16</div>
+      <div class="cal-day crossed">17</div>
+      <div class="cal-day crossed">18</div>
+      <div class="cal-day crossed">19</div>
+      <div class="cal-day crossed">20</div>
+
+      <div class="cal-day crossed">21</div>
+      <div class="cal-day crossed">22</div>
+      <div class="cal-day crossed">23</div>
+      <div class="cal-day crossed">24</div>
+      <div class="cal-day crossed">25</div>
+      <div class="cal-day crossed">26</div>
+      <div class="cal-day crossed">27</div>
+
+      <div class="cal-day crossed">28</div>
+      <div class="cal-day crossed">29</div>
+      <div class="cal-day crossed">30</div>
+    </div>
+    <div class="red-x">✕</div>
+    <div class="oops">свободных дат уже нет&nbsp;🙃</div>
+  </div>
+
+  <div class="bottom">
+    <div class="bottom-main">Бронируй в <em>марте</em> —<br>пока есть место</div>
+    <div class="bottom-phone">📞 231-888</div>
+    <div class="bottom-name">Кафе ЛуЛу</div>
+  </div>
+
+</body>
+</html>

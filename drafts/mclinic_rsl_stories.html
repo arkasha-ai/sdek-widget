@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 540px;
+    height: 960px;
+    background: #111111;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 44px 40px 44px 40px;
+  }
+
+  .logo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 36px;
+  }
+
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+    border: 2px solid #C9A84C;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-icon span {
+    color: #C9A84C;
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .logo-text {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .logo-text small {
+    display: block;
+    font-size: 9px;
+    font-weight: normal;
+    color: #aaaaaa;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+
+  .badge {
+    background: #C9A84C;
+    color: #111111;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 6px 18px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 28px;
+    align-self: flex-start;
+  }
+
+  .title {
+    width: 100%;
+    font-size: 34px;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .title em {
+    color: #C9A84C;
+    font-style: normal;
+  }
+
+  .subtitle {
+    width: 100%;
+    font-size: 17px;
+    color: #cccccc;
+    line-height: 1.5;
+    margin-bottom: 36px;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: #333333;
+    margin-bottom: 32px;
+  }
+
+  .benefits-title {
+    width: 100%;
+    font-size: 13px;
+    color: #C9A84C;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+
+  .benefit {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .benefit-dot {
+    width: 6px;
+    height: 6px;
+    background: #C9A84C;
+    border-radius: 50%;
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  .benefit-text {
+    font-size: 16px;
+    color: #ffffff;
+    line-height: 1.4;
+  }
+
+  .spacer { flex: 1; }
+
+  .promo-box {
+    width: 100%;
+    border: 1px solid #C9A84C;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+  }
+
+  .promo-label {
+    font-size: 11px;
+    color: #C9A84C;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+
+  .promo-main {
+    font-size: 18px;
+    color: #ffffff;
+    font-weight: bold;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .promo-price {
+    font-size: 22px;
+    color: #C9A84C;
+    font-weight: 900;
+  }
+
+  .promo-price s {
+    color: #666;
+    font-size: 16px;
+    font-weight: normal;
+    margin-left: 8px;
+  }
+
+  .address {
+    width: 100%;
+    font-size: 13px;
+    color: #888888;
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+  <div class="logo">
+    <div class="logo-icon"><span>М</span></div>
+    <div class="logo-text">М-КЛИНИК<small>сеть медицинских центров</small></div>
+  </div>
+
+  <div class="badge">Специальное предложение</div>
+
+  <div class="title">RSL-<em>скульпти</em>рование<br>тела</div>
+
+  <div class="subtitle">
+    Стройное, подтянутое тело — без диет и изнуряющих тренировок
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="benefits-title">Результат после курса</div>
+
+  <div class="benefit">
+    <div class="benefit-dot"></div>
+    <div class="benefit-text">Уменьшение объёмов в проблемных зонах</div>
+  </div>
+  <div class="benefit">
+    <div class="benefit-dot"></div>
+    <div class="benefit-text">Улучшение рельефа и упругости кожи</div>
+  </div>
+  <div class="benefit">
+    <div class="benefit-dot"></div>
+    <div class="benefit-text">Стимуляция лимфооттока и микроциркуляции</div>
+  </div>
+  <div class="benefit">
+    <div class="benefit-dot"></div>
+    <div class="benefit-text">Снижение целлюлита уже после первого курса</div>
+  </div>
+
+  <div class="spacer"></div>
+
+  <div class="promo-box">
+    <div class="promo-label">Акция</div>
+    <div class="promo-main">При оплате курса из 4 процедур —<br>5-я процедура в подарок!</div>
+    <div class="promo-price">12 000 ₽ <s>15 000 ₽</s></div>
+  </div>
+
+  <div class="address">Ул. Дубровинского, 106 &nbsp;·&nbsp; +7 (391) 986-74-61</div>
+
+</body>
+</html>

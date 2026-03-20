@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ЗНАЕМ AI — Technical Craft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;800&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --bg: #FAFAF8;
+    --text: #1A1A1A;
+    --accent: #2563EB;
+    --subtle: #6B7280;
+    --grid-color: #E8E8E8;
+    --border: #D1D5DB;
+  }
+
+  html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    position: relative;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 64px;
+    height: 72px;
+    border-bottom: 1px solid var(--border);
+    background-color: var(--bg);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .logo-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent);
+    color: #fff;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    padding: 2px 6px;
+    line-height: 1;
+  }
+
+  .nav-cta {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid var(--accent);
+    padding: 8px 20px;
+    transition: background-color 0.15s, color 0.15s;
+  }
+
+  .nav-cta:hover {
+    background-color: var(--accent);
+    color: #fff;
+  }
+
+  /* HERO */
+  .hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 64px;
+    max-width: 1100px;
+    width: 100%;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--subtle);
+    margin-bottom: 28px;
+  }
+
+  .eyebrow::before {
+    content: '// ';
+    color: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 28px;
+  }
+
+  h1 .accent {
+    color: var(--accent);
+  }
+
+  .subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    font-weight: 400;
+    color: var(--subtle);
+    max-width: 540px;
+    line-height: 1.6;
+    margin-bottom: 44px;
+  }
+
+  .cta-group {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--accent);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 14px 32px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.15s;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-primary:hover {
+    background-color: #1D4ED8;
+  }
+
+  .cta-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--subtle);
+    letter-spacing: 0.02em;
+  }
+
+  .cta-note span {
+    color: var(--accent);
+  }
+
+  /* METRICS */
+  .metrics {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    border-top: 1px solid var(--border);
+    padding-top: 32px;
+  }
+
+  .metric {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-right: 48px;
+    margin-right: 48px;
+    border-right: 1px solid var(--border);
+  }
+
+  .metric:last-child {
+    border-right: none;
+    margin-right: 0;
+    padding-right: 0;
+  }
+
+  .metric-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2.2rem;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .metric-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--subtle);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <nav>
+    <a href="#" class="logo">
+      ЗНАЕМ
+      <span class="logo-badge">AI</span>
+    </a>
+    <a href="#" class="nav-cta">Обсудить задачу</a>
+  </nav>
+
+  <main class="hero">
+    <p class="eyebrow">AI-студия полного цикла</p>
+    <h1>Делаем AI,<br>который <span class="accent">работает</span></h1>
+    <p class="subtitle">Персональные агенты, автоматизация бизнеса, синхронный перевод. Под ключ.</p>
+    <div class="cta-group">
+      <a href="#" class="btn-primary">Обсудить задачу →</a>
+      <span class="cta-note"><span>_</span> AI-аудит — бесплатно</span>
+    </div>
+    <div class="metrics">
+      <div class="metric">
+        <span class="metric-value">4+</span>
+        <span class="metric-label">Продукта в продакшене</span>
+      </div>
+      <div class="metric">
+        <span class="metric-value">2</span>
+        <span class="metric-label">Года в AI</span>
+      </div>
+      <div class="metric">
+        <span class="metric-value">On-prem</span>
+        <span class="metric-label">Без утечки данных</span>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>
