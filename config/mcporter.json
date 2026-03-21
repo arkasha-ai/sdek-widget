@@ -26,7 +26,12 @@
     },
     "penpot-official": {
       "baseUrl": "http://localhost:4401/sse"
+    },
+    "supabase": {
+      "type": "http",
+      "baseUrl": "https://supa.jakeberrimor.com/mcp"
     }
   },
   "imports": []
 }
+

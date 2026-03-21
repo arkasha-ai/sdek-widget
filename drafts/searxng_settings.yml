@@ -1,0 +1,128 @@
+general:
+  # Debug mode, only for development
+  debug: false
+  # displayed name
+  instance_name: "SearXNG"
+  # For example: https://example.com/privacy
+  privacypolicy_url: false
+  # use true to use your own donation page
+  donation_url: false
+  # mailto:contact@example.com
+  contact_url: false
+  # record stats
+  enable_metrics: true
+  # expose stats in open metrics format at /metrics
+  open_metrics: ''
+
+brand:
+  new_issue_url: https://github.com/searxng/searxng/issues/new
+  docs_url: https://docs.searxng.org/
+  public_instances: https://searx.space
+  wiki_url: https://github.com/searxng/searxng/wiki
+  issue_url: https://github.com/searxng/searxng/issues/new
+
+search:
+  # Filter results. 0: None, 1: Moderate, 2: Strict
+  safe_search: 0
+  autocomplete: ""
+  autocomplete_min: 4
+  favicon_resolver: ""
+  # Default search language
+  default_lang: "auto"
+  ban_time_on_fail: 5
+  max_ban_time_on_fail: 120
+  suspended_times:
+    SearxEngineAccessDenied: 180
+    SearxEngineCaptcha: 3600
+    SearxEngineTooManyRequests: 180
+    cf_SearxEngineCaptcha: 1296000
+    cf_SearxEngineAccessDenied: 86400
+    recaptcha_SearxEngineCaptcha: 604800
+
+  # ⚠️ json обязателен для LiteLLM и API интеграций
+  formats:
+    - html
+    - json
+
+server:
+  port: 8080
+  bind_address: "0.0.0.0"
+  base_url: false
+  limiter: false
+  public_instance: false
+  secret_key: "UEHF3oL$pTKwZ!oRcKMRC"
+  image_proxy: false
+  http_protocol_version: "HTTP/1.1"
+  enable_https: false
+  url_rewrite: []
+
+ui:
+  default_theme: "simple"
+  themes: ["simple", "oscar"]
+
+disabled_engines: []
+
+engines:
+  - name: duckduckgo
+    engine: duckduckgo
+    categories: general
+    shortcut: ddg
+
+  - name: google
+    engine: google
+    categories: general
+    shortcut: gp
+
+  - name: bing
+    engine: bing
+    categories: general
+    shortcut: bi
+
+  - name: brave
+    engine: brave
+    categories: general
+    shortcut: br
+
+  - name: google scholar
+    engine: google_scholar
+    categories: science
+    shortcut: gs
+
+  - name: wikipedia
+    engine: wikipedia
+    categories: general
+    shortcut: wp
+
+  - name: youtube
+    engine: youtube
+    categories: videos
+    shortcut: yt
+
+  - name: github
+    engine: github
+    categories: it
+    shortcut: gh
+
+  - name: stackoverflow
+    engine: stackoverflow
+    categories: it
+    shortcut: so
+
+  - name: yahoo
+    engine: yahoo
+    categories: general
+    shortcut: yh
+
+  - name: yandex
+    engine: yandex
+    categories: general
+    shortcut: ya
+
+appearance:
+  theme: "simple"
+  style: "auto"
+
+openapi:
+  enabled: false
+
+external_bang: {}

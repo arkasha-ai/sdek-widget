@@ -1,0 +1,53 @@
+use_default_settings: true
+
+general:
+  debug: false
+  instance_name: "SearXNG"
+
+search:
+  safe_search: 0
+  default_lang: "ru-RU"
+
+server:
+  secret_key: "UEHF3oL$pTKwZ!oRcKMRC"
+  limiter: false
+  port: 8080
+  bind_address: "0.0.0.0"
+
+ui:
+  default_locale: "ru"
+  default_theme: simple
+
+outgoing:
+  request_timeout: 15.0
+
+engines:
+  - name: bing
+    engine: bing
+    shortcut: bi
+    disabled: false
+
+  - name: duckduckgo
+    engine: duckduckgo
+    shortcut: ddg
+    disabled: false
+
+  - name: brave
+    engine: brave
+    shortcut: br
+    disabled: false
+
+  - name: yandex
+    engine: yandex
+    shortcut: ya
+    disabled: false
+
+  - name: startpage
+    engine: startpage
+    shortcut: sp
+    disabled: false
+
+  - name: qwant
+    engine: qwant
+    shortcut: qw
+    disabled: false

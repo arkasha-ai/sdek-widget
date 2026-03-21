@@ -5943,28 +5943,766 @@
       "sentiment": "negative",
       "productivity_score": 0,
       "tasks_completed": 0
+    },
+    {
+      "id": "79d45611-c092-4f55-9baf-021eff29806c",
+      "start": "2026-03-20T02:17:25.123Z",
+      "end": "2026-03-20T02:17:45.090Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Agents",
+        "Cron",
+        "API",
+        "Telegram"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "5eaf48dc-ed9c-4bbc-a95f-3a00ddd4f8f6",
+      "start": "2026-03-20T01:00:30.843Z",
+      "end": "2026-03-20T03:04:26.883Z",
+      "duration_seconds": 7436,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Agents",
+        "Cron",
+        "Skills",
+        "Reminders"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "6dc52738-1182-417a-a2f4-1543657accc5",
+      "start": "2026-03-19T23:17:25.028Z",
+      "end": "2026-03-19T23:17:45.785Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Agents",
+        "Cron",
+        "API",
+        "Telegram"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "4a19d2df-4dc5-4b65-b80c-8117ed73f48c",
+      "start": "2026-03-20T01:17:25.111Z",
+      "end": "2026-03-20T01:17:55.486Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Agents",
+        "Cron",
+        "API",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "b1173a28-5044-4448-b7a8-0609cf3b30db",
+      "start": "2026-03-19T22:17:25.017Z",
+      "end": "2026-03-19T22:18:46.407Z",
+      "duration_seconds": 81,
+      "channel": "telegram",
+      "topics": [
+        "GitHub",
+        "Tasks",
+        "Agents",
+        "Cron",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "8c861c6d-d106-4bb2-ae14-a3d89a493afb-topic-1",
+      "start": "2026-03-20T02:09:12.041Z",
+      "end": "2026-03-20T02:48:56.602Z",
+      "duration_seconds": 2384,
+      "channel": "telegram",
+      "topics": [
+        "React",
+        "GitHub",
+        "SQL",
+        "Agents",
+        "Tasks"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "7b772c7c-ed34-4175-8f8f-6021b879974c",
+      "start": "2026-03-19T21:17:25.029Z",
+      "end": "2026-03-19T21:18:52.021Z",
+      "duration_seconds": 86,
+      "channel": "telegram",
+      "topics": [
+        "React",
+        "GitHub",
+        "Tasks",
+        "Agents",
+        "Cron"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "f4cf9b0a-184c-4f98-9731-7e656dea9828",
+      "start": "2026-03-20T00:17:25.140Z",
+      "end": "2026-03-20T00:17:49.987Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Agents",
+        "Cron",
+        "API",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "4518456f-ec48-41ff-9023-e8572b69c548",
+      "start": "2026-03-20T07:17:25.223Z",
+      "end": "2026-03-20T07:19:26.758Z",
+      "duration_seconds": 121,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Cron",
+        "API",
+        "OpenClaw",
+        "Telegram"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "040d55dd-d628-4259-871b-eb895b9fe169",
+      "start": "2026-03-20T08:17:25.361Z",
+      "end": "2026-03-20T08:18:28.002Z",
+      "duration_seconds": 62,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Cron",
+        "API",
+        "OpenClaw",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "44b08356-9824-4955-85c0-a4ec1c5c9b2c",
+      "start": "2026-03-20T05:00:00.133Z",
+      "end": "2026-03-20T05:00:24.449Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Git",
+        "Agents",
+        "Cron",
+        "API"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "e44612b0-a1d4-419e-bc59-13e1036a7527",
+      "start": "2026-03-20T06:37:36.953Z",
+      "end": "2026-03-20T07:07:15.501Z",
+      "duration_seconds": 1778,
+      "channel": "telegram",
+      "topics": [],
+      "sentiment": "mixed",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "cfc5e90f-ef61-4bd9-9576-db150fbfb466",
+      "start": "2026-03-20T08:49:40.543Z",
+      "end": "2026-03-20T09:00:08.063Z",
+      "duration_seconds": 627,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "93b95a71-727e-400b-a81a-b127aafccffd-topic-81",
+      "start": "2026-03-20T08:00:15.940Z",
+      "end": "2026-03-20T08:00:54.781Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "API",
+        "GitHub",
+        "Git",
+        "Telegram"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "f231980b-48ad-4c77-bf8b-8f2a28c32d42",
+      "start": "2026-03-20T09:00:00.376Z",
+      "end": "2026-03-20T09:00:14.479Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Reminders",
+        "Telegram",
+        "Cron"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "674400fa-58b0-41e7-8304-59baf9c9412d",
+      "start": "2026-03-20T07:00:00.231Z",
+      "end": "2026-03-20T07:00:17.215Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "Gateway",
+        "Telegram",
+        "Cron"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "8037ee74-cfc4-43a1-9cb7-49f2ed9d831b",
+      "start": "2026-03-20T03:17:25.177Z",
+      "end": "2026-03-20T03:20:30.709Z",
+      "duration_seconds": 185,
+      "channel": "telegram",
+      "topics": [
+        "Database",
+        "Docker",
+        "Git",
+        "Agents",
+        "Gateway"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "ff855d69-60f6-4316-a1fe-24d28fa24335-topic-84",
+      "start": "2026-03-20T07:59:47.174Z",
+      "end": "2026-03-20T08:55:25.053Z",
+      "duration_seconds": 3337,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "Agents",
+        "API",
+        "Browser",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "aa3b58b5-fab5-4300-b01e-278f8f06c0d7",
+      "start": "2026-03-20T05:17:25.246Z",
+      "end": "2026-03-20T05:20:27.195Z",
+      "duration_seconds": 181,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "Gateway",
+        "SQL",
+        "Telegram",
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "6249e154-82ff-40ed-bfe8-83ee72388f6a",
+      "start": "2026-03-20T06:17:25.253Z",
+      "end": "2026-03-20T06:20:11.125Z",
+      "duration_seconds": 165,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Cron",
+        "API",
+        "Analytics",
+        "OpenClaw"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "007ed3be-5e3b-49a9-8129-e699084a155b",
+      "start": "2026-03-20T04:17:25.306Z",
+      "end": "2026-03-20T04:17:54.884Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Cron",
+        "API",
+        "OpenClaw",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "89544495-d6d5-4821-81d7-7b9910c87537",
+      "start": "2026-03-20T10:00:00.395Z",
+      "end": "2026-03-20T10:00:08.313Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Reminders",
+        "Telegram",
+        "Cron"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "e1d97a37-410b-40c7-b6d2-243c79a7ea1c",
+      "start": "2026-03-20T10:17:25.338Z",
+      "end": "2026-03-20T10:19:02.097Z",
+      "duration_seconds": 96,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Telegram",
+        "Agents",
+        "OpenClaw",
+        "Cron"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "a7c6456e-0d1d-4d61-b519-c3b8e47cab1f",
+      "start": "2026-03-20T11:17:25.405Z",
+      "end": "2026-03-20T11:18:46.453Z",
+      "duration_seconds": 81,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Telegram",
+        "Agents",
+        "OpenClaw",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "9a466f0e-f0fe-41ae-a4f9-91a21b807263-topic-90",
+      "start": "2026-03-20T09:42:35.635Z",
+      "end": "2026-03-20T09:42:58.242Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "9a470260-a576-4322-9edc-3393cbecfb96",
+      "start": "2026-03-20T13:17:25.395Z",
+      "end": "2026-03-20T13:19:37.133Z",
+      "duration_seconds": 131,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Telegram",
+        "Agents",
+        "Python",
+        "Git"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "2ffda2e0-2e74-478a-b811-12d288a52634",
+      "start": "2026-03-20T10:15:00.233Z",
+      "end": "2026-03-20T10:15:12.348Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Telegram",
+        "Python",
+        "OpenClaw",
+        "Medication"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "8fd8db06-e929-4777-80db-15b624da03cd",
+      "start": "2026-03-20T11:00:32.509Z",
+      "end": "2026-03-20T11:08:15.570Z",
+      "duration_seconds": 463,
+      "channel": "telegram",
+      "topics": [
+        "Python",
+        "Agents",
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "fe4ac778-89af-4569-adc7-dd6d29fe6d45",
+      "start": "2026-03-20T09:30:00.162Z",
+      "end": "2026-03-20T09:30:23.837Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Telegram",
+        "Python",
+        "OpenClaw",
+        "Medication"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "8f5c2dcc-58dd-429d-8f4a-14c71587f669",
+      "start": "2026-03-20T09:17:25.379Z",
+      "end": "2026-03-20T09:18:32.324Z",
+      "duration_seconds": 66,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Telegram",
+        "Agents",
+        "SQL",
+        "Git"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "9a2779f6-61b2-4014-9ccc-4dd09f4851b8",
+      "start": "2026-03-20T09:16:14.470Z",
+      "end": "2026-03-20T13:42:07.112Z",
+      "duration_seconds": 15952,
+      "channel": "telegram",
+      "topics": [
+        "Telegram",
+        "Agents",
+        "Git",
+        "OpenClaw",
+        "GitHub"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "05cddda2-39f6-4198-af75-f5cb89a7ddfc",
+      "start": "2026-03-20T14:17:25.404Z",
+      "end": "2026-03-20T14:18:48.279Z",
+      "duration_seconds": 82,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Telegram",
+        "Agents",
+        "Python",
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "7b3617b5-8155-401c-9c46-417f5ae2e373",
+      "start": "2026-03-20T11:00:19.162Z",
+      "end": "2026-03-20T11:05:04.290Z",
+      "duration_seconds": 285,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "a0ba7212-8675-4e3c-b358-15adb1a1b316",
+      "start": "2026-03-20T12:17:25.460Z",
+      "end": "2026-03-20T12:17:51.039Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Telegram",
+        "Agents",
+        "OpenClaw",
+        "Cron"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "730f7147-1378-4f79-a60e-50d9ea57c7e1",
+      "start": "2026-03-20T09:50:00.205Z",
+      "end": "2026-03-20T09:50:14.184Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Telegram",
+        "Python",
+        "OpenClaw",
+        "Medication"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "9ade8ede-368b-49ce-bea9-7558ee53a6c4",
+      "start": "2026-03-20T17:17:25.418Z",
+      "end": "2026-03-20T17:19:37.048Z",
+      "duration_seconds": 131,
+      "channel": "telegram",
+      "topics": [
+        "Gateway",
+        "JavaScript",
+        "Browser",
+        "Git",
+        "GitHub"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "58e2b93a-5216-4662-8dd9-7143b6908044",
+      "start": "2026-03-20T15:17:25.468Z",
+      "end": "2026-03-20T15:18:15.905Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Telegram",
+        "Tasks",
+        "OpenClaw",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "b84b46ab-951d-4547-ba20-97f73f434ec7",
+      "start": "2026-03-20T18:17:25.484Z",
+      "end": "2026-03-20T18:17:55.404Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Telegram",
+        "Tasks",
+        "OpenClaw",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "573ddbeb-6d52-437a-878d-fdca983f02a1-topic-1",
+      "start": "2026-03-20T20:27:53.635Z",
+      "end": "2026-03-20T20:37:30.654Z",
+      "duration_seconds": 577,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "Agents",
+        "Telegram",
+        "Tasks",
+        "OpenClaw"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "60efc1a8-f133-4a7d-86d9-668c0fba0246",
+      "start": "2026-03-20T19:17:25.487Z",
+      "end": "2026-03-20T19:18:42.888Z",
+      "duration_seconds": 77,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "Agents",
+        "Telegram",
+        "React",
+        "Tasks"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "3fe226b5-216c-4f7c-baad-4cef8f1de873",
+      "start": "2026-03-20T20:17:25.471Z",
+      "end": "2026-03-20T20:19:02.063Z",
+      "duration_seconds": 96,
+      "channel": "telegram",
+      "topics": [
+        "Gateway",
+        "JavaScript",
+        "Browser",
+        "Git",
+        "GitHub"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "f610cf43-ea05-464f-8e01-7abd7ac2b306",
+      "start": "2026-03-20T16:17:25.416Z",
+      "end": "2026-03-20T16:17:54.414Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Telegram",
+        "Tasks",
+        "OpenClaw",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "49de213a-8cd5-4c5b-8327-e833e32704aa-topic-1",
+      "start": "2026-03-20T20:48:11.094Z",
+      "end": "2026-03-20T20:54:24.810Z",
+      "duration_seconds": 373,
+      "channel": "telegram",
+      "topics": [
+        "JavaScript",
+        "Git",
+        "Agents",
+        "Telegram",
+        "Tasks"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "8cd06f79-a6e5-4cf3-9774-72d61fbecf70-topic-1",
+      "start": "2026-03-20T20:39:44.859Z",
+      "end": "2026-03-20T20:52:56.421Z",
+      "duration_seconds": 791,
+      "channel": "telegram",
+      "topics": [
+        "Gateway",
+        "Git",
+        "Agents",
+        "Telegram",
+        "Tasks"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "3f26450d-cd23-42bd-b987-b3221e780ced",
+      "start": "2026-03-20T18:46:54.460Z",
+      "end": "2026-03-20T21:04:59.019Z",
+      "duration_seconds": 8284,
+      "channel": "telegram",
+      "topics": [
+        "Browser",
+        "Git",
+        "GitHub",
+        "Agents",
+        "Telegram"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
     }
   ],
-  "last_import": "2026-03-20T00:04:24.310243",
+  "last_import": "2026-03-21T00:04:59.195292",
   "topic_stats": {
     "SQL": {
-      "total_mentions": 40,
-      "last_seen": "2026-03-19T15:17:24.927Z",
+      "total_mentions": 43,
+      "last_seen": "2026-03-20T09:50:00.205Z",
       "trend": "new"
     },
     "Agents": {
-      "total_mentions": 139,
-      "last_seen": "2026-03-19T15:17:24.927Z",
+      "total_mentions": 170,
+      "last_seen": "2026-03-20T18:46:54.460Z",
       "trend": "new"
     },
     "Cron": {
-      "total_mentions": 190,
-      "last_seen": "2026-03-19T15:17:24.927Z",
+      "total_mentions": 211,
+      "last_seen": "2026-03-20T18:46:54.460Z",
       "trend": "new"
     },
     "Database": {
-      "total_mentions": 21,
-      "last_seen": "2026-03-06T20:15:37.129Z",
+      "total_mentions": 22,
+      "last_seen": "2026-03-20T04:17:25.306Z",
       "trend": "new"
     },
     "TypeScript": {
@@ -5973,18 +6711,18 @@
       "trend": "new"
     },
     "Tasks": {
-      "total_mentions": 181,
-      "last_seen": "2026-03-19T15:17:24.927Z",
+      "total_mentions": 205,
+      "last_seen": "2026-03-20T18:46:54.460Z",
       "trend": "new"
     },
     "Medication": {
-      "total_mentions": 119,
-      "last_seen": "2026-03-19T15:17:24.927Z",
+      "total_mentions": 122,
+      "last_seen": "2026-03-20T09:50:00.205Z",
       "trend": "new"
     },
     "Reminders": {
-      "total_mentions": 112,
-      "last_seen": "2026-03-19T11:04:02.922Z",
+      "total_mentions": 115,
+      "last_seen": "2026-03-20T09:50:00.205Z",
       "trend": "new"
     },
     "Health": {
@@ -5993,38 +6731,38 @@
       "trend": "new"
     },
     "GitHub": {
-      "total_mentions": 30,
-      "last_seen": "2026-03-17T01:00:42.603Z",
+      "total_mentions": 38,
+      "last_seen": "2026-03-20T18:46:54.460Z",
       "trend": "new"
     },
     "Docker": {
-      "total_mentions": 25,
-      "last_seen": "2026-03-19T15:17:24.927Z",
+      "total_mentions": 27,
+      "last_seen": "2026-03-20T04:17:25.306Z",
       "trend": "new"
     },
     "API": {
-      "total_mentions": 60,
-      "last_seen": "2026-03-19T15:17:24.927Z",
+      "total_mentions": 71,
+      "last_seen": "2026-03-20T04:17:25.306Z",
       "trend": "new"
     },
     "Gateway": {
-      "total_mentions": 61,
-      "last_seen": "2026-03-19T15:17:24.927Z",
+      "total_mentions": 67,
+      "last_seen": "2026-03-20T18:46:54.460Z",
       "trend": "new"
     },
     "Python": {
-      "total_mentions": 98,
-      "last_seen": "2026-03-19T15:17:24.927Z",
+      "total_mentions": 104,
+      "last_seen": "2026-03-20T09:50:00.205Z",
       "trend": "new"
     },
     "Analytics": {
-      "total_mentions": 16,
-      "last_seen": "2026-03-19T01:00:44.897Z",
+      "total_mentions": 17,
+      "last_seen": "2026-03-20T04:17:25.306Z",
       "trend": "new"
     },
     "OpenClaw": {
-      "total_mentions": 109,
-      "last_seen": "2026-03-19T15:17:24.927Z",
+      "total_mentions": 130,
+      "last_seen": "2026-03-20T18:46:54.460Z",
       "trend": "new"
     },
     "Heartbeat": {
@@ -6033,33 +6771,33 @@
       "trend": "new"
     },
     "Telegram": {
-      "total_mentions": 111,
-      "last_seen": "2026-03-19T15:17:24.927Z",
+      "total_mentions": 143,
+      "last_seen": "2026-03-20T18:46:54.460Z",
       "trend": "new"
     },
     "Git": {
-      "total_mentions": 37,
-      "last_seen": "2026-03-19T11:04:02.922Z",
+      "total_mentions": 52,
+      "last_seen": "2026-03-20T18:46:54.460Z",
       "trend": "new"
     },
     "Skills": {
-      "total_mentions": 16,
-      "last_seen": "2026-03-19T01:00:44.897Z",
+      "total_mentions": 18,
+      "last_seen": "2026-03-20T00:17:25.140Z",
       "trend": "new"
     },
     "React": {
-      "total_mentions": 25,
-      "last_seen": "2026-03-19T15:17:24.927Z",
+      "total_mentions": 28,
+      "last_seen": "2026-03-20T18:46:54.460Z",
       "trend": "new"
     },
     "Browser": {
-      "total_mentions": 19,
-      "last_seen": "2026-03-19T11:04:02.922Z",
+      "total_mentions": 23,
+      "last_seen": "2026-03-20T18:46:54.460Z",
       "trend": "new"
     },
     "JavaScript": {
-      "total_mentions": 3,
-      "last_seen": "2026-03-18T01:19:08.988Z",
+      "total_mentions": 6,
+      "last_seen": "2026-03-20T18:46:54.460Z",
       "trend": "new"
     },
     "Nginx": {
@@ -6080,45 +6818,45 @@
   },
   "time_stats": {
     "hourly_distribution": {
-      "13": 11,
-      "6": 83,
-      "22": 4,
-      "14": 23,
-      "1": 36,
-      "7": 14,
-      "16": 6,
-      "12": 7,
-      "9": 31,
-      "18": 22,
-      "10": 19,
-      "11": 6,
-      "19": 10,
-      "15": 6,
-      "17": 9,
-      "20": 28,
-      "8": 8,
-      "4": 5,
-      "2": 17,
-      "5": 13,
-      "21": 4,
-      "23": 3,
-      "3": 3,
-      "0": 2
+      "13": 12,
+      "6": 85,
+      "22": 5,
+      "14": 24,
+      "1": 38,
+      "7": 17,
+      "16": 7,
+      "12": 8,
+      "9": 37,
+      "18": 24,
+      "10": 22,
+      "11": 9,
+      "19": 11,
+      "15": 7,
+      "17": 10,
+      "20": 32,
+      "8": 11,
+      "4": 6,
+      "2": 19,
+      "5": 15,
+      "21": 5,
+      "23": 4,
+      "3": 4,
+      "0": 3
     },
     "daily_distribution": {
       "tuesday": 90,
-      "thursday": 54,
+      "thursday": 57,
       "saturday": 41,
-      "friday": 42,
+      "friday": 84,
       "sunday": 35,
       "wednesday": 70,
       "monday": 38
     }
   },
   "sentiment_stats": {
-    "positive": 41,
-    "neutral": 109,
-    "negative": 136,
-    "mixed": 84
+    "positive": 45,
+    "neutral": 117,
+    "negative": 157,
+    "mixed": 96
   }
 }
