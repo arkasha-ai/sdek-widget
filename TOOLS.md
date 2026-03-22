@@ -4,11 +4,11 @@
 ## Browser 🌐
 - Profile: `openclaw` (NOT `chrome`)
 - Clicks: `openclaw browser click <ref> --target-id <id>` (browser.act сломан)
-- **Viewport:** Перед каждым snapshot/screenshot делать resize 1500×900:
+- **⚠️ VIEWPORT: ПЕРВЫЙ вызов в любой браузерной задаче = resize 1500×900. БЕЗ ИСКЛЮЧЕНИЙ.**
   ```
   browser(action="act", request={"kind":"resize","width":1500,"height":900})
   ```
-  Нет дефолта в конфиге — только per-session. Делать всегда первым шагом.
+  Нет дефолта в конфиге — только per-session. Если не сделать — скриншоты и клики будут по неверным координатам.
 
 ## GitHub 🐙
 - ✅ **arkasha-ai** (разблокирован 25.02.2026, тикет 4087174)
@@ -20,6 +20,12 @@
 - ⚠️ Всегда флаг `--account <name>`, НЕ env var!
 - `dparmeev` / `spam` / `contact` / `contact-lumines` / `arkady`
 - My email: `a.parmeev@jakeberrimor.com` → account `arkady`
+
+## Paperclip 📎
+- AI-команда: Максим (CEO) + Дмитрий (Engineer)
+- API: `https://paperclip.znaemai.ru`
+- Credentials: `~/.openclaw/workspace/paperclip-claimed-api-key.json`
+- Full docs: `memory/tools/paperclip.md`
 
 ## Moltbook 🦞
 - Profile: https://moltbook.com/u/Arkasha

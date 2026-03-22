@@ -146,21 +146,17 @@ _Обновлено: 2026-03-18_
 - URL: https://online.consultant.ru (логин через login.consultant.ru)
 - Workflow: залогиниться → найти нужное → выйти из аккаунта
 
-### Agent-to-Agent коммуникация (2026-02-27)
+### Agent-to-Agent коммуникация (2026-02-27, обновлено 2026-03-22)
 
 **Проблема:** Telegram боты не видят сообщения других ботов — платформенное ограничение.
 
-**Решение 1 — Redis Pub/Sub relay:**
-- Скрипт: `scripts/agent_relay.py`
-- Redis: `redis://default:q2bYD3MS4sH4mw0G0yis@80.87.197.0:6379`
-- Использование: `python3 agent_relay.py send <agent> <msg>` / `recv <agent>`
-- Мой агент-name: `arkasha`, Котик: `friend`
+**Актуальное решение — Paperclip API** (см. TOOLS.md и memory/tools/paperclip.md)
 
-**Решение 2 — Email через imap-idle skill:**
+~~Redis Pub/Sub relay~~ — **не используется**, убрано 22.03.2026.
+
+**Email через imap-idle skill** — резервный вариант для коммуникации вне Paperclip:
 - Агенты могут общаться через email + imap-idle для real-time уведомлений
 - Skill: https://clawhub.ai/topitip/imap-idle
-- Установка: `openclaw skills install topitip/imap-idle`
-- Котик (бот Светы) тоже ставит этот скилл → общаемся по email
 
 **Группа:** `Афигеваем от ассистентов` (-5226768769) — Денис, Света, Котик (@Rotibor_bot), Аркаша
 
@@ -201,3 +197,52 @@ Personal Analytics — дважды соврал:
 
 **Записано в:** SOUL.md (раздел Boundaries)
 
+
+---
+
+### Карточки товаров для маркетплейсов (2026-03-21)
+
+**Правильный пайплайн:**
+1. Берём исходное фото товара
+2. Скармливаем в **FLUX Kontext** с промптом — он сам убирает фон, правит позицию, добавляет тематическую сцену (полянка, кроватка, детская комната и т.д.)
+3. Поверх результата накладываем текст через **HTML/CSS + Playwright**
+
+**НЕ правильно:**
+- Сначала вырезать фон rembg → отдельно генерировать фон → руками склеивать PIL
+- Делать тёмный overlay поверх фото (выглядит криповo, не по-детски)
+- Генерировать фон отдельно без исходного фото
+
+**Модель:** `black-forest-labs/flux-kontext-dev` через Replicate API
+**Токен:** `REPLICATE_API_TOKEN` в `~/.openclaw/secrets.env`
+
+**Финальный стек:** FLUX Kontext (фото→сцена) → HTML/CSS шаблон → Playwright screenshot → готовая карточка
+
+---
+
+### Paperclip — AI команда (2026-03-22)
+
+**Что это:** Paperclip — платформа для AI-агентов. Я (Аркадий) подключён как посредник между Денисом и командой агентов.
+
+**Инфраструктура:**
+- Paperclip: `https://paperclip.znaemai.ru` (Dokploy, тот же сервер)
+- API key: `~/.openclaw/workspace/paperclip-claimed-api-key.json`
+- Agent ID: `7fba4a1f-dbb5-49a9-ad74-4840f5556a52`
+- Company ID: `b246cf3d-2eda-4223-8ff6-5be30c598eca`
+- Gateway для Paperclip: `ws://95.81.99.103:18789/`
+
+**Команда:**
+- Максим (CEO, a5893697) — планирует, декомпозирует
+- Дмитрий (Engineer, 5a630270) — реализует
+- Аркадий (я, посредник) — связь с заказчиком, ревью
+
+**Gitea:**
+- Org: `git.jakeberrimor.com/znaem-ai`
+- ceo-agent: `CeoAgent2026!` / token `c0ef1b36...`
+- founding-engineer: `EngAgent2026!` / token `aba5e5aa...`
+
+**Активный проект:** Product Card Generator
+- Repo: `znaem-ai/product-card-generator`
+- Статус: план готов, ждём ответы заказчика на вопросы
+
+**Уведомления:** важное → ZnaemAI (`-1003831241406`)
+**Cron:** каждые 30 мин проверяю Paperclip активность

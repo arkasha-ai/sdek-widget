@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 900px; height: 900px; overflow: hidden; background: #fff; font-family: 'Nunito', sans-serif; }
+.card { width: 900px; height: 900px; position: relative; overflow: hidden; }
+.bg-img {
+  position: absolute; top: 0; left: 0;
+  width: 900px; height: 900px;
+  object-fit: cover; z-index: 0;
+}
+.content {
+  position: absolute; top: 0; left: 0;
+  width: 460px; height: 900px; z-index: 10;
+  display: flex; flex-direction: column;
+  padding: 48px 40px;
+  background: transparent;
+}
+.brand {
+  display: inline-block;
+  background: #1A1A1A; color: #fff;
+  font-size: 12px; font-weight: 800; letter-spacing: 3.5px;
+  padding: 7px 16px; border-radius: 4px;
+  text-transform: uppercase; width: fit-content;
+}
+.age-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #F5A623; color: #fff;
+  font-size: 20px; font-weight: 900;
+  width: 52px; height: 52px; border-radius: 50%;
+  margin-top: 14px;
+  box-shadow: 0 6px 18px rgba(245,166,35,0.45);
+}
+.text-block { margin-top: auto;
+  margin-bottom: auto; }
+
+/* Frosted glass плашка только под текстовым блоком */
+.glass-card {
+  background: rgba(255, 248, 235, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.6);
+  padding: 24px 28px;
+}
+
+.big-number {
+  font-size: 88px; font-weight: 900; color: #E68900;
+  line-height: 0.9; letter-spacing: -4px;
+}
+.big-number-sub {
+  font-size: 20px; font-weight: 800; color: #E68900; margin-top: 4px;
+}
+.main-title {
+  font-size: 36px; font-weight: 900; color: #1A1A1A;
+  line-height: 1.1; margin-top: 14px; text-transform: uppercase;
+}
+.subtitle {
+  font-size: 14px; font-weight: 600; color: #5a4530;
+  margin-top: 6px; font-style: italic;
+}
+.features { margin-top: 16px; display: flex; flex-direction: column; gap: 5px; }
+.feature {
+  font-size: 13px; font-weight: 700; color: #1A1A1A;
+  display: flex; align-items: center; gap: 8px;
+}
+.dot { width: 6px; height: 6px; border-radius: 50%; background: #E68900; flex-shrink: 0; }
+.divider { margin-top: 16px; width: 40px; height: 3px; background: #E68900; border-radius: 2px; }
+.tagline {
+  margin-top: 10px; font-size: 11px; font-weight: 700;
+  color: #888; letter-spacing: 2px; text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+<div class="card">
+  <img class="bg-img" src="file:///tmp/bria_v2.jpg">
+  <div class="content">
+    <div class="brand">ALILO</div>
+    <div class="age-badge">0+</div>
+    <div class="text-block">
+      <div class="glass-card">
+        <div class="big-number">60+</div>
+        <div class="big-number-sub">мелодий и звуков</div>
+        <div class="main-title">Музыкальная<br>погремушка</div>
+        <div class="subtitle">Слушай, играй, засыпай</div>
+        <div class="features">
+          <div class="feature"><div class="dot"></div>LED подсветка</div>
+          <div class="feature"><div class="dot"></div>Материал без BPA</div>
+          <div class="feature"><div class="dot"></div>Батарейки в комплекте</div>
+          <div class="feature"><div class="dot"></div>Сертифицировано</div>
+        </div>
+        <div class="divider"></div>
+        <div class="tagline">Гарантия 1 год</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

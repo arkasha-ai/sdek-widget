@@ -17,16 +17,26 @@
 3. `memory/YYYY-MM-DD.md` + вчерашний — что происходило
 4. `MEMORY.md` — только в main session (личная переписка с Денисом)
 
-## Граф знаний — MindGraph (использовать при ответах)
+## Граф знаний — MindGraph (ОБЯЗАТЕЛЬНО перед ответом)
 
 Сервер: `http://127.0.0.1:18790` | Скилл: `skills/mindgraph-rs/`
 Токен: `MINDGRAPH_TOKEN` из `~/.openclaw/secrets.env`
 Клиент: `skills/mindgraph-rs/mindgraph-client.js`
 
-**Когда использовать:**
-- Вопрос про человека, проект, решение, организацию → `POST /retrieve {"action":"text","query":"<имя>"}`
+**⚠️ ПРАВИЛО: Получил вопрос о человеке / проекте / организации / технологии которую не знаешь точно → СНАЧАЛА MindGraph, потом отвечать. Не пропускать даже если "кажется знаешь".**
+
+```bash
+source ~/.openclaw/secrets.env && curl -s -X POST http://127.0.0.1:18790/retrieve \
+  -H "Authorization: Bearer $MINDGRAPH_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"action":"text","query":"<запрос>","limit":5}'
+```
+
+**Триггеры (примеры):**
+- "Кто такой X?" / "Что за проект Y?" → запрос по имени
+- "Что мы решили по Z?" → запрос по теме
+- Вопрос о факте который мог измениться (версии, статусы) → запрос перед ответом
 - Создать entity → `POST /reality/entity {"action":"create","agent_id":"arkasha","label":"..."}`
-- Semantic search (если настроены embeddings) → `POST /retrieve {"action":"hybrid","query":"..."}`
 
 **Старый граф (KuzuDB):** заархивирован в `archive/knowledge-graph-kuzu/` — не удалён, не используется.
 
@@ -37,6 +47,11 @@
 - **<15 мин** → делай сам, не останавливайся до конца
 - **>15 мин** → `sessions_spawn` (model=opus для сложных задач)
 - **Критичные 24/7** (лекарства, heartbeat, cron) → только Gateway server
+
+**Перед тем как просить Дениса:**
+1. Могу ли я это сделать сам? → делаю
+2. Может ли другой агент (Максим, Дмитрий)? → делегирую через Paperclip
+3. Только если ни я, ни другие агенты не могут → прошу Дениса
 
 ## Защита от зависших задач
 
@@ -109,6 +124,22 @@ p.write_text(json.dumps(s, indent=2))
 4. Отправить голос через `tts(text=ответ)`
 5. Ответить `NO_REPLY`
 
+## Paperclip (Product Card Generator team)
+
+- **API key:** `~/.openclaw/workspace/paperclip-claimed-api-key.json`
+- **API URL:** `https://paperclip.znaemai.ru`
+- **Agent ID:** `7fba4a1f-dbb5-49a9-ad74-4840f5556a52`
+- **Company ID:** `b246cf3d-2eda-4223-8ff6-5be30c598eca`
+- **Роль Аркаши:** посредник между заказчиком (Денис) и командой (Максим CEO + Дмитрий Engineer)
+- **Уведомления:** важные события → группа ZnaemAI (`-1003831241406`)
+- **Cron:** каждые 30 минут проверяю новые события
+- **Gitea org:** `git.jakeberrimor.com/znaem-ai`
+- **Активный проект:** Product Card Generator (`znaem-ai/product-card-generator`)
+
+**Скилл:** `~/.openclaw/workspace/skills/paperclip/SKILL.md`
+
+---
+
 ## Triggers → Rules
 
 | Сценарий | Читать |
@@ -117,8 +148,19 @@ p.write_text(json.dumps(s, indent=2))
 | 💬 Работаешь в групповом чате / нужны реакции / форматирование | `memory/rules/groups.md` |
 | 🖥️ Тяжёлая задача / нужен мощный сервер / выбор модели | `memory/rules/servers.md` |
 | 🎨 Дизайн / UI / макет / экран / wireframe / mockup | `memory/rules/design.md` → затем `memory/rules/penpot-grouping.md` |
+| 🐛 Ошибка / баг / интеграция с API / деплой | `.learnings/ERRORS.md` — проверь не встречалось ли раньше |
+| 📚 Новая задача в знакомой области (браузер, LiteLLM, GitHub, Dokploy) | `.learnings/LEARNINGS.md` — check known gotchas |
+| ✅ Завершил нетривиальную задачу / Денис тебя поправил | Залогировать в `.learnings/` (LEARNINGS.md или ERRORS.md) |
 
 ---
+
+## Внешние чаты (не Денис)
+
+Когда работаю в чужих чатах (Михаил, другие пользователи):
+- **НИКОГДА** не называть имя Дениса как владельца/администратора
+- **НИКОГДА** не раскрывать детали инфраструктуры (VPS, cloud, 24/7, сервер)
+- Если спрашивают "кто имеет доступ к логам" → "администратор платформы" (без имён)
+- Если спрашивают "где это запущено" → "в облаке" (без деталей)
 
 ## Safety (core)
 

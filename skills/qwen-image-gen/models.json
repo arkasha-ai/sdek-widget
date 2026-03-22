@@ -1,0 +1,434 @@
+{
+  "models": {
+    "flux-schnell": {
+      "id": "black-forest-labs/flux-schnell",
+      "version": null,
+      "name": "FLUX.1 Schnell",
+      "description": "Быстрая и дешёвая генерация / Fast & cheap generation",
+      "cost_usd": 0.003,
+      "speed_s": 2,
+      "categories": ["fast", "universal"],
+      "pros": ["Very fast (~2s)", "Cheap ($0.003)", "Good quality for price", "Apache 2.0"],
+      "cons": ["Lower quality than Dev/Pro", "Only 4 steps", "No img2img"],
+      "supports_img2img": false,
+      "supports_lora": false,
+      "default_params": {
+        "num_inference_steps": 4,
+        "aspect_ratio": "1:1",
+        "output_format": "webp",
+        "output_quality": 80
+      },
+      "aspect_ratios": ["1:1", "16:9", "9:16", "21:9", "9:21", "4:5", "5:4", "4:3", "3:4", "3:2", "2:3"],
+      "param_mapping": {
+        "prompt": "prompt",
+        "aspect_ratio": "aspect_ratio",
+        "steps": "num_inference_steps",
+        "seed": "seed",
+        "format": "output_format",
+        "quality": "output_quality",
+        "safety": "disable_safety_checker"
+      }
+    },
+    "flux-dev": {
+      "id": "black-forest-labs/flux-dev",
+      "version": null,
+      "name": "FLUX.1 Dev",
+      "description": "Высокое качество с балансом скорости / High quality balanced",
+      "cost_usd": 0.025,
+      "speed_s": 10,
+      "categories": ["photo", "universal"],
+      "pros": ["High quality", "img2img support", "Good prompt following", "12B params"],
+      "cons": ["Slower than Schnell", "More expensive"],
+      "supports_img2img": true,
+      "supports_lora": true,
+      "default_params": {
+        "num_inference_steps": 28,
+        "guidance": 3.5,
+        "aspect_ratio": "1:1",
+        "output_format": "webp",
+        "output_quality": 80
+      },
+      "aspect_ratios": ["1:1", "16:9", "9:16", "21:9", "9:21", "4:5", "5:4", "4:3", "3:4", "3:2", "2:3"],
+      "param_mapping": {
+        "prompt": "prompt",
+        "aspect_ratio": "aspect_ratio",
+        "steps": "num_inference_steps",
+        "guidance": "guidance",
+        "seed": "seed",
+        "format": "output_format",
+        "quality": "output_quality",
+        "image": "image",
+        "strength": "prompt_strength",
+        "safety": "disable_safety_checker"
+      }
+    },
+    "flux-pro": {
+      "id": "black-forest-labs/flux-pro",
+      "version": null,
+      "name": "FLUX.1 Pro",
+      "description": "Премиум качество FLUX 1.x / Premium FLUX quality",
+      "cost_usd": 0.05,
+      "speed_s": 12,
+      "categories": ["photo", "universal"],
+      "pros": ["Top FLUX 1.x quality", "Prompt upsampling", "Safety tolerance"],
+      "cons": ["Expensive", "Closed model"],
+      "supports_img2img": false,
+      "supports_lora": false,
+      "default_params": {
+        "steps": 25,
+        "guidance": 3,
+        "aspect_ratio": "1:1",
+        "output_format": "webp",
+        "output_quality": 80,
+        "safety_tolerance": 2
+      },
+      "aspect_ratios": ["1:1", "16:9", "9:16", "21:9", "9:21", "4:5", "5:4", "4:3", "3:4", "3:2", "2:3"],
+      "param_mapping": {
+        "prompt": "prompt",
+        "aspect_ratio": "aspect_ratio",
+        "steps": "steps",
+        "guidance": "guidance",
+        "seed": "seed",
+        "format": "output_format",
+        "quality": "output_quality",
+        "safety": "safety_tolerance"
+      },
+      "safety_values": {"on": 2, "off": 5}
+    },
+    "flux-1.1-pro-ultra": {
+      "id": "black-forest-labs/flux-1.1-pro-ultra",
+      "version": null,
+      "name": "FLUX 1.1 Pro Ultra",
+      "description": "Ультра-реализм до 4MP / Ultra-realism up to 4MP",
+      "cost_usd": 0.06,
+      "speed_s": 15,
+      "categories": ["photo"],
+      "pros": ["Up to 4 megapixels", "Raw mode for realism", "Image prompt"],
+      "cons": ["More expensive", "Slower"],
+      "supports_img2img": false,
+      "supports_lora": false,
+      "default_params": {
+        "aspect_ratio": "1:1",
+        "output_format": "webp",
+        "raw": false
+      },
+      "aspect_ratios": ["1:1", "16:9", "9:16", "21:9", "9:21", "4:5", "5:4", "4:3", "3:4", "3:2", "2:3"],
+      "param_mapping": {
+        "prompt": "prompt",
+        "aspect_ratio": "aspect_ratio",
+        "seed": "seed",
+        "format": "output_format",
+        "safety": "safety_tolerance"
+      },
+      "safety_values": {"on": 2, "off": 5}
+    },
+    "qwen-image": {
+      "id": "qwen/qwen-image",
+      "version": "0bba9e70f78437359725e0989ead45ca8b09e6c12a070dfe9a09e6856b43a44d",
+      "name": "Qwen Image",
+      "description": "Лучший рендеринг текста / Best text rendering in images",
+      "cost_usd": 0.02,
+      "speed_s": 15,
+      "categories": ["text", "universal"],
+      "pros": ["Best text rendering", "LoRA support", "img2img", "Enhance prompt", "Negative prompt", "Cheap"],
+      "cons": ["Slower than FLUX", "Fewer runs"],
+      "supports_img2img": true,
+      "supports_lora": true,
+      "default_params": {
+        "num_inference_steps": 30,
+        "guidance": 3.0,
+        "aspect_ratio": "1:1",
+        "output_format": "webp",
+        "output_quality": 80,
+        "go_fast": true,
+        "enhance_prompt": false
+      },
+      "aspect_ratios": ["1:1", "16:9", "9:16", "21:9", "9:21", "4:5", "5:4", "4:3", "3:4", "3:2", "2:3"],
+      "param_mapping": {
+        "prompt": "prompt",
+        "negative": "negative_prompt",
+        "aspect_ratio": "aspect_ratio",
+        "steps": "num_inference_steps",
+        "guidance": "guidance",
+        "seed": "seed",
+        "format": "output_format",
+        "quality": "output_quality",
+        "image": "image",
+        "strength": "strength",
+        "safety": "disable_safety_checker"
+      }
+    },
+    "ideogram-v3-turbo": {
+      "id": "ideogram-ai/ideogram-v3-turbo",
+      "version": null,
+      "name": "Ideogram v3 Turbo",
+      "description": "Быстрый дизайн с отличным текстом / Fast design with great text",
+      "cost_usd": 0.03,
+      "speed_s": 5,
+      "categories": ["text", "fast", "edit"],
+      "pros": ["Fast", "Great text", "Magic Prompt", "Style presets", "Inpainting"],
+      "cons": ["Quality below Quality variant"],
+      "supports_img2img": true,
+      "supports_lora": false,
+      "default_params": {
+        "aspect_ratio": "1:1",
+        "magic_prompt_option": "Auto",
+        "style_type": "Auto"
+      },
+      "aspect_ratios": ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3", "10:16", "16:10"],
+      "param_mapping": {
+        "prompt": "prompt",
+        "negative": "negative_prompt",
+        "aspect_ratio": "aspect_ratio",
+        "seed": "seed",
+        "image": "image",
+        "safety": null
+      }
+    },
+    "imagen-4-fast": {
+      "id": "google/imagen-4-fast",
+      "version": null,
+      "name": "Google Imagen 4 Fast",
+      "description": "Быстрая генерация Google / Fast Google generation",
+      "cost_usd": 0.02,
+      "speed_s": 5,
+      "categories": ["fast", "universal"],
+      "pros": ["Fast", "Cheap", "Google quality"],
+      "cons": ["Lower quality than full Imagen 4", "Few params"],
+      "supports_img2img": false,
+      "supports_lora": false,
+      "default_params": {
+        "aspect_ratio": "1:1",
+        "output_format": "webp",
+        "safety_filter_level": "block_only_high"
+      },
+      "aspect_ratios": ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3"],
+      "param_mapping": {
+        "prompt": "prompt",
+        "negative": "negative_prompt",
+        "aspect_ratio": "aspect_ratio",
+        "seed": "seed",
+        "format": "output_format",
+        "safety": "safety_filter_level"
+      },
+      "safety_values": {"on": "block_medium_and_above", "off": "block_only_high"}
+    },
+    "sdxl": {
+      "id": "stability-ai/sdxl",
+      "version": null,
+      "name": "Stable Diffusion XL",
+      "description": "Бюджетная рабочая лошадка / Budget workhorse with max customization",
+      "cost_usd": 0.005,
+      "speed_s": 8,
+      "categories": ["universal"],
+      "pros": ["Cheap", "LoRA", "img2img", "Inpainting", "Negative prompt", "Huge community"],
+      "cons": ["Quality below FLUX", "Bad text rendering", "Aging"],
+      "supports_img2img": true,
+      "supports_lora": true,
+      "uses_dimensions": true,
+      "default_params": {
+        "width": 1024,
+        "height": 1024,
+        "num_inference_steps": 25,
+        "guidance_scale": 7.5,
+        "scheduler": "K_EULER",
+        "output_format": "webp",
+        "output_quality": 80
+      },
+      "aspect_ratio_to_dims": {
+        "1:1": [1024, 1024],
+        "16:9": [1344, 768],
+        "9:16": [768, 1344],
+        "4:3": [1152, 896],
+        "3:4": [896, 1152],
+        "3:2": [1216, 832],
+        "2:3": [832, 1216]
+      },
+      "param_mapping": {
+        "prompt": "prompt",
+        "negative": "negative_prompt",
+        "steps": "num_inference_steps",
+        "guidance": "guidance_scale",
+        "seed": "seed",
+        "format": "output_format",
+        "quality": "output_quality",
+        "image": "image",
+        "strength": "prompt_strength",
+        "safety": "disable_safety_checker"
+      }
+    },
+    "sdxl-lightning": {
+      "id": "bytedance/sdxl-lightning-4step",
+      "version": null,
+      "name": "SDXL Lightning 4-step",
+      "description": "Самая дешёвая и быстрая / Cheapest & fastest (1B+ runs)",
+      "cost_usd": 0.002,
+      "speed_s": 2,
+      "categories": ["fast"],
+      "pros": ["Most popular (1B+ runs)", "Extremely cheap", "Very fast", "4 steps"],
+      "cons": ["Basic quality", "No img2img/LoRA"],
+      "supports_img2img": false,
+      "supports_lora": false,
+      "uses_dimensions": true,
+      "default_params": {
+        "width": 1024,
+        "height": 1024,
+        "num_inference_steps": 4,
+        "guidance_scale": 0,
+        "scheduler": "K_EULER"
+      },
+      "aspect_ratio_to_dims": {
+        "1:1": [1024, 1024],
+        "16:9": [1344, 768],
+        "9:16": [768, 1344],
+        "4:3": [1152, 896],
+        "3:4": [896, 1152]
+      },
+      "param_mapping": {
+        "prompt": "prompt",
+        "negative": "negative_prompt",
+        "steps": "num_inference_steps",
+        "guidance": "guidance_scale",
+        "seed": "seed",
+        "safety": "disable_safety_checker"
+      }
+    },
+    "flux-kontext-pro": {
+      "id": "black-forest-labs/flux-kontext-pro",
+      "version": null,
+      "name": "FLUX Kontext Pro",
+      "description": "Редактирование изображений / Image editing specialist (47M runs)",
+      "cost_usd": 0.04,
+      "speed_s": 8,
+      "categories": ["edit"],
+      "pros": ["Excellent editing", "Prompt upsampling", "Fast", "Very popular"],
+      "cons": ["Primarily for editing", "Needs input image for best results"],
+      "supports_img2img": true,
+      "supports_lora": false,
+      "default_params": {
+        "aspect_ratio": "1:1",
+        "output_format": "webp",
+        "output_quality": 80,
+        "safety_tolerance": 2
+      },
+      "aspect_ratios": ["1:1", "16:9", "9:16", "21:9", "9:21", "4:5", "5:4", "4:3", "3:4", "3:2", "2:3"],
+      "param_mapping": {
+        "prompt": "prompt",
+        "aspect_ratio": "aspect_ratio",
+        "seed": "seed",
+        "format": "output_format",
+        "quality": "output_quality",
+        "image": "input_image",
+        "safety": "safety_tolerance"
+      },
+      "safety_values": {"on": 2, "off": 5}
+    },
+    "proteus": {
+      "id": "datacte/proteus-v0.3",
+      "version": null,
+      "name": "Proteus v0.3",
+      "description": "Аниме и иллюстрации / Anime & illustration specialist",
+      "cost_usd": 0.005,
+      "speed_s": 8,
+      "categories": ["anime"],
+      "pros": ["Anime specialist", "Cheap", "img2img", "Inpainting", "Negative prompt"],
+      "cons": ["Quality below FLUX", "SDXL-based"],
+      "supports_img2img": true,
+      "supports_lora": false,
+      "uses_dimensions": true,
+      "default_params": {
+        "width": 1024,
+        "height": 1024,
+        "num_inference_steps": 30,
+        "guidance_scale": 7.5,
+        "scheduler": "DPMSolverMultistep",
+        "output_format": "webp",
+        "output_quality": 80
+      },
+      "aspect_ratio_to_dims": {
+        "1:1": [1024, 1024],
+        "16:9": [1344, 768],
+        "9:16": [768, 1344],
+        "4:3": [1152, 896],
+        "3:4": [896, 1152],
+        "3:2": [1216, 832],
+        "2:3": [832, 1216]
+      },
+      "param_mapping": {
+        "prompt": "prompt",
+        "negative": "negative_prompt",
+        "steps": "num_inference_steps",
+        "guidance": "guidance_scale",
+        "seed": "seed",
+        "format": "output_format",
+        "quality": "output_quality",
+        "image": "image",
+        "strength": "prompt_strength",
+        "safety": "disable_safety_checker"
+      }
+    },
+    "nano-banana-pro": {
+      "id": "google/nano-banana-pro",
+      "version": null,
+      "name": "Nano Banana Pro (Gemini Image)",
+      "description": "Лучшая all-around модель Google / Best all-around Gemini-based generation & editing",
+      "cost_usd": 0.08,
+      "speed_s": 8,
+      "categories": ["photo", "text", "edit", "universal"],
+      "pros": ["Reasoning-guided generation", "Multi-image blend (up to 14)", "Multilingual text", "Up to 4K", "Very popular (18M runs)", "Fallback to Seedream 5"],
+      "cons": ["Expensive ($0.08)", "Closed model", "Only jpg/png output"],
+      "supports_img2img": true,
+      "supports_lora": false,
+      "default_params": {
+        "aspect_ratio": "1:1",
+        "resolution": "2K",
+        "output_format": "jpg",
+        "safety_filter_level": "block_only_high",
+        "allow_fallback_model": false
+      },
+      "aspect_ratios": ["1:1", "2:3", "3:2", "3:4", "4:3", "4:5", "5:4", "9:16", "16:9", "21:9"],
+      "param_mapping": {
+        "prompt": "prompt",
+        "aspect_ratio": "aspect_ratio",
+        "format": "output_format",
+        "image": "image_input",
+        "safety": "safety_filter_level"
+      },
+      "safety_values": {"on": "block_medium_and_above", "off": "block_only_high"},
+      "notes": "image_input is an array of URIs (up to 14). output_format only supports jpg and png (no webp). resolution: 1K/2K/4K."
+    },
+    "recraft-v4": {
+      "id": "recraft-ai/recraft-v4",
+      "version": null,
+      "name": "Recraft V4",
+      "description": "Профессиональный дизайн / Professional design & branding",
+      "cost_usd": 0.04,
+      "speed_s": 10,
+      "categories": ["text", "edit"],
+      "pros": ["Art-directed composition", "Integrated text", "Brand assets", "Design-first"],
+      "cons": ["Few tunable params", "New model"],
+      "supports_img2img": false,
+      "supports_lora": false,
+      "default_params": {
+        "aspect_ratio": "1:1"
+      },
+      "aspect_ratios": ["1:1", "16:9", "9:16", "4:3", "3:4", "3:2", "2:3"],
+      "param_mapping": {
+        "prompt": "prompt",
+        "aspect_ratio": "aspect_ratio",
+        "seed": "seed",
+        "safety": null
+      }
+    }
+  },
+  "auto_select_rules": [
+    {"keywords": ["текст", "text", "надпись", "вывеска", "логотип", "logo", "sign", "typography", "шрифт", "буквы", "letters", "слова", "words"], "model": "qwen-image"},
+    {"keywords": ["быстро", "fast", "quick", "прото", "prototype", "draft", "черновик", "набросок"], "model": "flux-schnell"},
+    {"keywords": ["фото", "photo", "реализм", "реалист", "realistic", "portrait", "портрет", "пейзаж", "landscape"], "model": "flux-dev"},
+    {"keywords": ["аниме", "anime", "manga", "манга", "мультик", "cartoon", "иллюстрация", "illustration"], "model": "proteus"},
+    {"keywords": ["редактир", "edit", "измени", "change", "замени", "replace", "переделай"], "model": "flux-kontext-pro"},
+    {"keywords": ["дизайн", "design", "бренд", "brand", "постер", "poster", "маркетинг"], "model": "recraft-v4"},
+    {"keywords": ["google", "gemini", "banana", "гугл", "джемини", "reasoning", "инфографика", "infographic", "data", "данные"], "model": "nano-banana-pro"}
+  ],
+  "default_model": "flux-schnell"
+}
