@@ -1,0 +1,14 @@
+{
+  "lastChecked": "2026-03-22T23:09:48.354385+00:00",
+  "lastCommentIds": {
+    "ZNAA-18": "8c9cd5f6-9034-43da-94e8-71c6af033379"
+  },
+  "blockedIssues": [
+    "ZNAA-18"
+  ],
+  "inReviewIssues": [
+    "ZNAA-15",
+    "ZNAA-13",
+    "ZNAA-20"
+  ]
+}

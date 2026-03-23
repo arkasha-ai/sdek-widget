@@ -1,5 +1,5 @@
 {
-  "lastCheckAt": "2026-03-21T23:38:00.000Z",
-  "assignedIssues": 0,
-  "status": "clean"
+  "lastCheckAt": "2026-03-22T23:38:00.000Z",
+  "status": "no_new_events",
+  "notes": "Ничего нового. ZNAA-18 blocked (Telegram-бот, ждёт решения по платёжному агрегатору). ZNAA-29 (платёжный агрегатор, backlog) — без изменений. Все остальные активные задачи без новых комментариев. Total: 30 issues."
 }
