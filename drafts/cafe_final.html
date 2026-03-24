@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 987px; height: 1280px; overflow: hidden; }
+
+  .poster {
+    width: 987px;
+    height: 1280px;
+    position: relative;
+  }
+
+  .bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Текстовый блок поверх бирюзовой карточки */
+  .text-overlay {
+    position: absolute;
+    top: 190px;
+    left: 78px;
+    right: 200px;
+    z-index: 10;
+    font-family: 'Arial Black', 'Arial', sans-serif;
+  }
+
+  .vacancy-label {
+    font-size: 34px;
+    font-weight: 900;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .vacancy-title {
+    font-size: 92px;
+    font-weight: 900;
+    color: #FFD700;
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+  }
+
+  .divider {
+    width: 56px;
+    height: 5px;
+    background: #FFD700;
+    border-radius: 3px;
+    margin-bottom: 28px;
+  }
+
+  .duties {
+    list-style: none;
+  }
+
+  .duties li {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+    line-height: 1.25;
+  }
+
+  .duties li .lbl {
+    color: rgba(255,255,255,0.7);
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 1px;
+  }
+</style>
+</head>
+<body>
+<div class="poster">
+  <img class="bg" src="file:///home/clawdbot/.openclaw/workspace/drafts/cafe_inpainted.png" />
+
+  <div class="text-overlay">
+    <div class="vacancy-label">Вакансия:</div>
+    <div class="vacancy-title">Дегу-<br>статор.</div>
+    <div class="divider"></div>
+    <ul class="duties">
+      <li>
+        <span class="lbl">Обязанности:</span>
+        есть, пить, оценивать блюда
+      </li>
+      <li>
+        <span class="lbl">Опыт:</span>
+        жизненный
+      </li>
+      <li>
+        <span class="lbl">График:</span>
+        по аппетиту
+      </li>
+      <li>
+        <span class="lbl">Зарплата:</span>
+        очень вкусная 😄
+      </li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

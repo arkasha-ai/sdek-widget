@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 800px; height: 1067px; font-family: 'Arial Black', 'Arial', sans-serif; overflow: hidden; }
+
+  .poster {
+    width: 800px;
+    height: 1067px;
+    position: relative;
+    background: url('file:///home/clawdbot/.openclaw/workspace/drafts/cafe_vacancy_april.png') center center / cover no-repeat;
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 180, 180, 0.82);
+  }
+
+  .content {
+    position: relative;
+    z-index: 2;
+    padding: 60px 64px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .tag {
+    display: inline-block;
+    background: #FFD600;
+    color: #1a1a1a;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border-radius: 4px;
+    margin-bottom: 28px;
+    width: fit-content;
+  }
+
+  h1 {
+    font-size: 96px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    text-shadow: 2px 3px 0px rgba(0,0,0,0.15);
+  }
+
+  h2 {
+    font-size: 64px;
+    font-weight: 900;
+    color: #FFD600;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 40px;
+    text-shadow: 2px 3px 0px rgba(0,0,0,0.2);
+  }
+
+  .divider {
+    width: 60px;
+    height: 5px;
+    background: #FFD600;
+    border-radius: 3px;
+    margin-bottom: 36px;
+  }
+
+  .list {
+    list-style: none;
+    margin-bottom: 48px;
+  }
+
+  .list li {
+    font-size: 28px;
+    color: #fff;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .list li::before {
+    content: '●';
+    color: #FFD600;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .footer {
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .footer-emoji {
+    font-size: 36px;
+  }
+
+  .footer-text {
+    font-size: 24px;
+    color: #fff;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .footer-text span {
+    color: #FFD600;
+  }
+</style>
+</head>
+<body>
+<div class="poster">
+  <div class="overlay"></div>
+  <div class="content">
+    <div class="tag">Вакансия</div>
+    <h1>Дегуста-</h1>
+    <h2>тор.</h2>
+    <div class="divider"></div>
+    <ul class="list">
+      <li>Обязанности: есть и пить</li>
+      <li>Оценивать блюда честно</li>
+      <li>Опыт: жизненный</li>
+      <li>График: по аппетиту</li>
+      <li>З/П: вкусная</li>
+    </ul>
+    <div class="footer">
+      <span class="footer-emoji">🎉</span>
+      <div class="footer-text">
+        С 1 апреля! <span>Но если серьёзно — ждём вас в гости.</span>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

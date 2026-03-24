@@ -49,6 +49,15 @@ cd ~/.openclaw/workspace && sha256sum \
 - Текущее время > nextRunAtMs И (lastRunAtMs пустой ИЛИ lastRunAtMs < nextRunAtMs - 1 час) → **ПРОПУЩЕНА**
 - Действие: `cron(action=run, jobId=<id>)` + message Денису о пропуске
 
+## fal.ai баланс (каждый heartbeat)
+```bash
+result=$(python3 ~/.openclaw/workspace/scripts/check_fal_balance.py 2>&1)
+echo "$result"
+```
+Если `ALERT:FAL_BALANCE_EXHAUSTED` → сообщить Денису:
+"⚠️ fal.ai баланс исчерпан! Пополни на fal.ai/dashboard/billing — иначе генерация не работает."
+Если OK → молча продолжить.
+
 ## Paperclip — активность команды (каждый heartbeat)
 Проверить что делают и делали коллеги в Paperclip:
 ```bash

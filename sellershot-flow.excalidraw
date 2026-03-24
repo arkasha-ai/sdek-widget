@@ -1,0 +1,84 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "elements": [
+    {"type":"rectangle","id":"start","x":20,"y":20,"width":160,"height":45,"strokeColor":"#1e1e1e","backgroundColor":"#b2f2bb","fillStyle":"solid","strokeWidth":2,"roughness":1},
+    {"type":"text","id":"t_start","x":55,"y":32,"width":90,"height":24,"text":"/start","fontSize":18,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center"},
+
+    {"type":"arrow","id":"a1","from":"start","to":"auth","strokeColor":"#1e1e1e","strokeWidth":2,"roughness":1},
+
+    {"type":"rectangle","id":"auth","x":20,"y":90,"width":160,"height":45,"strokeColor":"#1e1e1e","backgroundColor":"#a5d8ff","fillStyle":"solid","strokeWidth":2,"roughness":1},
+    {"type":"text","id":"t_auth","x":30,"y":100,"width":140,"height":24,"text":"Авторизация Telegram","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center"},
+
+    {"type":"arrow","id":"a2","from":"auth","to":"sub","strokeColor":"#1e1e1e","strokeWidth":2,"roughness":1},
+
+    {"type":"diamond","id":"sub","x":5,"y":160,"width":190,"height":80,"strokeColor":"#1e1e1e","backgroundColor":"#ffec99","fillStyle":"solid","strokeWidth":2,"roughness":1},
+    {"type":"text","id":"t_sub","x":40,"y":188,"width":120,"height":24,"text":"Подписан?","fontSize":14,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center"},
+
+    {"type":"arrow","id":"a_no","from":"sub","to":"subbtn","strokeColor":"#e8590c","strokeWidth":2,"roughness":1},
+    {"type":"text","id":"l_no","x":200,"y":190,"width":25,"height":18,"text":"Нет","fontSize":11,"fontFamily":1,"strokeColor":"#e8590c"},
+
+    {"type":"rectangle","id":"subbtn","x":220,"y":175,"width":160,"height":45,"strokeColor":"#e8590c","backgroundColor":"#ffc9c9","fillStyle":"solid","strokeWidth":2,"roughness":1},
+    {"type":"text","id":"t_subbtn","x":230,"y":186,"width":140,"height":24,"text":"Кнопка подписки\n+50 кредитов","fontSize":12,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center"},
+
+    {"type":"arrow","id":"a_yes","from":"sub","to":"photo","strokeColor":"#2f9e44","strokeWidth":2,"roughness":1},
+    {"type":"text","id":"l_yes","x":52,"y":248,"width":20,"height":18,"text":"Да","fontSize":11,"fontFamily":1,"strokeColor":"#2f9e44"},
+
+    {"type":"rectangle","id":"photo","x":20,"y":268,"width":160,"height":45,"strokeColor":"#1e1e1e","backgroundColor":"#d0bfff","fillStyle":"solid","strokeWidth":2,"roughness":1},
+    {"type":"text","id":"t_photo","x":35,"y":278,"width":130,"height":24,"text":"Фото товара","fontSize":14,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center"},
+
+    {"type":"arrow","id":"a3","from":"photo","to":"format","strokeColor":"#1e1e1e","strokeWidth":2,"roughness":1},
+
+    {"type":"rectangle","id":"format","x":20,"y":338,"width":160,"height":55,"strokeColor":"#1e1e1e","backgroundColor":"#a5d8ff","fillStyle":"solid","strokeWidth":2,"roughness":1},
+    {"type":"text","id":"t_format","x":25,"y":345,"width":150,"height":44,"text":"Формат карточки\n3:4|1:1|4:3|9:16","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center"},
+
+    {"type":"arrow","id":"a4","from":"format","to":"count","strokeColor":"#1e1e1e","strokeWidth":2,"roughness":1},
+
+    {"type":"rectangle","id":"count","x":20,"y":418,"width":160,"height":55,"strokeColor":"#1e1e1e","backgroundColor":"#a5d8ff","fillStyle":"solid","strokeWidth":2,"roughness":1},
+    {"type":"text","id":"t_count","x":25,"y":425,"width":150,"height":44,"text":"Кол-во карточек\n1-7 кнопкой / до 10 текстом","fontSize":12,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center"},
+
+    {"type":"arrow","id":"a5","from":"count","to":"vision","strokeColor":"#1e1e1e","strokeWidth":2,"roughness":1},
+
+    {"type":"rectangle","id":"vision","x":20,"y":498,"width":160,"height":55,"strokeColor":"#1e1e1e","backgroundColor":"#f3d9fa","fillStyle":"solid","strokeWidth":2,"roughness":1},
+    {"type":"text","id":"t_vision","x":25,"y":505,"width":150,"height":44,"text":"Vision анализ\n(авто-стиль)","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center"},
+
+    {"type":"arrow","id":"a6","from":"vision","to":"scenes","strokeColor":"#1e1e1e","strokeWidth":2,"roughness":1},
+
+    {"type":"rectangle","id":"scenes","x":20,"y":578,"width":160,"height":55,"strokeColor":"#1e1e1e","backgroundColor":"#f3d9fa","fillStyle":"solid","strokeWidth":2,"roughness":1},
+    {"type":"text","id":"t_scenes","x":25,"y":585,"width":150,"height":44,"text":"4-6 сцен\n(рус. названия)","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center"},
+
+    {"type":"arrow","id":"a7","from":"scenes","to":"pick","strokeColor":"#1e1e1e","strokeWidth":2,"roughness":1},
+
+    {"type":"rectangle","id":"pick","x":20,"y":658,"width":160,"height":55,"strokeColor":"#1e1e1e","backgroundColor":"#ffec99","fillStyle":"solid","strokeWidth":2,"roughness":1},
+    {"type":"text","id":"t_pick","x":25,"y":665,"width":150,"height":44,"text":"Выбор сцены\n/ Выбрать все","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center"},
+
+    {"type":"arrow","id":"a8","from":"pick","to":"genloop","strokeColor":"#1e1e1e","strokeWidth":2,"roughness":1},
+
+    {"type":"rectangle","id":"genloop","x":10,"y":738,"width":180,"height":70,"strokeColor":"#862e9c","backgroundColor":"#d0bfff","fillStyle":"solid","strokeWidth":2,"roughness":1},
+    {"type":"text","id":"t_gen","x":15,"y":748,"width":170,"height":54,"text":"Цикл N карточек\nimage gen → layout LLM\n→ Playwright → S3","fontSize":12,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center"},
+
+    {"type":"arrow","id":"a9","from":"genloop","to":"preview","strokeColor":"#1e1e1e","strokeWidth":2,"roughness":1},
+
+    {"type":"rectangle","id":"preview","x":20,"y":833,"width":160,"height":55,"strokeColor":"#2f9e44","backgroundColor":"#b2f2bb","fillStyle":"solid","strokeWidth":2,"roughness":1},
+    {"type":"text","id":"t_prev","x":25,"y":843,"width":150,"height":44,"text":"Фото карточек\n(по одной)","fontSize":13,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center"},
+
+    {"type":"arrow","id":"a10","from":"preview","to":"btns","strokeColor":"#1e1e1e","strokeWidth":2,"roughness":1},
+
+    {"type":"rectangle","id":"btns","x":5,"y":913,"width":190,"height":80,"strokeColor":"#1e1e1e","backgroundColor":"#fff4e6","fillStyle":"solid","strokeWidth":2,"roughness":1},
+    {"type":"text","id":"t_btns","x":10,"y":920,"width":180,"height":70,"text":"[📄 Файлы] [🗂 ZIP]\n[✏️ Карт.1][✏️ Карт.2]...\n[🔄 Перегенерировать]\n[✅ Готово]","fontSize":12,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center"},
+
+    {"type":"arrow","id":"a_edit","from":"btns","to":"retext","strokeColor":"#1971c2","strokeWidth":2,"roughness":1,"strokeStyle":"dashed"},
+    {"type":"text","id":"l_edit","x":200,"y":930,"width":80,"height":18,"text":"✏️ Изменить","fontSize":11,"fontFamily":1,"strokeColor":"#1971c2"},
+
+    {"type":"rectangle","id":"retext","x":230,"y":870,"width":180,"height":70,"strokeColor":"#1971c2","backgroundColor":"#a5d8ff","fillStyle":"solid","strokeWidth":2,"roughness":1},
+    {"type":"text","id":"t_retext","x":235,"y":880,"width":170,"height":54,"text":"Правка текста/стиля\n→ layout LLM\n(фото не меняется)","fontSize":12,"fontFamily":1,"strokeColor":"#1e1e1e","textAlign":"center"},
+
+    {"type":"arrow","id":"a_back","from":"retext","to":"preview","strokeColor":"#1971c2","strokeWidth":1,"roughness":1,"strokeStyle":"dashed"},
+
+    {"type":"arrow","id":"a_regen","from":"btns","to":"photo","strokeColor":"#e8590c","strokeWidth":2,"roughness":1,"strokeStyle":"dashed"},
+    {"type":"text","id":"l_regen","x":230,"y":780,"width":120,"height":18,"text":"🔄 Перегенерировать","fontSize":11,"fontFamily":1,"strokeColor":"#e8590c"},
+
+    {"type":"arrow","id":"a_sub_done","from":"subbtn","to":"photo","strokeColor":"#868e96","strokeWidth":1,"roughness":1,"strokeStyle":"dashed"},
+    {"type":"text","id":"l_sub_done","x":200,"y":258,"width":100,"height":18,"text":"после подписки","fontSize":10,"fontFamily":1,"strokeColor":"#868e96"}
+  ]
+}

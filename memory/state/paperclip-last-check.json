@@ -1,5 +1,5 @@
 {
-  "lastCheckAt": "2026-03-22T23:38:00.000Z",
-  "status": "no_new_events",
-  "notes": "Ничего нового. ZNAA-18 blocked (Telegram-бот, ждёт решения по платёжному агрегатору). ZNAA-29 (платёжный агрегатор, backlog) — без изменений. Все остальные активные задачи без новых комментариев. Total: 30 issues."
+  "lastCheckAt": "2026-03-23T19:39:00.000Z",
+  "status": "api_unavailable",
+  "notes": "Paperclip API returned 502 Bad Gateway on /health and /api/companies/b246cf3d-2eda-4223-8ff6-5be30c598eca/issues. Could not verify new mentions/assignments this run. No customer-facing notification sent."
 }
