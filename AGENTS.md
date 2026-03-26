@@ -17,6 +17,15 @@
 3. `memory/YYYY-MM-DD.md` + вчерашний — что происходило
 4. `MEMORY.md` — только в main session (личная переписка с Денисом)
 
+## Few-Shot Examples (перед сложными задачами)
+
+Для типовых задач читай `memory/examples/`:
+- `01-code-debug.md` — код, отладка, рефакторинг
+- `02-documents.md` — документы, заявки, PDF, DOCX
+- `03-api-debug.md` — API, вебхуки, интеграции
+- `04-content-text.md` — тексты, посты, контент
+- `05-research.md` — исследования, поиск, анализ
+
 ## Граф знаний — MindGraph (ОБЯЗАТЕЛЬНО перед ответом)
 
 Сервер: `http://127.0.0.1:18790` | Скилл: `skills/mindgraph-rs/`
@@ -148,7 +157,19 @@ p.write_text(json.dumps(s, indent=2))
 | 💬 Работаешь в групповом чате / нужны реакции / форматирование | `memory/rules/groups.md` |
 | 🖥️ Тяжёлая задача / нужен мощный сервер / выбор модели | `memory/rules/servers.md` |
 | 🎨 Дизайн / UI / макет / экран / wireframe / mockup | `memory/rules/design.md` → затем `memory/rules/penpot-grouping.md` |
-| 🐛 Ошибка / баг / интеграция с API / деплой | `.learnings/ERRORS.md` — проверь не встречалось ли раньше |
+| 🐛 Ошибка / баг / интеграция с API / деплой | `skills/debug-mastery/SKILL.md` + `.learnings/ERRORS.md` |
+| ✅ Завершил задачу / reporting / completion | `skills/verification-mastery/SKILL.md` — evidence before claims |
+| 🧪 Пишешь код / хочешь покрыть тестами | `skills/tdd-mastery/SKILL.md` — RED-GREEN-REFACTOR |
+| ⚙️ Архитектура / API / backend / база данных | `skills/backend-design/SKILL.md` |
+| ⚡ Performance / скорость / latency / INP / bundle | `skills/optimization-mastery/SKILL.md` |
+| 🧹 Пишешь код / рефакторинг / code review | `skills/clean-code/SKILL.md` — SOLID, no placeholders |
+| 📋 Планирование / декомпозиция / roadmap | `skills/planning-mastery/SKILL.md` — RFC-Lite, max 300 строк |
+| 💡 Новая фича / архитектурное решение / brainstorm | `skills/brainstorming/SKILL.md` — design before code |
+| 🔄 Тесты падают / autonomous fix / surgical debug | `skills/ralph-wiggum/SKILL.md` — circuit breaker at 3 failures |
+| 🌳 Параллельная разработка / feature branch / isolation | `skills/git-worktrees/SKILL.md` |
+| 📄 DOCX / Word / документ / заявка / контракт | `skills/docx-mastery/SKILL.md` |
+| 📊 Excel / XLSX / таблица / dashboard | `skills/excel-mastery/SKILL.md` |
+| 📽️ PPTX / PowerPoint / презентация / КП | `skills/pptx-mastery/SKILL.md` |
 | 📚 Новая задача в знакомой области (браузер, LiteLLM, GitHub, Dokploy) | `.learnings/LEARNINGS.md` — check known gotchas |
 | ✅ Завершил нетривиальную задачу / Денис тебя поправил | Залогировать в `.learnings/` (LEARNINGS.md или ERRORS.md) |
 

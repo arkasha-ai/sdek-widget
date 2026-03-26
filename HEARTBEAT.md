@@ -49,6 +49,15 @@ cd ~/.openclaw/workspace && sha256sum \
 - Текущее время > nextRunAtMs И (lastRunAtMs пустой ИЛИ lastRunAtMs < nextRunAtMs - 1 час) → **ПРОПУЩЕНА**
 - Действие: `cron(action=run, jobId=<id>)` + message Денису о пропуске
 
+## Disk Space (каждый heartbeat)
+```bash
+DISK_USAGE=$(df / --output=pcent | tail -1 | tr -d ' %')
+echo "Disk usage: ${DISK_USAGE}%"
+if [ "$DISK_USAGE" -gt 85 ]; then echo "ALERT:DISK_HIGH"; fi
+```
+Если `ALERT:DISK_HIGH` → алерт: "⚠️ Диск заполнен на ${DISK_USAGE}%! Проверь /tmp/ и кэши."
+Если ≤85% → молча.
+
 ## fal.ai баланс (каждый heartbeat)
 ```bash
 result=$(python3 ~/.openclaw/workspace/scripts/check_fal_balance.py 2>&1)

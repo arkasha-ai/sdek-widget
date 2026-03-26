@@ -95,6 +95,29 @@ MindGraph не используется несмотря на инструкци
 
 ---
 
+## [LRN-20260325-001] glm47-no-tool-use
+
+**Logged**: 2026-03-25T21:10:00Z
+**Priority**: medium
+**Status**: pending
+**Area**: config
+
+### Summary
+GLM-4.7 через LiteLLM не поддерживает tool use — не может вызывать message(), exec(), и другие инструменты OpenClaw.
+
+### Details
+При переключении на GLM-4.7 (`/model glm47`) модель получает сообщения и контекст, но не может отправлять ответы через Telegram и вызывать tools. Результат: молчание.
+
+### Suggested Action
+- Использовать GLM-4.7 только для sub-agent задач где tool use не критичен
+- Или настроить LiteLLM с поддержкой function calling для GLM
+
+### Metadata
+- Source: conversation
+- Tags: glm, litellm, tool-use, models
+
+---
+
 ## [LRN-20260321-005] litellm-onprem-uses-source-code
 **Logged**: 2026-03-21T01:41:00Z
 **Priority**: medium
