@@ -88,11 +88,30 @@
 - Credentials: `~/.openclaw/secrets.env` (YANDEX_API_KEY_ID, YANDEX_API_SECRET)
 
 ## Documents 📄
-- Читаю/обрабатываю: PDF, DOCX, TXT, Markdown — резюмирую, анализирую, извлекаю данные
-- Генерирую документы: заявки, отчёты, шаблоны любых форматов
-- Конвертирую форматы, редактирую, структурирую
-- PDF через browser (print-to-pdf)
+- **DOCX:** `python-docx` (создание, редактирование) → skill `docx-mastery`
+- **XLSX:** `openpyxl` (таблицы, charts, dashboards) → skill `excel-mastery`
+- **PPTX:** `python-pptx` (презентации, КП) → skill `pptx-mastery`
+- **PDF из Markdown:** `pandoc --pdf-engine=xelatex` (кириллица, таблицы, шрифты DejaVu)
+- **PDF из LaTeX:** `pdflatex` (полный контроль) или `xelatex` (Unicode шрифты TTF/OTF)
+- **PDF из HTML:** Playwright print-to-pdf (карточки, визуал)
+- **Чтение PDF:** `pdf` tool (встроенный) или `pandoc file.pdf -o out.md`
+- **Чтение DOCX:** `pandoc file.docx -o out.md` или python-docx
 - Диаграммы/схемы → Excalidraw skill
+
+### Быстрые команды
+```bash
+# Markdown → PDF (кириллица)
+pandoc doc.md -o doc.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif" -V geometry:margin=2cm
+
+# CSV → Excel (форматированный)
+python3 skills/excel-mastery/scripts/csv_to_excel.py data.csv report.xlsx
+
+# JSON → DOCX
+python3 skills/docx-mastery/scripts/create_docx.py spec.json output.docx
+
+# JSON → PPTX
+python3 skills/pptx-mastery/scripts/create_pptx.py spec.json output.pptx
+```
 
 ## Gravity Docs 📄
 - Заявки: `scripts/gravity_zavka_generator_v2.py`
