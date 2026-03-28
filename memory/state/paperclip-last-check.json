@@ -1,5 +1,5 @@
 {
-  "lastCheckAt": "2026-03-23T19:39:00.000Z",
-  "status": "api_unavailable",
-  "notes": "Paperclip API returned 502 Bad Gateway on /health and /api/companies/b246cf3d-2eda-4223-8ff6-5be30c598eca/issues. Could not verify new mentions/assignments this run. No customer-facing notification sent."
+  "lastCheckAt": "2026-03-27T22:08:00.000Z",
+  "status": "ok",
+  "notes": "Two blocked tasks, no new activity since last check (20:08 UTC). ZNAA-43: blocked since 23.03, waiting for Denis re pricing grid + @sellershot_bot screenshots from Mikhail. Last update 26.03 20:16 UTC. ZNAA-39: blocked since 23.03, last Аркаша comment 27.03 02:46 UTC (escalated to Denis). Issue updated 04:49 UTC (Дмитрий blocker note). All prior notifications already sent. Dedup rule: no repeat."
 }

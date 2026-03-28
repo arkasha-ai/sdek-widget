@@ -1,5 +1,25 @@
 # LEARNINGS
 
+## [LRN-20260327-001] send-file-not-path
+**Logged**: 2026-03-27T09:51:00Z
+**Priority**: high
+**Status**: active
+**Area**: messaging
+
+### Summary
+Никогда не отправлять путь к файлу в сообщении — только сам файл через filePath в message tool.
+
+### Details
+Когда нужно отправить файл пользователю — не писать "файл по пути /tmp/foo.docx", а сразу отправлять через `message(action=send, filePath=<path>, ...)`.
+Отправка пути вместо файла = бесполезно, пользователь не имеет доступа к серверному FS.
+
+### Suggested Action
+Перед любой отправкой файла: сначала `message` с `filePath`, потом текст-комментарий.
+
+### Metadata
+- Source: Denis correction
+- Tags: messaging, files, telegram
+
 ## [LRN-20260321-001] anthropic-oauth-required-headers
 **Logged**: 2026-03-21T01:41:00Z
 **Priority**: high

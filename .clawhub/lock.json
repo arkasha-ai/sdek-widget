@@ -68,6 +68,74 @@
     "generate-presentation": {
       "version": "1.0.0",
       "installedAt": 1773347832408
+    },
+    "agent-memory": {
+      "version": "1.0.0",
+      "installedAt": 1774575390536
+    },
+    "context-verifier": {
+      "version": "1.5.1",
+      "installedAt": 1774575390688
+    },
+    "dcg-guard": {
+      "version": "1.1.0",
+      "installedAt": 1774575390873
+    },
+    "todo-boss": {
+      "version": "0.1.0",
+      "installedAt": 1774575391018
+    },
+    "context-budgeting": {
+      "version": "1.0.0",
+      "installedAt": 1774575391111
+    },
+    "agent-daily-planner": {
+      "version": "1.0.0",
+      "installedAt": 1774575391160
+    },
+    "context-gatekeeper": {
+      "version": "0.1.1",
+      "installedAt": 1774575391665
+    },
+    "meeting-to-action": {
+      "version": "1.0.0",
+      "installedAt": 1774575605071
+    },
+    "pr-risk-analyzer": {
+      "version": "1.0.0",
+      "installedAt": 1774575650574
+    },
+    "session-watchdog": {
+      "version": "1.0.0",
+      "installedAt": 1774575650780
+    },
+    "better-ralph": {
+      "version": "1.0.0",
+      "installedAt": 1774575651735
+    },
+    "meyhem-search": {
+      "version": "0.2.5",
+      "installedAt": 1774575651981
+    },
+    "camoufox": {
+      "version": "1.0.0",
+      "installedAt": 1774575652124
+    },
+    "casual-cron": {
+      "version": "1.2.0",
+      "installedAt": 1774575652721
+    },
+    "meyhem-researcher": {
+      "version": "0.2.5",
+      "installedAt": 1774575667268
+    },
+    "browser-automation": {
+      "version": "1.0.1",
+      "installedAt": 1774575675427
+    },
+    "devops-automation-pack": {
+      "version": "1.0.0",
+      "installedAt": 1774575681523
     }
   }
 }
