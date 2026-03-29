@@ -15709,28 +15709,1367 @@
       "sentiment": "mixed",
       "productivity_score": 0.8999999999999999,
       "tasks_completed": 1
+    },
+    {
+      "id": "bd54e304-70ff-4dfc-8190-194cbbb1cc47",
+      "start": "2026-03-28T01:01:10.202Z",
+      "end": "2026-03-28T03:04:25.278Z",
+      "duration_seconds": 7395,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Analytics",
+        "Tasks",
+        "Git",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "e45e791f-2279-44d8-bcc1-fd1180d0a059",
+      "start": "2026-03-28T00:47:53.456Z",
+      "end": "2026-03-28T00:48:41.259Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "Telegram",
+        "Cron",
+        "OpenClaw"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "1b9fb517-393c-42a3-9786-6e6fe46ae886",
+      "start": "2026-03-28T01:47:53.359Z",
+      "end": "2026-03-28T01:48:21.075Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "Telegram",
+        "Cron",
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "ac1a9e08-cc62-4483-aba7-fe14c5f28a5e",
+      "start": "2026-03-27T21:47:54.729Z",
+      "end": "2026-03-27T21:49:29.869Z",
+      "duration_seconds": 95,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "Git",
+        "Skills",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "4486bf2f-5329-4b28-accd-e0a3c5a3c78d",
+      "start": "2026-03-28T00:38:38.365Z",
+      "end": "2026-03-28T00:39:45.746Z",
+      "duration_seconds": 67,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "Reminders",
+        "Git",
+        "Gateway"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "cfdd2ae0-6625-4db6-b6b0-2c41a63bf4a4",
+      "start": "2026-03-28T00:08:38.645Z",
+      "end": "2026-03-28T00:09:18.853Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "Reminders",
+        "Git",
+        "GitHub"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "7308465c-5410-4a46-b8fd-5ace8e99dc94",
+      "start": "2026-03-28T01:38:38.315Z",
+      "end": "2026-03-28T01:39:07.709Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "Reminders",
+        "Git",
+        "GitHub"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "0dd7c7c8-ffce-4425-b070-e5b86380ae2b",
+      "start": "2026-03-28T02:08:38.350Z",
+      "end": "2026-03-28T02:09:02.117Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "Git",
+        "GitHub",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "7e55056d-05e3-4c8e-a14e-209ecabaf455",
+      "start": "2026-03-28T01:08:38.363Z",
+      "end": "2026-03-28T01:09:35.821Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "Reminders",
+        "Git",
+        "GitHub"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "bcd3798d-c140-4d6b-ab7b-56d29b26b9a4",
+      "start": "2026-03-27T22:47:53.554Z",
+      "end": "2026-03-27T22:51:35.334Z",
+      "duration_seconds": 221,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "Git",
+        "React",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "c632b74a-e624-448c-b5d9-2970236dcdd5",
+      "start": "2026-03-27T21:38:39.073Z",
+      "end": "2026-03-27T21:39:57.835Z",
+      "duration_seconds": 78,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "Reminders",
+        "Git",
+        "GitHub"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "6585c172-117f-4533-8fcf-75390c6678f6",
+      "start": "2026-03-28T02:38:38.443Z",
+      "end": "2026-03-28T02:39:18.829Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "Reminders",
+        "Git",
+        "GitHub"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "f96edcdf-518b-42e1-8daf-3b1e55f7d677",
+      "start": "2026-03-28T02:47:53.372Z",
+      "end": "2026-03-28T02:49:24.360Z",
+      "duration_seconds": 90,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "Git",
+        "Skills",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "49b2c94d-3091-489d-ad8e-f691868d372b",
+      "start": "2026-03-27T23:47:53.782Z",
+      "end": "2026-03-27T23:49:59.801Z",
+      "duration_seconds": 126,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "Git",
+        "Skills",
+        "Telegram"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "4a3a42ac-6d6c-4f0a-ac69-e10df0bfd665",
+      "start": "2026-03-27T23:38:39.730Z",
+      "end": "2026-03-27T23:39:03.059Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "Reminders",
+        "Git",
+        "GitHub"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "96497fbd-63e8-464c-a917-35f821fa24ec",
+      "start": "2026-03-27T22:08:39.450Z",
+      "end": "2026-03-27T22:09:29.287Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "Git",
+        "GitHub",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "e65b310a-2f38-4bc3-8bf7-696bbeaf9451",
+      "start": "2026-03-27T23:08:39.494Z",
+      "end": "2026-03-27T23:09:10.276Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "Reminders",
+        "Git",
+        "GitHub"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "528fa2e0-8884-4d6c-be44-b88b2fc20891",
+      "start": "2026-03-27T21:08:39.370Z",
+      "end": "2026-03-27T21:09:07.997Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "Reminders",
+        "Git",
+        "GitHub"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "df57b560-eb31-40db-b521-2b0adb456177",
+      "start": "2026-03-27T22:38:39.196Z",
+      "end": "2026-03-27T22:39:02.637Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Tasks",
+        "Reminders",
+        "Git",
+        "GitHub"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "dde3738f-4767-43d8-ac24-e2701fbd7ddc",
+      "start": "2026-03-28T07:47:53.459Z",
+      "end": "2026-03-28T07:49:51.232Z",
+      "duration_seconds": 117,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "OpenClaw",
+        "Redis",
+        "API",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "1551a9a6-94fb-491b-adcc-689298638242",
+      "start": "2026-03-28T07:08:38.620Z",
+      "end": "2026-03-28T07:09:56.466Z",
+      "duration_seconds": 77,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "OpenClaw",
+        "Heartbeat",
+        "API",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "0a53a8ed-b3c4-40bc-9dab-89840a7d2f75",
+      "start": "2026-03-28T05:08:38.495Z",
+      "end": "2026-03-28T05:09:20.727Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "OpenClaw",
+        "Heartbeat",
+        "API",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "e6c7346b-0696-4527-a249-84503f0333c4",
+      "start": "2026-03-28T03:47:53.383Z",
+      "end": "2026-03-28T03:50:30.544Z",
+      "duration_seconds": 157,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "OpenClaw",
+        "API",
+        "SQL",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "d811876a-e386-42eb-b53f-d69cab0da112",
+      "start": "2026-03-28T08:47:53.471Z",
+      "end": "2026-03-28T08:49:05.835Z",
+      "duration_seconds": 72,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "OpenClaw",
+        "Redis",
+        "API",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "3cf4e46a-e8e1-43b8-b2c8-72558b1596c4",
+      "start": "2026-03-28T06:38:38.509Z",
+      "end": "2026-03-28T06:39:17.325Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Reminders",
+        "OpenClaw",
+        "Heartbeat",
+        "API"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "8a7942fb-01fd-45b3-9b1f-33242a17a54c",
+      "start": "2026-03-28T08:38:38.490Z",
+      "end": "2026-03-28T08:39:29.971Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "OpenClaw",
+        "Heartbeat",
+        "API",
+        "Gateway"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "93ad08f2-5faf-43ad-ab42-3b26c2cf69ba",
+      "start": "2026-03-28T07:00:00.793Z",
+      "end": "2026-03-28T07:00:29.617Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Gateway",
+        "OpenClaw",
+        "Cron",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "2de17215-2171-4541-9bb7-951d1eaad6c6",
+      "start": "2026-03-28T03:38:38.474Z",
+      "end": "2026-03-28T03:39:31.148Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Reminders",
+        "OpenClaw",
+        "Heartbeat",
+        "API"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "4da0ad77-c7df-4705-ac0b-0d7aec49024f",
+      "start": "2026-03-28T04:47:53.445Z",
+      "end": "2026-03-28T04:49:07.629Z",
+      "duration_seconds": 74,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "OpenClaw",
+        "API",
+        "Telegram",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "a274841c-5270-4905-8c7d-27df8bd0ce8d",
+      "start": "2026-03-28T04:38:38.385Z",
+      "end": "2026-03-28T04:39:32.307Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "OpenClaw",
+        "Heartbeat",
+        "API",
+        "Redis"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "9faa8862-2e69-487b-842c-906a9b7dbcd8",
+      "start": "2026-03-28T03:08:38.410Z",
+      "end": "2026-03-28T03:09:16.091Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "OpenClaw",
+        "Heartbeat",
+        "API",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "09e12b13-cabe-4350-a3c7-64e1a586d697",
+      "start": "2026-03-28T04:08:38.412Z",
+      "end": "2026-03-28T04:09:00.201Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Reminders",
+        "OpenClaw",
+        "Heartbeat",
+        "API"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "d0dd71bc-e6a2-4097-bf50-af54cf500744",
+      "start": "2026-03-28T07:38:38.463Z",
+      "end": "2026-03-28T07:39:16.797Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Reminders",
+        "OpenClaw",
+        "Heartbeat",
+        "API"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "707e17c0-7cf0-437f-afd9-3796ce1999c3",
+      "start": "2026-03-28T05:47:53.423Z",
+      "end": "2026-03-28T05:50:27.744Z",
+      "duration_seconds": 154,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "OpenClaw",
+        "Heartbeat",
+        "API",
+        "SQL"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "9a0a6d5d-4e2d-47aa-86f2-b70f01de17f6",
+      "start": "2026-03-28T05:38:38.542Z",
+      "end": "2026-03-28T05:39:01.253Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Reminders",
+        "OpenClaw",
+        "Heartbeat",
+        "API"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "32388abd-5e6c-44b1-ae2e-97a6eea648f3",
+      "start": "2026-03-28T05:00:01.085Z",
+      "end": "2026-03-28T05:00:29.401Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Browser",
+        "OpenClaw",
+        "API",
+        "Gateway"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "efd5affd-e130-4c8d-b96a-dd563d4ea14c",
+      "start": "2026-03-28T06:47:53.474Z",
+      "end": "2026-03-28T06:51:56.073Z",
+      "duration_seconds": 242,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Browser",
+        "OpenClaw",
+        "API",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "6f1a8eff-81f3-4549-a932-bbaae5a59cdd",
+      "start": "2026-03-28T08:08:38.464Z",
+      "end": "2026-03-28T08:09:07.147Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Reminders",
+        "OpenClaw",
+        "Heartbeat",
+        "API"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "256ec44a-cc1a-4385-a046-d1d890c6be74",
+      "start": "2026-03-28T06:08:38.581Z",
+      "end": "2026-03-28T06:09:39.996Z",
+      "duration_seconds": 61,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Reminders",
+        "OpenClaw",
+        "Heartbeat",
+        "API"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "48758246-ab52-41a9-bfc8-f0a83b832337",
+      "start": "2026-03-28T13:47:53.378Z",
+      "end": "2026-03-28T13:50:41.461Z",
+      "duration_seconds": 168,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Browser",
+        "Tasks",
+        "OpenClaw",
+        "Database"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "b86d5b3c-b1ce-4f9b-93b3-ac735278a4f5",
+      "start": "2026-03-28T11:08:38.569Z",
+      "end": "2026-03-28T11:09:22.066Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "OpenClaw",
+        "Skills",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "ba9b30b5-230e-4f35-b172-0e4b3a03d762",
+      "start": "2026-03-28T12:47:53.505Z",
+      "end": "2026-03-28T12:49:58.809Z",
+      "duration_seconds": 125,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Browser",
+        "Tasks",
+        "OpenClaw",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "2c758286-b2b3-42ee-a4f3-66740596c91a",
+      "start": "2026-03-28T13:38:38.651Z",
+      "end": "2026-03-28T13:39:13.658Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "OpenClaw",
+        "Skills",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "19cd762b-74c2-4768-934c-3a26f681bc48",
+      "start": "2026-03-28T09:30:00.872Z",
+      "end": "2026-03-28T09:30:42.838Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Medication",
+        "OpenClaw",
+        "Python",
+        "Tasks"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "11229528-5230-4f2b-a16b-766292bd2204",
+      "start": "2026-03-28T11:47:53.527Z",
+      "end": "2026-03-28T11:52:09.204Z",
+      "duration_seconds": 255,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Browser",
+        "Tasks",
+        "OpenClaw",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "d43b69fa-8912-4933-addc-7f264055b780",
+      "start": "2026-03-28T09:38:38.620Z",
+      "end": "2026-03-28T09:39:01.862Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "OpenClaw",
+        "Skills",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "173a9722-1e56-430e-b977-ecdc5cb79bd2",
+      "start": "2026-03-28T09:47:53.567Z",
+      "end": "2026-03-28T09:48:24.388Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "API",
+        "Agents",
+        "Telegram",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "02ebe47d-2175-4345-81b3-b33165ff5dae",
+      "start": "2026-03-28T10:08:38.715Z",
+      "end": "2026-03-28T10:09:06.459Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "OpenClaw",
+        "Skills",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "8abdafe3-c26e-447b-9d8e-23b835dd333b",
+      "start": "2026-03-28T10:47:53.415Z",
+      "end": "2026-03-28T10:48:09.032Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "API",
+        "Agents",
+        "Telegram",
+        "Cron"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "edf7c010-9d0a-4fcc-8061-c35db59df1bf",
+      "start": "2026-03-28T14:08:38.728Z",
+      "end": "2026-03-28T14:09:19.386Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "OpenClaw",
+        "Skills",
+        "Heartbeat"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "a7f9bdd5-0824-48c6-9c14-3ecb5c674848",
+      "start": "2026-03-28T12:08:38.517Z",
+      "end": "2026-03-28T12:10:04.164Z",
+      "duration_seconds": 85,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "OpenClaw",
+        "Skills",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "af760bb2-8a85-4e1e-bf45-2edf99d6228a",
+      "start": "2026-03-28T14:47:53.525Z",
+      "end": "2026-03-28T14:50:35.009Z",
+      "duration_seconds": 161,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "OpenClaw",
+        "API",
+        "Python",
+        "Tasks"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "81375639-bce9-40ea-b7cb-7da335ff6be4",
+      "start": "2026-03-28T12:38:38.561Z",
+      "end": "2026-03-28T12:39:52.511Z",
+      "duration_seconds": 73,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "OpenClaw",
+        "Skills",
+        "Gateway"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "4dc208ae-7aae-4281-af85-409ec3cef3f2",
+      "start": "2026-03-28T10:15:00.918Z",
+      "end": "2026-03-28T10:15:14.228Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Medication",
+        "Reminders",
+        "Python",
+        "Tasks"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "fa0e3cba-373c-4d72-ae63-8bfd9337da4d",
+      "start": "2026-03-28T14:38:38.757Z",
+      "end": "2026-03-28T14:39:10.402Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "OpenClaw",
+        "Skills",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "3aa4f320-9b2b-4176-9525-0b5c0a40c316",
+      "start": "2026-03-28T13:08:38.648Z",
+      "end": "2026-03-28T13:09:16.350Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "OpenClaw",
+        "Skills",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "c3447ede-19fa-4ed4-9291-42489d2b7e76",
+      "start": "2026-03-28T09:08:38.453Z",
+      "end": "2026-03-28T09:09:22.639Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "OpenClaw",
+        "Skills",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "6e959c3b-5912-4966-951e-c08b15f5b17c",
+      "start": "2026-03-28T09:50:00.895Z",
+      "end": "2026-03-28T09:51:40.428Z",
+      "duration_seconds": 99,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Browser",
+        "Tasks",
+        "Medication",
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "01d4e2f0-2623-4afa-8e28-a818cf5487d7",
+      "start": "2026-03-28T10:38:38.684Z",
+      "end": "2026-03-28T10:39:26.830Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "OpenClaw",
+        "Skills",
+        "Heartbeat"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "23f194f6-81a9-4db8-ac42-41fce0455ed9",
+      "start": "2026-03-28T11:38:38.447Z",
+      "end": "2026-03-28T11:39:19.278Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "OpenClaw",
+        "Skills",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "6c1868c9-d718-46ac-9d06-278f9761e2da",
+      "start": "2026-03-28T12:31:18.105Z",
+      "end": "2026-03-28T12:38:51.970Z",
+      "duration_seconds": 453,
+      "channel": "telegram",
+      "topics": [
+        "API",
+        "Git"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "a326f66d-514c-4720-a0a3-2164cfd736f5",
+      "start": "2026-03-28T18:38:39.085Z",
+      "end": "2026-03-28T18:39:09.919Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Docker",
+        "API",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "41af345e-0cba-4c1b-9773-d7ce664c7e00",
+      "start": "2026-03-28T16:08:38.630Z",
+      "end": "2026-03-28T16:09:33.276Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Docker",
+        "API",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "fc7c4c57-901c-4dcf-af10-71f752285c8b",
+      "start": "2026-03-28T16:47:53.447Z",
+      "end": "2026-03-28T16:50:23.737Z",
+      "duration_seconds": 150,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Skills",
+        "API",
+        "Browser"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "9be79773-5e7f-4c9f-b1ba-b6637a9730a4",
+      "start": "2026-03-28T19:54:17.821Z",
+      "end": "2026-03-28T19:56:28.356Z",
+      "duration_seconds": 130,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Docker",
+        "API",
+        "Python"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "b7cd9c3a-953c-4cfe-bf94-9d291b7b39a1",
+      "start": "2026-03-28T18:08:38.796Z",
+      "end": "2026-03-28T18:09:33.391Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Docker",
+        "API",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "c41ab2be-b048-42f4-9e7d-9592f2ed3389",
+      "start": "2026-03-28T20:54:17.779Z",
+      "end": "2026-03-28T20:56:01.685Z",
+      "duration_seconds": 103,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "API",
+        "Heartbeat",
+        "Agents"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "da3e7ba9-0bb5-4f6e-8d50-d0e0d0ce2703",
+      "start": "2026-03-28T15:08:38.560Z",
+      "end": "2026-03-28T15:09:42.910Z",
+      "duration_seconds": 64,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Docker",
+        "API",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "45566741-b001-4f03-bfed-40f9c95142f3",
+      "start": "2026-03-28T20:08:38.683Z",
+      "end": "2026-03-28T20:09:05.034Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Docker",
+        "API",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "056772dd-eab7-4792-bfdd-2fb9c19321d9",
+      "start": "2026-03-28T17:38:38.935Z",
+      "end": "2026-03-28T17:39:33.360Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Docker",
+        "API",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "84354ee8-887f-477f-8425-ecd9cd3f2ba3",
+      "start": "2026-03-28T20:38:38.680Z",
+      "end": "2026-03-28T20:39:26.872Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Docker",
+        "API",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "7098fc29-2a6d-435a-8f50-3274bb92d33a",
+      "start": "2026-03-28T15:38:38.610Z",
+      "end": "2026-03-28T15:39:24.718Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Docker",
+        "API",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "4ca6d5a8-5c28-4489-b007-64996634bcde",
+      "start": "2026-03-28T18:52:01.949Z",
+      "end": "2026-03-28T18:54:16.702Z",
+      "duration_seconds": 134,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "API",
+        "React",
+        "Python"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "e5fc07fe-09f0-4544-af29-484dc299b288",
+      "start": "2026-03-28T15:47:54.057Z",
+      "end": "2026-03-28T15:50:11.097Z",
+      "duration_seconds": 137,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "API",
+        "Python",
+        "Agents"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "9a26423c-b1ac-4528-bc58-6aa48aac083d",
+      "start": "2026-03-28T17:08:38.836Z",
+      "end": "2026-03-28T17:09:01.903Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Docker",
+        "API",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "1f23892c-fdc0-44f6-ab18-9339025a2301",
+      "start": "2026-03-28T16:38:38.908Z",
+      "end": "2026-03-28T16:39:25.673Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Docker",
+        "API",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "e3650af5-6a6e-476e-ae82-c6119077b063",
+      "start": "2026-03-28T19:08:38.806Z",
+      "end": "2026-03-28T19:10:38.090Z",
+      "duration_seconds": 119,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Docker",
+        "API",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "3d499da5-9b69-492d-9610-04a56abfaaa2",
+      "start": "2026-03-28T19:38:38.767Z",
+      "end": "2026-03-28T19:38:58.254Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Docker",
+        "API",
+        "Skills"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "5d4f3164-a1a4-4fab-bac5-a4b0e37b1c4b",
+      "start": "2026-03-28T17:50:25.298Z",
+      "end": "2026-03-28T17:52:00.648Z",
+      "duration_seconds": 95,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "API",
+        "Agents",
+        "OpenClaw"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
     }
   ],
-  "last_import": "2026-03-28T00:04:25.725777",
+  "last_import": "2026-03-29T00:04:24.481939",
   "topic_stats": {
     "SQL": {
-      "total_mentions": 47,
-      "last_seen": "2026-03-26T17:15:50.910Z",
+      "total_mentions": 49,
+      "last_seen": "2026-03-28T06:08:38.581Z",
       "trend": "new"
     },
     "Agents": {
-      "total_mentions": 464,
-      "last_seen": "2026-03-27T15:38:38.349Z",
+      "total_mentions": 488,
+      "last_seen": "2026-03-28T17:50:25.298Z",
       "trend": "new"
     },
     "Cron": {
-      "total_mentions": 500,
-      "last_seen": "2026-03-27T15:38:38.349Z",
+      "total_mentions": 550,
+      "last_seen": "2026-03-28T17:50:25.298Z",
       "trend": "new"
     },
     "Database": {
-      "total_mentions": 29,
-      "last_seen": "2026-03-26T21:46:37.321Z",
+      "total_mentions": 30,
+      "last_seen": "2026-03-28T12:31:18.105Z",
       "trend": "new"
     },
     "TypeScript": {
@@ -15739,18 +17078,18 @@
       "trend": "new"
     },
     "Tasks": {
-      "total_mentions": 355,
-      "last_seen": "2026-03-27T15:38:38.349Z",
+      "total_mentions": 432,
+      "last_seen": "2026-03-28T17:50:25.298Z",
       "trend": "new"
     },
     "Medication": {
-      "total_mentions": 144,
-      "last_seen": "2026-03-27T10:38:38.225Z",
+      "total_mentions": 147,
+      "last_seen": "2026-03-28T12:31:18.105Z",
       "trend": "new"
     },
     "Reminders": {
-      "total_mentions": 161,
-      "last_seen": "2026-03-27T13:38:38.130Z",
+      "total_mentions": 179,
+      "last_seen": "2026-03-28T12:31:18.105Z",
       "trend": "new"
     },
     "Health": {
@@ -15759,68 +17098,68 @@
       "trend": "new"
     },
     "GitHub": {
-      "total_mentions": 95,
-      "last_seen": "2026-03-27T13:38:38.130Z",
+      "total_mentions": 106,
+      "last_seen": "2026-03-27T22:38:39.196Z",
       "trend": "new"
     },
     "Docker": {
-      "total_mentions": 125,
-      "last_seen": "2026-03-27T15:38:38.349Z",
+      "total_mentions": 139,
+      "last_seen": "2026-03-28T17:50:25.298Z",
       "trend": "new"
     },
     "API": {
-      "total_mentions": 336,
-      "last_seen": "2026-03-27T15:38:38.349Z",
+      "total_mentions": 377,
+      "last_seen": "2026-03-28T17:50:25.298Z",
       "trend": "new"
     },
     "Gateway": {
-      "total_mentions": 213,
-      "last_seen": "2026-03-27T13:38:38.130Z",
+      "total_mentions": 218,
+      "last_seen": "2026-03-28T12:31:18.105Z",
       "trend": "new"
     },
     "Python": {
-      "total_mentions": 189,
-      "last_seen": "2026-03-27T15:38:38.349Z",
+      "total_mentions": 195,
+      "last_seen": "2026-03-28T17:50:25.298Z",
       "trend": "new"
     },
     "Analytics": {
-      "total_mentions": 34,
-      "last_seen": "2026-03-26T21:46:37.321Z",
+      "total_mentions": 35,
+      "last_seen": "2026-03-27T22:38:39.196Z",
       "trend": "new"
     },
     "OpenClaw": {
-      "total_mentions": 411,
-      "last_seen": "2026-03-27T15:38:38.349Z",
+      "total_mentions": 452,
+      "last_seen": "2026-03-28T17:50:25.298Z",
       "trend": "new"
     },
     "Heartbeat": {
-      "total_mentions": 269,
-      "last_seen": "2026-03-27T15:38:38.349Z",
+      "total_mentions": 294,
+      "last_seen": "2026-03-28T17:50:25.298Z",
       "trend": "new"
     },
     "Telegram": {
-      "total_mentions": 360,
-      "last_seen": "2026-03-27T15:38:38.349Z",
+      "total_mentions": 369,
+      "last_seen": "2026-03-28T12:31:18.105Z",
       "trend": "new"
     },
     "Git": {
-      "total_mentions": 168,
-      "last_seen": "2026-03-27T15:38:38.349Z",
+      "total_mentions": 186,
+      "last_seen": "2026-03-28T12:31:18.105Z",
       "trend": "new"
     },
     "Skills": {
-      "total_mentions": 97,
-      "last_seen": "2026-03-27T13:38:38.130Z",
+      "total_mentions": 130,
+      "last_seen": "2026-03-28T17:50:25.298Z",
       "trend": "new"
     },
     "React": {
-      "total_mentions": 63,
-      "last_seen": "2026-03-27T15:38:38.349Z",
+      "total_mentions": 65,
+      "last_seen": "2026-03-28T17:50:25.298Z",
       "trend": "new"
     },
     "Browser": {
-      "total_mentions": 52,
-      "last_seen": "2026-03-27T05:14:07.277Z",
+      "total_mentions": 59,
+      "last_seen": "2026-03-28T17:50:25.298Z",
       "trend": "new"
     },
     "JavaScript": {
@@ -15839,43 +17178,43 @@
       "trend": "new"
     },
     "Redis": {
-      "total_mentions": 37,
-      "last_seen": "2026-03-27T05:14:07.277Z",
+      "total_mentions": 40,
+      "last_seen": "2026-03-28T06:08:38.581Z",
       "trend": "new"
     }
   },
   "time_stats": {
     "hourly_distribution": {
-      "13": 34,
-      "6": 106,
-      "22": 24,
-      "14": 47,
-      "1": 65,
-      "7": 40,
-      "16": 29,
-      "12": 27,
-      "9": 71,
-      "18": 45,
-      "10": 51,
-      "11": 29,
-      "19": 38,
-      "15": 26,
-      "17": 35,
-      "20": 56,
-      "8": 34,
-      "4": 23,
-      "2": 38,
-      "5": 44,
-      "21": 25,
-      "23": 23,
-      "3": 20,
-      "0": 21
+      "13": 37,
+      "6": 109,
+      "22": 27,
+      "14": 50,
+      "1": 69,
+      "7": 44,
+      "16": 32,
+      "12": 31,
+      "9": 76,
+      "18": 48,
+      "10": 55,
+      "11": 32,
+      "19": 41,
+      "15": 29,
+      "17": 38,
+      "20": 59,
+      "8": 37,
+      "4": 26,
+      "2": 41,
+      "5": 48,
+      "21": 28,
+      "23": 26,
+      "3": 23,
+      "0": 24
     },
     "daily_distribution": {
       "tuesday": 169,
       "thursday": 150,
-      "saturday": 80,
-      "friday": 170,
+      "saturday": 150,
+      "friday": 179,
       "sunday": 123,
       "wednesday": 132,
       "monday": 127
@@ -15883,8 +17222,8 @@
   },
   "sentiment_stats": {
     "positive": 60,
-    "neutral": 267,
-    "negative": 449,
-    "mixed": 175
+    "neutral": 268,
+    "negative": 517,
+    "mixed": 185
   }
 }

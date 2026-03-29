@@ -1,5 +1,5 @@
 {
-  "lastCheckAt": "2026-03-27T22:08:00.000Z",
+  "lastCheckAt": "2026-03-28T23:38:00.000Z",
   "status": "ok",
-  "notes": "Two blocked tasks, no new activity since last check (20:08 UTC). ZNAA-43: blocked since 23.03, waiting for Denis re pricing grid + @sellershot_bot screenshots from Mikhail. Last update 26.03 20:16 UTC. ZNAA-39: blocked since 23.03, last Аркаша comment 27.03 02:46 UTC (escalated to Denis). Issue updated 04:49 UTC (Дмитрий blocker note). All prior notifications already sent. Dedup rule: no repeat."
+  "notes": "ZNAA-43: still blocked, last comment 28.03 19:10 UTC (22:10 MSK) from me. No new comments from others since last check. Dedup rule applied: no repeat notification. Still waiting for Denis on pricing grid (/buy packages/prices) + Mikhail screenshots from @sellershot_bot."
 }
