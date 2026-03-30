@@ -17048,28 +17048,1684 @@
       "sentiment": "mixed",
       "productivity_score": 0.3,
       "tasks_completed": 0
+    },
+    {
+      "id": "b10a1c3a-a7eb-4939-b3a4-dc0d1490186f",
+      "start": "2026-03-29T01:08:38.882Z",
+      "end": "2026-03-29T01:09:10.117Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Skills",
+        "GitHub",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "ce0a19a0-e5de-47e2-9d0d-a48147c3a3ae",
+      "start": "2026-03-28T22:54:18.075Z",
+      "end": "2026-03-28T22:56:33.574Z",
+      "duration_seconds": 135,
+      "channel": "telegram",
+      "topics": [
+        "Skills",
+        "JavaScript",
+        "Nginx",
+        "Browser",
+        "GitHub"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "1d21d23b-88b4-4e88-9dfe-2aa069da6327",
+      "start": "2026-03-28T22:08:38.892Z",
+      "end": "2026-03-28T22:09:04.856Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Skills",
+        "GitHub",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "82e7d982-63f8-45a4-82db-f9bfc147fae2",
+      "start": "2026-03-29T02:08:38.754Z",
+      "end": "2026-03-29T02:09:14.936Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Skills",
+        "GitHub",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "a5ce0d9a-de63-447a-990a-d1d0e2809e6c",
+      "start": "2026-03-28T23:08:38.893Z",
+      "end": "2026-03-28T23:09:05.235Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Skills",
+        "GitHub",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "07f6df93-7d31-43f5-bbc7-820e6463f581",
+      "start": "2026-03-28T21:38:38.663Z",
+      "end": "2026-03-28T21:39:18.451Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Skills",
+        "GitHub",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "ca34d752-6d0d-4f15-b7be-0cd320b776ba",
+      "start": "2026-03-29T00:38:38.827Z",
+      "end": "2026-03-29T00:39:15.800Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Skills",
+        "GitHub",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "4155eb27-868e-45ed-906c-4827056e2a57",
+      "start": "2026-03-28T21:54:17.962Z",
+      "end": "2026-03-28T21:56:03.658Z",
+      "duration_seconds": 105,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "OpenClaw",
+        "Agents",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "e9db66ea-0140-4032-82a7-70e72b8ea2b1",
+      "start": "2026-03-29T01:38:39.035Z",
+      "end": "2026-03-29T01:39:07.230Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Skills",
+        "GitHub",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "a8a6d221-7717-4685-8c1c-d50e4793e922",
+      "start": "2026-03-29T01:54:18.048Z",
+      "end": "2026-03-29T01:55:53.737Z",
+      "duration_seconds": 95,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "OpenClaw",
+        "Agents",
+        "Heartbeat"
+      ],
+      "sentiment": "positive",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "e3ff87fd-d1a6-4a77-ad8e-d30aa91dc946",
+      "start": "2026-03-29T00:54:18.130Z",
+      "end": "2026-03-29T00:54:23.668Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "Telegram"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "fe0312bd-23d2-4b62-8927-bb9aabf29949",
+      "start": "2026-03-29T02:38:38.986Z",
+      "end": "2026-03-29T02:39:07.862Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Skills",
+        "GitHub",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "a6759a46-cb9a-445e-831a-bb3156e70d6e",
+      "start": "2026-03-28T23:54:18.018Z",
+      "end": "2026-03-28T23:56:05.016Z",
+      "duration_seconds": 106,
+      "channel": "telegram",
+      "topics": [
+        "Nginx",
+        "Tasks",
+        "Cron",
+        "OpenClaw",
+        "Agents"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "e4870d43-217d-461e-8670-09ddb2d60b7c",
+      "start": "2026-03-28T21:08:38.868Z",
+      "end": "2026-03-28T21:09:24.908Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Skills",
+        "GitHub",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "e0c4d1a2-7e79-4b85-a2e8-0149f1c38559",
+      "start": "2026-03-29T00:08:38.929Z",
+      "end": "2026-03-29T00:09:18.236Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Skills",
+        "GitHub",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "719f1857-b1ae-4f6b-a661-96048142adee",
+      "start": "2026-03-28T23:38:38.947Z",
+      "end": "2026-03-28T23:39:21.676Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Skills",
+        "GitHub",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "d3cf79dd-8f28-4e6b-b1af-f6e3c3540a9b",
+      "start": "2026-03-29T02:54:17.841Z",
+      "end": "2026-03-29T02:56:01.206Z",
+      "duration_seconds": 103,
+      "channel": "telegram",
+      "topics": [
+        "Tasks",
+        "Cron",
+        "OpenClaw",
+        "Agents",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "3821e348-4c66-4645-a5ab-4f9e6f51a0c2",
+      "start": "2026-03-29T01:00:41.911Z",
+      "end": "2026-03-29T03:04:22.959Z",
+      "duration_seconds": 7421,
+      "channel": "telegram",
+      "topics": [
+        "Skills",
+        "GitHub",
+        "Tasks",
+        "OpenClaw",
+        "Agents"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "47188f07-a58f-41dc-a954-beaf483ebdd8",
+      "start": "2026-03-28T22:38:38.720Z",
+      "end": "2026-03-28T22:39:03.390Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Skills",
+        "GitHub",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "8d7d61ea-aa65-47d2-8fa4-9b27996a2c4e",
+      "start": "2026-03-29T03:08:38.774Z",
+      "end": "2026-03-29T03:09:00.144Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "GitHub",
+        "OpenClaw",
+        "Git",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "a4739501-6d2c-41e9-a9ee-7ce662de6266",
+      "start": "2026-03-29T04:54:17.912Z",
+      "end": "2026-03-29T04:56:11.026Z",
+      "duration_seconds": 113,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "OpenClaw",
+        "Agents",
+        "Telegram",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "9e89719a-2329-4fe2-99eb-978278f2171e",
+      "start": "2026-03-29T07:54:17.964Z",
+      "end": "2026-03-29T07:55:56.533Z",
+      "duration_seconds": 98,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "OpenClaw",
+        "Git",
+        "Agents",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "653c4c10-23fa-4b52-adf5-4acc37fcf8ec",
+      "start": "2026-03-29T05:00:01.446Z",
+      "end": "2026-03-29T05:01:10.194Z",
+      "duration_seconds": 68,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "GitHub",
+        "OpenClaw",
+        "Git",
+        "Gateway"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "60d92c1a-306c-4f4f-a8b1-6e7b30f21f52",
+      "start": "2026-03-29T08:54:18.223Z",
+      "end": "2026-03-29T08:54:28.344Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Telegram",
+        "Tasks"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "3ad534ed-3659-4c23-82f0-834986b4ac4f",
+      "start": "2026-03-29T06:54:18.029Z",
+      "end": "2026-03-29T06:55:52.554Z",
+      "duration_seconds": 94,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "OpenClaw",
+        "Git",
+        "Agents",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "b6d7926d-c82f-4618-a9d2-6bf386287462",
+      "start": "2026-03-29T04:38:38.968Z",
+      "end": "2026-03-29T04:39:10.617Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "GitHub",
+        "OpenClaw",
+        "Git",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "8e732623-1396-4c65-9f4e-aabfbb4774b1",
+      "start": "2026-03-29T07:38:39.481Z",
+      "end": "2026-03-29T07:39:18.915Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "GitHub",
+        "OpenClaw",
+        "Git",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "5419ad04-821b-45cb-818a-f6dc719519fb",
+      "start": "2026-03-29T07:00:00.867Z",
+      "end": "2026-03-29T07:00:24.663Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Telegram",
+        "OpenClaw",
+        "Gateway"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "5cd68942-1cee-4278-8c47-d8aa110db30b",
+      "start": "2026-03-29T07:08:38.947Z",
+      "end": "2026-03-29T07:09:03.546Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "GitHub",
+        "OpenClaw",
+        "Git",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "67d623a2-b3ce-49af-86c7-162086ded383",
+      "start": "2026-03-29T03:54:17.833Z",
+      "end": "2026-03-29T03:55:40.086Z",
+      "duration_seconds": 82,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "GitHub",
+        "OpenClaw",
+        "Git",
+        "Gateway"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "edccebf0-7801-4e31-a863-a358b84cd8c7",
+      "start": "2026-03-29T08:08:39.007Z",
+      "end": "2026-03-29T08:09:18.263Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "GitHub",
+        "OpenClaw",
+        "Git",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "9907faab-dc17-4d00-844f-37a1ccd25e26",
+      "start": "2026-03-29T05:54:18.219Z",
+      "end": "2026-03-29T05:56:03.311Z",
+      "duration_seconds": 105,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "OpenClaw",
+        "Agents",
+        "Python",
+        "Telegram"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "77a14312-cc93-4076-a913-120599adf6ea",
+      "start": "2026-03-29T08:38:39.029Z",
+      "end": "2026-03-29T08:39:17.266Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "GitHub",
+        "OpenClaw",
+        "Git",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "d700a4db-b2ac-479a-8027-f3c4770abf11",
+      "start": "2026-03-29T05:38:39.090Z",
+      "end": "2026-03-29T05:38:57.790Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "GitHub",
+        "OpenClaw",
+        "Git",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "1865025b-fcc6-4612-8fa1-e0ed5ca01f86",
+      "start": "2026-03-29T05:08:39.153Z",
+      "end": "2026-03-29T05:09:26.151Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "GitHub",
+        "OpenClaw",
+        "Git",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "b0ac6fc2-fa3e-4525-bfed-5ef7d7755e38",
+      "start": "2026-03-29T06:08:38.926Z",
+      "end": "2026-03-29T06:08:59.452Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "GitHub",
+        "OpenClaw",
+        "Git",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "a3ffccda-172b-46e1-b4bc-a050997d1f38",
+      "start": "2026-03-29T03:38:38.893Z",
+      "end": "2026-03-29T03:39:08.738Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "GitHub",
+        "OpenClaw",
+        "Git",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "c7eb6a26-28a3-4141-bb54-4df4bb224e3f",
+      "start": "2026-03-29T06:38:39.202Z",
+      "end": "2026-03-29T06:39:12.563Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "GitHub",
+        "OpenClaw",
+        "Git",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "d51c7fba-d38a-4d45-9594-7d19d907a8bd",
+      "start": "2026-03-29T04:08:39.152Z",
+      "end": "2026-03-29T04:09:01.386Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "GitHub",
+        "OpenClaw",
+        "Git",
+        "Reminders"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "7e5936a4-825e-4ff6-a791-e90de287d8d2",
+      "start": "2026-03-29T09:54:17.996Z",
+      "end": "2026-03-29T09:56:31.038Z",
+      "duration_seconds": 133,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Skills",
+        "Cron",
+        "Heartbeat",
+        "Tasks"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "0ad0448a-7a3f-4533-b4d9-3c28c5488597",
+      "start": "2026-03-29T12:38:39.548Z",
+      "end": "2026-03-29T12:39:07.056Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Agents",
+        "Skills",
+        "Cron",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "3779ad2a-b2de-4f54-94f8-dba4ec727c56-topic-1",
+      "start": "2026-03-29T14:01:53.601Z",
+      "end": "2026-03-29T14:05:14.727Z",
+      "duration_seconds": 201,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Agents",
+        "Tasks",
+        "SQL",
+        "Database"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "14ab18fc-0bc4-4a54-89c3-db58ef2b043a-topic-1",
+      "start": "2026-03-29T13:54:24.165Z",
+      "end": "2026-03-29T14:00:29.419Z",
+      "duration_seconds": 365,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Agents",
+        "Tasks",
+        "Nginx",
+        "API"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "1d8400f4-33dc-4849-b2c6-e167c82c85d4",
+      "start": "2026-03-29T11:38:39.151Z",
+      "end": "2026-03-29T11:39:07.176Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Agents",
+        "Skills",
+        "Cron",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "985fdb5b-9d96-4c2e-95fe-4a45293a13d7",
+      "start": "2026-03-29T14:17:25.941Z",
+      "end": "2026-03-29T14:19:34.525Z",
+      "duration_seconds": 128,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Agents",
+        "Cron",
+        "Tasks",
+        "SQL"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "99330c09-590f-42c0-8be7-dc04f4906ca6",
+      "start": "2026-03-29T10:38:39.178Z",
+      "end": "2026-03-29T10:39:09.358Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Agents",
+        "Skills",
+        "Cron",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "0db78b7a-645d-47ce-af74-0fe9dd17db4d",
+      "start": "2026-03-29T10:08:39.018Z",
+      "end": "2026-03-29T10:08:58.745Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Agents",
+        "Skills",
+        "Cron",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "ea124d5d-b721-45a6-bcb0-4e5ee0da561a",
+      "start": "2026-03-29T13:08:54.344Z",
+      "end": "2026-03-29T13:09:12.838Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Telegram",
+        "Browser",
+        "Python"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "c2b93864-6161-4ed7-9089-d2bf43b4a8f8",
+      "start": "2026-03-29T14:38:39.062Z",
+      "end": "2026-03-29T14:39:01.544Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Agents",
+        "Skills",
+        "Cron",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "6321e058-a35a-4bff-808c-1d93bbedceec",
+      "start": "2026-03-29T10:54:19.061Z",
+      "end": "2026-03-29T10:55:39.552Z",
+      "duration_seconds": 80,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Cron",
+        "Tasks",
+        "API",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "3798c63b-328d-4abf-9ee7-c993485f0895-topic-1",
+      "start": "2026-03-29T12:50:29.891Z",
+      "end": "2026-03-29T15:03:37.431Z",
+      "duration_seconds": 7987,
+      "channel": "telegram",
+      "topics": [
+        "Nginx",
+        "Redis",
+        "JavaScript",
+        "Skills",
+        "Gateway"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "f8679812-c817-452d-9f21-37062ed2a5be",
+      "start": "2026-03-29T13:38:39.070Z",
+      "end": "2026-03-29T13:39:17.915Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Agents",
+        "Skills",
+        "Cron",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "d95abb6c-22ce-4d62-8c6c-5a3ed9dd7445",
+      "start": "2026-03-29T09:30:01.469Z",
+      "end": "2026-03-29T09:31:07.628Z",
+      "duration_seconds": 66,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Skills",
+        "Gateway",
+        "Cron",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "e4599014-5693-4dad-82b2-a42e4aaa9e62",
+      "start": "2026-03-29T13:08:39.011Z",
+      "end": "2026-03-29T13:09:09.887Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Agents",
+        "Skills",
+        "Cron",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "93bdf96e-38f4-4ebb-a3ed-f632b8a4e25c",
+      "start": "2026-03-29T11:08:39.151Z",
+      "end": "2026-03-29T11:09:12.321Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Agents",
+        "Skills",
+        "Cron",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "6446aee8-756d-4910-b184-fe13f53e83bd",
+      "start": "2026-03-29T10:15:01.130Z",
+      "end": "2026-03-29T10:15:44.140Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Gateway",
+        "Cron",
+        "Tasks",
+        "Python"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "8b7fbb0b-457f-41ca-801e-a7ddd73ae2a0-topic-1",
+      "start": "2026-03-29T13:55:43.079Z",
+      "end": "2026-03-29T13:58:22.059Z",
+      "duration_seconds": 158,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Agents",
+        "Tasks",
+        "SQL",
+        "Database"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "02a2aeae-d5fb-440b-a306-b7fd9ef69d12",
+      "start": "2026-03-29T14:08:39.085Z",
+      "end": "2026-03-29T14:09:13.037Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Agents",
+        "Skills",
+        "Cron",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "87d0b222-6a46-49a6-87da-11fae3f6a67e-topic-1",
+      "start": "2026-03-29T13:02:05.520Z",
+      "end": "2026-03-29T13:02:49.710Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Telegram",
+        "OpenClaw",
+        "Tasks"
+      ],
+      "sentiment": "neutral",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "68a6a67e-6ead-4e6f-b0e3-d99a8070cd59",
+      "start": "2026-03-29T09:50:01.234Z",
+      "end": "2026-03-29T09:50:25.414Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Cron",
+        "Tasks",
+        "Medication",
+        "Telegram",
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "3d2da55c-8e48-48a7-b15d-a75c048b6133",
+      "start": "2026-03-29T09:38:39.034Z",
+      "end": "2026-03-29T09:40:36.471Z",
+      "duration_seconds": 117,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Agents",
+        "Skills",
+        "Cron",
+        "Heartbeat"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "c1b719b4-fb5a-4341-81ce-45b9146ea06c",
+      "start": "2026-03-29T09:08:39.175Z",
+      "end": "2026-03-29T09:08:59.244Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Agents",
+        "Skills",
+        "Cron",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "b59e8d99-ab67-4c59-b3b7-89fd26eb96de",
+      "start": "2026-03-29T12:08:40.364Z",
+      "end": "2026-03-29T12:09:13.005Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Docker",
+        "Agents",
+        "Skills",
+        "Cron",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "3092ab03-4da3-479a-9d2a-13fc95ac4e6e",
+      "start": "2026-03-29T12:54:18.458Z",
+      "end": "2026-03-29T12:55:01.830Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Cron",
+        "Tasks",
+        "API",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "8f067a07-782d-4bf5-a927-3ac6ce2b3631",
+      "start": "2026-03-29T13:17:25.481Z",
+      "end": "2026-03-29T13:18:47.723Z",
+      "duration_seconds": 82,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Cron",
+        "Tasks",
+        "API",
+        "Git"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "f1007db4-898b-4fc1-af3f-01af4fc2ebdd",
+      "start": "2026-03-29T11:54:19.315Z",
+      "end": "2026-03-29T11:56:27.393Z",
+      "duration_seconds": 128,
+      "channel": "telegram",
+      "topics": [
+        "Agents",
+        "Skills",
+        "Gateway",
+        "Cron",
+        "Heartbeat"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "aa9ba795-baf5-432e-be17-53f7eb16711a",
+      "start": "2026-03-29T17:00:01.393Z",
+      "end": "2026-03-29T17:00:33.342Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "Analytics",
+        "API",
+        "OpenClaw",
+        "Skills"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "e86c3477-c12e-4897-aed9-6efc147ba796",
+      "start": "2026-03-29T18:17:25.881Z",
+      "end": "2026-03-29T18:18:08.840Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Git",
+        "API",
+        "OpenClaw",
+        "Gateway"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "2437a9d4-325b-4fc4-a960-0a8bee830887",
+      "start": "2026-03-29T15:08:39.156Z",
+      "end": "2026-03-29T15:09:10.452Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "API",
+        "GitHub",
+        "OpenClaw",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "a72c0dc4-c651-498a-911d-85310d50c370",
+      "start": "2026-03-29T20:17:26.115Z",
+      "end": "2026-03-29T20:18:51.980Z",
+      "duration_seconds": 85,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "API",
+        "OpenClaw",
+        "Tasks",
+        "Cron"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "4e41b459-239c-4d3a-b4f2-c70863170d12-topic-7156",
+      "start": "2026-03-29T16:07:44.252Z",
+      "end": "2026-03-29T16:09:29.904Z",
+      "duration_seconds": 105,
+      "channel": "telegram",
+      "topics": [
+        "API",
+        "OpenClaw",
+        "Redis",
+        "Docker",
+        "Tasks"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "acb8ca0f-f3c6-4ad2-8ff9-0a51d1545ebf",
+      "start": "2026-03-29T15:17:25.669Z",
+      "end": "2026-03-29T15:19:39.973Z",
+      "duration_seconds": 134,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Git",
+        "API",
+        "OpenClaw",
+        "Redis"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "ef7215da-90b1-4a43-8049-ff2c767cd174",
+      "start": "2026-03-29T17:08:39.333Z",
+      "end": "2026-03-29T17:09:09.408Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "API",
+        "GitHub",
+        "OpenClaw",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "ae4ecda6-b565-4904-be80-1333d2b3cffd-topic-7156",
+      "start": "2026-03-29T19:35:46.904Z",
+      "end": "2026-03-29T19:36:52.630Z",
+      "duration_seconds": 65,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "Analytics",
+        "Medication",
+        "API",
+        "GitHub"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "bb720dd1-62b5-4d52-b420-4622fd985193",
+      "start": "2026-03-29T20:08:39.663Z",
+      "end": "2026-03-29T20:09:30.687Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "API",
+        "GitHub",
+        "OpenClaw",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "9e01ed5f-d127-4230-9f7a-384857867ebf",
+      "start": "2026-03-29T16:08:39.124Z",
+      "end": "2026-03-29T16:09:20.115Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "API",
+        "GitHub",
+        "OpenClaw",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "417b3575-5099-402f-a9e3-65a9a215fcae",
+      "start": "2026-03-29T18:38:39.184Z",
+      "end": "2026-03-29T18:39:21.253Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "API",
+        "GitHub",
+        "OpenClaw",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "62fc5137-8418-484b-b618-f9d6097d865e",
+      "start": "2026-03-29T19:08:39.265Z",
+      "end": "2026-03-29T19:09:28.538Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "API",
+        "GitHub",
+        "OpenClaw",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "d80a6397-1847-4860-9783-cc34beec05e2",
+      "start": "2026-03-29T19:38:39.551Z",
+      "end": "2026-03-29T19:39:05.468Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "API",
+        "GitHub",
+        "OpenClaw",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "c0949a40-b02d-413d-b344-d67f42f99dde",
+      "start": "2026-03-29T16:38:39.119Z",
+      "end": "2026-03-29T16:39:17.147Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "API",
+        "GitHub",
+        "OpenClaw",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "ce84ed33-b2b0-4885-bdd5-2e1d20df1b4b",
+      "start": "2026-03-29T18:08:39.202Z",
+      "end": "2026-03-29T18:09:21.489Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "API",
+        "GitHub",
+        "OpenClaw",
+        "Docker"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "e0d6ca81-9693-4cb8-80f4-220438e073d9-topic-7156",
+      "start": "2026-03-29T19:05:25.793Z",
+      "end": "2026-03-29T19:15:25.858Z",
+      "duration_seconds": 600,
+      "channel": "telegram",
+      "topics": [
+        "API",
+        "OpenClaw",
+        "Redis",
+        "Nginx",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "ef97a6d2-7489-41be-b06b-def87f124095-topic-7156",
+      "start": "2026-03-29T16:32:15.999Z",
+      "end": "2026-03-29T16:33:37.874Z",
+      "duration_seconds": 81,
+      "channel": "telegram",
+      "topics": [
+        "API",
+        "OpenClaw",
+        "Redis",
+        "Docker",
+        "Python"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "f7e83f44-e062-4f6a-b393-bcb91920a810-topic-7156",
+      "start": "2026-03-29T16:38:35.629Z",
+      "end": "2026-03-29T16:46:07.095Z",
+      "duration_seconds": 451,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "API",
+        "OpenClaw",
+        "Redis",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "94eaf0a4-7639-4b3f-8270-fb5841158aec-topic-7156",
+      "start": "2026-03-29T16:38:08.995Z",
+      "end": "2026-03-29T16:45:36.787Z",
+      "duration_seconds": 447,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Browser",
+        "API",
+        "OpenClaw",
+        "Redis"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "ff790a93-b3d6-46a5-a593-23b1cfd94954-topic-7156",
+      "start": "2026-03-29T19:25:37.433Z",
+      "end": "2026-03-29T19:27:34.006Z",
+      "duration_seconds": 116,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Browser",
+        "Git",
+        "API",
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "4ad49805-64b2-41dc-96ea-6c59b422651b-topic-7156",
+      "start": "2026-03-29T15:19:46.319Z",
+      "end": "2026-03-29T19:40:48.907Z",
+      "duration_seconds": 15662,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "GitHub",
+        "Health",
+        "Telegram",
+        "SQL"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.8999999999999999,
+      "tasks_completed": 1
+    },
+    {
+      "id": "88e76d7c-e4a0-4359-b79f-f8e92088e94e",
+      "start": "2026-03-29T18:18:13.882Z",
+      "end": "2026-03-29T19:46:11.373Z",
+      "duration_seconds": 5277,
+      "channel": "telegram",
+      "topics": [
+        "Browser",
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "b2321a2f-6add-41e5-8812-0e25b7f94ec9-topic-7156",
+      "start": "2026-03-29T16:21:32.547Z",
+      "end": "2026-03-29T16:23:13.826Z",
+      "duration_seconds": 101,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "API",
+        "OpenClaw",
+        "Redis",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "905e5482-46f6-4cdc-bd18-2edc216cd03e",
+      "start": "2026-03-29T15:38:39.049Z",
+      "end": "2026-03-29T15:39:08.223Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "API",
+        "GitHub",
+        "OpenClaw",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "7da27072-048e-41ea-a971-58c4bb727254",
+      "start": "2026-03-29T17:38:39.503Z",
+      "end": "2026-03-29T17:39:36.610Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "API",
+        "GitHub",
+        "OpenClaw",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "232bac84-e693-4fb6-b998-958c4d2369d4",
+      "start": "2026-03-29T17:17:25.587Z",
+      "end": "2026-03-29T17:17:56.364Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "OpenClaw",
+        "API",
+        "Tasks",
+        "Cron",
+        "Telegram"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "365980f6-7487-47a6-903f-b1b8a1287e78-topic-7156",
+      "start": "2026-03-29T16:25:49.240Z",
+      "end": "2026-03-29T16:28:09.170Z",
+      "duration_seconds": 139,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Git",
+        "API",
+        "OpenClaw",
+        "Redis"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "bb114cdb-8ad5-439a-9f50-68926c6cbb66",
+      "start": "2026-03-29T19:17:27.399Z",
+      "end": "2026-03-29T19:18:45.554Z",
+      "duration_seconds": 78,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "API",
+        "OpenClaw",
+        "Docker",
+        "Tasks"
+      ],
+      "sentiment": "mixed",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "a1a8ca1b-0e49-4cd3-85ca-a0bc51ed679c-topic-7156",
+      "start": "2026-03-29T17:22:52.872Z",
+      "end": "2026-03-29T17:27:52.943Z",
+      "duration_seconds": 300,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Git",
+        "API",
+        "GitHub",
+        "Redis"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.3,
+      "tasks_completed": 0
+    },
+    {
+      "id": "81bc8ddc-1b26-497e-9aa5-7d911d4d4f76",
+      "start": "2026-03-29T16:17:25.928Z",
+      "end": "2026-03-29T16:18:24.751Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "Git",
+        "API",
+        "GitHub",
+        "OpenClaw"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
+    },
+    {
+      "id": "963901ba-ed8c-4ed8-8f73-960fb02f74f7",
+      "start": "2026-03-29T20:38:39.569Z",
+      "end": "2026-03-29T20:39:09.813Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "Git",
+        "API",
+        "GitHub",
+        "OpenClaw",
+        "Docker"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0.6,
+      "tasks_completed": 1
+    },
+    {
+      "id": "19c9d5bb-6527-4e36-97e5-bdd4100e4fb0-topic-7156",
+      "start": "2026-03-29T18:21:16.885Z",
+      "end": "2026-03-29T18:21:59.562Z",
+      "duration_seconds": 60,
+      "channel": "telegram",
+      "topics": [
+        "SQL",
+        "OpenClaw",
+        "Redis",
+        "Database",
+        "Tasks"
+      ],
+      "sentiment": "negative",
+      "productivity_score": 0,
+      "tasks_completed": 0
     }
   ],
-  "last_import": "2026-03-29T00:04:24.481939",
+  "last_import": "2026-03-30T00:04:25.708176",
   "topic_stats": {
     "SQL": {
-      "total_mentions": 49,
-      "last_seen": "2026-03-28T06:08:38.581Z",
+      "total_mentions": 63,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     },
     "Agents": {
-      "total_mentions": 488,
-      "last_seen": "2026-03-28T17:50:25.298Z",
+      "total_mentions": 521,
+      "last_seen": "2026-03-29T11:54:19.315Z",
       "trend": "new"
     },
     "Cron": {
-      "total_mentions": 550,
-      "last_seen": "2026-03-28T17:50:25.298Z",
+      "total_mentions": 611,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     },
     "Database": {
-      "total_mentions": 30,
-      "last_seen": "2026-03-28T12:31:18.105Z",
+      "total_mentions": 33,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     },
     "TypeScript": {
@@ -17078,78 +18734,78 @@
       "trend": "new"
     },
     "Tasks": {
-      "total_mentions": 432,
-      "last_seen": "2026-03-28T17:50:25.298Z",
+      "total_mentions": 467,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     },
     "Medication": {
-      "total_mentions": 147,
-      "last_seen": "2026-03-28T12:31:18.105Z",
+      "total_mentions": 149,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     },
     "Reminders": {
-      "total_mentions": 179,
-      "last_seen": "2026-03-28T12:31:18.105Z",
+      "total_mentions": 187,
+      "last_seen": "2026-03-29T04:08:39.152Z",
       "trend": "new"
     },
     "Health": {
-      "total_mentions": 41,
-      "last_seen": "2026-03-26T10:25:14.985Z",
+      "total_mentions": 42,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     },
     "GitHub": {
-      "total_mentions": 106,
-      "last_seen": "2026-03-27T22:38:39.196Z",
+      "total_mentions": 150,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     },
     "Docker": {
-      "total_mentions": 139,
-      "last_seen": "2026-03-28T17:50:25.298Z",
+      "total_mentions": 189,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     },
     "API": {
-      "total_mentions": 377,
-      "last_seen": "2026-03-28T17:50:25.298Z",
+      "total_mentions": 410,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     },
     "Gateway": {
-      "total_mentions": 218,
-      "last_seen": "2026-03-28T12:31:18.105Z",
+      "total_mentions": 226,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     },
     "Python": {
-      "total_mentions": 195,
-      "last_seen": "2026-03-28T17:50:25.298Z",
+      "total_mentions": 199,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     },
     "Analytics": {
-      "total_mentions": 35,
-      "last_seen": "2026-03-27T22:38:39.196Z",
+      "total_mentions": 37,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     },
     "OpenClaw": {
-      "total_mentions": 452,
-      "last_seen": "2026-03-28T17:50:25.298Z",
+      "total_mentions": 507,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     },
     "Heartbeat": {
-      "total_mentions": 294,
-      "last_seen": "2026-03-28T17:50:25.298Z",
+      "total_mentions": 312,
+      "last_seen": "2026-03-29T11:54:19.315Z",
       "trend": "new"
     },
     "Telegram": {
-      "total_mentions": 369,
-      "last_seen": "2026-03-28T12:31:18.105Z",
+      "total_mentions": 384,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     },
     "Git": {
-      "total_mentions": 186,
-      "last_seen": "2026-03-28T12:31:18.105Z",
+      "total_mentions": 226,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     },
     "Skills": {
-      "total_mentions": 130,
-      "last_seen": "2026-03-28T17:50:25.298Z",
+      "total_mentions": 161,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     },
     "React": {
@@ -17158,18 +18814,18 @@
       "trend": "new"
     },
     "Browser": {
-      "total_mentions": 59,
-      "last_seen": "2026-03-28T17:50:25.298Z",
+      "total_mentions": 64,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     },
     "JavaScript": {
-      "total_mentions": 13,
-      "last_seen": "2026-03-27T13:38:38.130Z",
+      "total_mentions": 15,
+      "last_seen": "2026-03-29T11:54:19.315Z",
       "trend": "new"
     },
     "Nginx": {
-      "total_mentions": 106,
-      "last_seen": "2026-03-27T15:38:38.349Z",
+      "total_mentions": 111,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     },
     "Kubernetes": {
@@ -17178,52 +18834,52 @@
       "trend": "new"
     },
     "Redis": {
-      "total_mentions": 40,
-      "last_seen": "2026-03-28T06:08:38.581Z",
+      "total_mentions": 51,
+      "last_seen": "2026-03-29T18:21:16.885Z",
       "trend": "new"
     }
   },
   "time_stats": {
     "hourly_distribution": {
-      "13": 37,
-      "6": 109,
-      "22": 27,
-      "14": 50,
-      "1": 69,
-      "7": 44,
-      "16": 32,
-      "12": 31,
-      "9": 76,
-      "18": 48,
-      "10": 55,
-      "11": 32,
-      "19": 41,
-      "15": 29,
-      "17": 38,
-      "20": 59,
-      "8": 37,
-      "4": 26,
-      "2": 41,
-      "5": 48,
-      "21": 28,
-      "23": 26,
-      "3": 23,
-      "0": 24
+      "13": 44,
+      "6": 112,
+      "22": 30,
+      "14": 54,
+      "1": 73,
+      "7": 48,
+      "16": 41,
+      "12": 35,
+      "9": 81,
+      "18": 53,
+      "10": 59,
+      "11": 35,
+      "19": 47,
+      "15": 33,
+      "17": 43,
+      "20": 62,
+      "8": 40,
+      "4": 29,
+      "2": 44,
+      "5": 52,
+      "21": 31,
+      "23": 29,
+      "3": 26,
+      "0": 27
     },
     "daily_distribution": {
       "tuesday": 169,
       "thursday": 150,
-      "saturday": 150,
+      "saturday": 159,
       "friday": 179,
-      "sunday": 123,
+      "sunday": 212,
       "wednesday": 132,
       "monday": 127
     }
   },
   "sentiment_stats": {
-    "positive": 60,
-    "neutral": 268,
-    "negative": 517,
-    "mixed": 185
+    "positive": 61,
+    "neutral": 272,
+    "negative": 602,
+    "mixed": 193
   }
 }
