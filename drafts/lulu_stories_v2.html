@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1134px;
+    background: #111;
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .story {
+    width: 540px;
+    height: 960px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0;
+  }
+
+  .story img.bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0; left: 0;
+  }
+
+  /* Dark overlay */
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.52);
+  }
+
+  .story-content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Top text */
+  .top-text {
+    padding: 60px 40px 0;
+    text-align: center;
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 38px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.15;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    letter-spacing: -0.3px;
+  }
+
+  /* Logo circle in center */
+  .logo-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-circle {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 2px solid rgba(255,255,255,0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    backdrop-filter: blur(4px);
+  }
+
+  .logo-small {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .logo-main {
+    font-family: 'Times New Roman', Georgia, serif;
+    font-size: 46px;
+    font-style: italic;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(200,73,10,0.6);
+  }
+
+  .logo-sub {
+    font-family: 'Times New Roman', Georgia, serif;
+    font-size: 14px;
+    font-style: italic;
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 0.12em;
+  }
+
+  /* Bottom bar */
+  .bottom-bar {
+    width: 100%;
+    background: rgba(190, 70, 30, 0.88);
+    padding: 32px 40px 40px;
+    text-align: center;
+  }
+
+  .bottom-bar .main-text {
+    font-family: Arial, 'Helvetica Neue', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff;
+    text-transform: uppercase;
+    line-height: 1.25;
+    letter-spacing: 0.03em;
+  }
+</style>
+</head>
+<body>
+
+<!-- Story 1 -->
+<div class="story">
+  <img class="bg" src="/home/clawdbot/.openclaw/media/inbound/file_1186---a928343f-4af1-48dd-a6cd-80c240bd3328.jpg" alt="">
+  <div class="overlay"></div>
+  <div class="story-content">
+    <div class="top-text">Бизнес-ланч<br>каждый будний день</div>
+    <div class="logo-wrap">
+      <div class="logo-circle">
+        <span class="logo-small">Кафе</span>
+        <span class="logo-main">ЛуЛу</span>
+        <span class="logo-sub">LuLu</span>
+      </div>
+    </div>
+    <div class="bottom-bar">
+      <div class="main-text">Пн — Пт с 11:00 до 15:00<br>Суп + горячее + салат</div>
+    </div>
+  </div>
+</div>
+
+<!-- Story 2 -->
+<div class="story">
+  <img class="bg" src="/home/clawdbot/.openclaw/media/inbound/file_1188---b3d090d2-fe16-4c2f-b45b-8d04aaf62e45.jpg" alt="">
+  <div class="overlay"></div>
+  <div class="story-content">
+    <div class="top-text">Вкусный обед<br>без лишних забот</div>
+    <div class="logo-wrap">
+      <div class="logo-circle">
+        <span class="logo-small">Кафе</span>
+        <span class="logo-main">ЛуЛу</span>
+        <span class="logo-sub">LuLu</span>
+      </div>
+    </div>
+    <div class="bottom-bar">
+      <div class="main-text">Меню обновляется каждую неделю<br>Спутник, Пенза</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

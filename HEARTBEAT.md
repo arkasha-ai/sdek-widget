@@ -67,25 +67,6 @@ echo "$result"
 "⚠️ fal.ai баланс исчерпан! Пополни на fal.ai/dashboard/billing — иначе генерация не работает."
 Если OK → молча продолжить.
 
-## Paperclip — активность команды (каждый heartbeat)
-Проверить что делают и делали коллеги в Paperclip:
-```bash
-python3 -c "
-import requests, json
-with open('/home/clawdbot/.openclaw/workspace/paperclip-claimed-api-key.json') as f:
-    creds = json.load(f)
-TOKEN = creds['token']
-API_URL = 'https://paperclip.znaemai.ru'
-COMPANY_ID = 'b246cf3d-2eda-4223-8ff6-5be30c598eca'
-r = requests.get(f'{API_URL}/api/companies/{COMPANY_ID}/issues', headers={'Authorization': f'Bearer {TOKEN}'}, timeout=10)
-for iss in r.json():
-    print(iss.get('status'), '|', iss.get('title','')[:60])
-"
-```
-- Если появились новые задачи в `blocked` или `in_review` → проверить нужна ли помощь или ответ заказчика
-- Если задача `done` → сообщить Денису о результате
-- Если задача висит в `in_progress` больше суток без комментариев → написать в задачу с пингом агента
-- Молча если всё ок
 
 ## TickTick Tasks (каждый heartbeat)
 Проверить проект "🤖 Аркаша Tasks" (ID: `6998c6fb1ff4510b9e851f9f`).

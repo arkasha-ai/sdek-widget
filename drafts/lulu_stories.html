@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ЛуЛу Бизнес-ланч</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Nunito:wght@400;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    background: #1a1a1a;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding: 24px;
+  }
+
+  .story {
+    width: 510px;
+    height: 906px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+  }
+
+  .story img.bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0; left: 0;
+    filter: brightness(0.72);
+  }
+
+  /* Gradient overlays */
+  .story::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(20,12,5,0.15) 0%,
+      rgba(20,12,5,0.0) 35%,
+      rgba(20,12,5,0.55) 65%,
+      rgba(20,12,5,0.88) 100%
+    );
+  }
+
+  .story-content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 44px 40px 52px;
+  }
+
+  .logo-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 100px;
+    padding: 10px 20px 10px 14px;
+    width: fit-content;
+  }
+
+  .logo-dot {
+    width: 36px;
+    height: 36px;
+    background: #C8490A;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.5px;
+  }
+
+  .logo-name {
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.92);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .tag {
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #E8936B;
+    background: rgba(200,73,10,0.18);
+    border: 1px solid rgba(200,73,10,0.35);
+    border-radius: 6px;
+    padding: 6px 14px;
+    display: inline-block;
+    width: fit-content;
+  }
+
+  .headline {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 700;
+    color: #FFF8F2;
+    line-height: 1.08;
+    letter-spacing: -0.5px;
+  }
+
+  .headline em {
+    font-style: italic;
+    color: #E8936B;
+  }
+
+  .description {
+    font-family: 'Nunito', sans-serif;
+    font-size: 17px;
+    font-weight: 400;
+    color: rgba(255,248,242,0.8);
+    line-height: 1.55;
+  }
+
+  .divider {
+    width: 40px;
+    height: 2px;
+    background: #C8490A;
+    border-radius: 2px;
+  }
+
+  .details-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .detail-label {
+    font-family: 'Nunito', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,248,242,0.45);
+  }
+
+  .detail-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #FFF8F2;
+  }
+
+  .detail-sep {
+    width: 1px;
+    height: 36px;
+    background: rgba(255,255,255,0.2);
+  }
+
+  /* Story 2 variations */
+  .story.s2 .headline { font-size: 44px; }
+  .story.s2 .menu-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .story.s2 .menu-list li {
+    font-family: 'Nunito', sans-serif;
+    font-size: 17px;
+    color: rgba(255,248,242,0.85);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .story.s2 .menu-list li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #C8490A;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- Story 1: Анонс бизнес-ланча -->
+<div class="story s1">
+  <img class="bg" src="/home/clawdbot/.openclaw/media/inbound/file_1186---a928343f-4af1-48dd-a6cd-80c240bd3328.jpg" alt="">
+  <div class="story-content">
+    <div class="logo-badge">
+      <div class="logo-dot">Лу</div>
+      <span class="logo-name">Кафе ЛуЛу</span>
+    </div>
+    <div class="bottom">
+      <span class="tag">Бизнес-ланч</span>
+      <h1 class="headline">Обед,<br>который<br><em>заряжает</em></h1>
+      <div class="divider"></div>
+      <p class="description">Горячее, суп и салат — всё что нужно,<br>чтобы вернуться к делам с силами.</p>
+      <div class="details-row">
+        <div class="detail-item">
+          <span class="detail-label">Время</span>
+          <span class="detail-value">11:00 — 15:00</span>
+        </div>
+        <div class="detail-sep"></div>
+        <div class="detail-item">
+          <span class="detail-label">Дни</span>
+          <span class="detail-value">Пн — Пт</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Story 2: Состав меню -->
+<div class="story s2">
+  <img class="bg" src="/home/clawdbot/.openclaw/media/inbound/file_1187---d0c9edcf-5945-4249-919e-74769f8a9acc.jpg" alt="">
+  <div class="story-content">
+    <div class="logo-badge">
+      <div class="logo-dot">Лу</div>
+      <span class="logo-name">Кафе ЛуЛу</span>
+    </div>
+    <div class="bottom">
+      <span class="tag">В меню сегодня</span>
+      <h1 class="headline">Всё<br><em>свежее</em></h1>
+      <div class="divider"></div>
+      <ul class="menu-list">
+        <li>Суп дня</li>
+        <li>Горячее блюдо на выбор</li>
+        <li>Салат</li>
+        <li>Хлеб</li>
+      </ul>
+      <p class="description" style="margin-top: 4px; font-size:15px; opacity:0.6;">
+        Меню обновляется еженедельно
+      </p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
