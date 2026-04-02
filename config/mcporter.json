@@ -30,8 +30,16 @@
     "supabase": {
       "type": "http",
       "baseUrl": "https://supa.jakeberrimor.com/mcp"
+    },
+    "mind-mem": {
+      "command": "python3",
+      "args": [
+        "/home/clawdbot/.openclaw/workspace/.mind-mem/mcp_server.py"
+      ],
+      "env": {
+        "MIND_MEM_WORKSPACE": "/home/clawdbot/.openclaw/workspace/mind-mem-workspace"
+      }
     }
   },
   "imports": []
 }
-

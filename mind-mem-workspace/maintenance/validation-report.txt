@@ -1,0 +1,84 @@
+Mind Mem Integrity Validation Report (Python)
+Date: 2026-04-01T08:44:00Z
+Workspace: /home/clawdbot/.openclaw/workspace/mind-mem-workspace
+
+=== 0. FILE STRUCTURE ===
+  PASS: decisions/DECISIONS.md exists
+  PASS: tasks/TASKS.md exists
+  PASS: entities/projects.md exists
+  PASS: entities/people.md exists
+  PASS: entities/tools.md exists
+  PASS: entities/incidents.md exists
+  WARN: summaries/weekly/ has no .md files (expected for new workspaces)
+  PASS: memory/maint-state.json exists
+  PASS: MEMORY.md exists
+  PASS: MEMORY.md has Protocol v1.0 header
+
+=== 1. DECISIONS - IDs, fields, values ===
+  PASS: All 0 Decisions IDs match ^D-\d{8}-\d{3}$
+  PASS: Decisions: Date: present in all 0 blocks
+  PASS: Decisions: Status: present in all 0 blocks
+  PASS: Decisions: Scope: present in all 0 blocks
+  PASS: Decisions: Statement: present in all 0 blocks
+  PASS: Decisions: Rationale: present in all 0 blocks
+  PASS: Decisions: Supersedes: present in all 0 blocks
+  PASS: Decisions: Tags: present in all 0 blocks
+  PASS: Decisions: Sources: present in all 0 blocks
+  PASS: Decisions: all Status values valid (0)
+
+=== 2. TASKS - IDs, fields, values ===
+  PASS: All 0 Tasks IDs match ^T-\d{8}-\d{3}$
+  PASS: Tasks: Date: present in all 0 blocks
+  PASS: Tasks: Title: present in all 0 blocks
+  PASS: Tasks: Status: present in all 0 blocks
+  PASS: Tasks: Priority: present in all 0 blocks
+  PASS: Tasks: Project: present in all 0 blocks
+  PASS: Tasks: Due: present in all 0 blocks
+  PASS: Tasks: Owner: present in all 0 blocks
+  PASS: Tasks: Context: present in all 0 blocks
+  PASS: Tasks: Next: present in all 0 blocks
+  PASS: Tasks: Dependencies: present in all 0 blocks
+  PASS: Tasks: Sources: present in all 0 blocks
+  PASS: Tasks: History: present in all 0 blocks
+  PASS: Tasks: all Status values valid (0)
+  PASS: Tasks: all Priority values valid (0)
+  PASS: Tasks: all Owner values valid (0)
+
+=== 3. ENTITIES - IDs & required fields ===
+  PASS: All 0 Projects IDs match ^PRJ-[a-z0-9-]+$
+  PASS: All 0 People IDs match ^PER-[a-z0-9-]+$
+  PASS: All 0 Tools IDs match ^TOOL-[a-z0-9-]+$
+  PASS: All 0 Incidents IDs match ^INC-\d{8}-[a-z0-9-]+$
+  PASS: Incidents: Date: present in all 0 blocks
+  PASS: Incidents: Title: present in all 0 blocks
+  PASS: Incidents: Impact: present in all 0 blocks
+  PASS: Incidents: Summary: present in all 0 blocks
+  PASS: Incidents: RootCause: present in all 0 blocks
+  PASS: Incidents: Fix: present in all 0 blocks
+  PASS: Incidents: Prevention: present in all 0 blocks
+  PASS: Incidents: Sources: present in all 0 blocks
+
+=== 4. PROVENANCE - Sources not empty ===
+  PASS: DECISIONS.md: all 0 blocks have Sources:
+  PASS: DECISIONS.md: no empty Sources: blocks
+  PASS: TASKS.md: all 0 blocks have Sources:
+  PASS: TASKS.md: no empty Sources: blocks
+  PASS: incidents.md: all 0 blocks have Sources:
+  PASS: incidents.md: no empty Sources: blocks
+
+=== 5. CROSS-REFERENCE INTEGRITY ===
+  PASS: All cross-references resolve to defined IDs
+
+=== 6. INTELLIGENCE FILES ===
+  PASS: intelligence/SIGNALS.md exists
+  PASS: intelligence/CONTRADICTIONS.md exists
+  PASS: intelligence/DRIFT.md exists
+  PASS: intelligence/IMPACT.md exists
+  PASS: intelligence/BRIEFINGS.md exists
+  PASS: intelligence/AUDIT.md exists
+  PASS: memory/intel-state.json exists
+  PASS: intelligence/proposed/ directory exists
+
+===========================================
+TOTAL: 62 checks | 62 passed | 0 issues | 1 warnings
+===========================================
