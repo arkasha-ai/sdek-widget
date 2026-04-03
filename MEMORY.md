@@ -3,7 +3,7 @@
 ## О Денисе
 
 **Базовая информация:**
-- Имя: Денис
+- Имя: Пармеев Денис Владимирович
 - Локация: Пенза
 - Часовой пояс: Europe/Moscow (GMT+3)
 - Работа: Проектный руководитель / Разработчик / Тимлид / Архитектор
@@ -17,11 +17,9 @@
 - Денис забывчивый — я должен быть настойчивым с напоминаниями
 
 **Работа:**
-- Компания: **Gravity** (IT Gravity-group)
-- Роль Дениса: Тимлид / Проектный руководитель LLM проектов
-- Моя роль: Разработчик в команде (начало 09.02.2026)
-- Инструменты: Self-hosted GitLab + Redmine
-- Email для работы: `a.parmeev@jakeberrimor.com`
+- **Партнёрство:** Студия **ZnaemAI** (co-founder — Михаил Коржов)
+- Email рабочие: dparmeev@luminesfox.com, contact@jakeberrimor.com
+- Email Аркаши (для аккаунтов): a.parmeev@jakeberrimor.com
 
 **Проекты:**
 - Pet-проект: корпоративная база знаний (детали позже)
@@ -37,7 +35,7 @@
 
 **Мои инструменты:**
 - **Браузер:** `profile="openclaw"` — мой собственный браузер
-- **GitHub аккаунт:** arkasha-ai (✅ разблокирован 25.02.2026 — GitHub Support тикет 4087174)
+- **GitHub аккаунт:** arkasha-ai (активен)
 - **Email:** a.parmeev@jakeberrimor.com (для регистраций и аккаунтов)
 
 ---
@@ -130,8 +128,8 @@ arkasha-ai — был заблокирован 15.02.2026 (aggressive activity p
 ---
 
 ### AI рендеры (2026-03-18)
-- **Replicate API** доступен → `REPLICATE_API_TOKEN` в secrets.env
-- **FLUX.1-dev** (`black-forest-labs/flux-dev`) — продуктовые рендеры, техвиз, концепт-арт
+- **Nano Banana** (bananalab.pw) — основная платформа для генерации изображений
+- **fal.ai** — резервная платформа для генерации
 - Шаблон скрипта: `scripts/render_table_column.py`
 - Первый рендер: телескопическая колонка DIY стола → результат отличный
 
@@ -212,25 +210,21 @@ Personal Analytics — дважды соврал:
 - Делать тёмный overlay поверх фото (выглядит криповo, не по-детски)
 - Генерировать фон отдельно без исходного фото
 
-**Модель:** `black-forest-labs/flux-kontext-dev` через Replicate API
-**Токен:** `REPLICATE_API_TOKEN` в `~/.openclaw/secrets.env`
-
+**Модель:** FLUX Kontext через Nano Banana или fal.ai
 **Финальный стек:** FLUX Kontext (фото→сцена) → HTML/CSS шаблон → Playwright screenshot → готовая карточка
 
 ---
 
-### Paperclip — AI команда (2026-03-22)
+### Paperclip — инструмент управления
 
-**Что это:** Paperclip — платформа для AI-агентов. Я (Аркадий) подключён как посредник между Денисом и командой агентов.
+**Что это:** Paperclip (paperclip.ing) — opensource инструмент управления AI-агентами. ZnaemAI использует его как систему управления проектами (как Jira, только для агентов).
 
 **Инфраструктура:**
-- Paperclip: `https://paperclip.znaemai.ru` (Dokploy, тот же сервер)
-- API key: `~/.openclaw/workspace/paperclip-claimed-api-key.json`
+- Paperclip: `https://paperclip.znaemai.ru` (self-hosted)
 - Agent ID: `7fba4a1f-dbb5-49a9-ad74-4840f5556a52`
 - Company ID: `b246cf3d-2eda-4223-8ff6-5be30c598eca`
-- Gateway для Paperclip: `ws://95.81.99.103:18789/`
 
-**Команда:**
+**AI-команда в Paperclip:**
 - Максим (CEO, a5893697) — планирует, декомпозирует
 - Дмитрий (Engineer, 5a630270) — реализует
 - Аркадий (я, посредник) — связь с заказчиком, ревью
@@ -240,9 +234,17 @@ Personal Analytics — дважды соврал:
 - ceo-agent: `CeoAgent2026!` / token `c0ef1b36...`
 - founding-engineer: `EngAgent2026!` / token `aba5e5aa...`
 
-**Активный проект:** Product Card Generator
+**Cron:** каждые 30 мин проверяю Paperclip активность
+
+### SellerShot — Product Card Generator
+
+**Внутренний проект ZnaemAI.** AI-генератор карточек товаров для маркетплейсов (Wildberries, Ozon и т.д.)
 - Repo: `znaem-ai/product-card-generator`
-- Статус: план готов, ждём ответы заказчика на вопросы
+- Сайт: sellershot.ru
+- Бот: @sellershot_bot
+- Стек: FastAPI + SQLAlchemy async + aiogram 3.x + Redis
+- Генерация: Gemini/FLUX через Nano Banana + fal.ai
+- Пайплайн: FLUX Kontext → HTML/CSS → Playwright → карточка 4:5
+- Статус: активная разработка
 
 **Уведомления:** важное → ZnaemAI (`-1003831241406`)
-**Cron:** каждые 30 мин проверяю Paperclip активность

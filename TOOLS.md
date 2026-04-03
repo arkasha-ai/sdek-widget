@@ -3,6 +3,8 @@
 
 ## Browser 🌐
 - Profile: `openclaw` (NOT `chrome`)
+- ⚠️ **НИКОГДА не логиниться в Google** в агентских профилях — все managed-профили (openclaw, construction-demo и др.) делят один Chrome userDataDir, Google Sync сразу виден во всех профилях
+- `userDataDir` в конфиге работает ТОЛЬКО для `existing-session` профилей (Brave, Edge), не для managed
 - Clicks: `openclaw browser click <ref> --target-id <id>` (browser.act сломан)
 - **⚠️ VIEWPORT: ПЕРВЫЙ вызов в любой браузерной задаче = resize 1500×900. БЕЗ ИСКЛЮЧЕНИЙ.**
   ```

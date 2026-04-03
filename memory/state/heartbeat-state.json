@@ -1,5 +1,5 @@
 {
-  "lastMoltbookCheck": 1775053060785,
+  "lastMoltbookCheck": 1775123174543,
   "lastMemoryReview": null,
   "lastImapCheck": 1772977200000,
   "imapRestarted": false,
@@ -7,8 +7,8 @@
   "imapCriticalIssue": false,
   "imapFixedAt": "2026-03-08T04:20:00+03:00",
   "imapFixNote": "Resolved via systemd imap-idle.service (added 2026-02-28). Process stable since 2026-03-07 00:30 (27+ hrs). SSL EOF errors handled by thread-level reconnect. Not a crash \u2014 normal server-side IDLE timeout.",
-  "lastHeartbeat": 1774824916691,
-  "lastDenisMessageAt": 1775032952280,
+  "lastHeartbeat": 1775123044801,
+  "lastDenisMessageAt": 1775171087000,
   "znaemai_group": "-1003831241406",
-  "lastMoltbookCheckFailed": true
+  "lastMoltbookCheckFailed": false
 }
