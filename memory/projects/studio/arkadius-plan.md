@@ -1,6 +1,6 @@
 # Аркадиус — Техническая и продуктовая документация
 
-> **Версия:** 2.0 | **Дата:** 2026-04-03  
+> **Версия:** 2.1 | **Дата:** 2026-04-04  
 > **Статус:** Активная разработка — старт 04.04.2026
 
 ---
@@ -63,14 +63,11 @@ packages/
 apps/
   dashboard/    # Админка: пользователи, баланс, мониторинг
   billing/      # ЮKassa webhooks, транзакции
-  inference/    # LiteLLM конфиг + роутинг моделей
+  inference/    # Anthropic API proxy (один ключ для MVP)
 infra/
   docker-compose.yml
   nginx/
-  litellm/
 ```
-
-LiteLLM — только в `arkadius-admin`. В продуктовом репо нет.
 
 ### 3.2 Обзор сервисов
 
@@ -95,10 +92,10 @@ LiteLLM — только в `arkadius-admin`. В продуктовом репо
           │(Python) │ │      │ │             │
           └────┬────┘ └──────┘ └─────────────┘
                │
-        ┌──────▼──────┐
-        │  LiteLLM    │  (в arkadius-admin)
-        │  Proxy      │
-        └──────┬──────┘
+        ┌──────────────┐
+        │  Anthropic   │  (в arkadius-admin)
+        │  API Proxy   │  (один ключ для MVP)
+        └──────┬───────┘
                │
          ┌─────▼─────┐
          │  Claude   │
@@ -348,7 +345,7 @@ CREATE TABLE user_files (
 
 ### 7.1 Backend
 
-- **Язык:** Python 3.12
+- **Язык:** Python 3.13.3
 - **Framework:** FastAPI (async)
 - **ORM:** SQLAlchemy async + Alembic
 - **Queue:** Celery + Redis (или ARQ)
@@ -397,8 +394,8 @@ class AgentRunner:
 ### 7.4 LLM
 
 - **MVP:** только Anthropic Claude (Sonnet) — без Qwen, без GPT пока
-- **Роутинг:** LiteLLM (в arkadius-admin)
-- **Биллинг:** success_callback → PostgreSQL
+- **Биллинг MVP:** один Anthropic API ключ зашит в конфиге `arkadius-admin`. Все запросы агентов идут через него. Токены считаются per-user в PostgreSQL. Лимит токенов на пользователя — защита от ухода в минус.
+- **Будущее (v0.2+):** пользователь приносит свой Anthropic API ключ ИЛИ кредитная модель (prepaid рубли)
 
 ### 7.5 Инфраструктура MVP (только РФ)
 
@@ -451,13 +448,56 @@ CREATE TABLE agent_packages (
 
 **Для B2B enterprise (v1.0):** self-hosted модель на сервере в РФ — данные не покидают страну.
 
+### 7.8 Фронтенд (Next.js 15)
+
+**Фреймворк и ядро:**
+- Next.js 15.3 (App Router, RSC, стриминг)
+- React 19
+- TypeScript 5.8
+- Python 3.13.3 (бэкенд — обновлено с 3.12)
+
+**UI и стили:**
+- Tailwind CSS v4 (конфиг в CSS, быстрее)
+- shadcn/ui (компоненты на Radix UI)
+
+**AI чат:**
+- @assistant-ui/react — headless чат компоненты, стриминг, tool calls рендер, human approvals inline
+
+**Граф памяти (вкладка Память):**
+- react-force-graph — 2D/3D WebGL граф для визуализации namespace памяти
+
+**Контент:**
+- react-markdown + rehype-highlight — рендер ответов агента
+- @uiw/react-codemirror — подсветка кода в ответах
+
+**Файлы:**
+- react-dropzone — drag & drop загрузка файлов агенту
+- @tanstack/react-virtual — виртуализация больших списков файлов
+
+**Стейт и данные:**
+- Zustand 5.x — стейт менеджмент
+- TanStack Query 5.x — кэш API запросов
+
+**Аутентификация:**
+- better-auth — современная авторизация (email, OAuth)
+
+**Биллинг и аналитика:**
+- recharts — графики расхода токенов, баланс
+
+**Ключевые экраны:**
+1. Чат (главный) — @assistant-ui/react + стриминг
+2. Память — react-force-graph граф namespace + редактирование
+3. Файлы — react-dropzone + @tanstack/react-virtual
+4. Биллинг — recharts графики
+5. Настройки агента
+
 ---
 
 ## 8. Репозитории
 
 - **GitHub организация:** создаёт Денис 04.04.2026, добавляет `arkasha-ai`
 - **`ZnaemAI/arkadius`** — бэкенд (Python FastAPI) + веб (Next.js) (private)
-- **`ZnaemAI/arkadius-admin`** — инфра, LiteLLM, биллинг (private)
+- **`ZnaemAI/arkadius-admin`** — инфра, биллинг, Anthropic API proxy (один ключ для MVP) (private)
 - **`ZnaemAI/arkadius-node-server`** — Rust daemon для серверных нод (SSH и клиентский режим) (private)
 - **Основа Agent Runner:** https://github.com/SafeRL-Lab/nano-claude-code
 
@@ -476,13 +516,13 @@ CREATE TABLE agent_packages (
 
 | День | Задача |
 |------|--------|
-| **День 1 (04.04)** | Org + репо, scaffolding монорепо, БД схема, Agent Runner скелет |
-| **День 2 (05.04)** | Tool system (exec, read, write, web_search), Memory Manager |
+| **День 1 (04.04)** | ✅ Org + репо, LLM Provider, FastAPI scaffold, Next.js scaffold, дизайн система, план + 96 модулей + ревью |
+| **День 2 (05.04)** | ✅ (done 04.04 ночь) Agent Loop, Tool Registry, Memory Manager, Telegram адаптер, Auth, Orchestrator, DB миграции |
 | **День 3 (06.04)** | FastAPI: auth, chat endpoint, WebSocket стриминг |
-| **День 4 (07.04)** | LiteLLM + billing (ЮKassa webhook), pre-flight check |
-| **День 5 (08.04)** | Next.js: чат UI, биллинг, открытая память |
+| **День 4 (07.04)** | Anthropic API proxy + billing, per-user токен лимиты |
+| **День 5 (08.04)** | Next.js: чат UI (@assistant-ui), биллинг, открытая память |
 | **День 6 (09.04)** | autoDream + KAIROS, Telegram канал |
-| **День 7 (10.04)** | Деплой Hetzner + smoke test + фикс багов |
+| **День 7 (10.04)** | Деплой FirstVDS + smoke test + фикс багов |
 
 ---
 
@@ -554,7 +594,7 @@ CREATE TABLE agent_packages (
 
 | Риск | Митигация |
 |------|-----------|
-| Anthropic меняет API | LiteLLM абстракция, можно переключить |
+| Anthropic меняет API | Изолированный API proxy в `inference/`, легко заменить модель |
 | Низкая retention | Sticky memory — чем больше используешь, тем полезнее |
 | OOM при 500+ агентах | Агрессивный sleep, swap на NVMe |
 | Утечка данных между агентами | Process-level изоляция обязательна |
@@ -562,4 +602,4 @@ CREATE TABLE agent_packages (
 
 ---
 
-*Обновлено: 2026-04-03. Следующее обновление после первой недели разработки.*
+*Обновлено: 2026-04-04. Следующее обновление после первой недели разработки.*

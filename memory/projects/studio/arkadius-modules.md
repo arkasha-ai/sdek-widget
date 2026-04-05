@@ -59,6 +59,7 @@ arkadius-admin/                  [репо: arkadius-admin]
 - **Классы:**
   - `Settings(BaseSettings)` — все env vars
   - `DatabaseSettings`, `S3Settings`, `LiteLLMSettings`, `RedisSettings`
+  - `AnthropicSettings` — api_key, default_model, compaction_threshold (float = 0.7), per_user_token_limit (int)
   - `get_settings() -> Settings` — cached singleton (lru_cache)
 - **Зависимости:** нет
 - **Источник:** OpenClaw (модель конфига с провайдерами/каналами) + nano-claude-code (паттерн env-конфигурации)
@@ -216,6 +217,41 @@ arkadius-admin/                  [репо: arkadius-admin]
 
 ---
 
+### anthropic_client.py — *(новый)*
+
+- **Репо:** arkadius
+- **Путь:** `infra/anthropic_client.py`
+- **Ответственность:** Низкоуровневый транспортный слой поверх Anthropic AsyncAnthropic SDK. Настраивает retry-политику, таймауты, логирование API-вызовов. Не содержит бизнес-логики — только транспорт.
+- **Классы:**
+  - `AnthropicClient` — синглтон-обёртка над SDK
+  - `__init__(api_key, timeout=60.0)` — инициализация `AsyncAnthropic`
+  - `async health_check() -> bool` — проверка доступности Anthropic API
+  - `async create_message(**kwargs)` — вызов с автоматическим retry при 429/529 (через tenacity)
+  - `get_anthropic_client() -> AnthropicClient` — FastAPI dependency / singleton фабрика
+- **Зависимости:** `core/config.py` (AnthropicSettings)
+- **Кто использует:** `infra/llm/provider.py`, `apps/memory/memory_search.py`
+- **Источник:** новый (review-core-infra-models)
+
+---
+
+### admin_client.py — *(новый)*
+
+- **Репо:** arkadius
+- **Путь:** `infra/admin_client.py`
+- **Ответственность:** HTTP-клиент для inter-service вызовов arkadius → arkadius-admin. Авторизация через заголовок `X-Internal-Token`. Таймаут, retry, типизированные методы под каждый внутренний эндпоинт admin-repo.
+- **Классы:**
+  - `AdminAPIClient` — основной HTTP-клиент (httpx.AsyncClient)
+  - `async exec_code(user_id, language, code, timeout) -> dict`
+  - `async create_sandbox(user_id) -> dict`
+  - `async destroy_sandbox(user_id) -> None`
+  - `async check_billing(user_id) -> dict`
+  - `get_admin_client() -> AdminAPIClient` — FastAPI dependency
+- **Зависимости:** `core/config.py` (AdminAPISettings)
+- **Кто использует:** `apps/tools/builtin/code_exec.py`, `apps/sandbox/router.py`
+- **Источник:** новый (review-core-infra-models)
+
+---
+
 ### sandbox/docker_manager.py
 
 - **Репо:** arkadius-admin
@@ -301,8 +337,9 @@ arkadius-admin/                  [репо: arkadius-admin]
 - **Путь:** `models/memory.py`
 - **Ответственность:** Постоянная память агента. Трёхуровневая: personal (между сессиями пользователя), org (общая для организации), project (привязана к контексту). Поддерживает pgvector для семантического поиска.
 - **Классы:**
-  - `MemoryEntry(Base)` — id, agent_id, org_id (nullable), scope (personal|org|project), type (fact|preference|event|skill), content, embedding (Vector), staleness_score, created_at
+  - `MemoryEntry(Base)` — id, agent_id, org_id (nullable), scope (personal|org|project), namespace (VARCHAR, иерархия через `/`, например `projects/arkadius/arch`), type (fact|preference|event|feedback|skill), content, embedding (Vector), staleness_score, created_at
   - `MemoryTag(Base)` — теги для быстрой фильтрации
+  - **Заметка:** namespace позволяет агенту создавать «подпапки» в памяти. Пользователь видит их как дерево в UI. Под капотом — просто строка с `/`.
 - **Зависимости:** `core/database.py`, `models/agent.py`, `models/organization.py`
 - **Источник:** nano-claude-code (dual-scope memory, 4 types, staleness); обновлён: добавлен scope=org
 
@@ -398,10 +435,12 @@ arkadius-admin/                  [репо: arkadius-admin]
 - **Ответственность:** Главный reasoning loop агента. Принимает сообщение → строит контекст → вызывает LLM → обрабатывает tool calls → итерирует до финального ответа. Стримит ответ обратно в канал. Центральный модуль всей системы.
 - **Классы:**
   - `AgentLoop`
-  - `async run(session_id, user_message) -> AsyncGenerator[AgentEvent]`
+  - `async run(session_id, user_message, depth: int = 0, cancel_check: Callable[[], bool] | None = None) -> AsyncGenerator[AgentEvent]`
   - `_process_tool_call(tool_name, tool_input) -> ToolResult`
   - `_should_continue(response) -> bool`
+  - `maybe_compact(session_id)` — вызывается автоматически ПЕРЕД каждым LLM-вызовом в цикле
   - `AgentEvent` — union type: TextDelta | ToolCall | ToolResult | Done | Error
+  - `MAX_DEPTH = 3` — защита от бесконечной рекурсии субагентов
 - **Зависимости:** `infra/llm/provider.py`, `infra/llm/context_manager.py`, `apps/tools/registry.py`, `apps/memory/memory_manager.py`, `apps/agent/context_builder.py`, `models/session.py`
 - **Источник:** nano-claude-code (Streaming API + automatic tool-use loop), OpenClaw (agent runtime)
 
@@ -435,6 +474,8 @@ arkadius-admin/                  [репо: arkadius-admin]
   - `build(session_id, new_message: str) -> BuiltContext`
   - `_inject_system_context(agent: Agent) -> str`
   - `_fetch_relevant_memories(agent_id, query, org_id=None) -> List[MemoryEntry]`
+  - `_build_memory_index(agent_id) -> str` — краткий индекс всей памяти (MEMORY.md-стиль), инжектируется в system prompt
+  - `MAX_MEMORY_INDEX_LINES = 200` / `MAX_MEMORY_INDEX_BYTES = 25_000` — лимиты индекса
   - `BuiltContext(system_prompt, messages, tools_schema)`
 - **Зависимости:** `apps/memory/memory_manager.py`, `apps/tools/registry.py`, `infra/llm/context_manager.py`, `models/agent.py`, `models/session.py`
 - **Источник:** nano-claude-code (Context injection), OpenClaw (agent-specific system prompt)
@@ -469,7 +510,9 @@ arkadius-admin/                  [репо: arkadius-admin]
   - `check_pending_reminders() -> List[AgentAction]`
   - `check_dream_schedule(agent_id) -> bool`
   - `dispatch_proactive_messages(actions: List[AgentAction])`
+  - `run_tick_with_budget(action: AgentAction) -> bool` — выполняет action с явным 15-секундным tick budget (через asyncio.wait_for)
   - `AgentAction` — union: SendMessage | TriggerDream | CleanupSandbox
+  - `TICK_BUDGET_SECONDS = 15` — максимальное время на один tick-action; превышение логируется и action отменяется
 - **Зависимости:** `apps/worker/celery_app.py`, `apps/channels/router.py`, `apps/agent/dream.py`, `models/agent.py`
 - **Источник:** OpenClaw (KAIROS background tick loop)
 
@@ -606,8 +649,10 @@ arkadius-admin/                  [репо: arkadius-admin]
   - `ToolRegistry` — singleton
   - `@register_tool(name, description, schema)` — декоратор
   - `get_tools_for_agent(agent_id) -> List[ToolSchema]`
-  - `execute_tool(name, input, context) -> ToolResult`
+  - `execute_tool(name, input, context) -> ToolResult` — включает output truncation до 32K символов
   - `get_tool_schema(name) -> dict`
+  - `ToolDef.read_only: bool` — не изменяет состояние; auto-approve в permission check
+  - `ToolDef.concurrent_safe: bool` — можно запускать параллельно без блокировки
 - **Зависимости:** `apps/tools/base.py`, `apps/tools/permission.py`, `models/tool.py`
 - **Источник:** nano-claude-code (tool_registry, auto-registration), OpenClaw (ToolRegistry паттерн)
 
@@ -621,9 +666,12 @@ arkadius-admin/                  [репо: arkadius-admin]
 - **Классы:**
   - `BaseTool(ABC)`
   - `async execute(input: dict, context: ToolContext) -> ToolResult`
+  - `read_only: bool = False` — не изменяет состояние; используется в permission check
+  - `concurrent_safe: bool = False` — можно запускать параллельно
   - `ToolResult(success, output, error, metadata)`
   - `ToolContext(user_id, agent_id, session_id, org_id, sandbox_info)`
   - `ToolSchema(name, description, input_schema)`
+  - `MAX_TOOL_OUTPUT = 32_000` — лимит символов; вывод больше обрезается с пометкой `[... N символов обрезано ...]`
 - **Зависимости:** нет
 - **Источник:** nano-claude-code
 
@@ -737,6 +785,7 @@ arkadius-admin/                  [репо: arkadius-admin]
   - `list(agent_id, scope, type, limit, org_id=None) -> List[MemoryEntry]`
   - `update_staleness_scores(agent_id)`
   - `evict_stale(agent_id, keep_top_n)`
+  - Тип памяти `feedback` добавлен в `type` enum — хранит инструкции как агент должен себя вести (аналог nano-claude-code `feedback` type)
 - **Зависимости:** `core/database.py`, `models/memory.py`, `apps/agent/src/org/memory.py`
 - **Источник:** nano-claude-code (Persistent memory, dual-scope); обновлён: двухуровневая память personal+org
 
@@ -772,6 +821,22 @@ arkadius-admin/                  [репо: arkadius-admin]
 
 ---
 
+### snip.py — *(новый)*
+
+- **Репо:** arkadius
+- **Путь:** `apps/memory/snip.py`
+- **Ответственность:** Первый (бесплатный) слой компрессии контекста. Без LLM-вызова обрезает старые tool results до лимита символов. Применяется ПЕРЕД `compressor.py` (суммаризацией) — аналог nano-claude-code `compaction.py:snip()`.
+- **Классы:**
+  - `SnipService`
+  - `snip_tool_results(messages: list, max_chars: int = 2000) -> list` — обрезает content tool-сообщений старше N turns
+  - `SNIP_TOOL_RESULTS_AFTER = 5` — обрезать tool results старше 5 turns
+  - `SNIP_AT_RATIO = 0.50` — порог 50% контекста для запуска snip
+- **Зависимости:** `models/session.py`
+- **Кто использует:** `apps/memory/compressor.py` вызывает snip сначала, затем compact если недостаточно
+- **Источник:** новый (review-agent-tools-memory)
+
+---
+
 ### s3_snapshot.py
 
 - **Репо:** arkadius
@@ -804,7 +869,10 @@ arkadius-admin/                  [репо: arkadius-admin]
   - `normalize(raw_event) -> ChannelMessage`
   - `ChannelMessage(user_id, org_id, channel_type, text, media, raw)`
   - `ChannelType(Enum)` — WEB, TELEGRAM, VK, MAX
-- **Зависимости:** нет
+  - `async verify_webhook(request: Request) -> bool` — абстрактный метод; каждый канал реализует свою проверку подписи (Telegram secret_token, VK HMAC-SHA256...)
+  - `split_message(text: str) -> List[str]` — автоматическая разбивка сообщений >4096 символов по лимиту канала
+  - `_dedup_update(update_id: str) -> bool` — Redis SET NX c TTL 24h; возвращает False если update уже обрабатывался
+- **Зависимости:** `infra/cache/redis.py` (для deduplication)
 - **Источник:** OpenClaw (multi-channel inbox)
 
 ---
@@ -949,11 +1017,28 @@ arkadius-admin/                  [репо: arkadius-admin]
 - **Классы:**
   - `CreditManager`
   - `get_balance(user_id) -> Decimal`
-  - `debit(user_id, amount, description, ref_id) -> CreditTransaction`
-  - `credit(user_id, amount, description, ref_id) -> CreditTransaction`
+  - `debit(user_id, amount, description, ref_id, idempotency_key: str | None = None) -> CreditTransaction`
+  - `credit(user_id, amount, description, ref_id, idempotency_key: str | None = None) -> CreditTransaction`
   - `get_transactions(user_id, limit, offset) -> List[CreditTransaction]`
+  - `idempotency_key: str` — UNIQUE в `CreditTransaction`, защита от двойных начислений при повторном webhook
 - **Зависимости:** `core/database.py`, `models/billing.py`
 - **Источник:** новый
+
+---
+
+### billing/admin_key_mode.py — *(новый)*
+
+- **Репо:** arkadius
+- **Путь:** `apps/billing/admin_key_mode.py`
+- **Ответственность:** MVP-режим биллинга: один ключ Anthropic в admin-repo, без prepaid. Простой счётчик токенов per-user без блокировки баланса. Активируется через `BILLING_MODE=admin_key` в Settings.
+- **Классы:**
+  - `AdminKeyBillingMode`
+  - `track_usage(user_id, usage: UsageStats)` — логирует токены, не списывает кредиты
+  - `get_user_token_count(user_id, period) -> int` — счётчик за день/месяц
+  - `check_daily_limit(user_id) -> bool` — проверка daily_token_limit из AgentConfig; возвращает False если лимит превышен
+  - `BILLING_MODE: Literal["admin_key", "prepaid_credits"] = "admin_key"` — флаг в Settings
+- **Зависимости:** `apps/billing/usage_tracker.py`, `infra/cache/redis.py` (счётчики в Redis)
+- **Источник:** новый (review-channels-billing-infra)
 
 ---
 
@@ -1301,6 +1386,52 @@ arkadius-admin/                  [репо: arkadius-admin]
 
 ---
 
+### apps/agent/src/nodes/protocol.py — *(новый)*
+
+- **Репо:** arkadius
+- **Путь:** `apps/agent/src/nodes/protocol.py`
+- **Ответственность:** Определение WebSocket протокола между аркадиусом и нодой. Типы сообщений, версия протокола, framing, sequence ID для матчинга req/resp.
+- **Классы:**
+  - `NodeMessage(BaseModel)` — базовый тип сообщения: type, request_id (UUID), payload, timestamp
+  - `NodeMessageType(str, Enum)` — `exec_req`, `exec_resp`, `file_read_req`, `file_read_resp`, `heartbeat`, `heartbeat_ack`, `cancel`, `auth`, `auth_ok`
+  - `PROTOCOL_VERSION = "1.0"` — константа версии для совместимости
+- **Зависимости:** нет (чистый типовой модуль)
+- **Кто использует:** `apps/agent/src/nodes/executor.py`, `apps/agent/src/nodes/auth.py`, `arkadius-node-server` (Rust)
+- **Источник:** новый (review-channels-billing-infra)
+
+---
+
+### apps/agent/src/nodes/auth.py — *(новый)*
+
+- **Репо:** arkadius
+- **Путь:** `apps/agent/src/nodes/auth.py`
+- **Ответственность:** Аутентификация нод при WebSocket подключении. Нода предъявляет `node_token` (хранится в vault), сервер проверяет и выдаёт `node_id`.
+- **Классы:**
+  - `NodeAuthService`
+  - `generate_node_token(node_id: str) -> str` — генерация токена при регистрации ноды
+  - `verify_node_token(token: str) -> str | None` — верификация; возвращает node_id или None
+  - `revoke_node_token(node_id: str)` — отзыв токена при удалении ноды
+- **Зависимости:** `apps/agent/src/vault/manager.py`, `models/node.py`, `infra/cache/redis.py`
+- **Источник:** новый (review-channels-billing-infra)
+
+---
+
+### apps/agent/src/nodes/reconnect.py — *(новый)*
+
+- **Репо:** arkadius
+- **Путь:** `apps/agent/src/nodes/reconnect.py`
+- **Ответственность:** Логика переподключения ноды после разрыва соединения (VPN, сон ноутбука). Exponential backoff с jitter, очередь пендинг команд в Redis на время offline.
+- **Классы:**
+  - `NodeReconnectManager`
+  - `schedule_reconnect(node_id, attempt: int = 0)` — exponential backoff: 5s, 10s, 20s, 40s... макс 10 мин
+  - `on_connected(node_id)` — сброс попыток; отправка очереди pending команд
+  - `get_pending_commands(node_id) -> List[NodeMessage]` — получить забуферизованные команды из Redis
+  - `MAX_RECONNECT_ATTEMPTS = 20` — после исчерпания → node.status = ERROR
+- **Зависимости:** `infra/cache/redis.py`, `models/node.py`, `apps/agent/src/nodes/protocol.py`
+- **Источник:** новый (review-channels-billing-infra)
+
+---
+
 ### models/node.py
 
 - **Репо:** arkadius
@@ -1325,6 +1456,14 @@ arkadius-admin/                  [репо: arkadius-admin]
 - **Классы:**
   - `SandboxManager`
   - `SandboxInstance`
+  - Security hardening параметры при `containers.run()`:
+    - `user="1000:1000"` — no-root, процесс не работает от root
+    - `read_only=True` + `tmpfs={"/tmp": "size=100m,exec", "/workspace": "size=<tier_storage>"}` — изоляция FS
+    - `network=settings.SANDBOX_NETWORK` — сетевая изоляция, запрет доступа к internal IP
+    - `security_opt=["no-new-privileges"]`
+    - `cap_drop=["ALL"]` + `cap_add=["NET_BIND_SERVICE"]`
+  - `MAX_STDOUT_BYTES = 50 * 1024` (100KB) — stdout truncation с пометкой `[output truncated]`
+  - `SANDBOX_TIERS = {"micro": {...}, "small": {...}, "medium": {...}}` — явные CPU/RAM/диск лимиты
 - **Зависимости:** `infra/docker.py`, `models/sandbox.py`
 - **Источник:** новый
 
@@ -1431,7 +1570,11 @@ arkadius-admin/                  [репо: arkadius-admin]
 - **Путь:** `infra/browser_pool.py`
 - **Ответственность:** Connection pool браузеров фиксированного размера. Управляет жизненным циклом Playwright/Camoufox экземпляров. Если все заняты — очередь ожидания.
 - **Классы:** `BrowserPool`, `BrowserSession`
-- **Методы:** `acquire(user_id) → BrowserSession`, `release(session)`, `get_stats()`
+- **Методы:** `acquire(user_id, stealth: bool = False, timeout_ms: int = 30_000) → BrowserSession`, `release(session)`, `get_stats()`
+- **Дополнительно:**
+  - `MAX_PER_USER = 3` — per-user browser limit; превышение → `BrowserLimitError`
+  - `acquire()` завершается через `asyncio.wait_for` с `timeout_ms`; превышение → `BrowserPoolExhaustedError`
+  - `_health_check_loop()` — фоновая задача (asyncio, каждые 30s): проверяет `session.is_alive()`, при crash автоматически перезапускает браузер (заменяет сессию в pool)
 - **Зависимости:** `infra/browser_state.py`, `infra/camoufox.py`
 - **Источник:** новый
 
@@ -1470,6 +1613,80 @@ arkadius-admin/                  [репо: arkadius-admin]
 - **Методы:** `navigate(url)`, `click(selector)`, `type(selector, text)`, `screenshot()`, `extract_text()`, `get_page_data()`
 - **Зависимости:** `infra/admin_client.py`, `apps/tools/registry.py`
 - **Источник:** новый + OpenClaw browser tool паттерн
+
+---
+
+## 18. TASK MANAGEMENT — Управление задачами
+
+> Аналог `task/` package из nano-claude-code v3.03 (фича v3.x). Агент может создавать задачи, отслеживать их статус между сессиями, строить dependency graphs.
+
+---
+
+### apps/agent/src/tasks/manager.py — *(новый)*
+
+- **Репо:** arkadius
+- **Путь:** `apps/agent/src/tasks/manager.py`
+- **Ответственность:** TaskManager — создание, перечисление, обновление и остановка задач с поддержкой dependency edges. Задача запускается только когда все её зависимости завершены.
+- **Классы:**
+  - `TaskManager`
+  - `create(agent_id, title, description, dependencies: List[str] | None = None) -> Task`
+  - `list(agent_id, status: TaskStatus | None = None) -> List[Task]`
+  - `update(task_id, status: TaskStatus, result: dict | None = None) -> Task`
+  - `stop(task_id)` — остановить; если задача в Celery — revoke
+  - `get_ready_tasks(agent_id) -> List[Task]` — задачи без невыполненных зависимостей (ready-to-run)
+  - `TaskStatus(str, Enum)` — `pending`, `in_progress`, `done`, `failed`, `cancelled`
+- **Зависимости:** `core/database.py`, `models/task.py`, `apps/worker/celery_app.py`
+- **Кто использует:** `apps/agent/agent_loop.py`, `apps/worker/tasks/subagent_task.py`
+- **Источник:** новый (аналог nano-claude-code v3.03 `task/` package)
+
+---
+
+### models/task.py — *(новый)*
+
+- **Репо:** arkadius
+- **Путь:** `models/task.py`
+- **Ответственность:** SQLAlchemy модель задачи агента. Хранит статус, зависимости, результат. Поддерживает dependency edges: поле `dependencies` — JSONB массив task_id.
+- **Классы:**
+  - `Task(Base)` — id (UUID), agent_id, title, description, status (TaskStatus), dependencies (JSONB: List[str]), result (JSONB | None), created_at, updated_at, celery_task_id (nullable — для revoke)
+- **Зависимости:** `core/database.py`, `models/agent.py`
+- **Источник:** новый (review-channels-billing-infra)
+
+---
+
+## 19. MCP SUPPORT — Model Context Protocol
+
+> Аналог `mcp/` package из nano-claude-code v3.01 (фича v3.x). Позволяет агенту подключаться к любым MCP серверам и использовать их инструменты наравне с встроенными.
+
+---
+
+### apps/agent/src/mcp/client.py — *(новый)*
+
+- **Репо:** arkadius
+- **Путь:** `apps/agent/src/mcp/client.py`
+- **Ответственность:** MCP клиент для взаимодействия с MCP серверами. Поддерживает два транспорта: stdio (локальные процессы) и HTTP/SSE (удалённые серверы). Автообнаруживает доступные инструменты и регистрирует их в ToolRegistry.
+- **Классы:**
+  - `MCPClient`
+  - `connect_stdio(command: str, args: List[str]) -> MCPSession` — запуск процесса, stdin/stdout как JSON-RPC
+  - `connect_http(url: str, headers: dict | None = None) -> MCPSession` — SSE подключение
+  - `list_tools(session: MCPSession) -> List[MCPTool]` — получить список инструментов сервера
+  - `call_tool(session, tool_name, arguments) -> dict` — вызов инструмента
+  - `register_mcp_tools(session, agent_id)` — авторегистрация MCP-инструментов в ToolRegistry
+  - `MCPSession` — активное подключение (transport: stdio|http, process, ws_session)
+  - `MCPTool(name, description, input_schema)` — инструмент с MCP-сервера
+- **Зависимости:** `apps/tools/registry.py`, `models/mcp_server.py`
+- **Источник:** новый (аналог nano-claude-code v3.01 `mcp/` package)
+
+---
+
+### models/mcp_server.py — *(новый)*
+
+- **Репо:** arkadius
+- **Путь:** `models/mcp_server.py`
+- **Ответственность:** Конфигурация MCP серверов per-agent. Каждый запись — один MCP-сервер с транспортом, командой запуска (для stdio) или URL (для HTTP/SSE).
+- **Классы:**
+  - `MCPServer(Base)` — id (UUID), agent_id, name, transport (Literal["stdio", "http"]), command (nullable — для stdio), args (JSONB | None), url (nullable — для HTTP), headers (JSONB | None), is_active, created_at
+- **Зависимости:** `core/database.py`, `models/agent.py`
+- **Источник:** новый (review-channels-billing-infra)
 
 ---
 
@@ -1563,9 +1780,90 @@ arkadius-admin/                  [репо: arkadius-admin]
 | `infra/browser_state.py` | **arkadius-admin** | Infra | **новый (browser-pool)** |
 | `infra/camoufox.py` | **arkadius-admin** | Infra | **новый (browser-pool)** |
 | `apps/agent/src/tools/browser.py` | arkadius | Tools | **новый (browser-pool)** |
+| `apps/agent/src/nodes/protocol.py` | arkadius | Nodes | **новый (ревью)** |
+| `apps/agent/src/nodes/auth.py` | arkadius | Nodes | **новый (ревью)** |
+| `apps/agent/src/nodes/reconnect.py` | arkadius | Nodes | **новый (ревью)** |
+| `apps/agent/src/tasks/manager.py` | arkadius | Tasks | **новый (ревью)** |
+| `models/task.py` | arkadius | DB | **новый (ревью)** |
+| `apps/agent/src/mcp/client.py` | arkadius | MCP | **новый (ревью)** |
+| `models/mcp_server.py` | arkadius | DB | **новый (ревью)** |
+| `infra/anthropic_client.py` | arkadius | Infra | **новый (ревью)** |
+| `infra/admin_client.py` | arkadius | Infra | **новый (ревью)** |
+| `apps/memory/snip.py` | arkadius | Memory | **новый (ревью)** |
+| `apps/billing/admin_key_mode.py` | arkadius | Billing | **новый (ревью)** |
 
-**Итого: 88 модулей** (было 84, добавлено 4 новых)  
-**arkadius:** 75 модулей | **arkadius-admin:** 13 модулей
+**Итого: 100 бэкенд модулей** (было 88, добавлено 12: anthropic_client, admin_client, snip, admin_key_mode, protocol, auth, reconnect, tasks/manager, task, mcp/client, mcp_server + обновлены существующие модули)  
+**arkadius:** 87 модулей | **arkadius-admin:** 13 модулей | **apps/web (Next.js):** 15+ компонентов (секция 20)
+
+---
+
+## 18. TASK MANAGEMENT (ДОБАВЛЕН из ревью)
+
+Управление долгоживущими задачами агента — persistence задач между сессиями, статусы, прогресс.
+
+---
+
+### apps/agent/src/tasks/manager.py (ДОБАВЛЕН из ревью)
+
+- **Репо:** arkadius
+- **Путь:** `apps/agent/src/tasks/manager.py`
+- **Ответственность:** CRUD и lifecycle долгоживущих задач агента с persistence в БД
+- **Классы/методы:**
+  - `TaskManager`
+  - `create_task(agent_id, title, description, parent_task_id=None) -> Task`
+  - `update_status(task_id, status: TaskStatus, progress: int = 0)`
+  - `complete_task(task_id, result: dict)`
+  - `fail_task(task_id, error: str)`
+  - `get_active_tasks(agent_id) -> List[Task]`
+  - `cancel_task(task_id)`
+- **Зависимости:** `core/database.py`, `models/task.py`, `infra/cache/redis.py`
+
+---
+
+### models/task.py (ДОБАВЛЕН из ревью)
+
+- **Репо:** arkadius
+- **Путь:** `models/task.py`
+- **Ответственность:** SQLAlchemy модель задачи агента
+- **Классы/методы:**
+  - `Task(Base)` — id, agent_id, session_id (nullable), title, description, status, progress (0-100), result_json, error, parent_task_id, created_at, updated_at
+  - `TaskStatus(Enum)` — PENDING, IN_PROGRESS, WAITING_USER, COMPLETED, FAILED, CANCELLED
+- **Зависимости:** `core/database.py`, `models/agent.py`
+
+---
+
+## 19. MCP SUPPORT (ДОБАВЛЕН из ревью)
+
+Поддержка Model Context Protocol — агент может подключаться к MCP-серверам пользователя и использовать их инструменты.
+
+---
+
+### apps/agent/src/mcp/client.py (ДОБАВЛЕН из ревью)
+
+- **Репо:** arkadius
+- **Путь:** `apps/agent/src/mcp/client.py`
+- **Ответственность:** MCP клиент: подключение к MCP-серверам, discovery инструментов, вызов tools через MCP протокол
+- **Классы/методы:**
+  - `MCPClient`
+  - `async connect(server: MCPServer) -> bool`
+  - `async list_tools(server_id: str) -> List[MCPToolDef]`
+  - `async call_tool(server_id, tool_name, arguments: dict) -> dict`
+  - `async disconnect(server_id: str)`
+  - `MCPToolDef(name, description, input_schema)` — маппится в `ToolSchema` для ToolRegistry
+  - `MCPConnectionPool` — хранит активные соединения по server_id
+- **Зависимости:** `models/mcp_server.py`, `apps/tools/registry.py`, `infra/cache/redis.py`
+
+---
+
+### models/mcp_server.py (ДОБАВЛЕН из ревью)
+
+- **Репо:** arkadius
+- **Путь:** `models/mcp_server.py`
+- **Ответственность:** SQLAlchemy модель зарегистрированного MCP-сервера агента
+- **Классы/методы:**
+  - `MCPServer(Base)` — id, agent_id, name, transport (stdio|http|sse), command (для stdio), url (для http/sse), env_vars_json, is_active, created_at
+  - `MCPServerStatus(Enum)` — ACTIVE, INACTIVE, ERROR
+- **Зависимости:** `core/database.py`, `models/agent.py`
 
 ---
 
@@ -1592,3 +1890,68 @@ arkadius-admin/                  [репо: arkadius-admin]
 | **IntegrationBuilder** | `apps/agent/src/integrations/builder.py` — агент пишет и регистрирует интеграции как инструменты |
 | **Хранение интеграций** | `models/agent_integration.py` — код + schema + статус |
 | **Browser Pool** | `infra/browser_pool.py` (arkadius-admin) — pool ~50 браузеров; агент acquire → restore session → task → save session → release |
+| **Task Management** | `models/task.py` + `apps/agent/src/tasks/manager.py` — persistence задач между сессиями |
+| **MCP Support** | `models/mcp_server.py` + `apps/agent/src/mcp/client.py` — подключение к MCP-серверам, auto-регистрация tools в ToolRegistry |
+
+---
+
+## 20. FRONTEND MODULES
+
+> Репо: ZnaemAI/arkadius | apps/web/
+
+### Ключевые зависимости
+
+| Пакет | Версия | Назначение |
+|-------|--------|-----------|
+| next | 15.3 | фреймворк |
+| react | 19 | UI |
+| typescript | 5.8 | типизация |
+| tailwindcss | 4.x | стили |
+| @assistant-ui/react | latest | AI чат компоненты |
+| react-force-graph | latest | граф памяти |
+| react-markdown | latest | рендер ответов |
+| @uiw/react-codemirror | latest | подсветка кода |
+| react-dropzone | latest | загрузка файлов |
+| @tanstack/react-virtual | latest | виртуализация |
+| @tanstack/react-query | 5.x | API кэш |
+| zustand | 5.x | стейт |
+| better-auth | latest | авторизация |
+| recharts | latest | графики биллинга |
+| shadcn/ui | latest | UI компоненты |
+
+### Структура apps/web/
+
+```
+apps/web/
+├── app/
+│   ├── (auth)/
+│   │   ├── login/page.tsx
+│   │   └── register/page.tsx
+│   ├── (app)/
+│   │   ├── chat/page.tsx          # @assistant-ui/react
+│   │   ├── memory/page.tsx        # react-force-graph
+│   │   ├── files/page.tsx         # react-dropzone + virtual
+│   │   ├── billing/page.tsx       # recharts
+│   │   └── settings/page.tsx
+│   ├── layout.tsx
+│   └── api/
+│       ├── chat/route.ts          # WebSocket proxy к бэкенду
+│       └── auth/[...all]/route.ts # better-auth
+├── components/
+│   ├── chat/
+│   │   ├── ChatThread.tsx         # @assistant-ui Thread
+│   │   ├── ToolCallCard.tsx       # кастомный рендер tool calls
+│   │   └── StreamingMessage.tsx
+│   ├── memory/
+│   │   ├── MemoryGraph.tsx        # react-force-graph
+│   │   └── MemoryEditor.tsx       # редактирование записей
+│   ├── files/
+│   │   ├── FileDropzone.tsx
+│   │   └── FileList.tsx           # виртуализированный список
+│   └── ui/                        # shadcn компоненты
+├── lib/
+│   ├── api.ts                     # TanStack Query хуки
+│   ├── auth.ts                    # better-auth client
+│   └── store.ts                   # Zustand stores
+└── package.json
+```
