@@ -3,7 +3,7 @@
  * Виджет выбора ПВЗ СДЭК с расчётом тарифа
  * Vue 3 + OpenLayers (через vue3-openlayers), Vite-билд
  */
-import { createApp } from 'vue';
+import { createApp, h } from 'vue';
 import Vue3Openlayers from 'vue3-openlayers';
 
 import PvzList  from './components/PvzList.vue';
@@ -63,20 +63,8 @@ export class SdekPvzWidget {
     this._overlay = document.createElement('div');
     this._overlay.className = 'sdwo-overlay';
 
-    const vm = {
-      list:      [],
-      active:    null,
-      loading:   true,
-      listError: null,
-      tariff:    null,
-      pvz:       null,
-      mapCenter: null,
-      // ref к MapPane (устанавливается после mount)
-      _mapRef:   null,
-    };
-
     // ---- sort helper ----
-    function sortByBounds(pvzList, bounds) {
+    const sortByBounds = (pvzList, bounds) => {
       if (!bounds) return pvzList;
       const [minLon, minLat, maxLon, maxLat] = bounds;
       const clon = (minLon + maxLon) / 2;
@@ -90,15 +78,32 @@ export class SdekPvzWidget {
         p._dist = (Math.hypot(lo - clon, la - clat) * 111).toFixed(1);
         return p;
       });
-    }
+    };
+
+    // данные reactive
+    const vm = {
+      list:      [],
+      active:    null,
+      loading:   true,
+      listError: null,
+      tariff:    null,
+      pvz:       null,
+      mapCenter: null,
+      // ref к MapPane (устанавливается после mount)
+      _mapRef:   null,
+    };
+
+    const self = this;
 
     this._app = createApp({
       components: { MapPane, PvzList },
+
       data: () => vm,
+
       methods: {
         async onMapSearch(q) {
           try {
-            const geo = await this._fetch({ action: 'geocode', query: q });
+            const geo = await self._fetch({ action: 'geocode', query: q });
             if (geo.lat && geo.lon) {
               this.mapCenter = [parseFloat(geo.lat), parseFloat(geo.lon)];
             } else {
@@ -112,7 +117,7 @@ export class SdekPvzWidget {
         async onMapMoveend(bounds) {
           if (!bounds) return;
           const [minLon, minLat, maxLon, maxLat] = bounds;
-          const visible = this._pvzAll.filter(p => {
+          const visible = self._pvzAll.filter(p => {
             const [la, lo] = p.location || [];
             if (!lo || !la) return false;
             return lo >= minLon && lo <= maxLon && la >= minLat && la <= maxLat;
@@ -121,7 +126,7 @@ export class SdekPvzWidget {
         },
 
         onMarkerSelect(code) {
-          const pvz = this._pvzAll.find(p => p.code == code);
+          const pvz = self._pvzAll.find(p => p.code == code);
           if (pvz) this._selectPvz(pvz);
         },
 
@@ -130,45 +135,49 @@ export class SdekPvzWidget {
         },
 
         onChoose(pvz, tariff) {
-          this.onChoose('PVZ', tariff, pvz);
-          this.close();
+          self.onChoose('PVZ', tariff, pvz);
+          self.close();
         },
 
         close() {
-          // delegate to parent class
+          self.close();
         },
       },
 
-      template: `
-        <div class="sdwo-popup">
-          <div class="sdwo-popup__header">
-            <span class="sdwo-popup__title">Выбор ПВЗ СДЭК</span>
-            <button class="sdwo-popup__close" @click="close">&times;</button>
-          </div>
-          <div class="sdwo-popup__body">
-            <MapPane
-              ref="mapRef"
-              :center="mapCenter"
-              :zoom="12"
-              :markers="list"
-              :activeCode="active"
-              @search="onMapSearch"
-              @moveend="onMapMoveend"
-              @markerselect="onMarkerSelect"
-            />
-            <PvzList
-              :list="list"
-              :active="active"
-              :loading="loading"
-              :error="listError"
-              :tariff="tariff"
-              :pvz="pvz"
-              @select="onPvzSelect"
-              @choose="onChoose"
-            />
-          </div>
-        </div>
-      `,
+      // render-функция вместо inline template (не требует runtime compiler)
+      render() {
+        return h('div', { class: 'sdwo-popup' }, [
+          h('div', { class: 'sdwo-popup__header' }, [
+            h('span', { class: 'sdwo-popup__title' }, 'Выбор ПВЗ СДЭК'),
+            h('button', {
+              class: 'sdwo-popup__close',
+              onClick: () => this.close(),
+            }, '\u00D7'),
+          ]),
+          h('div', { class: 'sdwo-popup__body' }, [
+            h(MapPane, {
+              ref: 'mapRef',
+              center:    this.mapCenter,
+              zoom:      12,
+              markers:   this.list,
+              activeCode: this.active,
+              onSearch:       this.onMapSearch,
+              onMoveend:      this.onMapMoveend,
+              onMarkerselect: this.onMarkerSelect,
+            }),
+            h(PvzList, {
+              list:    this.list,
+              active:  this.active,
+              loading: this.loading,
+              error:   this.listError,
+              tariff:  this.tariff,
+              pvz:     this.pvz,
+              onSelect: this.onPvzSelect,
+              onChoose: this.onChoose,
+            }),
+          ]),
+        ]);
+      },
     });
 
     this._app.use(Vue3Openlayers);

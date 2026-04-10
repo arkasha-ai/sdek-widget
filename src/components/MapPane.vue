@@ -13,12 +13,13 @@
       <div v-if="searchError" class="sdwo-error">{{ searchError }}</div>
     </div>
 
-    <!-- OpenLayers карта (vue3-openlayers компоненты) -->
-    <div class="sdwo-map">
+    <!-- OpenLayers карта -->
+    <div class="sdwo-map" ref="mapContainerRef" style="width:100%;min-height:300px;">
       <ol-map
         ref="olMapRef"
         :load-tiles-while-animating="true"
         :load-tiles-while-interacting="true"
+        style="width:100%;height:100%;"
         @click="onClick"
         @moveend="onMoveEnd"
       >
@@ -27,8 +28,8 @@
           <ol-source-osm />
         </ol-tile-layer>
 
-        <!-- Векторный слой маркеров -->
-        <ol-vector-layer>
+        <!-- Векторный слой маркеров — стиль задаётся через :style проп -->
+        <ol-vector-layer :style="markerStyleFn">
           <ol-source-vector>
             <ol-feature
               v-for="pvz in markers"
@@ -37,18 +38,6 @@
             >
               <!-- coords: [lon, lat] — projection EPSG:3857 -->
               <ol-geom-point :coordinates="toProj(pvz.location)" />
-              <ol-style>
-                <ol-style-circle :radius="pvz.code === activeCode ? 10 : 8">
-                  <ol-stroke
-                    :color="pvz.code === activeCode ? '#b80000' : '#fff'"
-                    :width="2"
-                  />
-                  <ol-fill
-                    :color="pvz.code === activeCode ? '#e53935' : '#c69b3c'"
-                  />
-                </ol-style-circle>
-                <ol-style-text :text="pvz.code" :offset-y="-14" />
-              </ol-style>
             </ol-feature>
           </ol-source-vector>
         </ol-vector-layer>
@@ -58,8 +47,9 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { fromLonLat } from 'ol/proj';
+import { Style, Circle, Stroke, Fill } from 'ol/style';
 
 const props = defineProps({
   center:     { type: Array,  default: null },  // [lat, lon]
@@ -70,8 +60,9 @@ const props = defineProps({
 
 const emit = defineEmits(['search', 'moveend', 'markerselect']);
 
-const olMapRef   = ref(null);
-const query      = ref('');
+const olMapRef    = ref(null);
+const mapContainerRef = ref(null);
+const query       = ref('');
 const searchError = ref(null);
 
 let searchTimer = null;
@@ -81,6 +72,24 @@ function toProj(loc) {
   const [lat, lon] = loc || [];
   if (!lat || !lon) return [0, 0];
   return fromLonLat([lon, lat]);
+}
+
+// Стиль маркера — factory function для каждого feature
+function markerStyleFn(feature) {
+  const code      = feature.getId();
+  const isActive  = code === props.activeCode;
+  const radius    = isActive ? 10 : 8;
+  const fillColor = isActive ? '#e53935' : '#c69b3c';
+  const strokeColor = isActive ? '#b80000' : '#fff';
+  const strokeWidth = 2;
+
+  return new Style({
+    image: new Circle({
+      radius,
+      fill: new Fill({ color: fillColor }),
+      stroke: new Stroke({ color: strokeColor, width: strokeWidth }),
+    }),
+  });
 }
 
 // клик по маркеру
@@ -128,5 +137,15 @@ defineExpose({ panTo, flashError, getBounds });
 // автопан при смене center
 watch(() => props.center, val => {
   if (val) panTo(val);
+});
+
+// Исправление width:0 — после монтирования сообщаем OL размеры контейнера
+onMounted(() => {
+  if (olMapRef.value) {
+    // небольшой tick чтобы DOM успел отрисоваться
+    setTimeout(() => {
+      olMapRef.value?.updateSize();
+    }, 50);
+  }
 });
 </script>

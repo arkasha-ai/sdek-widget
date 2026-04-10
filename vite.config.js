@@ -18,7 +18,8 @@ export default defineConfig({
 
   resolve: {
     alias: {
-      // vue3-openlayers использует ESM — убеждаемся что Vite правильно его резолвит
+      // vue3-openlayers использует template compiler — нужен ESM-билд с runtime compiler
+      vue: 'vue/dist/vue.esm-bundler.js',
     },
   },
 
@@ -33,7 +34,7 @@ export default defineConfig({
       external: ['vue', 'ol', 'vue3-openlayers'],
       output: {
         // Убираем .cjs → Apache отдаёт как application/javascript
-        entryFileNames: 'dist/[name].js',
+        entryFileNames: '[name].js',
         globals: {
           vue:              'Vue',
           ol:               'ol',
