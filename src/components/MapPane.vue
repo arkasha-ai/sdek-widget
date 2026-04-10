@@ -70,7 +70,15 @@ function markerStyle(feature) {
   });
 }
 
-// Обновить маркеры на карте
+// Обновить стили всех маркеров (вызывается при смене activeCode)
+function updateMarkerStyles() {
+  if (!vectorSource) return;
+  vectorSource.forEachFeature(feature => {
+    feature.setStyle(markerStyle(feature));
+  });
+}
+
+// Полностью пересоздать маркеры (вызывается при смене списка)
 function updateMarkers() {
   if (!vectorSource) return;
   vectorSource.clear();
@@ -141,12 +149,11 @@ watch(() => props.center, val => {
   if (val && mapRef.value) panTo(val);
 });
 
-// Пересоздавать маркеры при изменении списка или activeCode
-watch(
-  () => [props.markers, props.activeCode],
-  () => updateMarkers(),
-  { deep: true }
-);
+// Обновлять стили маркеров при смене activeCode
+watch(() => props.activeCode, () => updateMarkerStyles());
+
+// Пересоздавать маркеры при изменении списка
+watch(() => props.markers, () => updateMarkers(), { deep: true });
 
 // Инициализация OpenLayers
 onMounted(() => {
