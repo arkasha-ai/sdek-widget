@@ -196,26 +196,43 @@ function findCdekCityCode(string $cityName): ?int {
 
     $normalized = trim(mb_strtolower($cityName));
 
-    // Собираем уникальные коды городов
-    $found = null;
     foreach ($pvzList as $p) {
-        $pCity = trim(mb_strtolower($p['city'] ?? ''));
+        // Поддержка двух форматов кэша: топ-level city (старый) и location.city (новый)
+        $pCity = trim(mb_strtolower($p['city'] ?? ($p['location']['city'] ?? '')));
+        if (!$pCity) continue;
+
+        $code = (int) ($p['city_code'] ?? $p['location']['city_code'] ?? null);
+        if (!$code) continue;
+
+        // Точное совпадение
         if ($pCity === $normalized) {
-            $code = $p['city_code'] ?? $p['location']['city_code'] ?? null;
-            if ($code) return (int) $code;
+            file_put_contents(__DIR__ . '/geocode_debug.log',
+                date('Y-m-d H:i:s') . " findCdekCityCode EXACT '{$cityName}' => {$code} ({$pCity})\n",
+                FILE_APPEND);
+            return $code;
         }
     }
 
-    // Частичное совпадение (начинается с)
+    // Частичное совпадение: query "Челябинск" matches "Челябинск, Челябинская область"
     foreach ($pvzList as $p) {
-        $pCity = trim(mb_strtolower($p['city'] ?? ''));
+        $pCity = trim(mb_strtolower($p['city'] ?? ($p['location']['city'] ?? '')));
+        if (!$pCity) continue;
+
+        $code = (int) ($p['city_code'] ?? $p['location']['city_code'] ?? null);
+        if (!$code) continue;
+
         if (strpos($pCity, $normalized) === 0 || strpos($normalized, $pCity) === 0) {
-            $code = $p['city_code'] ?? $p['location']['city_code'] ?? null;
-            if ($code) return (int) $code;
+            file_put_contents(__DIR__ . '/geocode_debug.log',
+                date('Y-m-d H:i:s') . " findCdekCityCode PARTIAL '{$cityName}' => {$code} ({$pCity})\n",
+                FILE_APPEND);
+            return $code;
         }
     }
 
-    return $found;
+    file_put_contents(__DIR__ . '/geocode_debug.log',
+        date('Y-m-d H:i:s') . " findCdekCityCode NOT_FOUND '{$cityName}'\n",
+        FILE_APPEND);
+    return null;
 }
 
 // ================================================================
