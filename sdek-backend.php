@@ -543,10 +543,10 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
     }
 
     // tarifflist возвращает массив тарифов
-    if (isset($resp[0])) {
+    if (isset($resp['tariff_codes'])) {
         // Ищем тариф "Посылка склад-склад" (tariff_code=136)
         $selected = null;
-        foreach ($resp as $t) {
+        foreach ($resp['tariff_codes'] as $t) {
             if (($t['tariff_code'] ?? '') == 136) {
                 $selected = $t;
                 break;
@@ -555,7 +555,7 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
         // Fallback: самый дешёвый
         if (!$selected) {
             $minSum = PHP_FLOAT_MAX;
-            foreach ($resp as $t) {
+            foreach ($resp['tariff_codes'] as $t) {
                 $sum = (float) ($t['delivery_sum'] ?? PHP_FLOAT_MAX);
                 if ($sum > 0 && $sum < $minSum) {
                     $minSum = $sum;
