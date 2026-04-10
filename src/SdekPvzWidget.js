@@ -255,9 +255,9 @@ export class SdekPvzWidget {
     this._vm.active = pvz.code;
     this._vm.tariff = null;
 
-    // Фокусируем карту на выбранном ПВЗ
+    // Фокусируем карту на выбранном ПВЗ (zoom ~17 ≈ вид здания)
     if (this._mapRef && pvz.location) {
-      this._mapRef.panTo(pvz.location);
+      this._mapRef.panTo(pvz.location, 17);
     }
 
     try {

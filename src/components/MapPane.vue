@@ -162,11 +162,11 @@ function onSearch() {
 }
 
 // ---- API для родителя ----
-function panTo([lat, lon]) {
+function panTo([lat, lon], zoom = null) {
   if (!mapRef.value) return;
   mapRef.value.getView().animate({
     center: fromLonLat([lon, lat]),
-    zoom:   props.zoom,
+    zoom:   zoom ?? props.zoom,
     duration: 500,
   });
 }
