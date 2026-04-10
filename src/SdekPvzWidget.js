@@ -101,6 +101,7 @@ export class SdekPvzWidget {
 
       methods: {
         async onMapSearch(q) {
+          return;
           try {
             const geo = await self._fetch({ action: 'geocode', query: q });
             if (geo.lat && geo.lon) {
