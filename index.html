@@ -11,6 +11,16 @@
   <h1>Виджет выбора ПВЗ СДЭК</h1>
   <p>Нажмите кнопку, чтобы открыть виджет:</p>
 
+  <input id="selected-pvz-address" type="text" readonly placeholder="Адрес не выбран" style="
+    padding: 12px 16px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px 0 0 8px;
+    background: #f9f9f9;
+    color: #333;
+    width: 320px;
+    outline: none;
+  " />
   <button id="open-widget" style="
     padding: 12px 24px;
     font-size: 16px;
@@ -18,7 +28,7 @@
     background: #c69b3c;
     color: #fff;
     border: none;
-    border-radius: 8px;
+    border-radius: 0 8px 8px 0;
   ">Открыть виджет СДЭК</button>
 
   <script type="module">
@@ -32,6 +42,7 @@
       ],
       backendUrl: 'http://localhost:8080/sdek-backend.php',
       onChoose(type, tariff, address) {
+        document.getElementById('selected-pvz-address').value = address.address || '';
         console.log('=== Выбран ПВЗ ===');
         console.log('Тип:', type);
         console.log('Тариф:', tariff);
