@@ -1,0 +1,32 @@
+{
+  "name": "sdek-pvz-widget",
+  "version": "1.0.0",
+  "description": "Виджет выбора ПВЗ СДЭК с расчётом тарифа",
+  "type": "module",
+  "main": "dist/SdekPvzWidget.umd.js",
+  "module": "dist/SdekPvzWidget.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/SdekPvzWidget.es.js",
+      "require": "./dist/SdekPvzWidget.umd.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "ol": "^10.6.0",
+    "ol-contextmenu": "^5.5.0",
+    "ol-ext": "^4.0.38",
+    "vue": "^3.5.0",
+    "vue3-openlayers": "^12.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "vite": "^5.4.0",
+    "vite-plugin-css-injected-by-js": "^3.5.0"
+  }
+}

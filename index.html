@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SdekPvzWidget — Demo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@10.6.0/ol.css" />
+</head>
+<body>
+
+  <h1>Виджет выбора ПВЗ СДЭК</h1>
+  <p>Нажмите кнопку, чтобы открыть виджет:</p>
+
+  <button id="open-widget" style="
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    background: #c69b3c;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+  ">Открыть виджет СДЭК</button>
+
+  <script type="module">
+    import { SdekPvzWidget } from '/src/index.js';
+
+    const widget = new SdekPvzWidget({
+      defaultLocation: 'Краснокамск',
+      fromLocation:     'Челябинск',
+      packages: [
+        { length: 30, width: 20, height: 15, weight: 1000 },
+      ],
+      backendUrl: '/sdek-backend.php',
+      onChoose(type, tariff, address) {
+        console.log('=== Выбран ПВЗ ===');
+        console.log('Тип:', type);
+        console.log('Тариф:', tariff);
+        console.log('ПВЗ:', address);
+      },
+    });
+
+    document.getElementById('open-widget').addEventListener('click', () => {
+      widget.open();
+    });
+  </script>
+
+  <!-- после билда вместо <script type="module"> подключить:
+  <script src="/dist/SdekPvzWidget.umd.js">< /script>
+  <script>
+    const widget = new SdekPvzWidget({ ... });
+    widget.open();
+  </script>
+  -->
+</body>
+</html>
