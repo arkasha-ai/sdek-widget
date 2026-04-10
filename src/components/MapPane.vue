@@ -28,7 +28,7 @@
           <ol-source-osm />
         </ol-tile-layer>
 
-        <!-- Векторный слой маркеров — стиль задаётся через :style проп -->
+        <!-- Векторный слой маркеров -->
         <ol-vector-layer :style="markerStyleFn">
           <ol-source-vector>
             <ol-feature
@@ -47,7 +47,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, onMounted, inject } from 'vue';
 import { fromLonLat } from 'ol/proj';
 import { Style, Circle, Stroke, Fill } from 'ol/style';
 
@@ -59,6 +59,9 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['search', 'moveend', 'markerselect']);
+
+// ol-map создаёт OlMap instance и provide'ит его — забираем через inject
+const olMap = inject('map');
 
 const olMapRef    = ref(null);
 const mapContainerRef = ref(null);
@@ -115,8 +118,8 @@ function onSearch() {
 
 // ---- exposing для родителя ----
 function panTo([lat, lon]) {
-  if (!olMapRef.value) return;
-  const view = olMapRef.value.getView();
+  if (!olMap) return;
+  const view = olMap.getView();
   if (!view) return;
   view.animate({ center: fromLonLat([lon, lat]), zoom: props.zoom });
 }
@@ -126,26 +129,23 @@ function flashError(msg) {
 }
 
 function getBounds() {
-  if (!olMapRef.value) return null;
-  const view = olMapRef.value.getView();
+  if (!olMap) return null;
+  const view = olMap.getView();
   if (!view) return null;
-  return view.calculateExtent(olMapRef.value.getSize());
+  return view.calculateExtent(olMap.getSize());
 }
 
 defineExpose({ panTo, flashError, getBounds });
 
-// автопан при смене center
+// автопан при смене center — только когда карта готова
 watch(() => props.center, val => {
-  if (val) panTo(val);
+  if (val && olMap) panTo(val);
 });
 
 // Исправление width:0 — после монтирования сообщаем OL размеры контейнера
 onMounted(() => {
-  if (olMapRef.value) {
-    // небольшой tick чтобы DOM успел отрисоваться
-    setTimeout(() => {
-      olMapRef.value?.updateSize();
-    }, 50);
+  if (olMap) {
+    setTimeout(() => olMap.updateSize(), 50);
   }
 });
 </script>
