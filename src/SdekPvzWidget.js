@@ -24,6 +24,7 @@ export class SdekPvzWidget {
     this.packages        = options.packages         || [];
     this.onChoose        = options.onChoose         || (() => {});
     this.backendUrl      = options.backendUrl       || './sdek-backend.php';
+    console.log('[SdekPvzWidget] constructor options.backendUrl:', JSON.stringify(options.backendUrl), '→ this.backendUrl:', this.backendUrl);
 
     this._overlay   = null;
     this._app       = null;
