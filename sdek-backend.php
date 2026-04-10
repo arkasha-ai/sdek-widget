@@ -526,15 +526,49 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
 
     $resp = curlExecJson($ch);
 
-    // tarifflist возвращает массив тарифов — берём первый (самый быстрый/дешёвый)
-    if (is_array($resp) && isset($resp[0])) {
-        $tariff = $resp[0];
+    // DEBUG: записываем ответ в лог
+    file_put_contents(__DIR__ . '/tariff_debug.log',
+        date('Y-m-d H:i:s') . ' RESPONSE: ' . substr(json_encode($resp, JSON_UNESCAPED_UNICODE), 0, 1000) . "\n",
+        FILE_APPEND);
+
+    if (!is_array($resp)) {
         return [
-            'delivery_sum' => $tariff['total_sum']      ?? null,
-            'period_min'   => $tariff['period_min']    ?? null,
-            'period_max'   => $tariff['period_max']    ?? null,
-            'tariff_name'  => $tariff['tariff_name']   ?? null,
-            'tariff_code'  => $tariff['tariff_code']   ?? null,
+            'error'        => 'Invalid CDEK response',
+            'delivery_sum' => null,
+            'period_min'   => null,
+            'period_max'   => null,
+            'tariff_name'  => null,
+            'tariff_code'  => null,
+        ];
+    }
+
+    // tarifflist возвращает массив тарифов
+    if (isset($resp[0])) {
+        // Ищем тариф "Посылка склад-склад" (tariff_code=136)
+        $selected = null;
+        foreach ($resp as $t) {
+            if (($t['tariff_code'] ?? '') == 136) {
+                $selected = $t;
+                break;
+            }
+        }
+        // Fallback: самый дешёвый
+        if (!$selected) {
+            $minSum = PHP_FLOAT_MAX;
+            foreach ($resp as $t) {
+                $sum = (float) ($t['delivery_sum'] ?? PHP_FLOAT_MAX);
+                if ($sum > 0 && $sum < $minSum) {
+                    $minSum = $sum;
+                    $selected = $t;
+                }
+            }
+        }
+        return [
+            'delivery_sum' => $selected['delivery_sum']   ?? null,
+            'period_min'   => $selected['period_min']     ?? null,
+            'period_max'   => $selected['period_max']     ?? null,
+            'tariff_name'  => $selected['tariff_name']    ?? null,
+            'tariff_code'  => $selected['tariff_code']    ?? null,
         ];
     }
 
