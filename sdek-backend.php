@@ -25,6 +25,48 @@ $CONFIG = [
 ];
 
 // ================================================================
+// Геокод-кеш (24 часа, city_name → {lat, lon, city, city_code})
+// ================================================================
+function geocodeCacheFile(): string {
+    return __DIR__ . '/geocode_cache.json';
+}
+
+function geocodeCacheGet(string $query): ?array {
+    $cacheFile = geocodeCacheFile();
+    if (!file_exists($cacheFile)) return null;
+
+    $raw = file_get_contents($cacheFile);
+    $cache = json_decode($raw, true);
+    if (!is_array($cache)) return null;
+
+    $key = mb_strtolower(trim($query));
+    if (!isset($cache[$key])) return null;
+
+    $entry = $cache[$key];
+    // TTL 24 часа
+    if (($entry['_cached_at'] ?? 0) + 86400 < time()) {
+        return null;
+    }
+
+    unset($entry['_cached_at']);
+    return $entry;
+}
+
+function geocodeCacheSet(string $query, array $data): void {
+    $cacheFile = geocodeCacheFile();
+    $cache = [];
+    if (file_exists($cacheFile)) {
+        $cache = json_decode(file_get_contents($cacheFile), true) ?: [];
+    }
+
+    $key = mb_strtolower(trim($query));
+    $cache[$key] = $data;
+    $cache[$key]['_cached_at'] = time();
+
+    file_put_contents($cacheFile, json_encode($cache, JSON_UNESCAPED_UNICODE));
+}
+
+// ================================================================
 // Заголовки
 // ================================================================
 header('Content-Type: application/json; charset=utf-8');
@@ -212,6 +254,12 @@ function handleGeocode(string $query): array {
         throw new InvalidArgumentException('query is required');
     }
 
+    // Проверяем кеш (24 часа)
+    $cached = geocodeCacheGet($query);
+    if ($cached !== null) {
+        return $cached;
+    }
+
     $token = $CONFIG['DADATA_TOKEN'];
     if (!$token || str_starts_with($token, 'YOUR_')) {
         // fallback через Nominatim (без ключа)
@@ -273,6 +321,9 @@ function handleGeocode(string $query): array {
     if ($cdekCityCode) {
         $result['city_code'] = (string) $cdekCityCode;
     }
+
+    // Кешируем результат на 24 часа
+    geocodeCacheSet($query, $result);
 
     file_put_contents(__DIR__ . '/geocode_debug.log',
         date('Y-m-d H:i:s') . " {$query} => " . json_encode($result, JSON_UNESCAPED_UNICODE)
