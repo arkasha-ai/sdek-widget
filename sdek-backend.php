@@ -359,9 +359,9 @@ function normalizePvz(array $p): array {
     $address = $p['address']
         ?? ($loc['address_full'] ?? $loc['address'] ?? '');
 
-    // city — строка на верхнем уровне (из API), city_code — из location
+    // city — строка на верхнем уровне (из API), city_code — из location или корня (старый кэш)
     $cityName = $p['city'] ?? '';
-    $cityCode = $loc['city_code'] ?? '';
+    $cityCode = $loc['city_code'] ?? ($p['city_code'] ?? '');
 
     // postal_code — из location
     $postalCode = $loc['postal_code'] ?? $p['postal_code'] ?? '';
