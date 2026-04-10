@@ -80,12 +80,10 @@ function markerStyle(feature) {
 // Стиль кластера
 function clusterStyle(feature, resolution) {
   const size   = feature.get('features').length;
-  const isBig  = size > 10;
-  const radius = isBig ? 24 : 16;
   return new Style({
     image: new Circle({
-      radius,
-      fill: new Fill({ color: size > 10 ? '#2b7bb9' : '#c69b3c' }),
+      radius: 10,                          // 20px диаметр
+      fill: new Fill({ color: '#2b7bb9' }),
       stroke: new Stroke({ color: '#fff', width: 2 }),
     }),
     text: new Text({
