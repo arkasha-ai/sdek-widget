@@ -3,3 +3,5 @@ cdek_token.json
 pvz_cache.json
 dist
 .env
+geocode_debug.log
+tariff_debug.log
