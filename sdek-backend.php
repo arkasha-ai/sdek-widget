@@ -436,13 +436,17 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
     }
     $fromCode = $geo['city_code'];
 
-    // --- 2. city_code получателя — из PVZ ---
-    $pvzAll = pvzLoadFromCdek();
-    $toCode = null;
-    foreach ($pvzAll as $p) {
-        if (($p['code'] ?? '') == $toPvzCode) {
-            $toCode = $p['city_code'] ?? null;
-            break;
+    // --- 2. city_code получателя ---
+    // Widget отправляет city_code напрямую (pvz.city_code || pvz.code)
+    $toCode = is_numeric($toPvzCode) ? (int) $toPvzCode : null;
+    if (!$toCode) {
+        // Fallback: ищем по коду ПВЗ (если widget всё же отправил code вместо city_code)
+        $pvzAll = pvzLoadFromCdek();
+        foreach ($pvzAll as $p) {
+            if (($p['code'] ?? '') == $toPvzCode) {
+                $toCode = (int) ($p['city_code'] ?? null) ?: null;
+                break;
+            }
         }
     }
     if (!$toCode) {
