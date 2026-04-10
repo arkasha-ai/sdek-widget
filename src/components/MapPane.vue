@@ -179,7 +179,6 @@ function onMoveEnd(event) {
 
 // ---- Dadata suggestions ----
 async function doSuggest() {
-  console.log('[MapPane] doSuggest backendUrl:', props.backendUrl);
   if (!props.backendUrl) return;
   try {
     const url = props.backendUrl + '?action=suggest&query=' + encodeURIComponent(query.value.trim());

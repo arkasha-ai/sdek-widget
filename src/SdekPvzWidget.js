@@ -24,7 +24,6 @@ export class SdekPvzWidget {
     this.packages        = options.packages         || [];
     this.onChoose        = options.onChoose         || (() => {});
     this.backendUrl      = options.backendUrl       || './sdek-backend.php';
-    console.log('[SdekPvzWidget] constructor options.backendUrl:', JSON.stringify(options.backendUrl), '→ this.backendUrl:', this.backendUrl);
 
     this._overlay   = null;
     this._app       = null;
@@ -154,7 +153,6 @@ export class SdekPvzWidget {
               onClick: () => this.close(),
             }, '\u00D7'),
           ]),
-          console.log('[SdekPvzWidget] render MapPane props — backendUrl:', this.backendUrl, 'mapCenter:', this.mapCenter, 'list length:', this.list.length);
           h('div', { class: 'sdwo-popup__body' }, [
             h(MapPane, {
               ref: 'mapRef',
@@ -162,7 +160,7 @@ export class SdekPvzWidget {
               zoom:       12,
               markers:    this.list,
               activeCode: this.active,
-              backendUrl: this.backendUrl,
+              backendUrl: self.backendUrl,
               onSearch:       this.onMapSearch,
               onMoveend:      this.onMapMoveend,
               onMarkerselect: this.onMarkerSelect,
