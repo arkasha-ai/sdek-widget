@@ -390,11 +390,11 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
         if (!$toCode) $toCode = $toPvzCode;
     }
 
-    // --- 2. Собираем посылки ---
-    $items = [];
+    // --- 2. Собираем посылки (вес в граммах, без вложенного items) ---
+    $pkgItems = [];
     foreach ($packages ?: [[]] as $pkg) {
-        $items[] = [
-            'weight'  => (float) ($pkg['weight'] ?? 1000) / 1000, // г → кг
+        $pkgItems[] = [
+            'weight'  => (float) ($pkg['weight'] ?? 1000),       // граммы
             'length'  => (float) ($pkg['length'] ?? 10),
             'width'   => (float) ($pkg['width']  ?? 10),
             'height'  => (float) ($pkg['height'] ?? 10),
@@ -424,8 +424,13 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
         'currency'      => 1,                               // рубли
         'from_location' => ['code' => $fromCodeInt],
         'to_location'   => ['code' => $toCodeInt],
-        'packages'      => [['items' => $items]],
+        'packages'      => $pkgItems,
     ];
+
+    // DEBUG: записываем запрос в лог
+    file_put_contents(__DIR__ . '/tariff_debug.log',
+        date('Y-m-d H:i:s') . ' REQUEST: ' . json_encode($payload, JSON_UNESCAPED_UNICODE) . "\n",
+        FILE_APPEND);
 
     $ch = curl_init('https://api.cdek.ru/v2/calculator/tarifflist');
     curl_setopt_array($ch, [
