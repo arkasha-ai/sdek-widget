@@ -110,12 +110,19 @@ function handleGeocode(string $query): array {
     }
 
     $d = $suggestions[0]['data'] ?? [];
-    return [
+    $result = [
         'lat'       => $d['geo_lat']    ?? null,
         'lon'       => $d['geo_lon']    ?? null,
         'city'      => $d['city']       ?? $d['settlement'] ?? $query,
         'city_code' => $d['city_kladr_id'] ?? null,
     ];
+
+    file_put_contents(__DIR__ . '/geocode_debug.log',
+        date('Y-m-d H:i:s') . " {$query} => " . json_encode($result, JSON_UNESCAPED_UNICODE)
+        . " | raw: " . substr(json_encode($suggestions[0] ?? [], JSON_UNESCAPED_UNICODE), 0, 500) . "\n",
+        FILE_APPEND);
+
+    return $result;
 }
 
 /**
