@@ -153,6 +153,7 @@ export class SdekPvzWidget {
               onClick: () => this.close(),
             }, '\u00D7'),
           ]),
+          console.log('[SdekPvzWidget] render — backendUrl:', this.backendUrl);
           h('div', { class: 'sdwo-popup__body' }, [
             h(MapPane, {
               ref: 'mapRef',
@@ -161,6 +162,7 @@ export class SdekPvzWidget {
               markers:    this.list,
               activeCode: this.active,
               backendUrl: this.backendUrl,
+              'data-backend-url': this.backendUrl, // debug
               onSearch:       this.onMapSearch,
               onMoveend:      this.onMapMoveend,
               onMarkerselect: this.onMarkerSelect,
