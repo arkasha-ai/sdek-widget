@@ -58,7 +58,6 @@ const props = defineProps({
   markers:     { type: Array,   default: () => [] },
   activeCode: { type: String,  default: '' },
   backendUrl:  { type: String,  default: '' },
-  fromLocation:{ type: String,  default: '' },
 });
 
 const emit = defineEmits(['search', 'moveend', 'markerselect']);
@@ -183,8 +182,11 @@ async function doSuggest() {
   if (!props.backendUrl) return;
   try {
     let url = props.backendUrl + '?action=suggest&query=' + encodeURIComponent(query.value.trim());
-    if (props.fromLocation) {
-      url += '&from_city=' + encodeURIComponent(props.fromLocation);
+    // Передаём координаты центра карты для приоритизации поиска
+    if (mapRef.value) {
+      const center = mapRef.value.getView().getCenter();
+      const [lon, lat] = toLonLat(center);
+      url += '&lat=' + lat.toFixed(6) + '&lon=' + lon.toFixed(6);
     }
     const res = await fetch(url);
     const json = await res.json();

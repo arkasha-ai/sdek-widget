@@ -161,7 +161,6 @@ export class SdekPvzWidget {
               markers:    this.list,
               activeCode: this.active,
               backendUrl: self.backendUrl,
-              fromLocation: self.fromLocation,
               onSearch:       this.onMapSearch,
               onMoveend:      this.onMapMoveend,
               onMarkerselect: this.onMarkerSelect,

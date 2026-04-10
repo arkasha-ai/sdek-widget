@@ -39,7 +39,11 @@ $action = $_REQUEST['action'] ?? '';
 
 try {
     $result = match ($action) {
-        'suggest'   => handleSuggest($_REQUEST['query'] ?? '', $_REQUEST['from_city'] ?? ''),
+        'suggest'   => handleSuggest(
+            $_REQUEST['query'] ?? '',
+            $_REQUEST['lat'] !== '' ? (float) $_REQUEST['lat'] : null,
+            $_REQUEST['lon'] !== '' ? (float) $_REQUEST['lon'] : null
+        ),
         'geocode'   => handleGeocode($_REQUEST['query'] ?? ''),
         'pvzlist'   => handlePvzList(
             $_REQUEST['country_code'] ?? 'RU',
@@ -70,10 +74,10 @@ try {
 // ================================================================
 // 0. SUGGEST
 // --------
-// Вход:  query — строка поиска, fromCity — город для приоритизации результатов
+// Вход:  query — строка поиска, lat/lon — координаты центра карты для приоритизации
 // Выход: { suggestions: [{value, lat, lon, city, city_code, region}] }
 // ================================================================
-function handleSuggest(string $query, string $fromCity = ''): array {
+function handleSuggest(string $query, ?float $lat = null, ?float $lon = null): array {
     global $CONFIG;
 
     if (trim($query) === '') {
@@ -85,22 +89,21 @@ function handleSuggest(string $query, string $fromCity = ''): array {
         return ['suggestions' => []];
     }
 
-    // Геокодируем город отправителя для приоритизации (locations_boost)
+    // Reverse geocode координат карты → city/region с kladr_id для приоритизации
     $locationsBoost = [['country' => 'Россия']];
-    if ($fromCity) {
-        $geo = handleGeocode($fromCity);
-        if ($geo['lat'] && $geo['lon']) {
-            $lat = (float) $geo['lat'];
-            $lon = (float) $geo['lon'];
-            // bbox ±0.5 градуса (~30-50km) для приоритизации результатов
-            $locationsBoost[] = [
-                'geo' => [
-                    'lat_lb' => $lat - 0.5,
-                    'lon_lb' => $lon - 0.5,
-                    'lat_ub' => $lat + 0.5,
-                    'lon_ub' => $lon + 0.5,
-                ],
-            ];
+    if ($lat !== null && $lon !== null) {
+        $location = handleGeolocate($lat, $lon);
+        $kladrIds = [];
+        if ($location['city_kladr_id']) {
+            $kladrIds[] = $location['city_kladr_id'];
+        }
+        if ($location['region_kladr_id']) {
+            $kladrIds[] = $location['region_kladr_id'];
+        }
+        if ($kladrIds) {
+            foreach ($kladrIds as $kladrId) {
+                $locationsBoost[] = ['kladr_id' => $kladrId];
+            }
         }
     }
 
@@ -137,6 +140,47 @@ function handleSuggest(string $query, string $fromCity = ''): array {
     }
 
     return ['suggestions' => $result];
+}
+
+/**
+ * Обратное геокодирование: координаты → адрес (город/область с kladr_id)
+ * Используется для приоритизации поиска по текущему положению карты
+ */
+function handleGeolocate(float $lat, float $lon): array {
+    global $CONFIG;
+
+    $token = $CONFIG['DADATA_TOKEN'];
+    if (!$token || str_starts_with($token, 'YOUR_')) {
+        return [];
+    }
+
+    $ch = curl_init('https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address');
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_HTTPHEADER     => [
+            'Content-Type:  application/json',
+            'Authorization: Token ' . $token,
+        ],
+        CURLOPT_POSTFIELDS => json_encode([
+            'lat' => $lat,
+            'lon' => $lon,
+        ]),
+        CURLOPT_TIMEOUT => 10,
+    ]);
+
+    $resp = curlExecJson($ch);
+    if (!is_array($resp) || empty($resp)) {
+        return [];
+    }
+
+    $d = $resp['data'] ?? [];
+    return [
+        'city_kladr_id'  => $d['city_kladr_id']  ?? null,
+        'region_kladr_id'=> $d['region_kladr_id'] ?? null,
+        'city'           => $d['city']            ?? null,
+        'region'         => $d['region']           ?? null,
+    ];
 }
 
 // ================================================================
