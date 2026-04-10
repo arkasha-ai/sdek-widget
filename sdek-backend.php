@@ -195,7 +195,7 @@ function pvzLoadFromCdek(): array {
     // Запрос к официальному API СДЭК
     $token = cdekGetToken();
     if ($token) {
-        $ch = curl_init('https://api.cdek.ru/v2/location/PVZ');
+        $ch = curl_init('https://api.cdek.ru/v2/deliverypoints');
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTPHEADER     => ['Authorization: Bearer ' . $token],
@@ -204,8 +204,17 @@ function pvzLoadFromCdek(): array {
         $resp = curlExecJson($ch);
 
         if (is_array($resp) && !empty($resp)) {
-            file_put_contents($cacheFile, json_encode($resp, JSON_UNESCAPED_UNICODE));
-            return $resp;
+            // Новый формат /v2/deliverypoints оборачивает данные в ключ 'entity'
+            $flat = [];
+            foreach ($resp as $item) {
+                if (isset($item['entity'])) {
+                    $flat[] = $item['entity'];
+                } else {
+                    $flat[] = $item;
+                }
+            }
+            file_put_contents($cacheFile, json_encode($flat, JSON_UNESCAPED_UNICODE));
+            return $flat;
         }
     }
 
@@ -279,29 +288,63 @@ function pvzLoadFromCsv(): array {
  * Приведение записи ПВЗ к нужному формату
  */
 function normalizePvz(array $p): array {
+    // Поддержка двух форматов:
+    // 1. CSV / старый API:          location=[lat, lon], address, city
+    // 2. Новый API /v2/deliverypoints: address={latitude,longitude,address_full}, city={name,code}, work_time
+    $addr = $p['address'] ?? [];
+    $city = $p['city'] ?? [];
+
+    // location: CSV — массив [lat, lon], новый API — вложенный в address
     $loc = $p['location'] ?? [];
+    if (is_array($loc) && isset($loc[0]) && is_numeric($loc[0])) {
+        // CSV формат: [lat, lon]
+        $lat = $loc[0];
+        $lon = $loc[1] ?? 0.0;
+    } else {
+        // Новый API формат: address.latitude / address.longitude
+        $lat = $addr['latitude']  ?? $addr['lat']  ?? 0.0;
+        $lon = $addr['longitude'] ?? $addr['lon'] ?? 0.0;
+    }
+
+    // address: CSV — строка, новый API — address_full
+    $address = $p['address'] && is_string($p['address'])
+        ? $p['address']
+        : ($addr['address_full'] ?? $addr['address'] ?? '');
+
+    // city: CSV — строка, новый API — объект {name, code}
+    $cityName = is_string($p['city'])
+        ? $p['city']
+        : ($city['name'] ?? '');
+
+    $cityCode = is_array($p['city'])
+        ? ($city['code'] ?? '')
+        : ($p['city_code'] ?? '');
+
+    // work_time: разные имена полей
+    $workTime = $p['work_time'] ?? $p['workTime'] ?? '';
+
     return [
-        'city_code'       => $loc['city_code']     ?? $loc['city_uuid'] ?? '',
-        'city'           => $loc['city']           ?? '',
-        'type'           => $p['type']           ?? 'PVZ',
-        'postal_code'    => $loc['postal_code']    ?? '',
-        'country_code'   => $loc['country_code']   ?? 'RU',
-        'region'         => $loc['region']         ?? '',
-        'have_cashless'  => $p['have_cashless']  ?? true,
-        'have_cash'      => $p['have_cash']       ?? true,
-        'allowed_cod'    => $p['allowed_cod']    ?? true,
-        'is_dressing_room' => $p['is_dressing_room'] ?? false,
-        'code'           => $p['code']            ?? '',
-        'name'           => $p['name']            ?? ($p['code'] ?? ''),
-        'address'        => $loc['address']        ?? '',
-        'work_time'      => $p['work_time']      ?? '',
-        'location'       => [
-            $loc['longitude'] ?? 0.0,
-            $loc['latitude'] ?? 0.0,
+        'city_code'        => $cityCode,
+        'city'            => $cityName,
+        'type'            => $p['type']           ?? 'PVZ',
+        'postal_code'     => $p['postal_code']    ?? ($addr['postal_code'] ?? ''),
+        'country_code'    => $p['country_code']   ?? 'RU',
+        'region'          => $p['region']         ?? '',
+        'have_cashless'   => $p['have_cashless']  ?? true,
+        'have_cash'       => $p['have_cash']       ?? true,
+        'allowed_cod'     => $p['allowed_cod']    ?? true,
+        'is_dressing_room'=> $p['is_dressing_room'] ?? false,
+        'code'            => $p['code']            ?? '',
+        'name'            => $p['name']            ?? ($p['code'] ?? ''),
+        'address'         => $address,
+        'work_time'       => $workTime,
+        'location'        => [
+            (float) $lat,
+            (float) $lon,
         ],
-        'weight_min'     => $p['weight_min']     ?? 0,
-        'weight_max'     => $p['weight_max']     ?? 100000000,
-        'dimensions'     => $p['dimensions']      ?? null,
+        'weight_min'      => $p['weight_min']     ?? 0,
+        'weight_max'      => $p['weight_max']     ?? 100000000,
+        'dimensions'      => $p['dimensions']      ?? null,
     ];
 }
 
