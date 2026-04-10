@@ -5,3 +5,4 @@ dist
 .env
 geocode_debug.log
 tariff_debug.log
+geocode_cache.json
