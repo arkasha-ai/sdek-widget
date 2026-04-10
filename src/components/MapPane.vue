@@ -58,6 +58,7 @@ const props = defineProps({
   markers:     { type: Array,   default: () => [] },
   activeCode: { type: String,  default: '' },
   backendUrl:  { type: String,  default: '' },
+  fromLocation:{ type: String,  default: '' },
 });
 
 const emit = defineEmits(['search', 'moveend', 'markerselect']);
@@ -181,7 +182,10 @@ function onMoveEnd(event) {
 async function doSuggest() {
   if (!props.backendUrl) return;
   try {
-    const url = props.backendUrl + '?action=suggest&query=' + encodeURIComponent(query.value.trim());
+    let url = props.backendUrl + '?action=suggest&query=' + encodeURIComponent(query.value.trim());
+    if (props.fromLocation) {
+      url += '&from_city=' + encodeURIComponent(props.fromLocation);
+    }
     const res = await fetch(url);
     const json = await res.json();
     suggestions.value = json.suggestions || [];
