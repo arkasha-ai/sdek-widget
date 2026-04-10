@@ -28,7 +28,7 @@ import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
-import { fromLonLat } from 'ol/proj';
+import { fromLonLat, toLonLat } from 'ol/proj';
 import { Style, Circle, Stroke, Fill } from 'ol/style';
 
 const props = defineProps({
@@ -95,7 +95,11 @@ function onClick(event) {
 // Перемещение карты
 function onMoveEnd(event) {
   const extent = event.map.getView().calculateExtent(event.map.getSize());
-  emit('moveend', extent);
+  // Конвертируем EPSG:3857 → [lon, lat] WGS84 для корректной фильтрации
+  const [west, south, east, north] = extent;
+  const sw = toLonLat([west, south]);  // [lon, lat]
+  const ne = toLonLat([east, north]); // [lon, lat]
+  emit('moveend', [sw[0], sw[1], ne[0], ne[1]]); // [minLon, minLat, maxLon, maxLat] WGS84
 }
 
 // Поиск
@@ -122,7 +126,12 @@ function flashError(msg) {
 
 function getBounds() {
   if (!mapRef.value) return null;
-  return mapRef.value.getView().calculateExtent(mapRef.value.getSize());
+  const extent = mapRef.value.getView().calculateExtent(mapRef.value.getSize());
+  // EPSG:3857 → WGS84 [lon, lat]
+  const [west, south, east, north] = extent;
+  const sw = toLonLat([west, south]);
+  const ne = toLonLat([east, north]);
+  return [sw[0], sw[1], ne[0], ne[1]]; // [minLon, minLat, maxLon, maxLat] WGS84
 }
 
 defineExpose({ panTo, flashError, getBounds });

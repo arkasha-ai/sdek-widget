@@ -161,6 +161,7 @@ function handlePvzList(string $country, ?array $bbox): array {
 
     // фильтр по стране
     $pvz = array_filter($pvz, fn($p) =>
+        ($p['country_code'] ?? '') === $country ||
         ($p['location']['country_code'] ?? '') === $country
     );
 
