@@ -154,9 +154,11 @@ export class SdekPvzWidget {
               onClick: () => this.close(),
             }, '\u00D7'),
           ]),
+          console.log('[SdekPvzWidget] render MapPane props — backendUrl:', this.backendUrl, 'mapCenter:', this.mapCenter, 'list length:', this.list.length);
           h('div', { class: 'sdwo-popup__body' }, [
             h(MapPane, {
               ref: 'mapRef',
+              center:     this.mapCenter,
               zoom:       12,
               markers:    this.list,
               activeCode: this.active,
