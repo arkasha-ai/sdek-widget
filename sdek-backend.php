@@ -416,7 +416,7 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
 
     $payload = [
         'type'          => 1,                               // забор груза
-        'date'          => date('Y-m-d'),
+        'date'          => date('Y-m-d\TH:i:sO'),  // yyyy-MM-dd'T'HH:mm:ss+HHMM
         'currency'      => 1,                               // рубли
         'from_location' => ['code' => $fromCode],
         'to_location'   => ['code' => $toCode],
