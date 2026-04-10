@@ -156,10 +156,11 @@ export class SdekPvzWidget {
           h('div', { class: 'sdwo-popup__body' }, [
             h(MapPane, {
               ref: 'mapRef',
-              center:    this.mapCenter,
-              zoom:      12,
-              markers:   this.list,
+              center:     this.mapCenter,
+              zoom:       12,
+              markers:    this.list,
               activeCode: this.active,
+              backendUrl: this.backendUrl,
               onSearch:       this.onMapSearch,
               onMoveend:      this.onMapMoveend,
               onMarkerselect: this.onMarkerSelect,

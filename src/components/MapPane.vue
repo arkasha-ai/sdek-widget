@@ -1,19 +1,39 @@
 <template>
   <div class="sdwo-map-col">
-    <!-- Поиск -->
+    <!-- Поиск с подсказками Dadata -->
     <div class="sdwo-search-row">
-      <input
-        v-model="query"
-        type="text"
-        class="sdwo-input"
-        placeholder="Поиск адреса…"
-        autocomplete="off"
-        @input="onSearch"
-      />
+      <div class="sdwo-search-wrap">
+        <input
+          v-model="query"
+          type="text"
+          class="sdwo-input"
+          placeholder="Поиск адреса…"
+          autocomplete="off"
+          @input="onSearchInput"
+          @keydown.down.prevent="onKeyDown"
+          @keydown.up.prevent="onKeyUp"
+          @keydown.enter.prevent="onKeyEnter"
+          @keydown.escape="closeDropdown"
+          @blur="onBlur"
+          @focus="onFocus"
+        />
+        <!-- Выпадающий список -->
+        <ul v-if="suggestions.length" class="sdwo-suggest-dropdown">
+          <li
+            v-for="(s, i) in suggestions"
+            :key="i"
+            :class="{ 'sdwo-suggest-active': i === activeIdx }"
+            @mousedown.prevent="selectSuggestion(s)"
+            @mouseenter="activeIdx = i"
+          >
+            <span class="sdwo-suggest-value">{{ s.value }}</span>
+          </li>
+        </ul>
+      </div>
       <div v-if="searchError" class="sdwo-error">{{ searchError }}</div>
     </div>
 
-    <!-- OpenLayers карта — создаём в onMounted -->
+    <!-- OpenLayers карта -->
     <div class="sdwo-map" ref="mapContainerRef" style="width:100%;min-height:300px;" />
   </div>
 </template>
@@ -33,19 +53,23 @@ import { fromLonLat, toLonLat } from 'ol/proj';
 import { Style, Circle, Stroke, Fill, Text, Icon } from 'ol/style';
 
 const props = defineProps({
-  center:     { type: Array,  default: null },  // [lat, lon]
-  zoom:       { type: Number, default: 12 },
-  markers:    { type: Array,  default: () => [] },
+  center:      { type: Array,  default: null },
+  zoom:        { type: Number, default: 12 },
+  markers:     { type: Array,  default: () => [] },
   activeCode: { type: String, default: null },
+  backendUrl:  { type: String, default: '' },
 });
 
 const emit = defineEmits(['search', 'moveend', 'markerselect']);
 
 // Refs
 const mapContainerRef = ref(null);
-const query          = ref('');
+const query           = ref('');
 const searchError     = ref(null);
-const mapRef         = ref(null); // OpenLayers Map instance
+const mapRef          = ref(null);
+const suggestions     = ref([]);
+const activeIdx       = ref(-1);
+const isOpen          = ref(false);
 
 let searchTimer  = null;
 let vectorSource = null;
@@ -153,12 +177,65 @@ function onMoveEnd(event) {
   emit('moveend', [sw[0], sw[1], ne[0], ne[1]]); // [minLon, minLat, maxLon, maxLat] WGS84
 }
 
-// Поиск
-function onSearch() {
+// ---- Dadata suggestions ----
+async function doSuggest() {
+  if (!props.backendUrl) return;
+  try {
+    const url = props.backendUrl + '?action=suggest&query=' + encodeURIComponent(query.value.trim());
+    const res = await fetch(url);
+    const json = await res.json();
+    suggestions.value = json.suggestions || [];
+    isOpen.value = suggestions.value.length > 0;
+    activeIdx.value = suggestions.value.length > 0 ? 0 : -1;
+  } catch {
+    suggestions.value = [];
+    isOpen.value = false;
+  }
+}
+
+function onSearchInput() {
   searchError.value = null;
+  activeIdx.value = -1;
   clearTimeout(searchTimer);
-  if (query.value.trim().length < 3) return;
-  searchTimer = setTimeout(() => emit('search', query.value.trim()), 400);
+  if (query.value.trim().length < 3) {
+    suggestions.value = [];
+    isOpen.value = false;
+    return;
+  }
+  searchTimer = setTimeout(doSuggest, 300);
+}
+
+function onKeyDown() { if (activeIdx.value < suggestions.value.length - 1) activeIdx.value++; }
+function onKeyUp()   { if (activeIdx.value > 0) activeIdx.value--; }
+
+function onKeyEnter() {
+  if (activeIdx.value >= 0 && suggestions.value[activeIdx.value]) {
+    selectSuggestion(suggestions.value[activeIdx.value]);
+  }
+}
+
+function closeDropdown() { isOpen.value = false; }
+
+function onBlur() { setTimeout(() => { isOpen.value = false; }, 150); }
+
+function onFocus() { if (suggestions.value.length > 0) isOpen.value = true; }
+
+function selectSuggestion(s) {
+  query.value = s.value;
+  suggestions.value = [];
+  isOpen.value = false;
+  activeIdx.value = -1;
+
+  if (s.lat && s.lon) {
+    // Zoom по типу объекта (дом > улица > нас.пункт > город)
+    const zoom = s.house ? 17 : s.street ? 15 : s.settlement ? 13 : 12;
+    mapRef.value.getView().animate({
+      center: fromLonLat([parseFloat(s.lon), parseFloat(s.lat)]),
+      zoom,
+      duration: 500,
+    });
+    emit('search', s.value);
+  }
 }
 
 // ---- API для родителя ----
@@ -171,18 +248,15 @@ function panTo([lat, lon], zoom = null) {
   });
 }
 
-function flashError(msg) {
-  searchError.value = msg;
-}
+function flashError(msg) { searchError.value = msg; }
 
 function getBounds() {
   if (!mapRef.value) return null;
   const extent = mapRef.value.getView().calculateExtent(mapRef.value.getSize());
-  // EPSG:3857 → WGS84 [lon, lat]
   const [west, south, east, north] = extent;
   const sw = toLonLat([west, south]);
   const ne = toLonLat([east, north]);
-  return [sw[0], sw[1], ne[0], ne[1]]; // [minLon, minLat, maxLon, maxLat] WGS84
+  return [sw[0], sw[1], ne[0], ne[1]];
 }
 
 defineExpose({ panTo, flashError, getBounds });

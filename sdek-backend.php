@@ -39,6 +39,7 @@ $action = $_REQUEST['action'] ?? '';
 
 try {
     $result = match ($action) {
+        'suggest'   => handleSuggest($_REQUEST['query'] ?? ''),
         'geocode'   => handleGeocode($_REQUEST['query'] ?? ''),
         'pvzlist'   => handlePvzList(
             $_REQUEST['country_code'] ?? 'RU',
@@ -64,6 +65,59 @@ try {
         'error'   => 'Internal server error',
         'detail'  => $e->getMessage(),
     ], JSON_UNESCAPED_UNICODE);
+}
+
+// ================================================================
+// 0. SUGGEST
+// --------
+// Вход:  query — строка поиска
+// Выход: { suggestions: [{value, lat, lon, city, city_code, region}] }
+// ================================================================
+function handleSuggest(string $query): array {
+    global $CONFIG;
+
+    if (trim($query) === '') {
+        return ['suggestions' => []];
+    }
+
+    $token = $CONFIG['DADATA_TOKEN'];
+    if (!$token || str_starts_with($token, 'YOUR_')) {
+        return ['suggestions' => []];
+    }
+
+    $ch = curl_init('https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address');
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_HTTPHEADER     => [
+            'Content-Type:  application/json',
+            'Authorization: Token ' . $token,
+        ],
+        CURLOPT_POSTFIELDS => json_encode([
+            'query'       => $query,
+            'count'       => 8,
+            'locations'   => [['country' => 'Россия']],
+        ]),
+        CURLOPT_TIMEOUT => 10,
+    ]);
+
+    $resp = curlExecJson($ch);
+    $suggestions = $resp['suggestions'] ?? [];
+
+    $result = [];
+    foreach ($suggestions as $s) {
+        $d = $s['data'] ?? [];
+        $result[] = [
+            'value'    => $s['value'] ?? '',
+            'lat'      => $d['geo_lat']    ?? null,
+            'lon'      => $d['geo_lon']    ?? null,
+            'city'     => $d['city']       ?? $d['settlement'] ?? '',
+            'city_code'=> $d['city_kladr_id'] ?? null,
+            'region'   => $d['region'] ?? '',
+        ];
+    }
+
+    return ['suggestions' => $result];
 }
 
 // ================================================================
