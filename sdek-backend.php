@@ -414,12 +414,16 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
         ];
     }
 
+    // Приводим коды к int32 для CDEK API
+    $fromCodeInt = (int) $fromCode;
+    $toCodeInt   = (int) $toCode;
+
     $payload = [
         'type'          => 1,                               // забор груза
         'date'          => date('Y-m-d\TH:i:sO'),  // yyyy-MM-dd'T'HH:mm:ss+HHMM
         'currency'      => 1,                               // рубли
-        'from_location' => ['code' => $fromCode],
-        'to_location'   => ['code' => $toCode],
+        'from_location' => ['code' => $fromCodeInt],
+        'to_location'   => ['code' => $toCodeInt],
         'packages'      => [['items' => $items]],
     ];
 

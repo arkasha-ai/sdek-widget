@@ -259,7 +259,7 @@ export class SdekPvzWidget {
       const tariff = await this._fetch({
         action:      'calculate',
         from_city:   this.fromLocation,
-        to_pvz_code: pvz.code,
+        to_pvz_code: pvz.city_code || pvz.code,  // CDEK tariff needs city_code, fallback to pvz.code
         packages:    JSON.stringify(this.packages),
       });
       this._vm.tariff = tariff;
