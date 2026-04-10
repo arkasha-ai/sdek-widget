@@ -85,31 +85,23 @@ function handleSuggest(string $query, string $fromCity = ''): array {
         return ['suggestions' => []];
     }
 
-    // Геокодируем город отправителя для приоритизации
-    $cityBounds = null;
+    // Геокодируем город отправителя для приоритизации (locations_boost)
+    $locationsBoost = [['country' => 'Россия']];
     if ($fromCity) {
         $geo = handleGeocode($fromCity);
         if ($geo['lat'] && $geo['lon']) {
             $lat = (float) $geo['lat'];
             $lon = (float) $geo['lon'];
-            // bbox ±0.5 градуса (~30-50km) для ограничения поиска
-            $cityBounds = [
-                [$lat - 0.5, $lon - 0.5],
-                [$lat + 0.5, $lon + 0.5],
+            // bbox ±0.5 градуса (~30-50km) для приоритизации результатов
+            $locationsBoost[] = [
+                'geo' => [
+                    'lat_lb' => $lat - 0.5,
+                    'lon_lb' => $lon - 0.5,
+                    'lat_ub' => $lat + 0.5,
+                    'lon_ub' => $lon + 0.5,
+                ],
             ];
         }
-    }
-
-    $locations = [['country' => 'Россия']];
-    if ($cityBounds) {
-        $locations[] = [
-            'geo' => [
-                'lat_lb' => $cityBounds[0][0],
-                'lon_lb' => $cityBounds[0][1],
-                'lat_ub' => $cityBounds[1][0],
-                'lon_ub' => $cityBounds[1][1],
-            ],
-        ];
     }
 
     $ch = curl_init('https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address');
@@ -121,9 +113,9 @@ function handleSuggest(string $query, string $fromCity = ''): array {
             'Authorization: Token ' . $token,
         ],
         CURLOPT_POSTFIELDS => json_encode([
-            'query'     => $query,
-            'count'     => 8,
-            'locations' => $locations,
+            'query'            => $query,
+            'count'            => 8,
+            'locations_boost' => $locationsBoost,
         ]),
         CURLOPT_TIMEOUT => 10,
     ]);
