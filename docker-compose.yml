@@ -1,0 +1,14 @@
+version: '3'
+services:
+  app:
+    image: node:22-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "5177:5177"
+      - "8080:8080"
+    command: >
+      sh -c "npm run dev -- --host --port 5177 &
+             php -S 0.0.0.0:8080 -t . &
+             wait"

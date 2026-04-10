@@ -1,12 +1,10 @@
-FROM node:22-alpine
+FROM php:8.2-cli
 
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install
+# Node.js
+RUN apt-get update && apt-get install -y nodejs npm && rm -rf /var/lib/apt/lists/*
 
-COPY . .
+EXPOSE 80
 
-EXPOSE 5177
-
-CMD ["npm", "run", "dev", "--", "--host", "--port", "5177"]
+CMD ["php", "-S", "0.0.0.0:80", "-t", "."]
