@@ -110,10 +110,28 @@ function handleGeocode(string $query): array {
     }
 
     $d = $suggestions[0]['data'] ?? [];
+    $dCity = trim($d['city'] ?? $d['settlement'] ?? '');
+
+    // Dadata может вернуть область/район вместо города ("Челябинская обл" вместо "Челябинск")
+    // Если returned city не похож на query — пытаемся найти более точный результат
+    if ($dCity && mb_stripos($dCity, $query) !== 0 && mb_stripos($query, $dCity) !== 0) {
+        // Город в ответе не совпадает с запросом — попробуем взять следующую подсказку
+        if (count($suggestions) > 1) {
+            $d = $suggestions[1]['data'] ?? [];
+            $dCity = trim($d['city'] ?? $d['settlement'] ?? '');
+        }
+        // Если всё ещё не совпадает — доверяем Dadata, но логируем
+        if ($dCity && mb_stripos($dCity, $query) !== 0 && mb_stripos($query, $dCity) !== 0) {
+            file_put_contents(__DIR__ . '/geocode_debug.log',
+                date('Y-m-d H:i:s') . " FUZZY_MISMATCH {$query} vs {$dCity} | raw: " . substr(json_encode($suggestions[0] ?? [], JSON_UNESCAPED_UNICODE), 0, 300) . "\n",
+                FILE_APPEND);
+        }
+    }
+
     $result = [
         'lat'       => $d['geo_lat']    ?? null,
         'lon'       => $d['geo_lon']    ?? null,
-        'city'      => $d['city']       ?? $d['settlement'] ?? $query,
+        'city'      => $dCity ?: $query,
         'city_code' => $d['city_kladr_id'] ?? null,
     ];
 
