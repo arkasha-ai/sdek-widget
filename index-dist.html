@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SdekPvzWidget — Production Demo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@10.6.0/ol.css" />
+</head>
+<body>
+
+  <h1>Виджет выбора ПВЗ СДЭК (production build)</h1>
+  <p>Нажмите кнопку, чтобы открыть виджет:</p>
+
+  <button id="open-widget" style="
+    padding: 12px 24px;
+    font-size: 16px;
+    cursor: pointer;
+    background: #c69b3c;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+  ">Открыть виджет СДЭК</button>
+
+  <script src="dist/SdekPvzWidget.js"></script>
+  <script>
+    function waitForWidget() {
+      if (typeof window.SdekPvzWidget !== 'undefined') {
+        initWidget();
+      } else {
+        setTimeout(waitForWidget, 100);
+      }
+    }
+
+    function initWidget() {
+      console.log('[OK] SdekPvzWidget loaded:', typeof window.SdekPvzWidget);
+      var widget = new window.SdekPvzWidget({
+        defaultLocation: 'Краснокамск',
+        fromLocation:     'Челябинск',
+        packages: [
+          { length: 30, width: 20, height: 15, weight: 1000 },
+        ],
+        backendUrl: '/sdek-backend.php',
+        onChoose: function(type, tariff, address) {
+          console.log('=== PVZ selected ===');
+          console.log('Type:', type);
+          console.log('Tariff:', tariff);
+          console.log('PVZ:', address);
+          alert('PVZ selected: ' + (address.name || address.address));
+        },
+      });
+
+      document.getElementById('open-widget').addEventListener('click', function() {
+        widget.open();
+      });
+
+      document.getElementById('open-widget').textContent = 'Widget loaded — click';
+      document.getElementById('open-widget').style.background = '#27ae60';
+    }
+
+    window.addEventListener('load', waitForWidget);
+  </script>
+
+</body>
+</html>
