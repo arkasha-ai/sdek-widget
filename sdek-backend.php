@@ -117,6 +117,12 @@ function handleGeocode(string $query): array {
         'city_code' => $d['city_kladr_id'] ?? null,
     ];
 
+    // КЛАДР-код Dadata не совпадает с кодом города CDEK — ищем в PVZ cache
+    $cdekCityCode = findCdekCityCode($result['city'] ?? $query);
+    if ($cdekCityCode) {
+        $result['city_code'] = (string) $cdekCityCode;
+    }
+
     file_put_contents(__DIR__ . '/geocode_debug.log',
         date('Y-m-d H:i:s') . " {$query} => " . json_encode($result, JSON_UNESCAPED_UNICODE)
         . " | raw: " . substr(json_encode($suggestions[0] ?? [], JSON_UNESCAPED_UNICODE), 0, 500) . "\n",
@@ -156,6 +162,42 @@ function geocodeNominatim(string $query): array {
 function parseOsmDisplayName(string $name): string {
     $parts = explode(',', $name);
     return trim($parts[0]);
+}
+
+/**
+ * Найти city_code CDEK по имени города, используя кэш ПВЗ
+ * (КЛАДР-коды Dadata не совпадают с кодами CDEK — ищем в PVZ cache)
+ */
+function findCdekCityCode(string $cityName): ?int {
+    $cacheFile = __DIR__ . '/pvz_cache.json';
+    if (!file_exists($cacheFile)) return null;
+
+    $raw = file_get_contents($cacheFile);
+    $pvzList = json_decode($raw, true);
+    if (!is_array($pvzList)) return null;
+
+    $normalized = trim(mb_strtolower($cityName));
+
+    // Собираем уникальные коды городов
+    $found = null;
+    foreach ($pvzList as $p) {
+        $pCity = trim(mb_strtolower($p['city'] ?? ''));
+        if ($pCity === $normalized) {
+            $code = $p['city_code'] ?? $p['location']['city_code'] ?? null;
+            if ($code) return (int) $code;
+        }
+    }
+
+    // Частичное совпадение (начинается с)
+    foreach ($pvzList as $p) {
+        $pCity = trim(mb_strtolower($p['city'] ?? ''));
+        if (strpos($pCity, $normalized) === 0 || strpos($normalized, $pCity) === 0) {
+            $code = $p['city_code'] ?? $p['location']['city_code'] ?? null;
+            if ($code) return (int) $code;
+        }
+    }
+
+    return $found;
 }
 
 // ================================================================
