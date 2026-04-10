@@ -174,7 +174,8 @@ function handleGeolocate(float $lat, float $lon): array {
         return [];
     }
 
-    $d = $resp['data'] ?? [];
+    $d = $resp['suggestions'][0]['data'] ?? [];
+
     return [
         'city_kladr_id'  => $d['city_kladr_id']  ?? null,
         'region_kladr_id'=> $d['region_kladr_id'] ?? null,
