@@ -85,7 +85,8 @@ function handleGeocode(string $query): array {
         return geocodeNominatim($query);
     }
 
-    $ch = curl_init('https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address');
+    // Dadata suggest/address — прямое геокодирование (город → координаты + КЛАДР)
+    $ch = curl_init('https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address');
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_POST           => true,
@@ -364,33 +365,24 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
     // --- 1. Определяем city_code города-отправителя ---
     $geo = handleGeocode($fromCity);
     if (empty($geo['city_code'])) {
-        // Пробуем из PVZ по коду
-        $pvzAll = pvzLoadFromCdek();
-        $target = null;
-        foreach ($pvzAll as $p) {
-            if (($p['code'] ?? '') == $toPvzCode) {
-                $target = $p;
-                break;
-            }
-        }
+        throw new InvalidArgumentException("Не удалось определить код города для: {$fromCity}. Проверьте название города или настройте DADATA_TOKEN.");
+    }
+    $fromCode = $geo['city_code'];
 
-        $fromCode = kladrRegionCode($geo['city'] ?? $fromCity);
-        $toCode   = $target['city_code'] ?? $toPvzCode;
-    } else {
-        $fromCode = $geo['city_code'];
-        // КЛАДР code для получателя — из PVZ
-        $pvzAll   = pvzLoadFromCdek();
-        $toCode   = null;
-        foreach ($pvzAll as $p) {
-            if (($p['code'] ?? '') == $toPvzCode) {
-                $toCode = $p['city_code'] ?? null;
-                break;
-            }
+    // --- 2. city_code получателя — из PVZ ---
+    $pvzAll = pvzLoadFromCdek();
+    $toCode = null;
+    foreach ($pvzAll as $p) {
+        if (($p['code'] ?? '') == $toPvzCode) {
+            $toCode = $p['city_code'] ?? null;
+            break;
         }
-        if (!$toCode) $toCode = $toPvzCode;
+    }
+    if (!$toCode) {
+        throw new InvalidArgumentException("Не удалось найти city_code для PVZ: {$toPvzCode}");
     }
 
-    // --- 2. Собираем посылки (вес в граммах, без вложенного items) ---
+    // --- 3. Собираем посылки (вес в граммах) ---
     $pkgItems = [];
     foreach ($packages ?: [[]] as $pkg) {
         $pkgItems[] = [
@@ -401,7 +393,7 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
         ];
     }
 
-    // --- 3. Запрос тарифа ---
+    // --- 4. Запрос тарифа ---
     $token = cdekGetToken();
     if (!$token) {
         return [
