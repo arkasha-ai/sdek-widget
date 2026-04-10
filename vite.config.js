@@ -31,14 +31,13 @@ export default defineConfig({
       formats:  ['es', 'umd'],
     },
     rollupOptions: {
-      external: ['vue', 'ol', 'vue3-openlayers'],
+      external: ['ol'],
       output: {
-        // Убираем .cjs → Apache отдаёт как application/javascript
+        // Всё в один файл
         entryFileNames: '[name].js',
+        inlineDynamicImports: true,
         globals: {
-          vue:              'Vue',
-          ol:               'ol',
-          'vue3-openlayers': 'Vue3Openlayers',
+          ol: 'ol',
         },
       },
     },
