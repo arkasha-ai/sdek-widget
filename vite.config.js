@@ -16,12 +16,7 @@ export default defineConfig({
     cssInjectedByJs(),
   ],
 
-  resolve: {
-    alias: {
-      // vue3-openlayers использует template compiler — нужен ESM-билд с runtime compiler
-      vue: 'vue/dist/vue.esm-bundler.js',
-    },
-  },
+
 
   build: {
     lib: {

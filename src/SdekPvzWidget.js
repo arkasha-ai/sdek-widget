@@ -6,8 +6,14 @@
 import { createApp, h } from 'vue';
 import Vue3Openlayers from 'vue3-openlayers';
 
-import PvzList  from './components/PvzList.vue';
-import MapPane  from './components/MapPane.vue';
+// Явные импорты ol-* компонентов — предотвращаем tree-shaking в production
+import 'vue3-openlayers/map';
+import 'vue3-openlayers/layers';
+import 'vue3-openlayers/sources';
+import 'vue3-openlayers/geometries';
+
+import PvzList from './components/PvzList.vue';
+import MapPane from './components/MapPane.vue';
 import './style.css';
 
 export class SdekPvzWidget {
