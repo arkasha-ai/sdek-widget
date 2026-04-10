@@ -255,6 +255,11 @@ export class SdekPvzWidget {
     this._vm.active = pvz.code;
     this._vm.tariff = null;
 
+    // Фокусируем карту на выбранном ПВЗ
+    if (this._mapRef && pvz.location) {
+      this._mapRef.panTo(pvz.location);
+    }
+
     try {
       const tariff = await this._fetch({
         action:      'calculate',
