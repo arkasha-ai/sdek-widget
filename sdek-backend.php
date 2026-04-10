@@ -129,6 +129,17 @@ function handleSuggest(string $query, ?float $lat = null, ?float $lon = null): a
     $result = [];
     foreach ($suggestions as $s) {
         $d = $s['data'] ?? [];
+
+        // Определяем тип объекта для зума
+        $type = 'city';
+        if (!empty($d['house'])) {
+            $type = 'house';
+        } elseif (!empty($d['street'])) {
+            $type = 'street';
+        } elseif (!empty($d['settlement'])) {
+            $type = 'settlement';
+        }
+
         $result[] = [
             'value'    => $s['value'] ?? '',
             'lat'      => $d['geo_lat']    ?? null,
@@ -136,6 +147,10 @@ function handleSuggest(string $query, ?float $lat = null, ?float $lon = null): a
             'city'     => $d['city']       ?? $d['settlement'] ?? '',
             'city_code'=> $d['city_kladr_id'] ?? null,
             'region'   => $d['region'] ?? '',
+            'type'     => $type,           // house | street | settlement | city
+            'house'    => $d['house'] ?? null,
+            'street'   => $d['street'] ?? null,
+            'settlement'=> $d['settlement'] ?? null,
         ];
     }
 

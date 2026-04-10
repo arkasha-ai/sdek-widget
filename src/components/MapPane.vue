@@ -233,8 +233,9 @@ function selectSuggestion(s) {
   activeIdx.value = -1;
 
   if (s.lat && s.lon) {
-    // Zoom по типу объекта (дом > улица > нас.пункт > город)
-    const zoom = s.house ? 17 : s.street ? 15 : s.settlement ? 13 : 12;
+    // Zoom по типу объекта: house > street > settlement > city
+    const zoomMap = { house: 17, street: 15, settlement: 13, city: 12 };
+    const zoom = zoomMap[s.type] ?? 12;
     mapRef.value.getView().animate({
       center: fromLonLat([parseFloat(s.lon), parseFloat(s.lat)]),
       zoom,
