@@ -82,13 +82,13 @@ function clusterStyle(feature, resolution) {
   const size   = feature.get('features').length;
   return new Style({
     image: new Circle({
-      radius: 10,                          // 20px диаметр
-      fill: new Fill({ color: '#2b7bb9' }),
-      stroke: new Stroke({ color: '#fff', width: 2 }),
+      radius: 10,                                      // 20px диаметр
+      fill: new Fill({ color: '#ffffff' }),
+      stroke: new Stroke({ color: '#1AB248', width: 2 }),
     }),
     text: new Text({
       text: String(size),
-      fill: new Fill({ color: '#fff' }),
+      fill: new Fill({ color: '#1AB248' }),
       font: 'bold 11px sans-serif',
     }),
   });
