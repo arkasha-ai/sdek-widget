@@ -26,10 +26,11 @@ import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
 import OSM from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
+import Cluster from 'ol/source/Cluster';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import { fromLonLat, toLonLat } from 'ol/proj';
-import { Style, Circle, Stroke, Fill } from 'ol/style';
+import { Style, Circle, Stroke, Fill, Text } from 'ol/style';
 
 const props = defineProps({
   center:     { type: Array,  default: null },  // [lat, lon]
@@ -48,6 +49,7 @@ const mapRef         = ref(null); // OpenLayers Map instance
 
 let searchTimer  = null;
 let vectorSource = null;
+let clusterSource = null;
 
 // Преобразование [lat, lon] → [lon, lat] в EPSG:3857
 function toProj(loc) {
@@ -70,33 +72,71 @@ function markerStyle(feature) {
   });
 }
 
+// Стиль кластера
+function clusterStyle(feature, resolution) {
+  const size   = feature.get('features').length;
+  const isBig  = size > 10;
+  const radius = isBig ? 24 : 16;
+  return new Style({
+    image: new Circle({
+      radius,
+      fill: new Fill({ color: size > 10 ? '#2b7bb9' : '#c69b3c' }),
+      stroke: new Stroke({ color: '#fff', width: 2 }),
+    }),
+    text: new Text({
+      text: String(size),
+      fill: new Fill({ color: '#fff' }),
+      font: 'bold 11px sans-serif',
+    }),
+  });
+}
+
 // Обновить стили всех маркеров (вызывается при смене activeCode)
 function updateMarkerStyles() {
-  if (!vectorSource) return;
-  vectorSource.forEachFeature(feature => {
+  if (!clusterSource) return;
+  // Для одиночных маркеров (не кластеры) обновляем стиль
+  clusterSource.getSource().forEachFeature(feature => {
     feature.setStyle(markerStyle(feature));
   });
 }
 
 // Полностью пересоздать маркеры (вызывается при смене списка)
 function updateMarkers() {
-  if (!vectorSource) return;
-  vectorSource.clear();
+  if (!clusterSource) return;
+  clusterSource.getSource().clear();
+  const features = [];
   props.markers.forEach(pvz => {
     const coords = toProj(pvz.location);
     if (!coords) return;
     const feature = new Feature({ geometry: new Point(coords) });
     feature.setId(pvz.code);
     feature.setStyle(markerStyle(feature));
-    vectorSource.addFeature(feature);
+    features.push(feature);
   });
+  clusterSource.getSource().addFeatures(features);
 }
 
-// Клик по маркеру
+// Клик по маркеру / кластеру
 function onClick(event) {
   mapRef.value.forEachFeatureAtPixel(event.pixel, feature => {
-    const code = feature.getId();
-    if (code) emit('markerselect', code);
+    const features = feature.get('features');
+    if (features) {
+      if (features.length > 1) {
+        // Кластер — zoom in к центру кластера
+        const clusterCenter = feature.getGeometry().getCoordinates();
+        mapRef.value.getView().animate({
+          center: clusterCenter,
+          zoom:   mapRef.value.getView().getZoom() + 2,
+          duration: 300,
+        });
+      } else if (features.length === 1) {
+        const code = features[0].getId();
+        if (code) emit('markerselect', code);
+      }
+    } else {
+      const code = feature.getId();
+      if (code) emit('markerselect', code);
+    }
   });
 }
 
@@ -160,10 +200,19 @@ onMounted(() => {
   const container = mapContainerRef.value;
 
   vectorSource = new VectorSource();
+  clusterSource = new Cluster({
+    distance: 40,
+    minDistance: 20,
+    source: vectorSource,
+  });
 
   const vectorLayer = new VectorLayer({
-    source: vectorSource,
-    style: f => markerStyle(f),
+    source: clusterSource,
+    style: (f, r) => {
+      const features = f.get('features');
+      if (features && features.length > 1) return clusterStyle(f, r);
+      return markerStyle(f);
+    },
   });
 
   const map = new Map({
