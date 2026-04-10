@@ -57,7 +57,7 @@ const props = defineProps({
   zoom:        { type: Number, default: 12 },
   markers:     { type: Array,  default: () => [] },
   activeCode: { type: String, default: null },
-  backendUrl:  { type: String, default: '' },
+  backendUrl:  { type: String, default: '/sdek-backend.php' },
 });
 
 const emit = defineEmits(['search', 'moveend', 'markerselect']);
