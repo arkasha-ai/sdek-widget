@@ -126,11 +126,11 @@ export class SdekPvzWidget {
 
         onMarkerSelect(code) {
           const pvz = self._pvzAll.find(p => p.code == code);
-          if (pvz) this._selectPvz(pvz);
+          if (pvz) self._selectPvz(pvz);
         },
 
         async onPvzSelect(pvz) {
-          await this._selectPvz(pvz);
+          await self._selectPvz(pvz);
         },
 
         onChoose(pvz, tariff) {
