@@ -289,47 +289,46 @@ function pvzLoadFromCsv(): array {
  */
 function normalizePvz(array $p): array {
     // Поддержка двух форматов:
-    // 1. CSV / старый API:          location=[lat, lon], address, city
-    // 2. Новый API /v2/deliverypoints: address={latitude,longitude,address_full}, city={name,code}, work_time
-    $addr = $p['address'] ?? [];
-    $city = $p['city'] ?? [];
-
-    // location: CSV — массив [lat, lon], новый API — вложенный в address
+    // 1. CSV:                location=[lat, lon], address=строка, city=строка
+    // 2. /v2/deliverypoints: location={latitude,longitude,address,address_full,city,...}, address=строка, city=строка
     $loc = $p['location'] ?? [];
+
+    // location.latitude / location.longitude
     if (is_array($loc) && isset($loc[0]) && is_numeric($loc[0])) {
         // CSV формат: [lat, lon]
         $lat = $loc[0];
         $lon = $loc[1] ?? 0.0;
     } else {
-        // Новый API формат: address.latitude / address.longitude
-        $lat = $addr['latitude']  ?? $addr['lat']  ?? 0.0;
-        $lon = $addr['longitude'] ?? $addr['lon'] ?? 0.0;
+        // API формат: {latitude, longitude}
+        $lat = $loc['latitude']  ?? 0.0;
+        $lon = $loc['longitude'] ?? 0.0;
     }
 
-    // address: CSV — строка, новый API — address_full
-    $address = $p['address'] && is_string($p['address'])
-        ? $p['address']
-        : ($addr['address_full'] ?? $addr['address'] ?? '');
+    // address — строка на верхнем уровне, либо из location.address
+    $address = $p['address']
+        ?? ($loc['address_full'] ?? $loc['address'] ?? '');
 
-    // city: CSV — строка, новый API — объект {name, code}
-    $cityName = is_string($p['city'])
-        ? $p['city']
-        : ($city['name'] ?? '');
+    // city — строка на верхнем уровне (из API), city_code — из location
+    $cityName = $p['city'] ?? '';
+    $cityCode = $loc['city_code'] ?? '';
 
-    $cityCode = is_array($p['city'])
-        ? ($city['code'] ?? '')
-        : ($p['city_code'] ?? '');
+    // postal_code — из location
+    $postalCode = $loc['postal_code'] ?? $p['postal_code'] ?? '';
 
-    // work_time: разные имена полей
+    // country_code — из location, region — из location
+    $countryCode = $loc['country_code'] ?? $p['country_code'] ?? 'RU';
+    $region      = $loc['region'] ?? $p['region'] ?? '';
+
+    // work_time
     $workTime = $p['work_time'] ?? $p['workTime'] ?? '';
 
     return [
         'city_code'        => $cityCode,
         'city'            => $cityName,
         'type'            => $p['type']           ?? 'PVZ',
-        'postal_code'     => $p['postal_code']    ?? ($addr['postal_code'] ?? ''),
-        'country_code'    => $p['country_code']   ?? 'RU',
-        'region'          => $p['region']         ?? '',
+        'postal_code'     => $postalCode,
+        'country_code'    => $countryCode,
+        'region'          => $region,
         'have_cashless'   => $p['have_cashless']  ?? true,
         'have_cash'       => $p['have_cash']       ?? true,
         'allowed_cod'     => $p['allowed_cod']    ?? true,
