@@ -57,7 +57,7 @@ const props = defineProps({
   zoom:        { type: Number, default: 12 },
   markers:     { type: Array,  default: () => [] },
   activeCode: { type: String, default: null },
-  backendUrl:  { type: String, default: '/sdek-backend.php' },
+  backendUrl:  { type: String, default: '' },
 });
 
 const emit = defineEmits(['search', 'moveend', 'markerselect']);
@@ -179,6 +179,7 @@ function onMoveEnd(event) {
 
 // ---- Dadata suggestions ----
 async function doSuggest() {
+  console.log('[MapPane] doSuggest backendUrl:', props.backendUrl);
   if (!props.backendUrl) return;
   try {
     const url = props.backendUrl + '?action=suggest&query=' + encodeURIComponent(query.value.trim());
