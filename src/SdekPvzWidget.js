@@ -4,14 +4,7 @@
  * Vue 3 + OpenLayers (через vue3-openlayers), Vite-билд
  */
 import { createApp, h } from 'vue';
-import Vue3Openlayers from 'vue3-openlayers';
-
-// Явные импорты ol-* компонентов — предотвращаем tree-shaking в production
-import 'vue3-openlayers/map';
-import 'vue3-openlayers/layers';
-import 'vue3-openlayers/sources';
-import 'vue3-openlayers/geometries';
-
+import 'ol/ol.css';
 import PvzList from './components/PvzList.vue';
 import MapPane from './components/MapPane.vue';
 import './style.css';
@@ -186,7 +179,6 @@ export class SdekPvzWidget {
       },
     });
 
-    this._app.use(Vue3Openlayers);
     this._app.mount(this._overlay);
 
     // получаем корневой Vue instance и ref на MapPane

@@ -13,41 +13,21 @@
       <div v-if="searchError" class="sdwo-error">{{ searchError }}</div>
     </div>
 
-    <!-- OpenLayers карта -->
-    <div class="sdwo-map" ref="mapContainerRef" style="width:100%;min-height:300px;">
-      <ol-map
-        ref="olMapRef"
-        :load-tiles-while-animating="true"
-        :load-tiles-while-interacting="true"
-        style="width:100%;height:100%;"
-        @click="onClick"
-        @moveend="onMoveEnd"
-      >
-        <!-- Тайловый слой OSM -->
-        <ol-tile-layer>
-          <ol-source-osm />
-        </ol-tile-layer>
-
-        <!-- Векторный слой маркеров -->
-        <ol-vector-layer :style="markerStyleFn">
-          <ol-source-vector>
-            <ol-feature
-              v-for="pvz in markers"
-              :key="pvz.code"
-              :id="pvz.code"
-            >
-              <!-- coords: [lon, lat] — projection EPSG:3857 -->
-              <ol-geom-point :coordinates="toProj(pvz.location)" />
-            </ol-feature>
-          </ol-source-vector>
-        </ol-vector-layer>
-      </ol-map>
-    </div>
+    <!-- OpenLayers карта — создаём в onMounted -->
+    <div class="sdwo-map" ref="mapContainerRef" style="width:100%;min-height:300px;" />
   </div>
 </template>
 
 <script setup>
-import { ref, watch, onMounted, inject } from 'vue';
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
+import Map from 'ol/Map';
+import View from 'ol/View';
+import TileLayer from 'ol/layer/Tile';
+import VectorLayer from 'ol/layer/Vector';
+import OSM from 'ol/source/OSM';
+import VectorSource from 'ol/source/Vector';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
 import { fromLonLat } from 'ol/proj';
 import { Style, Circle, Stroke, Fill } from 'ol/style';
 
@@ -60,55 +40,65 @@ const props = defineProps({
 
 const emit = defineEmits(['search', 'moveend', 'markerselect']);
 
-// ol-map создаёт OlMap instance и provide'ит его — забираем через inject
-const olMap = inject('map');
-
-const olMapRef    = ref(null);
+// Refs
 const mapContainerRef = ref(null);
-const query       = ref('');
-const searchError = ref(null);
+const query          = ref('');
+const searchError     = ref(null);
+const mapRef         = ref(null); // OpenLayers Map instance
 
-let searchTimer = null;
+let searchTimer  = null;
+let vectorSource = null;
 
-// CDEK returns [lat, lon], OpenLayers needs [lon, lat] in EPSG:3857
+// Преобразование [lat, lon] → [lon, lat] в EPSG:3857
 function toProj(loc) {
   const [lat, lon] = loc || [];
-  if (!lat || !lon) return [0, 0];
+  if (!lat || !lon) return null;
   return fromLonLat([lon, lat]);
 }
 
-// Стиль маркера — factory function для каждого feature
-function markerStyleFn(feature) {
-  const code      = feature.getId();
-  const isActive  = code === props.activeCode;
-  const radius    = isActive ? 10 : 8;
-  const fillColor = isActive ? '#e53935' : '#c69b3c';
-  const strokeColor = isActive ? '#b80000' : '#fff';
-  const strokeWidth = 2;
-
+// Стиль маркера
+function markerStyle(feature) {
+  const code     = feature.getId();
+  const isActive = code === props.activeCode;
+  const radius   = isActive ? 10 : 8;
   return new Style({
     image: new Circle({
       radius,
-      fill: new Fill({ color: fillColor }),
-      stroke: new Stroke({ color: strokeColor, width: strokeWidth }),
+      fill: new Fill({ color: isActive ? '#e53935' : '#c69b3c' }),
+      stroke: new Stroke({ color: isActive ? '#b80000' : '#fff', width: 2 }),
     }),
   });
 }
 
-// клик по маркеру
+// Обновить маркеры на карте
+function updateMarkers() {
+  if (!vectorSource) return;
+  vectorSource.clear();
+  props.markers.forEach(pvz => {
+    const coords = toProj(pvz.location);
+    if (!coords) return;
+    const feature = new Feature({ geometry: new Point(coords) });
+    feature.setId(pvz.code);
+    feature.setStyle(markerStyle(feature));
+    vectorSource.addFeature(feature);
+  });
+}
+
+// Клик по маркеру
 function onClick(event) {
-  event.map.forEachFeatureAtPixel(event.pixel, feature => {
+  mapRef.value.forEachFeatureAtPixel(event.pixel, feature => {
     const code = feature.getId();
     if (code) emit('markerselect', code);
   });
 }
 
-// перемещение карты
+// Перемещение карты
 function onMoveEnd(event) {
-  emit('moveend', event.map.getView().calculateExtent(event.map.getSize()));
+  const extent = event.map.getView().calculateExtent(event.map.getSize());
+  emit('moveend', extent);
 }
 
-// поиск
+// Поиск
 function onSearch() {
   searchError.value = null;
   clearTimeout(searchTimer);
@@ -116,12 +106,14 @@ function onSearch() {
   searchTimer = setTimeout(() => emit('search', query.value.trim()), 400);
 }
 
-// ---- exposing для родителя ----
+// ---- API для родителя ----
 function panTo([lat, lon]) {
-  if (!olMap) return;
-  const view = olMap.getView();
-  if (!view) return;
-  view.animate({ center: fromLonLat([lon, lat]), zoom: props.zoom });
+  if (!mapRef.value) return;
+  mapRef.value.getView().animate({
+    center: fromLonLat([lon, lat]),
+    zoom:   props.zoom,
+    duration: 500,
+  });
 }
 
 function flashError(msg) {
@@ -129,23 +121,65 @@ function flashError(msg) {
 }
 
 function getBounds() {
-  if (!olMap) return null;
-  const view = olMap.getView();
-  if (!view) return null;
-  return view.calculateExtent(olMap.getSize());
+  if (!mapRef.value) return null;
+  return mapRef.value.getView().calculateExtent(mapRef.value.getSize());
 }
 
 defineExpose({ panTo, flashError, getBounds });
 
-// автопан при смене center — только когда карта готова
+// Автопан при смене center
 watch(() => props.center, val => {
-  if (val && olMap) panTo(val);
+  if (val && mapRef.value) panTo(val);
 });
 
-// Исправление width:0 — после монтирования сообщаем OL размеры контейнера
+// Пересоздавать маркеры при изменении списка или activeCode
+watch(
+  () => [props.markers, props.activeCode],
+  () => updateMarkers(),
+  { deep: true }
+);
+
+// Инициализация OpenLayers
 onMounted(() => {
-  if (olMap) {
-    setTimeout(() => olMap.updateSize(), 50);
+  const container = mapContainerRef.value;
+
+  vectorSource = new VectorSource();
+
+  const vectorLayer = new VectorLayer({
+    source: vectorSource,
+    style: f => markerStyle(f),
+  });
+
+  const map = new Map({
+    target: container,
+    layers: [
+      new TileLayer({ source: new OSM() }),
+      vectorLayer,
+    ],
+    view: new View({
+      center: props.center ? fromLonLat([props.center[1], props.center[0]]) : fromLonLat([37.6176, 55.7558]),
+      zoom:   props.zoom,
+    }),
+  });
+
+  mapRef.value = map;
+
+  map.on('click',      onClick);
+  map.on('moveend',     onMoveEnd);
+
+  // Первичные маркеры
+  updateMarkers();
+
+  // Если center задан и карта уже имеет центр — пан
+  if (props.center) {
+    setTimeout(() => panTo(props.center), 100);
+  }
+});
+
+onBeforeUnmount(() => {
+  if (mapRef.value) {
+    mapRef.value.setTarget(null);
+    mapRef.value = null;
   }
 });
 </script>

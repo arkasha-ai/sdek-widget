@@ -16,8 +16,6 @@ export default defineConfig({
     cssInjectedByJs(),
   ],
 
-
-
   build: {
     lib: {
       entry:    resolve(__dirname, 'src/index.js'),
@@ -26,13 +24,9 @@ export default defineConfig({
       formats:  ['umd'],
     },
     rollupOptions: {
-      external: ['ol'],
       output: {
         inlineDynamicImports: true,
         entryFileNames: 'SdekPvzWidget.js',
-        globals: {
-          ol: 'ol',
-        },
       },
     },
   },
