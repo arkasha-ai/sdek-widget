@@ -66,6 +66,27 @@ npm run build    # production build → dist/
 npm run preview  # preview production build
 ```
 
+### Docker Compose (рекомендуется)
+
+```bash
+# 1. Создать .env из example.env
+cp example.env .env
+
+# 2. Заполнить ключи в .env
+#    SDEK_CLIENT_ID=...
+#    SDEK_CLIENT_SECRET=...
+#    DADATA_API_KEY=...
+
+# 3. Запустить
+docker compose up -d
+```
+
+После запуска:
+- **Frontend**: http://localhost:5177 (Vite dev server с HMR)
+- **Backend**: http://localhost:8080 (PHP dev server)
+
+> **Важно**: для production-сборки используйте `npm run build` и настройте свой веб-сервер (nginx/apache) для раздачи статики и проксирования запросов к бэкенту.
+
 ## Настройка бэкенда
 
 В файле `sdek-backend.php` заполнить массив `$CONFIG`:
