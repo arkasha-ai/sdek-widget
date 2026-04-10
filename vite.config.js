@@ -28,14 +28,13 @@ export default defineConfig({
       entry:    resolve(__dirname, 'src/index.js'),
       name:     'SdekPvzWidget',
       fileName: 'SdekPvzWidget',
-      formats:  ['es', 'umd'],
+      formats:  ['umd'],
     },
     rollupOptions: {
       external: ['ol'],
       output: {
-        // Всё в один файл
-        entryFileNames: '[name].js',
         inlineDynamicImports: true,
+        entryFileNames: 'SdekPvzWidget.js',
         globals: {
           ol: 'ol',
         },
