@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onBeforeUnmount, withDefaults } from 'vue';
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
@@ -52,18 +52,12 @@ import Point from 'ol/geom/Point';
 import { fromLonLat, toLonLat } from 'ol/proj';
 import { Style, Circle, Stroke, Fill, Text, Icon } from 'ol/style';
 
-const props = withDefaults(defineProps({
-  center:      { type: Array },
-  zoom:        { type: Number },
-  markers:     { type: Array },
-  activeCode: { type: String },
-  backendUrl:  { type: String },
-}), {
-  center:      null,
-  zoom:        12,
-  markers:     () => [],
-  activeCode: '',
-  backendUrl:  '',
+const props = defineProps({
+  center:      { type: Array,   default: null },
+  zoom:        { type: Number,  default: 12 },
+  markers:     { type: Array,   default: () => [] },
+  activeCode: { type: String,  default: '' },
+  backendUrl:  { type: String,  default: '' },
 });
 
 const emit = defineEmits(['search', 'moveend', 'markerselect']);
