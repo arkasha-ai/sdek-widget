@@ -16,12 +16,12 @@
 // ================================================================
 $CONFIG = [
     // DaData API (https://dadata.ru/api/)
-    'DADATA_TOKEN' => 'YOUR_DADATA_TOKEN',          // Token из ЛК DaData
-    'DADATA_SECRET'=> 'YOUR_DADATA_SECRET',          // Secret (для подсказок, опц.)
+    'DADATA_TOKEN' => getenv('DADATA_API_KEY') ?: 'YOUR_DADATA_TOKEN',  // Token из ЛК DaData
+    'DADATA_SECRET'=> getenv('DADATA_SECRET')  ?: 'YOUR_DADATA_SECRET', // Secret (для подсказок, опц.)
 
     // СДЭК OAuth2 (https://www.cdek.ru/api/)
-    'CDEK_CLIENT_ID'     => 'YOUR_CDEK_CLIENT_ID',      // client_id
-    'CDEK_CLIENT_SECRET' => 'YOUR_CDEK_CLIENT_SECRET',  // client_secret
+    'CDEK_CLIENT_ID'     => getenv('SDEK_CLIENT_ID')     ?: 'YOUR_CDEK_CLIENT_ID',     // client_id
+    'CDEK_CLIENT_SECRET' => getenv('SDEK_CLIENT_SECRET') ?: 'YOUR_CDEK_CLIENT_SECRET', // client_secret
 ];
 
 // ================================================================
@@ -161,15 +161,14 @@ function handlePvzList(string $country, ?array $bbox): array {
 
     // фильтр по стране
     $pvz = array_filter($pvz, fn($p) =>
-        ($p['country_code'] ?? '') === $country ||
-        ($p['country_rus']  ?? '') === 'Россия'
+        ($p['location']['country_code'] ?? '') === $country
     );
 
     // фильтр по bbox
     if ($bbox && count($bbox) === 4) {
         [$minLon, $minLat, $maxLon, $maxLat] = $bbox;
         $pvz = array_filter($pvz, function ($p) use ($minLon, $minLat, $maxLon, $maxLat) {
-            [$lat, $lon] = $p['location'] ?? [];
+            list ('latitude' => $lat, 'longitude' => $lon) = $p['location'] ?? [];
             if ($lat === null || $lon === null) return false;
             return $lon >= $minLon && $lon <= $maxLon
                 && $lat >= $minLat && $lat <= $maxLat;
@@ -282,23 +281,23 @@ function pvzLoadFromCsv(): array {
 function normalizePvz(array $p): array {
     $loc = $p['location'] ?? [];
     return [
-        'city_code'       => $p['city_code']     ?? $p['city_uuid'] ?? '',
-        'city'           => $p['city']           ?? '',
+        'city_code'       => $loc['city_code']     ?? $loc['city_uuid'] ?? '',
+        'city'           => $loc['city']           ?? '',
         'type'           => $p['type']           ?? 'PVZ',
-        'postal_code'    => $p['postal_code']    ?? '',
-        'country_code'   => $p['country_code']   ?? 'RU',
-        'region'         => $p['region']         ?? '',
+        'postal_code'    => $loc['postal_code']    ?? '',
+        'country_code'   => $loc['country_code']   ?? 'RU',
+        'region'         => $loc['region']         ?? '',
         'have_cashless'  => $p['have_cashless']  ?? true,
         'have_cash'      => $p['have_cash']       ?? true,
         'allowed_cod'    => $p['allowed_cod']    ?? true,
         'is_dressing_room' => $p['is_dressing_room'] ?? false,
         'code'           => $p['code']            ?? '',
         'name'           => $p['name']            ?? ($p['code'] ?? ''),
-        'address'        => $p['address']        ?? '',
+        'address'        => $loc['address']        ?? '',
         'work_time'      => $p['work_time']      ?? '',
         'location'       => [
-            $loc[0] ?? 0.0,
-            $loc[1] ?? 0.0,
+            $loc['longitude'] ?? 0.0,
+            $loc['latitude'] ?? 0.0,
         ],
         'weight_min'     => $p['weight_min']     ?? 0,
         'weight_max'     => $p['weight_max']     ?? 100000000,
