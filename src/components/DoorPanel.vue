@@ -5,12 +5,17 @@
     </div>
 
     <div class="sdwo-panel__body">
+      <!-- Загрузка (до получения адреса) -->
+      <div v-if="loading && !address" class="sdwo-loader">
+        <div class="sdwo-spinner" />
+      </div>
+
       <!-- Ничего не выбрано -->
-      <div v-if="!address" class="sdwo-door__empty">
+      <div v-else-if="!address && !loading" class="sdwo-door__empty">
         Нажмите на карту, чтобы выбрать адрес доставки
       </div>
 
-      <template v-else>
+      <template v-else-if="address">
         <!-- Адрес -->
         <div class="sdwo-door__addr">{{ address }}</div>
         <div v-if="hint" class="sdwo-door__hint">{{ hint }}</div>

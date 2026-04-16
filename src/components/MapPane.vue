@@ -3,44 +3,85 @@
     <!-- OpenLayers карта -->
     <div class="sdwo-map" ref="mapContainerRef" />
 
-    <!-- Поиск с подсказками (внутри карты, top-left) -->
+    <!-- Поиск + кнопка фильтра (top-left на карте) -->
     <div class="sdwo-search">
-      <div class="sdwo-search-wrap">
-        <svg class="sdwo-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input
-          v-model="query"
-          type="text"
-          class="sdwo-input"
-          placeholder="Поиск адреса…"
-          autocomplete="off"
-          @input="onSearchInput"
-          @keydown.down.prevent="onKeyDown"
-          @keydown.up.prevent="onKeyUp"
-          @keydown.enter.prevent="onKeyEnter"
-          @keydown.escape="closeDropdown"
-          @blur="onBlur"
-          @focus="onFocus"
-        />
-        <ul v-if="suggestions.length && isOpen" class="sdwo-suggest-dropdown">
-          <li
-            v-for="(s, i) in suggestions"
-            :key="i"
-            :class="{ 'sdwo-suggest-active': i === activeIdx }"
-            @mousedown.prevent="selectSuggestion(s)"
-            @mouseenter="activeIdx = i"
+      <div class="sdwo-search-row">
+        <div class="sdwo-search-wrap">
+          <svg class="sdwo-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input
+            v-model="query"
+            type="text"
+            class="sdwo-input"
+            placeholder="Поиск адреса…"
+            autocomplete="off"
+            @input="onSearchInput"
+            @keydown.down.prevent="onKeyDown"
+            @keydown.up.prevent="onKeyUp"
+            @keydown.enter.prevent="onKeyEnter"
+            @keydown.escape="closeDropdown"
+            @blur="onBlur"
+            @focus="onFocus"
+          />
+          <ul v-if="suggestions.length && isOpen" class="sdwo-suggest-dropdown">
+            <li
+              v-for="(s, i) in suggestions"
+              :key="i"
+              :class="{ 'sdwo-suggest-active': i === activeIdx }"
+              @mousedown.prevent="selectSuggestion(s)"
+              @mouseenter="activeIdx = i"
+            >
+              {{ s.value }}
+            </li>
+          </ul>
+        </div>
+        <!-- Кнопка фильтра -->
+        <div style="position:relative;" v-if="mode === 'office'">
+          <button
+            class="sdwo-filter-btn"
+            :class="{ 'sdwo-filter-btn--active': hasActiveFilters }"
+            @click.stop="filterOpen = !filterOpen"
+            title="Фильтры"
           >
-            {{ s.value }}
-          </li>
-        </ul>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          </button>
+          <!-- Filter dropdown -->
+          <div v-if="filterOpen" class="sdwo-filter-drop" @click.stop>
+            <div class="sdwo-filter-drop__title">Тип пункта</div>
+            <div class="sdwo-filter-item" @click="toggleFilter('pvz')">
+              <span class="sdwo-filter-check" :class="{ 'sdwo-filter-check--on': filters.pvz }">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              ПВЗ
+            </div>
+            <div class="sdwo-filter-item" @click="toggleFilter('postamat')">
+              <span class="sdwo-filter-check" :class="{ 'sdwo-filter-check--on': filters.postamat }">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              Постамат
+            </div>
+            <div class="sdwo-filter-drop__title" style="margin-top:6px;">Услуги</div>
+            <div class="sdwo-filter-item" @click="toggleFilter('cash')">
+              <span class="sdwo-filter-check" :class="{ 'sdwo-filter-check--on': filters.cash }">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              Оплата наличными
+            </div>
+            <div class="sdwo-filter-item" @click="toggleFilter('cashless')">
+              <span class="sdwo-filter-check" :class="{ 'sdwo-filter-check--on': filters.cashless }">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              Оплата картой
+            </div>
+            <div class="sdwo-filter-item" @click="toggleFilter('dressing')">
+              <span class="sdwo-filter-check" :class="{ 'sdwo-filter-check--on': filters.dressing }">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </span>
+              Примерочная
+            </div>
+          </div>
+        </div>
       </div>
       <div v-if="searchError" class="sdwo-error">{{ searchError }}</div>
-    </div>
-
-    <!-- Кнопка тогла списка (top-right) -->
-    <div class="sdwo-list-toggle">
-      <button class="sdwo-map-btn" @click="$emit('togglepanel')" title="Список ПВЗ">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
     </div>
 
     <!-- Кнопки zoom / geolocation (bottom-right) -->
@@ -55,7 +96,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
@@ -77,7 +118,7 @@ const props = defineProps({
   mode:       { type: String,  default: 'office' }, // 'office' | 'door'
 });
 
-const emit = defineEmits(['moveend', 'markerselect', 'togglepanel', 'mapclick']);
+const emit = defineEmits(['moveend', 'markerselect', 'mapclick', 'filterchange']);
 
 // Refs
 const mapContainerRef = ref(null);
@@ -87,6 +128,33 @@ const mapRef          = ref(null);
 const suggestions     = ref([]);
 const activeIdx       = ref(-1);
 const isOpen          = ref(false);
+const filterOpen      = ref(false);
+
+// Фильтры — по умолчанию все включены
+const filters = ref({
+  pvz:      true,
+  postamat: true,
+  cash:     false,
+  cashless: false,
+  dressing: false,
+});
+
+const hasActiveFilters = computed(() =>
+  filters.value.cash || filters.value.cashless || filters.value.dressing ||
+  !filters.value.pvz || !filters.value.postamat
+);
+
+function toggleFilter(key) {
+  filters.value[key] = !filters.value[key];
+  // Не допускать отключения обоих типов
+  if (!filters.value.pvz && !filters.value.postamat) {
+    filters.value[key] = true;
+  }
+  emit('filterchange', { ...filters.value });
+}
+
+// Закрыть фильтр при клике вне
+function onDocClick() { filterOpen.value = false; }
 
 let searchTimer   = null;
 let vectorSource  = null;
@@ -367,9 +435,12 @@ onMounted(() => {
   if (props.center) {
     map.once('postrender', () => panTo(props.center));
   }
+
+  document.addEventListener('click', onDocClick);
 });
 
 onBeforeUnmount(() => {
+  document.removeEventListener('click', onDocClick);
   if (mapRef.value) {
     mapRef.value.setTarget(null);
     mapRef.value = null;

@@ -364,10 +364,13 @@ function reverseGeocodeNominatim(float $lat, float $lon): array {
     ]);
     $resp = curlExecJson($ch);
 
+    $city = $resp['address']['city'] ?? $resp['address']['town'] ?? '';
+    $cdekCode = $city ? findCdekCityCode($city) : null;
+
     return [
         'address'   => $resp['display_name'] ?? '',
-        'city'      => $resp['address']['city'] ?? $resp['address']['town'] ?? '',
-        'city_code' => null,
+        'city'      => $city,
+        'city_code' => $cdekCode ? (string) $cdekCode : null,
         'precision' => !empty($resp['address']['house_number']) ? 'house' : 'street',
         'lat'       => $resp['lat'] ?? $lat,
         'lon'       => $resp['lon'] ?? $lon,

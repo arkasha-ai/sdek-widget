@@ -116,6 +116,10 @@ export class SdekPvzWidget {
 
         // Map
         mapCenter:  null,
+
+        // Filters
+        filters: { pvz: true, postamat: true, cash: false, cashless: false, dressing: false },
+        lastBounds: null,
       }),
 
       methods: {
@@ -128,22 +132,41 @@ export class SdekPvzWidget {
           } else {
             this.panel = 'none';
             this.panelOpen = true;
-            // Сбросить door state
             this.doorAddress = null;
             this.doorTariffs = [];
           }
         },
 
+        // --- Filters ---
+        onFilterChange(f) {
+          this.filters = f;
+          // Перефильтровать с последними bounds
+          if (this.lastBounds) this.onMapMoveend(this.lastBounds);
+        },
+
+        _applyFilters(list) {
+          return list.filter(p => {
+            const type = (p.type || 'PVZ').toUpperCase();
+            if (type === 'PVZ' && !this.filters.pvz) return false;
+            if (type === 'POSTAMAT' && !this.filters.postamat) return false;
+            if (this.filters.cash && !p.have_cash) return false;
+            if (this.filters.cashless && !p.have_cashless) return false;
+            if (this.filters.dressing && !p.is_dressing_room) return false;
+            return true;
+          });
+        },
+
         // --- Map events ---
         onMapMoveend(bounds) {
           if (!bounds) return;
+          this.lastBounds = bounds;
           const [minLon, minLat, maxLon, maxLat] = bounds;
           const visible = self._pvzAll.filter(p => {
             const [la, lo] = p.location || [];
             if (!lo || !la) return false;
             return lo >= minLon && lo <= maxLon && la >= minLat && la <= maxLat;
           });
-          this.list = sortByBounds(visible, bounds);
+          this.list = sortByBounds(this._applyFilters(visible), bounds);
         },
 
         onMarkerSelect(code) {
@@ -266,19 +289,13 @@ export class SdekPvzWidget {
       render() {
         const children = [];
 
-        // 1. Close button
-        children.push(
-          h('button', {
-            class: 'sdwo-close',
-            onClick: () => this.close(),
-          }, '\u00D7')
-        );
-
-        // 2. Segmented Control
+        // 1. Segmented Control
         children.push(
           h(SegmentedControl, {
             modelValue: this.mode,
             'onUpdate:modelValue': this.onModeChange,
+            onTogglepanel: this.togglePanel,
+            onClose: () => this.close(),
           })
         );
 
@@ -297,8 +314,8 @@ export class SdekPvzWidget {
             mode:       this.mode,
             onMoveend:      this.onMapMoveend,
             onMarkerselect: this.onMarkerSelect,
-            onTogglepanel:  this.togglePanel,
             onMapclick:     this.onMapClick,
+            onFilterchange: this.onFilterChange,
           })
         );
 
