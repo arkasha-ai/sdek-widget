@@ -1,8 +1,12 @@
 <template>
   <div class="sdwo-map-col">
-    <!-- Поиск с подсказками Dadata -->
-    <div class="sdwo-search-row">
+    <!-- OpenLayers карта -->
+    <div class="sdwo-map" ref="mapContainerRef" />
+
+    <!-- Поиск с подсказками (внутри карты, top-left) -->
+    <div class="sdwo-search">
       <div class="sdwo-search-wrap">
+        <svg class="sdwo-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input
           v-model="query"
           type="text"
@@ -17,8 +21,7 @@
           @blur="onBlur"
           @focus="onFocus"
         />
-        <!-- Выпадающий список -->
-        <ul v-if="suggestions.length" class="sdwo-suggest-dropdown">
+        <ul v-if="suggestions.length && isOpen" class="sdwo-suggest-dropdown">
           <li
             v-for="(s, i) in suggestions"
             :key="i"
@@ -26,15 +29,28 @@
             @mousedown.prevent="selectSuggestion(s)"
             @mouseenter="activeIdx = i"
           >
-            <span class="sdwo-suggest-value">{{ s.value }}</span>
+            {{ s.value }}
           </li>
         </ul>
       </div>
       <div v-if="searchError" class="sdwo-error">{{ searchError }}</div>
     </div>
 
-    <!-- OpenLayers карта -->
-    <div class="sdwo-map" ref="mapContainerRef" style="width:100%;min-height:300px;" />
+    <!-- Кнопка тогла списка (top-right) -->
+    <div class="sdwo-list-toggle">
+      <button class="sdwo-map-btn" @click="$emit('togglepanel')" title="Список ПВЗ">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Кнопки zoom / geolocation (bottom-right) -->
+    <div class="sdwo-map-controls">
+      <button class="sdwo-map-btn" @click="zoomIn" title="Приблизить">+</button>
+      <button class="sdwo-map-btn" @click="zoomOut" title="Отдалить">−</button>
+      <button class="sdwo-map-btn sdwo-map-btn--geo" @click="geolocate" title="Моё местоположение">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -53,14 +69,15 @@ import { fromLonLat, toLonLat } from 'ol/proj';
 import { Style, Circle, Stroke, Fill, Text, Icon } from 'ol/style';
 
 const props = defineProps({
-  center:      { type: Array,   default: null },
-  zoom:        { type: Number,  default: 12 },
-  markers:     { type: Array,   default: () => [] },
+  center:     { type: Array,   default: null },
+  zoom:       { type: Number,  default: 12 },
+  markers:    { type: Array,   default: () => [] },
   activeCode: { type: String,  default: '' },
-  backendUrl:  { type: String,  default: '' },
+  backendUrl: { type: String,  default: '' },
+  mode:       { type: String,  default: 'office' }, // 'office' | 'door'
 });
 
-const emit = defineEmits(['search', 'moveend', 'markerselect']);
+const emit = defineEmits(['moveend', 'markerselect', 'togglepanel', 'mapclick']);
 
 // Refs
 const mapContainerRef = ref(null);
@@ -71,89 +88,105 @@ const suggestions     = ref([]);
 const activeIdx       = ref(-1);
 const isOpen          = ref(false);
 
-let searchTimer  = null;
-let vectorSource = null;
+let searchTimer   = null;
+let vectorSource  = null;
 let clusterSource = null;
 
-// SVG-иконки ПВЗ (CDEK-стиль) — normal и active
-const ICON_NORMAL = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyOCIgaGVpZ2h0PSIzNiIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iIzFhYjI0OCIgZD0iTTI4IDE0LjM0NGExNC41NSAxNC41NSAwIDAgMS0yLjEyIDcuNTk0QzIwLjIgMzEuMjQ1IDE0IDM2IDE0IDM2UzcuOCAzMS4yNDUgMi4xMiAyMS45MzhBMTQuNTQgMTQuNTQgMCAwIDEgMCAxNC4zNDNDMCA2LjQyMiA2LjI2OCAwIDE0IDBzMTQgNi40MjIgMTQgMTQuMzQ0Ii8+PHJlY3Qgd2lkdGg9IjIyIiBoZWlnaHQ9IjIyIiB4PSIzIiB5PSIzIiBmaWxsPSIjZmZmIiByeD0iMTEiLz48cGF0aCBmaWxsPSIjMWFiMjQ4IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yMC43OTQgMTcuNjI0aC0uODE0Yy4xODQuMzA0LjI5Mi42NTYuMjkyIDEuMDMzIDAgMS4xMzgtLjk2OSAyLjA2NS0yLjE2IDIuMDY1LTEuMTkgMC0yLjE2LS45MjctMi4xNi0yLjA2NSAwLS4zNzcuMTA4LS43MjkuMjkzLTEuMDMzaC0yLjU2NGMuMTg1LjMwNC4yOTIuNjU2LjI5MiAxLjAzMyAwIDEuMTM4LS45NjggMi4wNjUtMi4xNTkgMi4wNjVzLTIuMTYtLjkyNy0yLjE2LTIuMDY1YzAtLjM3Ny4xMDgtLjcyOS4yOTMtMS4wMzNoLS44MjNhLjUzLjUzIDAgMCAxLS41NC0uNTE2bC0uMDEtNy4xMjQtMS43NS0xLjY3NGEuNS41IDAgMCAxIDAtLjczLjU2LjU2IDAgMCAxIC43NjQgMGwxLjkyNyAxLjg0M2MuMDA4LjAwNy4wMS4wMTYuMDE2LjAyNGEuNS41IDAgMCAxIC4wNTkuMDgzLjUuNSAwIDAgMSAuMDY0LjM0OWwuMDEgNi43MTJoMTEuMTNhLjUzLjUzIDAgMCAxIC41NC41MTcuNTMuNTMgMCAwIDEtLjU0LjUxNm0tOC45OCAwYy0uNTk1IDAtMS4wOC40NjMtMS4wOCAxLjAzM3MuNDg1IDEuMDMyIDEuMDggMS4wMzIgMS4wOC0uNDYzIDEuMDgtMS4wMzJjMC0uNTctLjQ4NS0xLjAzMy0xLjA4LTEuMDMzbTUuMjE4IDEuMDMzYzAgLjU2OS40ODUgMS4wMzIgMS4wOCAxLjAzMnMxLjA4LS40NjMgMS4wOC0xLjAzMmMwLS41Ny0uNDg0LTEuMDMzLTEuMDgtMS4wMzMtLjU5NSAwLTEuMDguNDYzLTEuMDggMS4wMzNtMi42ODItMy4wOThoLTguNDc2YS41My41MyAwIDAgMS0uNTQtLjUxN1Y3Ljc5M2MwLS4yODUuMjQyLS41MTYuNTQtLjUxNmg0LjgwNWwzLjY3MS4wMmMuMjk4IDAgLjU0LjIzMS41NC41MTZ2Ny4yM2EuNTMuNTMgMCAwIDEtLjU0LjUxNm0tLjU0LTcuMjMtMy4xMzEtLjAydjEuNTVhLjUzLjUzIDAgMCAxLS41NC41MTYuNTMuNTMgMCAwIDEtLjU0LS41MTZ2LTEuNTVoLTMuMTg1djYuMjE3aDcuMzk2eiIgY2xpcC1ydWxlPSJldmVub2RkIi8+PHJlY3Qgd2lkdGg9IjIyIiBoZWlnaHQ9IjIyIiB4PSIzIiB5PSIzIiBmaWxsPSIjZmZmIiByeD0iMTEiLz48cmVjdCB3aWR0aD0iMjIiIGhlaWdodD0iMjIiIHg9IjMiIHk9IjMiIGZpbGw9IiNmZmYiIHJ4PSIxMSIvPjxwYXRoIHN0cm9rZT0iIzFhYjI0OCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuMiIgZD0iTTggMTloMTJNOS4zMzMgMTlWOS42NjdMMTQuNjY3IDd2MTJtNCAwdi02LjY2N2wtNC0yLjY2Nk0xMiAxMXYuMDA3TTEyIDEzdi4wMDdNMTIgMTV2LjAwN00xMiAxN3YuMDA3Ii8+PC9zdmc+';
-const ICON_ACTIVE = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyOCIgaGVpZ2h0PSIzNiIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iIzFhYjI0OCIgZD0iTTI4IDE0LjM0NGExNC41NSAxNC41NSAwIDAgMS0yLjEyIDcuNTk0QzIwLjIgMzEuMjQ1IDE0IDM2IDE0IDM2UzcuOCAzMS4yNDUgMi4xMiAyMS45MzhBMTQuNTQgMTQuNTQgMCAwIDEgMCAxNC4zNDNDMCA2LjQyMiA2LjI2OCAwIDE0IDBzMTQgNi40MjIgMTQgMTQuMzQ0Ii8+PHJlY3Qgd2lkdGg9IjIyIiBoZWlnaHQ9IjIyIiB4PSIzIiB5PSIzIiBmaWxsPSIjZmZmIiByeD0iMTEiLz48cGF0aCBmaWxsPSIjMWFiMjQ4IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yMC43OTQgMTcuNjI0aC0uODE0Yy4xODQuMzA0LjI5Mi42NTYuMjkyIDEuMDMzIDAgMS4xMzgtLjk2OSAyLjA2NS0yLjE2IDIuMDY1LTEuMTkgMC0yLjE2LS45MjctMi4xNi0yLjA2NSAwLS4zNzcuMTA4LS43MjkuMjkzLTEuMDMzaC0yLjU2NGMuMTg1LjMwNC4yOTIuNjU2LjI5MiAxLjAzMyAwIDEuMTM4LS45NjggMi4wNjUtMi4xNTkgMi4wNjVzLTIuMTYtLjkyNy0yLjE2LTIuMDY1YzAtLjM3Ny4xMDgtLjcyOS4yOTMtMS4wMzNoLS44MjNhLjUzLjUzIDAgMCAxLS41NC0uNTE2bC0uMDEtNy4xMjQtMS43NS0xLjY3NGEuNS41IDAgMCAxIDAtLjczLjU2LjU2IDAgMCAxIC43NjQgMGwxLjkyNyAxLjg0M2MuMDA4LjAwNy4wMS4wMTYuMDE2LjAyNGEuNS41IDAgMCAxIC4wNTkuMDgzLjUuNSAwIDAgMSAuMDY0LjM0OWwuMDEgNi43MTJoMTEuMTNhLjUzLjUzIDAgMCAxIC41NC41MTcuNTMuNTMgMCAwIDEtLjU0LjUxNm0tOC45OCAwYy0uNTk1IDAtMS4wOC40NjMtMS4wOCAxLjAzM3MuNDg1IDEuMDMyIDEuMDggMS4wMzIgMS4wOC0uNDYzIDEuMDgtMS4wMzJjMC0uNTctLjQ4NS0xLjAzMy0xLjA4LTEuMDMzbTUuMjE4IDEuMDMzYzAgLjU2OS40ODUgMS4wMzIgMS4wOCAxLjAzMnMxLjA4LS40NjMgMS4wOC0xLjAzMmMwLS41Ny0uNDg0LTEuMDMzLTEuMDgtMS4wMzMtLjU5NSAwLTEuMDguNDYzLTEuMDggMS4wMzNtMi42ODItMy4wOThoLTguNDc2YS41My41MyAwIDAgMS0uNTQtLjUxN1Y3Ljc5M2MwLS4yODUuMjQyLS41MTYuNTQtLjUxNmg0LjgwNWwzLjY3MS4wMmMuMjk4IDAgLjU0LjIzMS41NC41MTZ2Ny4yM2EuNTMuNTMgMCAwIDEtLjU0LjUxNm0tLjU0LTcuMjMtMy4xMzEtLjAydjEuNTVhLjUzLjUzIDAgMCAxLS41NC41MTYuNTMuNTMgMCAwIDEtLjU0LS41MTZ2LTEuNTVoLTMuMTg1djYuMjE3aDcuMzk2eiIgY2xpcC1ydWxlPSJldmVub2RkIi8+PHJlY3Qgd2lkdGg9IjIyIiBoZWlnaHQ9IjIyIiB4PSIzIiB5PSIzIiBmaWxsPSIjZmZmIiByeD0iMTEiLz48cmVjdCB3aWR0aD0iMjIiIGhlaWdodD0iMjIiIHg9IjMiIHk9IjMiIGZpbGw9IiNmZmYiIHJ4PSIxMSIvPjxwYXRoIHN0cm9rZT0iIzFhYjI0OCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjEuMiIgZD0iTTggMTloMTJNOS4zMzMgMTlWOS42NjdMMTQuNjY3IDd2MTJtNCAwdi02LjY2N2wtNC0yLjY2Nk0xMiAxMXYuMDA3TTEyIDEzdi4wMDdNMTIgMTV2LjAwN00xMiAxN3YuMDA3Ii8+PC9zdmc+';
+// ---- SVG маркеры (inline data URI) ----
+// Пин с иконкой здания внутри (стиль СДЭК)
+function makePinSvg(pinColor, strokeColor) {
+  return 'data:image/svg+xml;base64,' + btoa(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="36" fill="none">` +
+    `<path fill="${pinColor}" d="M28 14.344a14.55 14.55 0 0 1-2.12 7.594C20.2 31.245 14 36 14 36S7.8 31.245 2.12 21.938A14.54 14.54 0 0 1 0 14.343C0 6.422 6.268 0 14 0s14 6.422 14 14.344"/>` +
+    `<rect width="22" height="22" x="3" y="3" fill="#fff" rx="11"/>` +
+    `<path stroke="${strokeColor}" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2" ` +
+    `d="M8 19h12M9.333 19V9.667L14.667 7v12m4 0v-6.667l-4-2.666M12 11v.007M12 13v.007M12 15v.007M12 17v.007"/>` +
+    `</svg>`
+  );
+}
 
-// Преобразование [lat, lon] → [lon, lat] в EPSG:3857
+const PIN_GREEN  = makePinSvg('#1AB248', '#1AB248');
+const PIN_PURPLE = makePinSvg('#4B3C87', '#4B3C87');
+const PIN_GREEN_ACTIVE = makePinSvg('#158E3A', '#158E3A');
+
+// [lat, lon] → EPSG:3857
 function toProj(loc) {
   const [lat, lon] = loc || [];
   if (!lat || !lon) return null;
   return fromLonLat([lon, lat]);
 }
 
-// Стиль маркера — SVG-иконка ПВЗ (CDEK-стиль)
+// Стиль маркера
 function markerStyle(feature) {
   const code     = feature.getId();
+  const type     = feature.get('pvzType') || 'PVZ';
   const isActive = code === props.activeCode;
+
+  let src = type === 'POSTAMAT' ? PIN_PURPLE : PIN_GREEN;
+  let scale = 0.85;
+  if (isActive) { src = PIN_GREEN_ACTIVE; scale = 1.05; }
+
   return new Style({
     image: new Icon({
-      src:      isActive ? ICON_ACTIVE : ICON_NORMAL,
-      scale:    0.9,
-      anchor:   [0.5, 1.0],   // низ иконки по центру = точка на карте
+      src,
+      scale,
+      anchor: [0.5, 1.0],
       anchorXUnits: 'fraction',
       anchorYUnits: 'fraction',
     }),
   });
 }
 
-// Стиль кластера
-function clusterStyle(feature, resolution) {
-  const size   = feature.get('features').length;
+// Стиль кластера (зелёная pill)
+function clusterStyle(feature) {
+  const size = feature.get('features').length;
   return new Style({
     image: new Circle({
-      radius: 10,                                      // 20px диаметр
-      fill: new Fill({ color: '#ffffff' }),
-      stroke: new Stroke({ color: '#1AB248', width: 2 }),
+      radius: 14,
+      fill: new Fill({ color: '#1AB248' }),
+      stroke: new Stroke({ color: '#fff', width: 2 }),
     }),
     text: new Text({
       text: String(size),
-      fill: new Fill({ color: '#1AB248' }),
-      font: 'bold 11px sans-serif',
+      fill: new Fill({ color: '#fff' }),
+      font: 'bold 11px Roboto, sans-serif',
     }),
   });
 }
 
-// Обновить стили всех маркеров (вызывается при смене activeCode)
 function updateMarkerStyles() {
-  if (!clusterSource) return;
-  // Для одиночных маркеров (не кластеры) обновляем стиль
-  clusterSource.getSource().forEachFeature(feature => {
-    feature.setStyle(markerStyle(feature));
-  });
+  if (!vectorSource) return;
+  vectorSource.forEachFeature(f => f.setStyle(markerStyle(f)));
 }
 
-// Полностью пересоздать маркеры (вызывается при смене списка)
 function updateMarkers() {
-  if (!clusterSource) return;
-  clusterSource.getSource().clear();
+  if (!vectorSource) return;
+  vectorSource.clear();
   const features = [];
   props.markers.forEach(pvz => {
     const coords = toProj(pvz.location);
     if (!coords) return;
     const feature = new Feature({ geometry: new Point(coords) });
     feature.setId(pvz.code);
+    feature.set('pvzType', pvz.type || 'PVZ');
     feature.setStyle(markerStyle(feature));
     features.push(feature);
   });
-  clusterSource.getSource().addFeatures(features);
+  vectorSource.addFeatures(features);
 }
 
-// Клик по маркеру / кластеру
+// Клик по маркеру / кластеру (stop on first hit)
 function onClick(event) {
+  let handled = false;
   mapRef.value.forEachFeatureAtPixel(event.pixel, feature => {
+    if (handled) return;
+    handled = true;
     const features = feature.get('features');
     if (features) {
       if (features.length > 1) {
-        // Кластер — zoom in к центру кластера
-        const clusterCenter = feature.getGeometry().getCoordinates();
         mapRef.value.getView().animate({
-          center: clusterCenter,
-          zoom:   mapRef.value.getView().getZoom() + 2,
+          center: feature.getGeometry().getCoordinates(),
+          zoom: mapRef.value.getView().getZoom() + 2,
           duration: 300,
         });
       } else if (features.length === 1) {
@@ -164,25 +197,52 @@ function onClick(event) {
       const code = feature.getId();
       if (code) emit('markerselect', code);
     }
+    return true;
   });
+
+  // Для режима door: если клик не по маркеру — emit координаты
+  if (!handled && props.mode === 'door') {
+    const coords = toLonLat(event.coordinate);
+    emit('mapclick', [coords[1], coords[0]]); // [lat, lon]
+  }
 }
 
-// Перемещение карты
 function onMoveEnd(event) {
   const extent = event.map.getView().calculateExtent(event.map.getSize());
-  // Конвертируем EPSG:3857 → [lon, lat] WGS84 для корректной фильтрации
-  const [west, south, east, north] = extent;
-  const sw = toLonLat([west, south]);  // [lon, lat]
-  const ne = toLonLat([east, north]); // [lon, lat]
-  emit('moveend', [sw[0], sw[1], ne[0], ne[1]]); // [minLon, minLat, maxLon, maxLat] WGS84
+  const sw = toLonLat([extent[0], extent[1]]);
+  const ne = toLonLat([extent[2], extent[3]]);
+  emit('moveend', [sw[0], sw[1], ne[0], ne[1]]);
 }
 
-// ---- Dadata suggestions ----
+// ---- Custom zoom / geolocation ----
+function zoomIn() {
+  const view = mapRef.value?.getView();
+  if (view) view.animate({ zoom: view.getZoom() + 1, duration: 200 });
+}
+function zoomOut() {
+  const view = mapRef.value?.getView();
+  if (view) view.animate({ zoom: view.getZoom() - 1, duration: 200 });
+}
+function geolocate() {
+  if (!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const { latitude, longitude } = pos.coords;
+      mapRef.value?.getView().animate({
+        center: fromLonLat([longitude, latitude]),
+        zoom: 14,
+        duration: 500,
+      });
+    },
+    () => { searchError.value = 'Не удалось определить местоположение'; }
+  );
+}
+
+// ---- DaData suggest ----
 async function doSuggest() {
   if (!props.backendUrl) return;
   try {
     let url = props.backendUrl + '?action=suggest&query=' + encodeURIComponent(query.value.trim());
-    // Передаём координаты центра карты для приоритизации поиска
     if (mapRef.value) {
       const center = mapRef.value.getView().getCenter();
       const [lon, lat] = toLonLat(center);
@@ -213,17 +273,13 @@ function onSearchInput() {
 
 function onKeyDown() { if (activeIdx.value < suggestions.value.length - 1) activeIdx.value++; }
 function onKeyUp()   { if (activeIdx.value > 0) activeIdx.value--; }
-
 function onKeyEnter() {
   if (activeIdx.value >= 0 && suggestions.value[activeIdx.value]) {
     selectSuggestion(suggestions.value[activeIdx.value]);
   }
 }
-
 function closeDropdown() { isOpen.value = false; }
-
 function onBlur() { setTimeout(() => { isOpen.value = false; }, 150); }
-
 function onFocus() { if (suggestions.value.length > 0) isOpen.value = true; }
 
 function selectSuggestion(s) {
@@ -232,8 +288,7 @@ function selectSuggestion(s) {
   isOpen.value = false;
   activeIdx.value = -1;
 
-  if (s.lat && s.lon) {
-    // Zoom по типу объекта: house > street > settlement > city
+  if (s.lat != null && s.lon != null) {
     const zoomMap = { house: 17, street: 15, settlement: 13, city: 12 };
     const zoom = zoomMap[s.type] ?? 12;
     mapRef.value.getView().animate({
@@ -241,16 +296,15 @@ function selectSuggestion(s) {
       zoom,
       duration: 500,
     });
-    emit('search', s.value);
   }
 }
 
-// ---- API для родителя ----
+// ---- API for parent ----
 function panTo([lat, lon], zoom = null) {
   if (!mapRef.value) return;
   mapRef.value.getView().animate({
     center: fromLonLat([lon, lat]),
-    zoom:   zoom ?? props.zoom,
+    zoom: zoom ?? props.zoom,
     duration: 500,
   });
 }
@@ -260,29 +314,20 @@ function flashError(msg) { searchError.value = msg; }
 function getBounds() {
   if (!mapRef.value) return null;
   const extent = mapRef.value.getView().calculateExtent(mapRef.value.getSize());
-  const [west, south, east, north] = extent;
-  const sw = toLonLat([west, south]);
-  const ne = toLonLat([east, north]);
+  const sw = toLonLat([extent[0], extent[1]]);
+  const ne = toLonLat([extent[2], extent[3]]);
   return [sw[0], sw[1], ne[0], ne[1]];
 }
 
 defineExpose({ panTo, flashError, getBounds });
 
-// Автопан при смене center
-watch(() => props.center, val => {
-  if (val && mapRef.value) panTo(val);
-});
-
-// Обновлять стили маркеров при смене activeCode
+// Watchers
+watch(() => props.center, val => { if (val && mapRef.value) panTo(val); });
 watch(() => props.activeCode, () => updateMarkerStyles());
+watch(() => props.markers, () => updateMarkers());
 
-// Пересоздавать маркеры при изменении списка
-watch(() => props.markers, () => updateMarkers(), { deep: true });
-
-// Инициализация OpenLayers
+// Init OpenLayers
 onMounted(() => {
-  const container = mapContainerRef.value;
-
   vectorSource = new VectorSource();
   clusterSource = new Cluster({
     distance: 40,
@@ -292,36 +337,35 @@ onMounted(() => {
 
   const vectorLayer = new VectorLayer({
     source: clusterSource,
-    style: (f, r) => {
+    style: (f) => {
       const features = f.get('features');
-      if (features && features.length > 1) return clusterStyle(f, r);
+      if (features && features.length > 1) return clusterStyle(f);
       return markerStyle(f);
     },
   });
 
   const map = new Map({
-    target: container,
+    target: mapContainerRef.value,
     layers: [
       new TileLayer({ source: new OSM() }),
       vectorLayer,
     ],
     view: new View({
-      center: props.center ? fromLonLat([props.center[1], props.center[0]]) : fromLonLat([37.6176, 55.7558]),
-      zoom:   props.zoom,
+      center: props.center
+        ? fromLonLat([props.center[1], props.center[0]])
+        : fromLonLat([37.6176, 55.7558]),
+      zoom: props.zoom,
     }),
+    controls: [], // убираем стандартные OL controls
   });
 
   mapRef.value = map;
-
-  map.on('click',      onClick);
-  map.on('moveend',     onMoveEnd);
-
-  // Первичные маркеры
+  map.on('click', onClick);
+  map.on('moveend', onMoveEnd);
   updateMarkers();
 
-  // Если center задан и карта уже имеет центр — пан
   if (props.center) {
-    setTimeout(() => panTo(props.center), 100);
+    map.once('postrender', () => panTo(props.center));
   }
 });
 

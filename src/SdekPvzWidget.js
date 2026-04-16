@@ -1,13 +1,38 @@
 /**
  * SdekPvzWidget.js
  * Виджет выбора ПВЗ СДЭК с расчётом тарифа
- * Vue 3 + OpenLayers (через vue3-openlayers), Vite-билд
+ * Дизайн и UX повторяют оригинальный виджет СДЭК v3
+ * Vue 3 + OpenLayers, Vite-билд
  */
 import { createApp, h } from 'vue';
 import 'ol/ol.css';
-import PvzList from './components/PvzList.vue';
+import SegmentedControl from './components/SegmentedControl.vue';
 import MapPane from './components/MapPane.vue';
+import PvzList from './components/PvzList.vue';
+import PvzDetail from './components/PvzDetail.vue';
+import DoorPanel from './components/DoorPanel.vue';
 import './style.css';
+
+const FETCH_TIMEOUT_MS = 15000;
+
+/**
+ * Сортирует ПВЗ по расстоянию от центра bbox.
+ * Возвращает shallow-клоны с полем _dist (км). Не мутирует оригиналы.
+ */
+function sortByBounds(pvzList, bounds) {
+  if (!bounds) return pvzList;
+  const [minLon, minLat, maxLon, maxLat] = bounds;
+  const clon = (minLon + maxLon) / 2;
+  const clat = (minLat + maxLat) / 2;
+  return [...pvzList]
+    .map(p => {
+      const [la, lo] = p.location || [0, 0];
+      const d = Math.hypot(lo - clon, la - clat);
+      return { ...p, _dist: (d * 111).toFixed(1), _d: d };
+    })
+    .sort((a, b) => a._d - b._d)
+    .map(({ _d, ...rest }) => rest);
+}
 
 export class SdekPvzWidget {
   /**
@@ -15,20 +40,20 @@ export class SdekPvzWidget {
    * @param {string}          options.defaultLocation  — город для фокуса карты
    * @param {string}          options.fromLocation     — город отправления
    * @param {Array<Object>}   options.packages         — [{length,width,height,weight}]
-   * @param {Function}        options.onChoose         — (type, tariff, address) => void
+   * @param {Function}        options.onChoose         — (mode, tariff, target) => void
    * @param {string}         [options.backendUrl]      — URL sdek-backend.php
    */
   constructor(options = {}) {
     this.defaultLocation = options.defaultLocation || 'Москва';
     this.fromLocation    = options.fromLocation    || 'Москва';
-    this.packages        = options.packages         || [];
-    this.onChoose        = options.onChoose         || (() => {});
-    this.backendUrl      = options.backendUrl       || './sdek-backend.php';
+    this.packages        = options.packages        || [];
+    this.onChoose        = options.onChoose        || (() => {});
+    this.backendUrl      = options.backendUrl      || './sdek-backend.php';
 
-    this._overlay   = null;
-    this._app       = null;
-    this._pvzAll    = [];
-    this._isOpen    = false;
+    this._overlay = null;
+    this._app     = null;
+    this._pvzAll  = [];
+    this._isOpen  = false;
   }
 
   // ----------------------------------------------------------
@@ -38,7 +63,6 @@ export class SdekPvzWidget {
     if (this._isOpen) return;
     this._isOpen = true;
     this._mount();
-    document.body.appendChild(this._overlay);
     this._loadInitial();
   }
 
@@ -46,75 +70,72 @@ export class SdekPvzWidget {
     if (!this._isOpen) return;
     this._isOpen = false;
     if (this._app) { this._app.unmount(); this._app = null; }
-    if (this._overlay && this._overlay.parentNode) {
-      this._overlay.parentNode.removeChild(this._overlay);
-    }
+    if (this._overlay?.parentNode) this._overlay.parentNode.removeChild(this._overlay);
     this._overlay = null;
     this._vm      = null;
     this._mapRef  = null;
-    this._listRef = null;
   }
 
   // ----------------------------------------------------------
-  // Mount Vue app (с vue3-openlayers)
+  // Mount Vue app
   // ----------------------------------------------------------
   _mount() {
     this._overlay = document.createElement('div');
     this._overlay.className = 'sdwo-overlay';
-
-    // ---- sort helper ----
-    const sortByBounds = (pvzList, bounds) => {
-      if (!bounds) return pvzList;
-      const [minLon, minLat, maxLon, maxLat] = bounds;
-      const clon = (minLon + maxLon) / 2;
-      const clat = (minLat + maxLat) / 2;
-      return [...pvzList].sort((a, b) => {
-        const [la, lo] = a.location || [0, 0];
-        const [lb, loB] = b.location || [0, 0];
-        return Math.hypot(lo - clon, la - clat) - Math.hypot(loB - clon, lb - clat);
-      }).map(p => {
-        const [la, lo] = p.location || [0, 0];
-        p._dist = (Math.hypot(lo - clon, la - clat) * 111).toFixed(1);
-        return p;
-      });
-    };
-
-    // данные reactive
-    const vm = {
-      list:      [],
-      active:    null,
-      loading:   true,
-      listError: null,
-      tariff:    null,
-      pvz:       null,
-      mapCenter: null,
-      // ref к MapPane (устанавливается после mount)
-      _mapRef:   null,
-    };
+    document.body.appendChild(this._overlay);
 
     const self = this;
 
     this._app = createApp({
-      components: { MapPane, PvzList },
+      components: { SegmentedControl, MapPane, PvzList, PvzDetail, DoorPanel },
 
-      data: () => vm,
+      data: () => ({
+        // State machine
+        mode:       'office',    // 'office' | 'door'
+        panel:      'list',      // 'list' | 'detail' | 'none'
+        panelOpen:  true,        // панель видима?
+
+        // Office mode
+        list:       [],
+        active:     null,
+        loading:    true,
+        listError:  null,
+        pvz:        null,        // выбранный ПВЗ
+        tariffs:    [],          // массив тарифов для выбранного ПВЗ
+        tariffLoading: false,
+        tariffError:   null,
+
+        // Door mode
+        doorAddress:  null,
+        doorHint:     null,
+        doorLocation: null,
+        doorCityCode: null,
+        doorTariffs:  [],
+        doorLoading:  false,
+        doorError:    null,
+
+        // Map
+        mapCenter:  null,
+      }),
 
       methods: {
-        async onMapSearch(q) {
-          return;
-          try {
-            const geo = await self._fetch({ action: 'geocode', query: q });
-            if (geo.lat && geo.lon) {
-              this.mapCenter = [parseFloat(geo.lat), parseFloat(geo.lon)];
-            } else {
-              this._mapRef?.flashError('Адрес не найден');
-            }
-          } catch (err) {
-            this._mapRef?.flashError(err.message);
+        // --- Mode ---
+        onModeChange(mode) {
+          this.mode = mode;
+          if (mode === 'office') {
+            this.panel = 'list';
+            this.panelOpen = true;
+          } else {
+            this.panel = 'none';
+            this.panelOpen = true;
+            // Сбросить door state
+            this.doorAddress = null;
+            this.doorTariffs = [];
           }
         },
 
-        async onMapMoveend(bounds) {
+        // --- Map events ---
+        onMapMoveend(bounds) {
           if (!bounds) return;
           const [minLon, minLat, maxLon, maxLat] = bounds;
           const visible = self._pvzAll.filter(p => {
@@ -127,70 +148,218 @@ export class SdekPvzWidget {
 
         onMarkerSelect(code) {
           const pvz = self._pvzAll.find(p => p.code == code);
-          if (pvz) self._selectPvz(pvz);
+          if (pvz) this.selectPvz(pvz);
         },
 
-        async onPvzSelect(pvz) {
-          await self._selectPvz(pvz);
+        togglePanel() {
+          this.panelOpen = !this.panelOpen;
         },
 
-        onChoose(pvz, tariff) {
-          self.onChoose('PVZ', tariff, pvz);
-          self.close();
+        // --- Office: select PVZ ---
+        async selectPvz(pvz) {
+          this.pvz = pvz;
+          this.active = pvz.code;
+          this.panel = 'detail';
+          this.panelOpen = true;
+          this.tariffs = [];
+          this.tariffLoading = true;
+          this.tariffError = null;
+
+          // Pan map
+          if (self._mapRef && pvz.location) {
+            self._mapRef.panTo(pvz.location, 17);
+          }
+
+          try {
+            const resp = await self._fetch({
+              action:      'calculate',
+              from_city:   self.fromLocation,
+              to_pvz_code: pvz.city_code || pvz.code,
+              packages:    JSON.stringify(self.packages),
+            }, { method: 'POST' });
+            this.tariffs = resp.tariff_codes || [];
+          } catch (err) {
+            this.tariffError = err.message;
+          } finally {
+            this.tariffLoading = false;
+          }
         },
 
-        close() {
-          self.close();
+        backToList() {
+          this.panel = 'list';
+          this.pvz = null;
+          this.tariffs = [];
         },
+
+        onPvzChoose(pvz, tariff) {
+          try {
+            self.onChoose('office', tariff, pvz);
+          } catch (e) {
+            console.error('[SdekPvzWidget] onChoose error:', e);
+          } finally {
+            self.close();
+          }
+        },
+
+        // --- Door mode ---
+        async onMapClick(latLon) {
+          if (this.mode !== 'door') return;
+          this.doorLoading = true;
+          this.doorAddress = null;
+          this.doorTariffs = [];
+          this.doorError = null;
+          this.doorHint = null;
+          this.panel = 'none';
+          this.panelOpen = true;
+
+          try {
+            const geo = await self._fetch({
+              action: 'reverse_geocode',
+              lat: latLon[0],
+              lon: latLon[1],
+            });
+            this.doorAddress  = geo.address || null;
+            this.doorLocation = [parseFloat(geo.lat), parseFloat(geo.lon)];
+            this.doorCityCode = geo.city_code || null;
+
+            // Только если точность >= street — запрашиваем тарифы
+            if (geo.precision === 'house' || geo.precision === 'street') {
+              if (geo.city_code) {
+                const resp = await self._fetch({
+                  action:      'calculate',
+                  from_city:   self.fromLocation,
+                  to_pvz_code: geo.city_code,
+                  packages:    JSON.stringify(self.packages),
+                }, { method: 'POST' });
+                // Фильтруем door-тарифы (delivery_mode 1,3,5,7 — дверь)
+                const doorModes = [1, 3, 5, 7];
+                this.doorTariffs = (resp.tariff_codes || []).filter(
+                  t => t.delivery_mode == null || doorModes.includes(t.delivery_mode)
+                );
+              } else {
+                this.doorHint = 'Не удалось определить город';
+              }
+            } else {
+              this.doorHint = 'Выберите адрес точнее (кликните ближе к зданию)';
+            }
+          } catch (err) {
+            this.doorError = err.message;
+          } finally {
+            this.doorLoading = false;
+          }
+        },
+
+        onDoorChoose(target, tariff) {
+          try {
+            self.onChoose('door', tariff, target);
+          } catch (e) {
+            console.error('[SdekPvzWidget] onChoose error:', e);
+          } finally {
+            self.close();
+          }
+        },
+
+        close() { self.close(); },
       },
 
-      // render-функция вместо inline template (не требует runtime compiler)
+      // --- Render function (без template compiler) ---
       render() {
-        return h('div', { class: 'sdwo-popup' }, [
-          h('div', { class: 'sdwo-popup__header' }, [
-            h('span', { class: 'sdwo-popup__title' }, 'Выбор ПВЗ СДЭК'),
-            h('button', {
-              class: 'sdwo-popup__close',
-              onClick: () => this.close(),
-            }, '\u00D7'),
-          ]),
-          h('div', { class: 'sdwo-popup__body' }, [
-            h(MapPane, {
-              ref: 'mapRef',
-              center:     this.mapCenter,
-              zoom:       12,
-              markers:    this.list,
-              activeCode: this.active,
-              backendUrl: self.backendUrl,
-              onSearch:       this.onMapSearch,
-              onMoveend:      this.onMapMoveend,
-              onMarkerselect: this.onMarkerSelect,
-            }),
+        const children = [];
+
+        // 1. Close button
+        children.push(
+          h('button', {
+            class: 'sdwo-close',
+            onClick: () => this.close(),
+          }, '\u00D7')
+        );
+
+        // 2. Segmented Control
+        children.push(
+          h(SegmentedControl, {
+            modelValue: this.mode,
+            'onUpdate:modelValue': this.onModeChange,
+          })
+        );
+
+        // 3. Map container (position relative для overlay панелей)
+        const mapChildren = [];
+
+        // 3a. Map
+        mapChildren.push(
+          h(MapPane, {
+            ref: 'mapRef',
+            center:     this.mapCenter,
+            zoom:       12,
+            markers:    this.mode === 'office' ? this.list : [],
+            activeCode: this.active,
+            backendUrl: self.backendUrl,
+            mode:       this.mode,
+            onMoveend:      this.onMapMoveend,
+            onMarkerselect: this.onMarkerSelect,
+            onTogglepanel:  this.togglePanel,
+            onMapclick:     this.onMapClick,
+          })
+        );
+
+        // 3b. Office panels
+        if (this.mode === 'office') {
+          // PvzList
+          mapChildren.push(
             h(PvzList, {
+              visible: this.panelOpen && this.panel === 'list',
               list:    this.list,
               active:  this.active,
               loading: this.loading,
               error:   this.listError,
-              tariff:  this.tariff,
-              pvz:     this.pvz,
-              onSelect: this.onPvzSelect,
-              onChoose: this.onChoose,
-            }),
-          ]),
-        ]);
+              onSelect: (pvz) => this.selectPvz(pvz),
+            })
+          );
+
+          // PvzDetail
+          mapChildren.push(
+            h(PvzDetail, {
+              visible:  this.panelOpen && this.panel === 'detail',
+              pvz:      this.pvz,
+              tariffs:  this.tariffs,
+              loading:  this.tariffLoading,
+              error:    this.tariffError,
+              onBack:   () => this.backToList(),
+              onChoose: this.onPvzChoose,
+            })
+          );
+        }
+
+        // 3c. Door panel
+        if (this.mode === 'door') {
+          mapChildren.push(
+            h(DoorPanel, {
+              visible:  this.panelOpen,
+              address:  this.doorAddress,
+              hint:     this.doorHint,
+              tariffs:  this.doorTariffs,
+              loading:  this.doorLoading,
+              error:    this.doorError,
+              location: this.doorLocation,
+              cityCode: this.doorCityCode,
+              onChoose: this.onDoorChoose,
+            })
+          );
+        }
+
+        children.push(
+          h('div', { class: 'sdwo-map-wrap' }, mapChildren)
+        );
+
+        return h('div', { class: 'sdwo-popup' }, children);
       },
     });
 
     this._app.mount(this._overlay);
 
-    // получаем корневой Vue instance и ref на MapPane
     const root = this._app._instance.proxy;
-    this._vm    = root;
+    this._vm     = root;
     this._mapRef = root.$refs.mapRef || null;
-
-    // кнопка закрытия — вешаем обработчик сразу на DOM
-    this._overlay.querySelector('.sdwo-popup__close')
-      .addEventListener('click', () => this.close());
   }
 
   // ----------------------------------------------------------
@@ -201,94 +370,79 @@ export class SdekPvzWidget {
     this._vm.loading   = true;
     this._vm.listError = null;
 
+    const geocodePromise = this._fetch({ action: 'geocode', query: this.defaultLocation })
+      .then(geo => {
+        if (geo.lat && geo.lon && this._vm) {
+          this._vm.mapCenter = [parseFloat(geo.lat), parseFloat(geo.lon)];
+        }
+      })
+      .catch(err => console.warn('[SdekPvzWidget] geocode failed:', err.message));
+
     try {
-      const geo = await this._fetch({ action: 'geocode', query: this.defaultLocation });
-      if (geo.lat && geo.lon) {
-        this._vm.mapCenter = [parseFloat(geo.lat), parseFloat(geo.lon)];
-      }
-      await this._reloadPvz();
+      await Promise.all([geocodePromise, this._reloadPvz()]);
     } catch (err) {
-      this._vm.listError = 'Ошибка загрузки: ' + err.message;
+      if (this._vm) this._vm.listError = 'Ошибка загрузки: ' + err.message;
     } finally {
-      this._vm.loading = false;
+      if (this._vm) this._vm.loading = false;
     }
   }
 
   async _reloadPvz() {
     if (!this._vm) return;
-    this._vm.loading = true;
 
     try {
       const data = await this._fetch({ action: 'pvzlist', country_code: 'RU' });
       const list = Array.isArray(data) ? data : (data.list || data.pvz || []);
       this._pvzAll = list;
+
       const bounds = this._mapRef?.getBounds?.();
       if (bounds) {
         const [minLon, minLat, maxLon, maxLat] = bounds;
-        const clon = (minLon + maxLon) / 2;
-        const clat = (minLat + maxLat) / 2;
         const visible = list.filter(p => {
           const [la, lo] = p.location || [];
           return lo >= minLon && lo <= maxLon && la >= minLat && la <= maxLat;
         });
-        this._vm.list = [...visible].sort((a, b) => {
-          const [la, lo] = a.location || [0, 0];
-          const [lb, loB] = b.location || [0, 0];
-          return Math.hypot(lo - clon, la - clat) - Math.hypot(loB - clon, lb - clat);
-        }).map(p => {
-          const [la, lo] = p.location || [0, 0];
-          p._dist = (Math.hypot(lo - clon, la - clat) * 111).toFixed(1);
-          return p;
-        });
+        this._vm.list = sortByBounds(visible, bounds);
       } else {
         this._vm.list = list;
       }
     } catch (err) {
-      this._vm.listError = 'Ошибка загрузки ПВЗ: ' + err.message;
-    } finally {
-      this._vm.loading = false;
-    }
-  }
-
-  async _selectPvz(pvz) {
-    if (!this._vm) return;
-    this._chosenPvz = pvz;
-    this._vm.pvz    = pvz;
-    this._vm.active = pvz.code;
-    this._vm.tariff = null;
-
-    // Фокусируем карту на выбранном ПВЗ (zoom ~17 ≈ вид здания)
-    if (this._mapRef && pvz.location) {
-      this._mapRef.panTo(pvz.location, 17);
-    }
-
-    try {
-      const tariff = await this._fetch({
-        action:      'calculate',
-        from_city:   this.fromLocation,
-        to_pvz_code: pvz.city_code || pvz.code,  // CDEK tariff needs city_code, fallback to pvz.code
-        packages:    JSON.stringify(this.packages),
-      });
-      this._vm.tariff = tariff;
-    } catch (err) {
-      console.error('[SdekPvzWidget] tariff error:', err);
+      if (this._vm) this._vm.listError = 'Ошибка загрузки ПВЗ: ' + err.message;
     }
   }
 
   // ----------------------------------------------------------
   // Fetch helper
   // ----------------------------------------------------------
-  async _fetch(params) {
-    const url  = this.backendUrl + '?' + new URLSearchParams(params).toString();
-    const res  = await fetch(url);
+  async _fetch(params, { method = 'GET' } = {}) {
+    const signal = AbortSignal.timeout(FETCH_TIMEOUT_MS);
+
+    let url, init;
+    if (method === 'POST') {
+      url  = this.backendUrl;
+      init = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(params).toString(),
+        signal,
+      };
+    } else {
+      url  = this.backendUrl + '?' + new URLSearchParams(params).toString();
+      init = { signal };
+    }
+
+    let res;
+    try {
+      res = await fetch(url, init);
+    } catch (err) {
+      if (err.name === 'TimeoutError' || err.name === 'AbortError') {
+        throw new Error('Таймаут запроса');
+      }
+      throw err;
+    }
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const json = await res.json();
     if (json.error) throw new Error(json.error);
     return json;
   }
-}
-
-// Глобальный экспорт для UMD <script>-тега
-if (typeof window !== 'undefined') {
-  window.SdekPvzWidget = SdekPvzWidget;
 }

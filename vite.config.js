@@ -12,21 +12,20 @@ export default defineConfig({
         },
       },
     }),
-    // CSS прямо в JS-бандл — удобно для embed/iframe
+    // CSS встраивается прямо в JS-бандл — удобно для embed/iframe
     cssInjectedByJs(),
   ],
 
   build: {
     lib: {
-      entry:    resolve(__dirname, 'src/index.js'),
-      name:     'SdekPvzWidget',
-      fileName: 'SdekPvzWidget',
-      formats:  ['umd'],
+      entry:   resolve(__dirname, 'src/index.js'),
+      name:    'SdekPvzWidget',
+      formats: ['umd', 'es'],
+      fileName: (format) => format === 'es' ? 'SdekPvzWidget.es.js' : 'SdekPvzWidget.umd.js',
     },
     rollupOptions: {
       output: {
         inlineDynamicImports: true,
-        entryFileNames: 'SdekPvzWidget.js',
       },
     },
   },
