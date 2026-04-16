@@ -42,7 +42,9 @@ try {
         'geocode'   => handleGeocode($_REQUEST['query'] ?? ''),
         'pvzlist'   => handlePvzList(
             $_REQUEST['country_code'] ?? 'RU',
-            $_REQUEST['bbox'] ?? null   // [minLon,minLat,maxLon,maxLat]
+            $_REQUEST['bbox'] ?? null,   // [minLon,minLat,maxLon,maxLat]
+            (int) ($_REQUEST['page'] ?? 1),
+            (int) ($_REQUEST['size'] ?? 500)
         ),
         'calculate' => handleCalculate(
             $_REQUEST['from_city']    ?? '',
@@ -153,65 +155,115 @@ function parseOsmDisplayName(string $name): string {
 // ================================================================
 // 2. PVZLIST
 // ----------
-// Вход:  country_code='RU', bbox=null|[minLon,minLat,maxLon,maxLat]
-// Выход: массив ПВЗ
+// Вход:  country_code='RU', bbox=null, page=1, size=50
+// Выход: { items: [...], total, page, size, total_pages }
+// Заголовки: x-total-elements, x-total-pages
+// Фильтры: type=PVZ, is_handout=true, country_code
 // ================================================================
-function handlePvzList(string $country, ?array $bbox): array {
-    $pvz = pvzLoadFromCdek();
+function handlePvzList(string $country, ?array $bbox, int $page, int $size): array {
+    $page  = max(1, $page);
+    $size  = min(max(1, $size), 200); // лимит на стороне API
 
-    // фильтр по стране
-    $pvz = array_filter($pvz, fn($p) =>
-        ($p['country_code'] ?? '') === $country ||
-        ($p['country_rus']  ?? '') === 'Россия'
-    );
+    $pvzData = pvzLoadFromCdek($country, $page, $size);
 
-    // фильтр по bbox
+    // bbox-фильтр применяется post-factum (城区 фильтрует сервер СДЭК)
     if ($bbox && count($bbox) === 4) {
         [$minLon, $minLat, $maxLon, $maxLat] = $bbox;
-        $pvz = array_filter($pvz, function ($p) use ($minLon, $minLat, $maxLon, $maxLat) {
+        $pvzData['items'] = array_filter($pvzData['items'], function ($p) use ($minLon, $minLat, $maxLon, $maxLat) {
             [$lat, $lon] = $p['location'] ?? [];
             if ($lat === null || $lon === null) return false;
             return $lon >= $minLon && $lon <= $maxLon
                 && $lat >= $minLat && $lat <= $maxLat;
         });
+        $pvzData['items'] = array_values($pvzData['items']);
+        // после bbox-фильтра количество может быть < size — корректируем total
+        $pvzData['total'] = count($pvzData['items']);
     }
 
     // приводим к нужному формату
-    return array_values(array_map('normalizePvz', $pvz));
+    $pvzData['items'] = array_values(array_map('normalizePvz', $pvzData['items']));
+
+    // проксируем заголовки пагинации
+    header('x-total-elements: ' . $pvzData['total']);
+    header('x-total-pages: '    . $pvzData['total_pages']);
+
+    return $pvzData;
 }
 
 /**
- * Загрузка ПВЗ: кэш → API → CSV-fallback
+ * Загрузка ПВЗ с пагинацией через /v2/deliverypoints
+ * Кэш: ключ = md5(country|page|size), TTL 1 час
  */
-function pvzLoadFromCdek(): array {
-    $cacheFile = __DIR__ . '/pvz_cache.json';
-    $cacheMax  = 3600; // 1 час
+function pvzLoadFromCdek(string $country, int $page, int $size): array {
+    $cacheDir  = __DIR__ . '/pvz_cache';
+    $cacheMax  = 3600;
+    $cacheKey  = md5("{$country}|{$page}|{$size}");
+    $cacheFile = $cacheDir . '/' . $cacheKey . '.json';
+
+    if (!is_dir($cacheDir)) {
+        @mkdir($cacheDir, 0755, true);
+    }
 
     if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheMax) {
-        $raw = file_get_contents($cacheFile);
-        $dec = json_decode($raw, true);
+        $dec = json_decode(file_get_contents($cacheFile), true);
         if (is_array($dec)) return $dec;
     }
 
-    // Запрос к официальному API СДЭК
+    // Запрос к официальному API СДЭК с пагинацией и фильтрами
     $token = cdekGetToken();
     if ($token) {
-        $ch = curl_init('https://api.cdek.ru/v2/location/PVZ');
-        curl_setopt_array($ch, [
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HTTPHEADER     => ['Authorization: Bearer ' . $token],
-            CURLOPT_TIMEOUT        => 15,
+        $query = http_build_query([
+            'country_code' => $country,
+            'type'         => 'PVZ',
+            'is_handout'   => 'true',
+            'page'         => $page,
+            'size'         => $size,
         ]);
-        $resp = curlExecJson($ch);
+        $url = 'https://api.cdek.ru/v2/deliverypoints?' . $query;
+        $result = curlExecWithHeaders($url, [
+            'Authorization: Bearer ' . $token,
+            'Accept: application/json',
+        ]);
+
+        $respHeaders = $result['headers'];
+        $resp = json_decode($result['body'], true);
 
         if (is_array($resp) && !empty($resp)) {
-            file_put_contents($cacheFile, json_encode($resp, JSON_UNESCAPED_UNICODE));
-            return $resp;
+            // Извлекаем пагинацию из заголовков
+            $total    = (int) ($respHeaders['x-total-elements'] ?? count($resp));
+            $totalPages = (int) ($respHeaders['x-total-pages'] ?? 1);
+
+            $result = [
+                'items'      => $resp,
+                'total'      => $total,
+                'page'       => $page,
+                'size'       => $size,
+                'total_pages'=> $totalPages,
+            ];
+
+            file_put_contents($cacheFile, json_encode($result, JSON_UNESCAPED_UNICODE));
+            return $result;
         }
     }
 
-    // Fallback: CSV-выгрузка с сайта СДЭК
-    return pvzLoadFromCsv();
+    // Fallback: CSV — без пагинации (весь файл), эмулируем пагинацию
+    $allPvz = pvzLoadFromCsv();
+
+    // фильтр по country_code (у CSV всегда RU)
+    $filtered = array_filter($allPvz, fn($p) => ($p['country_code'] ?? 'RU') === $country);
+    $filtered = array_values($filtered);
+
+    $total = count($filtered);
+    $offset = ($page - 1) * $size;
+    $items  = array_slice($filtered, $offset, $size);
+
+    return [
+        'items'       => $items,
+        'total'       => $total,
+        'page'        => $page,
+        'size'        => $size,
+        'total_pages' => (int) ceil($total / $size),
+    ];
 }
 
 /**
@@ -495,10 +547,48 @@ function curlExecJson($ch): array {
 }
 
 function curlExecRaw($ch): string {
+    // Получаем response headers отдельно
+    $responseHeaders = [];
+    curl_setopt($ch, CURLOPT_HEADERFUNCTION, function($ch, $header) use (&$responseHeaders) {
+        $len = strlen($header);
+        $header = trim($header);
+        if (!empty($header) && strpos($header, ':') !== false) {
+            $parts = explode(':', $header, 2);
+            $responseHeaders[strtolower(trim($parts[0]))] = trim($parts[1]);
+        }
+        return $len;
+    });
+
     $out = curl_exec($ch);
     if (curl_errno($ch)) {
         error_log('cURL error: ' . curl_error($ch));
         return '';
     }
     return $out ?: '';
+}
+
+/**
+ * cURL-exec с извлечением заголовков (используется в pvzLoadFromCdek)
+ * Возвращает ['body' => string, 'headers' => [string=>string]]
+ */
+function curlExecWithHeaders(string $url, array $headers): array {
+    $ch = curl_init($url);
+    $responseHeaders = [];
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_HTTPHEADER     => $headers,
+        CURLOPT_TIMEOUT        => 20,
+        CURLOPT_HEADERFUNCTION => function($ch, $header) use (&$responseHeaders) {
+            $len = strlen($header);
+            $header = trim($header);
+            if (!empty($header) && strpos($header, ':') !== false) {
+                $parts = explode(':', $header, 2);
+                $responseHeaders[strtolower(trim($parts[0]))] = trim($parts[1]);
+            }
+            return $len;
+        },
+    ]);
+    $body = curl_exec($ch);
+    curl_close($ch);
+    return ['body' => $body ?: '', 'headers' => $responseHeaders];
 }
