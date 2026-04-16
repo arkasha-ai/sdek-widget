@@ -4,129 +4,33 @@
  * Бэкенд для виджета SdekPvzWidget
  *
  * Endpoints (параметр action):
- *   suggest   — подсказки адресов DaData
- *   geocode   — прямой геокод через DaData (fallback Nominatim)
+ *   geocode   — прямой геокодинг через DaData API
  *   pvzlist   — список ПВЗ СДЭК (фильтр по стране, bbox)
  *   calculate — расчёт тарифа доставки до выбранного ПВЗ
  *
- * Конфигурация через env-переменные:
- *   DADATA_API_KEY, DADATA_SECRET
- *   SDEK_CLIENT_ID, SDEK_CLIENT_SECRET
- *   SDEK_ALLOWED_ORIGINS — список доменов через запятую, напр. "https://a.ru,https://b.ru" (по умолчанию "*" — небезопасно)
- *   SDEK_CACHE_DIR       — путь к директории кешей/логов (по умолчанию __DIR__)
- *   SDEK_DEBUG           — "1" включает запись в *_debug.log
+ * Все ключи — в массив $CONFIG в начале файла.
  */
 
 // ================================================================
-// КОНФИГУРАЦИЯ
+// КОНФИГУРАЦИЯ  ← заполнить перед использованием
 // ================================================================
 $CONFIG = [
-    'DADATA_TOKEN'       => getenv('DADATA_API_KEY')   ?: 'YOUR_DADATA_TOKEN',
-    'DADATA_SECRET'      => getenv('DADATA_SECRET')    ?: 'YOUR_DADATA_SECRET',
-    'CDEK_CLIENT_ID'     => getenv('SDEK_CLIENT_ID')   ?: 'YOUR_CDEK_CLIENT_ID',
-    'CDEK_CLIENT_SECRET' => getenv('SDEK_CLIENT_SECRET') ?: 'YOUR_CDEK_CLIENT_SECRET',
-    'ALLOWED_ORIGINS'    => array_filter(array_map('trim', explode(',', getenv('SDEK_ALLOWED_ORIGINS') ?: ''))),
-    'CACHE_DIR'          => rtrim(getenv('SDEK_CACHE_DIR') ?: __DIR__, '/'),
-    'DEBUG'              => getenv('SDEK_DEBUG') === '1',
+    // DaData API (https://dadata.ru/api/)
+    'DADATA_TOKEN' => 'YOUR_DADATA_TOKEN',          // Token из ЛК DaData
+    'DADATA_SECRET'=> 'YOUR_DADATA_SECRET',          // Secret (для подсказок, опц.)
+
+    // СДЭК OAuth2 (https://www.cdek.ru/api/)
+    'CDEK_CLIENT_ID'     => 'YOUR_CDEK_CLIENT_ID',      // client_id
+    'CDEK_CLIENT_SECRET' => 'YOUR_CDEK_CLIENT_SECRET',  // client_secret
 ];
 
-if (!is_dir($CONFIG['CACHE_DIR'])) {
-    @mkdir($CONFIG['CACHE_DIR'], 0755, true);
-}
-
 // ================================================================
-// Утилиты: пути, атомарная запись, логи
-// ================================================================
-function cachePath(string $name): string {
-    global $CONFIG;
-    return $CONFIG['CACHE_DIR'] . '/' . $name;
-}
-
-/**
- * Атомарная запись с эксклюзивной блокировкой.
- * Пишем во временный файл + rename — чтобы читатели не видели половину JSON.
- */
-function atomicWrite(string $path, string $content): bool {
-    $tmp = $path . '.tmp.' . bin2hex(random_bytes(4));
-    if (file_put_contents($tmp, $content, LOCK_EX) === false) {
-        return false;
-    }
-    return rename($tmp, $path);
-}
-
-function debugLog(string $file, string $message): void {
-    global $CONFIG;
-    if (!$CONFIG['DEBUG']) return;
-    @file_put_contents(cachePath($file), date('Y-m-d H:i:s') . ' ' . $message . "\n", FILE_APPEND | LOCK_EX);
-}
-
-// ================================================================
-// Геокод-кеш (24 часа, city_name → {lat, lon, city, city_code})
-// ================================================================
-function geocodeCacheGet(string $query): ?array {
-    $cacheFile = cachePath('geocode_cache.json');
-    if (!file_exists($cacheFile)) return null;
-
-    $raw = file_get_contents($cacheFile);
-    $cache = json_decode($raw, true);
-    if (!is_array($cache)) return null;
-
-    $key = mb_strtolower(trim($query));
-    if (!isset($cache[$key])) return null;
-
-    $entry = $cache[$key];
-    if (($entry['_cached_at'] ?? 0) + 86400 < time()) {
-        return null;
-    }
-
-    unset($entry['_cached_at']);
-    return $entry;
-}
-
-function geocodeCacheSet(string $query, array $data): void {
-    $cacheFile = cachePath('geocode_cache.json');
-    $cache = [];
-    if (file_exists($cacheFile)) {
-        $cache = json_decode(file_get_contents($cacheFile), true) ?: [];
-    }
-
-    // Эвикция протухших записей во время записи (TTL 24ч)
-    $now = time();
-    foreach ($cache as $k => $entry) {
-        if (!is_array($entry) || ($entry['_cached_at'] ?? 0) + 86400 < $now) {
-            unset($cache[$k]);
-        }
-    }
-
-    $key = mb_strtolower(trim($query));
-    $cache[$key] = $data + ['_cached_at' => $now];
-
-    atomicWrite($cacheFile, json_encode($cache, JSON_UNESCAPED_UNICODE));
-}
-
-// ================================================================
-// Заголовки (CORS — whitelist из env)
+// Заголовки
 // ================================================================
 header('Content-Type: application/json; charset=utf-8');
-
-$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
-if ($CONFIG['ALLOWED_ORIGINS']) {
-    if (in_array($origin, $CONFIG['ALLOWED_ORIGINS'], true)) {
-        header("Access-Control-Allow-Origin: $origin");
-        header('Vary: Origin');
-    }
-    // Иначе CORS-заголовок не выставляется — браузер заблокирует.
-} else {
-    // Пустой whitelist = открытый режим (dev). В проде указывать SDEK_ALLOWED_ORIGINS.
-    header('Access-Control-Allow-Origin: *');
-}
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
-
-if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'OPTIONS') {
-    http_response_code(204);
-    exit;
-}
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
 // ================================================================
 // Роутер
@@ -135,26 +39,18 @@ $action = $_REQUEST['action'] ?? '';
 
 try {
     $result = match ($action) {
-        'suggest'   => handleSuggest(
-            $_REQUEST['query'] ?? '',
-            (isset($_REQUEST['lat']) && $_REQUEST['lat'] !== '') ? (float) $_REQUEST['lat'] : null,
-            (isset($_REQUEST['lon']) && $_REQUEST['lon'] !== '') ? (float) $_REQUEST['lon'] : null
-        ),
         'geocode'   => handleGeocode($_REQUEST['query'] ?? ''),
-        'reverse_geocode' => handleReverseGeocode(
-            (float) ($_REQUEST['lat'] ?? 0),
-            (float) ($_REQUEST['lon'] ?? 0)
-        ),
         'pvzlist'   => handlePvzList(
             $_REQUEST['country_code'] ?? 'RU',
-            $_REQUEST['bbox'] ?? null
+            $_REQUEST['bbox'] ?? null,   // [minLon,minLat,maxLon,maxLat]
+            (int) ($_REQUEST['page'] ?? 1),
+            (int) ($_REQUEST['size'] ?? 500)
         ),
         'calculate' => handleCalculate(
             $_REQUEST['from_city']    ?? '',
             $_REQUEST['to_pvz_code'] ?? '',
-            json_decode($_REQUEST['packages'] ?? '[]', true) ?: []
+            json_decode($_REQUEST['packages'] ?? '[]', true)
         ),
-        '' => ['status' => 'ok', 'actions' => ['suggest','geocode','reverse_geocode','pvzlist','calculate']],
         default => throw new InvalidArgumentException("Unknown action: {$action}"),
     };
 
@@ -173,211 +69,6 @@ try {
 }
 
 // ================================================================
-// 0. SUGGEST
-// --------
-// Вход:  query — строка поиска, lat/lon — координаты центра карты для приоритизации
-// Выход: { suggestions: [{value, lat, lon, city, city_code, region}] }
-// ================================================================
-function handleSuggest(string $query, ?float $lat = null, ?float $lon = null): array {
-    global $CONFIG;
-
-    if (trim($query) === '') {
-        return ['suggestions' => []];
-    }
-
-    $token = $CONFIG['DADATA_TOKEN'];
-    if (!$token || str_starts_with($token, 'YOUR_')) {
-        return ['suggestions' => []];
-    }
-
-    // Reverse geocode координат карты → city/region с kladr_id для приоритизации
-    $locationsBoost = [['country' => 'Россия']];
-    if ($lat !== null && $lon !== null) {
-        $location = handleGeolocate($lat, $lon);
-        $kladrIds = [];
-        if (!empty($location['city_kladr_id']))   $kladrIds[] = $location['city_kladr_id'];
-        if (!empty($location['region_kladr_id'])) $kladrIds[] = $location['region_kladr_id'];
-        foreach ($kladrIds as $kladrId) {
-            $locationsBoost[] = ['kladr_id' => $kladrId];
-        }
-    }
-
-    $ch = curl_init('https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address');
-    curl_setopt_array($ch, [
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_HTTPHEADER     => [
-            'Content-Type: application/json',
-            'Authorization: Token ' . $token,
-        ],
-        CURLOPT_POSTFIELDS => json_encode([
-            'query'           => $query,
-            'count'           => 8,
-            'locations_boost' => $locationsBoost,
-        ]),
-        CURLOPT_TIMEOUT => 10,
-    ]);
-
-    $resp = curlExecJson($ch);
-    $suggestions = $resp['suggestions'] ?? [];
-
-    $result = [];
-    foreach ($suggestions as $s) {
-        $d = $s['data'] ?? [];
-
-        $type = 'city';
-        if (!empty($d['house'])) {
-            $type = 'house';
-        } elseif (!empty($d['street'])) {
-            $type = 'street';
-        } elseif (!empty($d['settlement'])) {
-            $type = 'settlement';
-        }
-
-        $result[] = [
-            'value'     => $s['value'] ?? '',
-            'lat'       => $d['geo_lat']    ?? null,
-            'lon'       => $d['geo_lon']    ?? null,
-            'city'      => $d['city']       ?? $d['settlement'] ?? '',
-            'city_code' => $d['city_kladr_id'] ?? null,
-            'region'    => $d['region'] ?? '',
-            'type'      => $type,
-            'house'     => $d['house'] ?? null,
-            'street'    => $d['street'] ?? null,
-            'settlement'=> $d['settlement'] ?? null,
-        ];
-    }
-
-    return ['suggestions' => $result];
-}
-
-/**
- * Обратное геокодирование: координаты → адрес (город/область с kladr_id)
- * Используется для приоритизации поиска по текущему положению карты
- */
-function handleGeolocate(float $lat, float $lon): array {
-    global $CONFIG;
-
-    $token = $CONFIG['DADATA_TOKEN'];
-    if (!$token || str_starts_with($token, 'YOUR_')) {
-        return [];
-    }
-
-    $ch = curl_init('https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address');
-    curl_setopt_array($ch, [
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_HTTPHEADER     => [
-            'Content-Type: application/json',
-            'Authorization: Token ' . $token,
-        ],
-        CURLOPT_POSTFIELDS => json_encode([
-            'lat' => $lat,
-            'lon' => $lon,
-        ]),
-        CURLOPT_TIMEOUT => 10,
-    ]);
-
-    $resp = curlExecJson($ch);
-    if (!is_array($resp) || empty($resp)) {
-        return [];
-    }
-
-    $d = $resp['suggestions'][0]['data'] ?? [];
-
-    return [
-        'city_kladr_id'   => $d['city_kladr_id']   ?? null,
-        'region_kladr_id' => $d['region_kladr_id'] ?? null,
-        'city'            => $d['city']            ?? null,
-        'region'          => $d['region']          ?? null,
-    ];
-}
-
-// ================================================================
-// 0b. REVERSE GEOCODE (для режима "до двери")
-// --------
-// Вход:  lat, lon — координаты клика на карте
-// Выход: { address, city, city_code, precision }
-// ================================================================
-function handleReverseGeocode(float $lat, float $lon): array {
-    global $CONFIG;
-
-    if ($lat == 0 && $lon == 0) {
-        throw new InvalidArgumentException('lat and lon are required');
-    }
-
-    $token = $CONFIG['DADATA_TOKEN'];
-    if (!$token || str_starts_with($token, 'YOUR_')) {
-        // Fallback: Nominatim reverse
-        return reverseGeocodeNominatim($lat, $lon);
-    }
-
-    $ch = curl_init('https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address');
-    curl_setopt_array($ch, [
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_HTTPHEADER     => [
-            'Content-Type: application/json',
-            'Authorization: Token ' . $token,
-        ],
-        CURLOPT_POSTFIELDS => json_encode([
-            'lat'   => $lat,
-            'lon'   => $lon,
-            'count' => 1,
-        ]),
-        CURLOPT_TIMEOUT => 10,
-    ]);
-
-    $resp = curlExecJson($ch);
-    $d = $resp['suggestions'][0]['data'] ?? [];
-
-    if (empty($d)) {
-        return reverseGeocodeNominatim($lat, $lon);
-    }
-
-    $cityName = $d['city'] ?? $d['settlement'] ?? '';
-    $cdekCityCode = findCdekCityCode($cityName);
-
-    // Определяем точность: house > street > settlement > city
-    $precision = 'city';
-    if (!empty($d['house'])) $precision = 'house';
-    elseif (!empty($d['street'])) $precision = 'street';
-    elseif (!empty($d['settlement'])) $precision = 'settlement';
-
-    return [
-        'address'   => $resp['suggestions'][0]['value'] ?? '',
-        'city'      => $cityName,
-        'city_code' => $cdekCityCode ? (string) $cdekCityCode : ($d['city_kladr_id'] ?? null),
-        'precision' => $precision,
-        'lat'       => $d['geo_lat'] ?? $lat,
-        'lon'       => $d['geo_lon'] ?? $lon,
-    ];
-}
-
-function reverseGeocodeNominatim(float $lat, float $lon): array {
-    $url = "https://nominatim.openstreetmap.org/reverse?lat={$lat}&lon={$lon}&format=json&zoom=18";
-    $ch = curl_init($url);
-    curl_setopt_array($ch, [
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_HTTPHEADER     => ['User-Agent: SdekWidget/1.0'],
-        CURLOPT_TIMEOUT        => 8,
-    ]);
-    $resp = curlExecJson($ch);
-
-    $city = $resp['address']['city'] ?? $resp['address']['town'] ?? '';
-    $cdekCode = $city ? findCdekCityCode($city) : null;
-
-    return [
-        'address'   => $resp['display_name'] ?? '',
-        'city'      => $city,
-        'city_code' => $cdekCode ? (string) $cdekCode : null,
-        'precision' => !empty($resp['address']['house_number']) ? 'house' : 'street',
-        'lat'       => $resp['lat'] ?? $lat,
-        'lon'       => $resp['lon'] ?? $lon,
-    ];
-}
-
-// ================================================================
 // 1. GEOCODE
 // ----------
 // Вход:  query — строка адреса
@@ -390,35 +81,24 @@ function handleGeocode(string $query): array {
         throw new InvalidArgumentException('query is required');
     }
 
-    $cached = geocodeCacheGet($query);
-    if ($cached !== null) {
-        return $cached;
-    }
-
     $token = $CONFIG['DADATA_TOKEN'];
     if (!$token || str_starts_with($token, 'YOUR_')) {
-        $result = geocodeNominatim($query);
-        // Nominatim не знает CDEK-коды — ищем в PVZ-кеше
-        if (empty($result['city_code'])) {
-            $cdekCode = findCdekCityCode($result['city'] ?: $query);
-            if ($cdekCode) $result['city_code'] = (string) $cdekCode;
-        }
-        geocodeCacheSet($query, $result);
-        return $result;
+        // fallback через Nominatim (без ключа)
+        return geocodeNominatim($query);
     }
 
-    $ch = curl_init('https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address');
+    $ch = curl_init('https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address');
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_POST           => true,
         CURLOPT_HTTPHEADER     => [
-            'Content-Type: application/json',
+            'Content-Type:  application/json',
             'Authorization: Token ' . $token,
         ],
         CURLOPT_POSTFIELDS => json_encode([
-            'query'     => $query,
-            'count'     => 1,
-            'locations' => [['country' => 'Россия']],
+            'query'       => $query,
+            'count'       => 1,
+            'locations'   => [['country' => 'Россия']],
         ]),
         CURLOPT_TIMEOUT => 10,
     ]);
@@ -431,37 +111,12 @@ function handleGeocode(string $query): array {
     }
 
     $d = $suggestions[0]['data'] ?? [];
-    $dCity = trim($d['city'] ?? $d['settlement'] ?? '');
-
-    // Dadata может вернуть область/район вместо города. Если не совпадает — берём вторую подсказку.
-    if ($dCity && mb_stripos($dCity, $query) !== 0 && mb_stripos($query, $dCity) !== 0) {
-        if (count($suggestions) > 1) {
-            $d = $suggestions[1]['data'] ?? [];
-            $dCity = trim($d['city'] ?? $d['settlement'] ?? '');
-        }
-        if ($dCity && mb_stripos($dCity, $query) !== 0 && mb_stripos($query, $dCity) !== 0) {
-            debugLog('geocode_debug.log', "FUZZY_MISMATCH {$query} vs {$dCity} | raw: " . substr(json_encode($suggestions[0] ?? [], JSON_UNESCAPED_UNICODE), 0, 300));
-        }
-    }
-
-    $result = [
+    return [
         'lat'       => $d['geo_lat']    ?? null,
         'lon'       => $d['geo_lon']    ?? null,
-        'city'      => $dCity ?: $query,
+        'city'      => $d['city']       ?? $d['settlement'] ?? $query,
         'city_code' => $d['city_kladr_id'] ?? null,
     ];
-
-    // КЛАДР-код Dadata не совпадает с кодом города CDEK — ищем в PVZ cache
-    $cdekCityCode = findCdekCityCode($result['city'] ?? $query);
-    if ($cdekCityCode) {
-        $result['city_code'] = (string) $cdekCityCode;
-    }
-
-    geocodeCacheSet($query, $result);
-
-    debugLog('geocode_debug.log', "{$query} => " . json_encode($result, JSON_UNESCAPED_UNICODE) . " | raw: " . substr(json_encode($suggestions[0] ?? [], JSON_UNESCAPED_UNICODE), 0, 500));
-
-    return $result;
 }
 
 /**
@@ -497,123 +152,118 @@ function parseOsmDisplayName(string $name): string {
     return trim($parts[0]);
 }
 
-/**
- * Найти city_code CDEK по имени города, используя кэш ПВЗ
- */
-function findCdekCityCode(string $cityName): ?int {
-    $cacheFile = cachePath('pvz_cache.json');
-    if (!file_exists($cacheFile)) return null;
-
-    $raw = file_get_contents($cacheFile);
-    $pvzList = json_decode($raw, true);
-    if (!is_array($pvzList)) return null;
-
-    $normalized = trim(mb_strtolower($cityName));
-
-    foreach ($pvzList as $p) {
-        $pCity = trim(mb_strtolower($p['city'] ?? ($p['location']['city'] ?? '')));
-        if (!$pCity) continue;
-
-        $code = (int) ($p['city_code'] ?? $p['location']['city_code'] ?? null);
-        if (!$code) continue;
-
-        if ($pCity === $normalized) {
-            debugLog('geocode_debug.log', "findCdekCityCode EXACT '{$cityName}' => {$code} ({$pCity})");
-            return $code;
-        }
-    }
-
-    foreach ($pvzList as $p) {
-        $pCity = trim(mb_strtolower($p['city'] ?? ($p['location']['city'] ?? '')));
-        if (!$pCity) continue;
-
-        $code = (int) ($p['city_code'] ?? $p['location']['city_code'] ?? null);
-        if (!$code) continue;
-
-        if (strpos($pCity, $normalized) === 0 || strpos($normalized, $pCity) === 0) {
-            debugLog('geocode_debug.log', "findCdekCityCode PARTIAL '{$cityName}' => {$code} ({$pCity})");
-            return $code;
-        }
-    }
-
-    debugLog('geocode_debug.log', "findCdekCityCode NOT_FOUND '{$cityName}'");
-    return null;
-}
-
 // ================================================================
 // 2. PVZLIST
 // ----------
-// Вход:  country_code='RU', bbox=null|[minLon,minLat,maxLon,maxLat]
-// Выход: массив ПВЗ
+// Вход:  country_code='RU', bbox=null, page=1, size=50
+// Выход: { items: [...], total, page, size, total_pages }
+// Заголовки: x-total-elements, x-total-pages
+// Фильтры: type=PVZ, is_handout=true, country_code
 // ================================================================
-function handlePvzList(string $country, ?array $bbox): array {
-    $pvz = pvzLoadFromCdek();
+function handlePvzList(string $country, ?array $bbox, int $page, int $size): array {
+    $page  = max(1, $page);
+    $size  = min(max(1, $size), 200); // лимит на стороне API
 
-    $pvz = array_filter($pvz, fn($p) =>
-        ($p['country_code'] ?? '') === $country ||
-        ($p['location']['country_code'] ?? '') === $country
-    );
+    $pvzData = pvzLoadFromCdek($country, $page, $size);
 
+    // bbox-фильтр применяется post-factum (城区 фильтрует сервер СДЭК)
     if ($bbox && count($bbox) === 4) {
         [$minLon, $minLat, $maxLon, $maxLat] = $bbox;
-        $pvz = array_filter($pvz, function ($p) use ($minLon, $minLat, $maxLon, $maxLat) {
-            // Поддержка двух форматов location:
-            //   - API /v2/deliverypoints: { latitude, longitude }
-            //   - CSV-fallback: [lat, lon] индексированный
-            $loc = $p['location'] ?? null;
-            if (!is_array($loc)) return false;
-            if (isset($loc['latitude'], $loc['longitude'])) {
-                $lat = $loc['latitude'];
-                $lon = $loc['longitude'];
-            } elseif (isset($loc[0], $loc[1])) {
-                $lat = $loc[0];
-                $lon = $loc[1];
-            } else {
-                return false;
-            }
-            if (!is_numeric($lat) || !is_numeric($lon)) return false;
+        $pvzData['items'] = array_filter($pvzData['items'], function ($p) use ($minLon, $minLat, $maxLon, $maxLat) {
+            [$lat, $lon] = $p['location'] ?? [];
+            if ($lat === null || $lon === null) return false;
             return $lon >= $minLon && $lon <= $maxLon
                 && $lat >= $minLat && $lat <= $maxLat;
         });
+        $pvzData['items'] = array_values($pvzData['items']);
+        // после bbox-фильтра количество может быть < size — корректируем total
+        $pvzData['total'] = count($pvzData['items']);
     }
 
-    return array_values(array_map('normalizePvz', $pvz));
+    // приводим к нужному формату
+    $pvzData['items'] = array_values(array_map('normalizePvz', $pvzData['items']));
+
+    // проксируем заголовки пагинации
+    header('x-total-elements: ' . $pvzData['total']);
+    header('x-total-pages: '    . $pvzData['total_pages']);
+
+    return $pvzData;
 }
 
 /**
- * Загрузка ПВЗ: кэш → API → CSV-fallback
+ * Загрузка ПВЗ с пагинацией через /v2/deliverypoints
+ * Кэш: ключ = md5(country|page|size), TTL 1 час
  */
-function pvzLoadFromCdek(): array {
-    $cacheFile = cachePath('pvz_cache.json');
+function pvzLoadFromCdek(string $country, int $page, int $size): array {
+    $cacheDir  = __DIR__ . '/pvz_cache';
     $cacheMax  = 3600;
+    $cacheKey  = md5("{$country}|{$page}|{$size}");
+    $cacheFile = $cacheDir . '/' . $cacheKey . '.json';
+
+    if (!is_dir($cacheDir)) {
+        @mkdir($cacheDir, 0755, true);
+    }
 
     if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheMax) {
-        $raw = file_get_contents($cacheFile);
-        $dec = json_decode($raw, true);
+        $dec = json_decode(file_get_contents($cacheFile), true);
         if (is_array($dec)) return $dec;
     }
 
+    // Запрос к официальному API СДЭК с пагинацией и фильтрами
     $token = cdekGetToken();
     if ($token) {
-        $ch = curl_init('https://api.cdek.ru/v2/deliverypoints');
-        curl_setopt_array($ch, [
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HTTPHEADER     => ['Authorization: Bearer ' . $token],
-            CURLOPT_TIMEOUT        => 15,
+        $query = http_build_query([
+            'country_code' => $country,
+            'type'         => 'PVZ',
+            'is_handout'   => 'true',
+            'page'         => $page,
+            'size'         => $size,
         ]);
-        $resp = curlExecJson($ch);
+        $url = 'https://api.cdek.ru/v2/deliverypoints?' . $query;
+        $result = curlExecWithHeaders($url, [
+            'Authorization: Bearer ' . $token,
+            'Accept: application/json',
+        ]);
+
+        $respHeaders = $result['headers'];
+        $resp = json_decode($result['body'], true);
 
         if (is_array($resp) && !empty($resp)) {
-            $flat = [];
-            foreach ($resp as $item) {
-                $flat[] = $item['entity'] ?? $item;
-            }
-            atomicWrite($cacheFile, json_encode($flat, JSON_UNESCAPED_UNICODE));
-            return $flat;
+            // Извлекаем пагинацию из заголовков
+            $total    = (int) ($respHeaders['x-total-elements'] ?? count($resp));
+            $totalPages = (int) ($respHeaders['x-total-pages'] ?? 1);
+
+            $result = [
+                'items'      => $resp,
+                'total'      => $total,
+                'page'       => $page,
+                'size'       => $size,
+                'total_pages'=> $totalPages,
+            ];
+
+            file_put_contents($cacheFile, json_encode($result, JSON_UNESCAPED_UNICODE));
+            return $result;
         }
     }
 
-    return pvzLoadFromCsv();
+    // Fallback: CSV — без пагинации (весь файл), эмулируем пагинацию
+    $allPvz = pvzLoadFromCsv();
+
+    // фильтр по country_code (у CSV всегда RU)
+    $filtered = array_filter($allPvz, fn($p) => ($p['country_code'] ?? 'RU') === $country);
+    $filtered = array_values($filtered);
+
+    $total = count($filtered);
+    $offset = ($page - 1) * $size;
+    $items  = array_slice($filtered, $offset, $size);
+
+    return [
+        'items'       => $items,
+        'total'       => $total,
+        'page'        => $page,
+        'size'        => $size,
+        'total_pages' => (int) ceil($total / $size),
+    ];
 }
 
 /**
@@ -622,8 +272,8 @@ function pvzLoadFromCdek(): array {
  */
 function pvzLoadFromCsv(): array {
     $csvUrl = 'https://www.cdek.ru/csv/directory-of-goods-issue-points.csv';
-    $cacheFile = cachePath('pvz_csv_cache.json');
-    $cacheMax  = 86400;
+    $cacheFile = __DIR__ . '/pvz_csv_cache.json';
+    $cacheMax  = 86400; // сутки
 
     if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheMax) {
         $dec = json_decode(file_get_contents($cacheFile), true);
@@ -634,7 +284,7 @@ function pvzLoadFromCsv(): array {
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_TIMEOUT        => 20,
-        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_FOLLOWLOCATION=> true,
     ]);
 
     $csv = curlExecRaw($ch);
@@ -642,10 +292,10 @@ function pvzLoadFromCsv(): array {
 
     if (!$csv) return [];
 
-    $lines = explode("\n", trim($csv));
+    $lines    = explode("\n", trim($csv));
     if (count($lines) < 2) return [];
 
-    $headers = str_getcsv(array_shift($lines), ';');
+    $headers  = str_getcsv(array_shift($lines), ';');
     $idx = array_flip(array_map('trim', $headers));
 
     $pvz = [];
@@ -655,69 +305,56 @@ function pvzLoadFromCsv(): array {
         $lat = trim($v[$idx['Latitude']  ?? 7]  ?? '');
         $lon = trim($v[$idx['Longitude'] ?? 8]  ?? '');
         $pvz[] = [
-            'code'            => $v[$idx['Code']         ?? 0] ?? '',
-            'name'            => $v[$idx['Name']         ?? 1] ?? '',
-            'city'            => $v[$idx['City']         ?? 2] ?? '',
-            'address'         => $v[$idx['Address']      ?? 3] ?? '',
-            'work_time'       => $v[$idx['WorkTime']     ?? 4] ?? '',
-            'country_code'    => 'RU',
-            'location'        => [
+            'code'           => $v[$idx['Code']           ?? 0] ?? '',
+            'name'           => $v[$idx['Name']           ?? 1] ?? '',
+            'city'           => $v[$idx['City']           ?? 2] ?? '',
+            'address'        => $v[$idx['Address']        ?? 3] ?? '',
+            'work_time'      => $v[$idx['WorkTime']       ?? 4] ?? '',
+            'country_code'   => 'RU',
+            'location'       => [
                 is_numeric($lat) ? (float) $lat : 0.0,
                 is_numeric($lon) ? (float) $lon : 0.0,
             ],
-            'have_cash'       => ($v[$idx['IsCash']      ?? 9]  ?? '') === '1',
-            'have_cashless'   => ($v[$idx['IsImposed']   ?? 10] ?? '') === '1',
-            'allowed_cod'     => true,
-            'is_dressing_room'=> ($v[$idx['DressingRoom'] ?? 11] ?? '') === '1',
+            'have_cash'      => ($v[$idx['IsCash']        ?? 9]  ?? '') === '1',
+            'have_cashless'  => ($v[$idx['IsImposed']     ?? 10] ?? '') === '1',
+            'allowed_cod'    => true,
+            'is_dressing_room'=> ($v[$idx['DressingRoom']  ?? 11] ?? '') === '1',
         ];
     }
 
-    atomicWrite($cacheFile, json_encode($pvz, JSON_UNESCAPED_UNICODE));
+    $encoded = json_encode($pvz, JSON_UNESCAPED_UNICODE);
+    file_put_contents($cacheFile, $encoded);
 
     return $pvz;
 }
 
 /**
- * Приведение записи ПВЗ к единому формату
+ * Приведение записи ПВЗ к нужному формату
  */
 function normalizePvz(array $p): array {
     $loc = $p['location'] ?? [];
-
-    if (is_array($loc) && isset($loc[0]) && is_numeric($loc[0])) {
-        $lat = $loc[0];
-        $lon = $loc[1] ?? 0.0;
-    } else {
-        $lat = $loc['latitude']  ?? 0.0;
-        $lon = $loc['longitude'] ?? 0.0;
-    }
-
-    $address = $p['address'] ?? ($loc['address_full'] ?? $loc['address'] ?? '');
-    $cityName = $p['city'] ?? ($loc['city'] ?? '');
-    $cityCode = $loc['city_code'] ?? ($p['city_code'] ?? '');
-    $postalCode = $loc['postal_code'] ?? $p['postal_code'] ?? '';
-    $countryCode = $loc['country_code'] ?? $p['country_code'] ?? 'RU';
-    $region = $loc['region'] ?? $p['region'] ?? '';
-    $workTime = $p['work_time'] ?? $p['workTime'] ?? '';
-
     return [
-        'city_code'        => $cityCode,
-        'city'             => $cityName,
-        'type'             => $p['type'] ?? 'PVZ',
-        'postal_code'      => $postalCode,
-        'country_code'     => $countryCode,
-        'region'           => $region,
-        'have_cashless'    => $p['have_cashless']    ?? true,
-        'have_cash'        => $p['have_cash']        ?? true,
-        'allowed_cod'      => $p['allowed_cod']      ?? true,
+        'city_code'       => $p['city_code']     ?? $p['city_uuid'] ?? '',
+        'city'           => $p['city']           ?? '',
+        'type'           => $p['type']           ?? 'PVZ',
+        'postal_code'    => $p['postal_code']    ?? '',
+        'country_code'   => $p['country_code']   ?? 'RU',
+        'region'         => $p['region']         ?? '',
+        'have_cashless'  => $p['have_cashless']  ?? true,
+        'have_cash'      => $p['have_cash']       ?? true,
+        'allowed_cod'    => $p['allowed_cod']    ?? true,
         'is_dressing_room' => $p['is_dressing_room'] ?? false,
-        'code'             => $p['code'] ?? '',
-        'name'             => $p['name'] ?? ($p['code'] ?? ''),
-        'address'          => $address,
-        'work_time'        => $workTime,
-        'location'         => [(float) $lat, (float) $lon],
-        'weight_min'       => $p['weight_min'] ?? 0,
-        'weight_max'       => $p['weight_max'] ?? 100000000,
-        'dimensions'       => $p['dimensions'] ?? null,
+        'code'           => $p['code']            ?? '',
+        'name'           => $p['name']            ?? ($p['code'] ?? ''),
+        'address'        => $p['address']        ?? '',
+        'work_time'      => $p['work_time']      ?? '',
+        'location'       => [
+            $loc[0] ?? 0.0,
+            $loc[1] ?? 0.0,
+        ],
+        'weight_min'     => $p['weight_min']     ?? 0,
+        'weight_max'     => $p['weight_max']     ?? 100000000,
+        'dimensions'     => $p['dimensions']      ?? null,
     ];
 }
 
@@ -728,72 +365,79 @@ function normalizePvz(array $p): array {
 // Выход: { delivery_sum, period_min, period_max, tariff_name, tariff_code }
 // ================================================================
 function handleCalculate(string $fromCity, string $toPvzCode, array $packages): array {
+    global $CONFIG;
+
     if (!$fromCity || !$toPvzCode) {
         throw new InvalidArgumentException('from_city and to_pvz_code are required');
     }
 
-    // --- 1. city_code отправителя ---
+    // --- 1. Определяем city_code города-отправителя ---
     $geo = handleGeocode($fromCity);
     if (empty($geo['city_code'])) {
-        throw new InvalidArgumentException("Не удалось определить код города для: {$fromCity}. Проверьте название города или настройте DADATA_TOKEN.");
-    }
-    $fromCode = $geo['city_code'];
-
-    // --- 2. city_code получателя ---
-    // Widget шлёт pvz.city_code || pvz.code; если пришёл code — ищем city_code в кеше
-    $toCode = is_numeric($toPvzCode) ? (int) $toPvzCode : null;
-    if (!$toCode) {
+        // Пробуем из PVZ по коду
         $pvzAll = pvzLoadFromCdek();
+        $target = null;
         foreach ($pvzAll as $p) {
             if (($p['code'] ?? '') == $toPvzCode) {
-                $toCode = (int) ($p['city_code'] ?? null) ?: null;
+                $target = $p;
                 break;
             }
         }
-    }
-    if (!$toCode) {
-        throw new InvalidArgumentException("Не удалось найти city_code для PVZ: {$toPvzCode}");
+
+        $fromCode = kladrRegionCode($geo['city'] ?? $fromCity);
+        $toCode   = $target['city_code'] ?? $toPvzCode;
+    } else {
+        $fromCode = $geo['city_code'];
+        // КЛАДР code для получателя — из PVZ
+        $pvzAll   = pvzLoadFromCdek();
+        $toCode   = null;
+        foreach ($pvzAll as $p) {
+            if (($p['code'] ?? '') == $toPvzCode) {
+                $toCode = $p['city_code'] ?? null;
+                break;
+            }
+        }
+        if (!$toCode) $toCode = $toPvzCode;
     }
 
-    // --- 3. Посылки (вес в граммах) ---
-    $pkgItems = [];
+    // --- 2. Собираем посылки ---
+    $items = [];
     foreach ($packages ?: [[]] as $pkg) {
-        $pkgItems[] = [
-            'weight' => (float) ($pkg['weight'] ?? 1000),
-            'length' => (float) ($pkg['length'] ?? 10),
-            'width'  => (float) ($pkg['width']  ?? 10),
-            'height' => (float) ($pkg['height'] ?? 10),
+        $items[] = [
+            'weight'  => (float) ($pkg['weight'] ?? 1000) / 1000, // г → кг
+            'length'  => (float) ($pkg['length'] ?? 10),
+            'width'   => (float) ($pkg['width']  ?? 10),
+            'height'  => (float) ($pkg['height'] ?? 10),
         ];
     }
 
-    // --- 4. Запрос тарифа ---
+    // --- 3. Запрос тарифа ---
     $token = cdekGetToken();
     if (!$token) {
-        // Dev-mode: мок-тарифы без ключей СДЭК (в проде задать SDEK_CLIENT_ID/SECRET)
-        return ['tariff_codes' => [
-            ['tariff_code' => 136, 'tariff_name' => 'Посылка склад-склад',    'delivery_sum' => 350, 'period_min' => 3, 'period_max' => 5, 'delivery_mode' => 2],
-            ['tariff_code' => 137, 'tariff_name' => 'Посылка склад-дверь',     'delivery_sum' => 450, 'period_min' => 3, 'period_max' => 5, 'delivery_mode' => 1],
-            ['tariff_code' => 233, 'tariff_name' => 'Экономичная посылка',     'delivery_sum' => 250, 'period_min' => 5, 'period_max' => 8, 'delivery_mode' => 2],
-            ['tariff_code' => 234, 'tariff_name' => 'Экономичная до двери',    'delivery_sum' => 320, 'period_min' => 5, 'period_max' => 8, 'delivery_mode' => 1],
-        ]];
+        return [
+            'error'        => 'CDEK authorization failed',
+            'delivery_sum' => null,
+            'period_min'   => null,
+            'period_max'   => null,
+            'tariff_name'  => null,
+            'tariff_code'  => null,
+        ];
     }
 
     $payload = [
-        'type'          => 1,
-        'date'          => date('Y-m-d\TH:i:sO'),
-        'currency'      => 1,
-        'from_location' => ['code' => (int) $fromCode],
-        'to_location'   => ['code' => (int) $toCode],
-        'packages'      => $pkgItems,
+        'type'          => 1,                               // забор груза
+        'date'          => date('Y-m-d'),
+        'currency'      => 1,                               // рубли
+        'from_location' => ['code' => $fromCode],
+        'to_location'   => ['code' => $toCode],
+        'packages'      => [['items' => $items]],
     ];
-
-    debugLog('tariff_debug.log', 'REQUEST: ' . json_encode($payload, JSON_UNESCAPED_UNICODE));
 
     $ch = curl_init('https://api.cdek.ru/v2/calculator/tarifflist');
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_HTTPHEADER     => [
+        CURLOPT_POST          => true,
+        CURLOPT_HTTPHEADER    => [
             'Content-Type: application/json',
             'Authorization: Bearer ' . $token,
         ],
@@ -803,45 +447,46 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
 
     $resp = curlExecJson($ch);
 
-    debugLog('tariff_debug.log', 'RESPONSE: ' . substr(json_encode($resp, JSON_UNESCAPED_UNICODE), 0, 1000));
-
-    if (!is_array($resp) || empty($resp)) {
-        throw new RuntimeException('Empty response from CDEK');
+    // tarifflist возвращает массив тарифов — берём первый (самый быстрый/дешёвый)
+    if (is_array($resp) && isset($resp[0])) {
+        $tariff = $resp[0];
+        return [
+            'delivery_sum' => $tariff['total_sum']      ?? null,
+            'period_min'   => $tariff['period_min']    ?? null,
+            'period_max'   => $tariff['period_max']    ?? null,
+            'tariff_name'  => $tariff['tariff_name']   ?? null,
+            'tariff_code'  => $tariff['tariff_code']   ?? null,
+        ];
     }
 
-    // tarifflist: возвращаем весь массив тарифов — фронт покажет выбор
-    if (isset($resp['tariff_codes']) && is_array($resp['tariff_codes'])) {
-        $tariffs = [];
-        foreach ($resp['tariff_codes'] as $t) {
-            $sum = (float) ($t['delivery_sum'] ?? 0);
-            if ($sum <= 0) continue;
-            $tariffs[] = [
-                'delivery_sum'  => $t['delivery_sum']  ?? null,
-                'period_min'    => $t['period_min']    ?? null,
-                'period_max'    => $t['period_max']    ?? null,
-                'tariff_name'   => $t['tariff_name']   ?? null,
-                'tariff_code'   => $t['tariff_code']   ?? null,
-                'delivery_mode' => $t['delivery_mode'] ?? null,
-            ];
-        }
-        // Сортируем по цене
-        usort($tariffs, fn($a, $b) => ($a['delivery_sum'] ?? 0) <=> ($b['delivery_sum'] ?? 0));
-        return ['tariff_codes' => $tariffs];
+    // одиночный ответ (старый формат /calculator/tariff)
+    if (is_array($resp) && !isset($resp[0])) {
+        return [
+            'delivery_sum' => $resp['total_sum']      ?? null,
+            'period_min'   => $resp['period_min']    ?? null,
+            'period_max'   => $resp['period_max']    ?? null,
+            'tariff_name'  => $resp['tariff_name']   ?? null,
+            'tariff_code'  => $resp['tariff_code']   ?? null,
+        ];
     }
 
-    // Старый формат /calculator/tariff — одиночный ответ → оборачиваем в массив
-    if (!isset($resp[0]) && isset($resp['total_sum'])) {
-        return ['tariff_codes' => [[
-            'delivery_sum'  => $resp['total_sum']    ?? null,
-            'period_min'    => $resp['period_min']   ?? null,
-            'period_max'    => $resp['period_max']   ?? null,
-            'tariff_name'   => $resp['tariff_name']  ?? null,
-            'tariff_code'   => $resp['tariff_code']  ?? null,
-            'delivery_mode' => $resp['delivery_mode'] ?? null,
-        ]]];
-    }
+    return [
+        'error'        => 'Empty response from CDEK',
+        'delivery_sum' => null,
+        'period_min'   => null,
+        'period_max'   => null,
+        'tariff_name'  => null,
+        'tariff_code'  => null,
+    ];
+}
 
-    throw new RuntimeException('Unexpected CDEK response format');
+/**
+ * Код региона по КЛАДР (заглушка — первые 2 цифры)
+ * Для точного расчёта нужен реальный city_code
+ */
+function kladrRegionCode(string $city): string {
+    // Берём часть КЛАДР-кода — СДЭК понимает 2-значный код региона
+    return $city . '00000000000';
 }
 
 // ================================================================
@@ -849,9 +494,9 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
 // ================================================================
 function cdekGetToken(): ?string {
     global $CONFIG;
-    $cacheFile = cachePath('cdek_token.json');
+    $cacheFile = __DIR__ . '/cdek_token.json';
 
-    $cached = @json_decode(@file_get_contents($cacheFile) ?: '', true);
+    $cached = @json_decode(file_get_contents($cacheFile), true);
     if ($cached && ($cached['expires_at'] ?? 0) > time() + 120) {
         return $cached['access_token'];
     }
@@ -860,15 +505,15 @@ function cdekGetToken(): ?string {
     $clientSecret = $CONFIG['CDEK_CLIENT_SECRET'] ?? '';
 
     if (!$clientId || str_starts_with($clientId, 'YOUR_')) {
-        return null;
+        return null; // не настроен
     }
 
     $ch = curl_init('https://api.cdek.ru/v2/oauth/token');
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_HTTPHEADER     => ['Content-Type: application/x-www-form-urlencoded'],
-        CURLOPT_POSTFIELDS     => http_build_query([
+        CURLOPT_POST          => true,
+        CURLOPT_HTTPHEADER    => ['Content-Type: application/x-www-form-urlencoded'],
+        CURLOPT_POSTFIELDS    => http_build_query([
             'grant_type'    => 'client_credentials',
             'client_id'     => $clientId,
             'client_secret' => $clientSecret,
@@ -881,10 +526,11 @@ function cdekGetToken(): ?string {
 
     if (empty($resp['access_token'])) return null;
 
-    atomicWrite($cacheFile, json_encode([
+    $data = [
         'access_token' => $resp['access_token'],
         'expires_at'   => time() + ($resp['expires_in'] ?? 3600),
-    ]));
+    ];
+    @file_put_contents($cacheFile, json_encode($data));
 
     return $resp['access_token'];
 }
@@ -901,10 +547,48 @@ function curlExecJson($ch): array {
 }
 
 function curlExecRaw($ch): string {
+    // Получаем response headers отдельно
+    $responseHeaders = [];
+    curl_setopt($ch, CURLOPT_HEADERFUNCTION, function($ch, $header) use (&$responseHeaders) {
+        $len = strlen($header);
+        $header = trim($header);
+        if (!empty($header) && strpos($header, ':') !== false) {
+            $parts = explode(':', $header, 2);
+            $responseHeaders[strtolower(trim($parts[0]))] = trim($parts[1]);
+        }
+        return $len;
+    });
+
     $out = curl_exec($ch);
     if (curl_errno($ch)) {
         error_log('cURL error: ' . curl_error($ch));
         return '';
     }
     return $out ?: '';
+}
+
+/**
+ * cURL-exec с извлечением заголовков (используется в pvzLoadFromCdek)
+ * Возвращает ['body' => string, 'headers' => [string=>string]]
+ */
+function curlExecWithHeaders(string $url, array $headers): array {
+    $ch = curl_init($url);
+    $responseHeaders = [];
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_HTTPHEADER     => $headers,
+        CURLOPT_TIMEOUT        => 20,
+        CURLOPT_HEADERFUNCTION => function($ch, $header) use (&$responseHeaders) {
+            $len = strlen($header);
+            $header = trim($header);
+            if (!empty($header) && strpos($header, ':') !== false) {
+                $parts = explode(':', $header, 2);
+                $responseHeaders[strtolower(trim($parts[0]))] = trim($parts[1]);
+            }
+            return $len;
+        },
+    ]);
+    $body = curl_exec($ch);
+    curl_close($ch);
+    return ['body' => $body ?: '', 'headers' => $responseHeaders];
 }
