@@ -56,7 +56,39 @@
   position: relative;
 }
 
-/* (крестик и ☰ перенесены в SegmentedControl) */
+/* Кнопка тогла сайдбара на карте (десктоп) */
+.sdwo-map-close {
+  position: absolute;
+  top: 10px;
+  right: calc(var(--sdwo-panel-w) + 10px);
+  z-index: 20;
+  transition: right var(--sdwo-transition);
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sdwo-white);
+  border: 1px solid var(--sdwo-border);
+  border-radius: var(--sdwo-radius);
+  cursor: pointer;
+  color: var(--sdwo-text-muted);
+  transition: all var(--sdwo-transition);
+  box-shadow: var(--sdwo-shadow-dropdown);
+}
+.sdwo-map-close:hover {
+  color: var(--sdwo-text);
+  border-color: var(--sdwo-text-muted);
+}
+.sdwo-map-close--collapsed {
+  right: 10px;
+}
+
+/* Крестик и бургер в табах — скрыты на десктопе */
+.sdwo-segment__icon.sdwo-segment__close,
+.sdwo-segment__icon.sdwo-segment__burger {
+  display: none;
+}
 
 /* --- Segmented Control --- */
 .sdwo-segment {
@@ -285,7 +317,7 @@
   align-items: center;
   justify-content: center;
   background: var(--sdwo-white);
-  border: 1px solid var(--sdwo-border);
+  border: 1.5px solid var(--sdwo-border);
   border-radius: var(--sdwo-radius);
   cursor: pointer;
   color: var(--sdwo-text-muted);
@@ -297,7 +329,7 @@
   color: var(--sdwo-green);
 }
 .sdwo-filter-btn--active {
-  background: var(--sdwo-green-10);
+  background: var(--sdwo-white);
   border-color: var(--sdwo-green);
   color: var(--sdwo-green);
 }
@@ -347,18 +379,18 @@
   flex-shrink: 0;
   transition: all var(--sdwo-transition);
 }
+.sdwo-filter-check svg {
+  display: none;
+  width: 10px;
+  height: 10px;
+  color: #fff;
+}
 .sdwo-filter-check--on {
   background: var(--sdwo-green);
   border-color: var(--sdwo-green);
 }
 .sdwo-filter-check--on svg {
   display: block;
-}
-.sdwo-filter-check svg {
-  display: none;
-  width: 10px;
-  height: 10px;
-  color: #fff;
 }
 
 /* --- Sliding Panel (общие стили для PvzList / PvzDetail / DoorPanel) --- */
@@ -664,16 +696,23 @@
     border-radius: 0;
   }
   .sdwo-segment {
-    flex-direction: column;
     padding: 6px 8px;
   }
   .sdwo-segment__btn {
-    width: 100%;
+    padding: 7px 10px;
+    font-size: 13px;
   }
   .sdwo-panel {
     width: 100%;
   }
   .sdwo-search {
-    width: calc(100% - 60px);
+    width: calc(100% - 20px);
+  }
+  .sdwo-map-close {
+    display: none;
+  }
+  .sdwo-segment__icon.sdwo-segment__close,
+  .sdwo-segment__icon.sdwo-segment__burger {
+    display: flex;
   }
 }

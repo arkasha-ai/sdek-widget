@@ -93,7 +93,7 @@ export class SdekPvzWidget {
         // State machine
         mode:       'office',    // 'office' | 'door'
         panel:      'list',      // 'list' | 'detail' | 'none'
-        panelOpen:  true,        // панель видима?
+        panelOpen:  window.innerWidth > 555,  // на мобильных скрыта по умолчанию
 
         // Office mode
         list:       [],
@@ -312,10 +312,12 @@ export class SdekPvzWidget {
             activeCode: this.active,
             backendUrl: self.backendUrl,
             mode:       this.mode,
+            panelOpen:  this.panelOpen,
             onMoveend:      this.onMapMoveend,
             onMarkerselect: this.onMarkerSelect,
             onMapclick:     this.onMapClick,
             onFilterchange: this.onFilterChange,
+            onTogglepanel:  this.togglePanel,
           })
         );
 
