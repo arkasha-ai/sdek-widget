@@ -16,12 +16,12 @@
 // ================================================================
 $CONFIG = [
     // DaData API (https://dadata.ru/api/)
-    'DADATA_TOKEN' => 'YOUR_DADATA_TOKEN',          // Token из ЛК DaData
-    'DADATA_SECRET'=> 'YOUR_DADATA_SECRET',          // Secret (для подсказок, опц.)
+    'DADATA_TOKEN' => getenv('DADATA_API_KEY') ?: 'YOUR_DADATA_TOKEN',          // Token из ЛК DaData
+    'DADATA_SECRET'=> getenv('DADATA_SECRET') ?:'YOUR_DADATA_SECRET',          // Secret (для подсказок, опц.)
 
     // СДЭК OAuth2 (https://www.cdek.ru/api/)
-    'CDEK_CLIENT_ID'     => 'YOUR_CDEK_CLIENT_ID',      // client_id
-    'CDEK_CLIENT_SECRET' => 'YOUR_CDEK_CLIENT_SECRET',  // client_secret
+    'CDEK_CLIENT_ID'     => getenv('SDEK_CLIENT_ID') ?: 'YOUR_CDEK_CLIENT_ID',      // client_id
+    'CDEK_CLIENT_SECRET' => getenv('SDEK_CLIENT_SECRET') ?: 'YOUR_CDEK_CLIENT_SECRET',  // client_secret
 ];
 
 // ================================================================
@@ -43,8 +43,8 @@ try {
         'pvzlist'   => handlePvzList(
             $_REQUEST['country_code'] ?? 'RU',
             $_REQUEST['bbox'] ?? null,   // [minLon,minLat,maxLon,maxLat]
-            (int) ($_REQUEST['page'] ?? 1),
-            (int) ($_REQUEST['size'] ?? 500)
+            $_REQUEST['page'] ?? null,
+            $_REQUEST['size'] ?? null
         ),
         'calculate' => handleCalculate(
             $_REQUEST['from_city']    ?? '',
@@ -160,9 +160,9 @@ function parseOsmDisplayName(string $name): string {
 // Заголовки: x-total-elements, x-total-pages
 // Фильтры: type=PVZ, is_handout=true, country_code
 // ================================================================
-function handlePvzList(string $country, ?array $bbox, int $page, int $size): array {
-    $page  = max(1, $page);
-    $size  = min(max(1, $size), 200); // лимит на стороне API
+function handlePvzList(string $country, ?array $bbox, ?int $page, ?int $size): array {
+    $page  = is_null($page) ? $page : max(1, $page);
+    $size  = is_null($size) ? $size : min(max(1, $size), 500); // лимит на стороне API
 
     $pvzData = pvzLoadFromCdek($country, $page, $size);
 
@@ -170,7 +170,7 @@ function handlePvzList(string $country, ?array $bbox, int $page, int $size): arr
     if ($bbox && count($bbox) === 4) {
         [$minLon, $minLat, $maxLon, $maxLat] = $bbox;
         $pvzData['items'] = array_filter($pvzData['items'], function ($p) use ($minLon, $minLat, $maxLon, $maxLat) {
-            [$lat, $lon] = $p['location'] ?? [];
+            list ('latitude' => $lat, 'longitude' => $lon) = $p['location'] ?? [];
             if ($lat === null || $lon === null) return false;
             return $lon >= $minLon && $lon <= $maxLon
                 && $lat >= $minLat && $lat <= $maxLat;
@@ -190,11 +190,22 @@ function handlePvzList(string $country, ?array $bbox, int $page, int $size): arr
     return $pvzData;
 }
 
+function pvzLoadFromCdekAll(string $country): array {
+    $page = -1;
+    $items = [];
+    do {
+        $page++;
+        $result = pvzLoadFromCdek($country, $page, 500);
+        $items = array_merge($items, $result['items']);
+    } while ($result['total_pages'] > $page);
+    return $items;
+}
+
 /**
  * Загрузка ПВЗ с пагинацией через /v2/deliverypoints
  * Кэш: ключ = md5(country|page|size), TTL 1 час
  */
-function pvzLoadFromCdek(string $country, int $page, int $size): array {
+function pvzLoadFromCdek(string $country, ?int $page, ?int $size): array {
     $cacheDir  = __DIR__ . '/pvz_cache';
     $cacheMax  = 3600;
     $cacheKey  = md5("{$country}|{$page}|{$size}");
@@ -212,13 +223,13 @@ function pvzLoadFromCdek(string $country, int $page, int $size): array {
     // Запрос к официальному API СДЭК с пагинацией и фильтрами
     $token = cdekGetToken();
     if ($token) {
-        $query = http_build_query([
+        $query = http_build_query(array_filter([
             'country_code' => $country,
             'type'         => 'PVZ',
             'is_handout'   => 'true',
             'page'         => $page,
             'size'         => $size,
-        ]);
+        ]));
         $url = 'https://api.cdek.ru/v2/deliverypoints?' . $query;
         $result = curlExecWithHeaders($url, [
             'Authorization: Bearer ' . $token,
@@ -334,23 +345,23 @@ function pvzLoadFromCsv(): array {
 function normalizePvz(array $p): array {
     $loc = $p['location'] ?? [];
     return [
-        'city_code'       => $p['city_code']     ?? $p['city_uuid'] ?? '',
-        'city'           => $p['city']           ?? '',
+        'city_code'       => $loc['city_code']     ?? $loc['city_uuid'] ?? '',
+        'city'           => $loc['city']           ?? '',
         'type'           => $p['type']           ?? 'PVZ',
-        'postal_code'    => $p['postal_code']    ?? '',
-        'country_code'   => $p['country_code']   ?? 'RU',
-        'region'         => $p['region']         ?? '',
+        'postal_code'    => $loc['postal_code']    ?? '',
+        'country_code'   => $loc['country_code']   ?? 'RU',
+        'region'         => $loc['region']         ?? '',
         'have_cashless'  => $p['have_cashless']  ?? true,
         'have_cash'      => $p['have_cash']       ?? true,
         'allowed_cod'    => $p['allowed_cod']    ?? true,
         'is_dressing_room' => $p['is_dressing_room'] ?? false,
         'code'           => $p['code']            ?? '',
         'name'           => $p['name']            ?? ($p['code'] ?? ''),
-        'address'        => $p['address']        ?? '',
+        'address'        => $loc['address']        ?? '',
         'work_time'      => $p['work_time']      ?? '',
         'location'       => [
-            $loc[0] ?? 0.0,
-            $loc[1] ?? 0.0,
+            $loc['latitude'] ?? 0.0,
+            $loc['longitude'] ?? 0.0,
         ],
         'weight_min'     => $p['weight_min']     ?? 0,
         'weight_max'     => $p['weight_max']     ?? 100000000,
@@ -375,7 +386,7 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
     $geo = handleGeocode($fromCity);
     if (empty($geo['city_code'])) {
         // Пробуем из PVZ по коду
-        $pvzAll = pvzLoadFromCdek();
+        $pvzAll = pvzLoadFromCdekAll($geo['country_iso_code'] ?? 'RU');
         $target = null;
         foreach ($pvzAll as $p) {
             if (($p['code'] ?? '') == $toPvzCode) {
@@ -389,7 +400,7 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
     } else {
         $fromCode = $geo['city_code'];
         // КЛАДР code для получателя — из PVZ
-        $pvzAll   = pvzLoadFromCdek();
+        $pvzAll   = pvzLoadFromCdekAll($geo['country_iso_code'] ?? 'RU');
         $toCode   = null;
         foreach ($pvzAll as $p) {
             if (($p['code'] ?? '') == $toPvzCode) {
@@ -426,7 +437,7 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
 
     $payload = [
         'type'          => 1,                               // забор груза
-        'date'          => date('Y-m-d'),
+        'date'          => date('Y-m-d\TH:i:sO'),
         'currency'      => 1,                               // рубли
         'from_location' => ['code' => $fromCode],
         'to_location'   => ['code' => $toCode],
@@ -446,6 +457,7 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
     ]);
 
     $resp = curlExecJson($ch);
+    var_dump($resp);die();
 
     // tarifflist возвращает массив тарифов — берём первый (самый быстрый/дешёвый)
     if (is_array($resp) && isset($resp[0])) {

@@ -6,3 +6,5 @@ dist
 geocode_debug.log
 tariff_debug.log
 geocode_cache.json
+pvz_cache
+pvz_csv_cache.json
