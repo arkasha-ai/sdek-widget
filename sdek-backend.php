@@ -161,8 +161,8 @@ function parseOsmDisplayName(string $name): string {
 // Фильтры: type=PVZ, is_handout=true, country_code
 // ================================================================
 function handlePvzList(string $country, ?array $bbox, ?int $page, ?int $size): array {
-    $page  = is_null($page) ? $page : max(1, $page);
-    $size  = is_null($size) ? $size : min(max(1, $size), 500); // лимит на стороне API
+    $page  = is_null($page) ? $page : max(0, $page);
+    $size  = is_null($size) ? $size : min(max(0, $size), 500); // лимит на стороне API
 
     $pvzData = pvzLoadFromCdek($country, $page, $size);
 
