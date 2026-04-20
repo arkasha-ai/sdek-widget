@@ -457,7 +457,6 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
     ]);
 
     $resp = curlExecJson($ch);
-    var_dump($resp);die();
 
     // tarifflist возвращает массив тарифов — берём первый (самый быстрый/дешёвый)
     if (is_array($resp) && isset($resp[0])) {

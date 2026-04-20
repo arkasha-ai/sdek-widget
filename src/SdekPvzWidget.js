@@ -412,12 +412,14 @@ export class SdekPvzWidget {
     try {
       let page = 0;
       let list, data;
+      this._pvzAll = [];
       do {
         data = await this._fetch({action: 'pvzlist', country_code: 'RU', size: 500, page});
         list = Array.isArray(data) ? data : (data.items || data.pvz || []);
+        this._pvzAll.concat(list);
         page++;
       } while ((data.total_pages ?? 0) > page);
-      this._pvzAll = list;
+
 
       const bounds = this._mapRef?.getBounds?.();
       if (bounds) {
