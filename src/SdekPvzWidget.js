@@ -416,7 +416,7 @@ export class SdekPvzWidget {
       do {
         data = await this._fetch({action: 'pvzlist', country_code: 'RU', size: 500, page});
         list = Array.isArray(data) ? data : (data.items || data.pvz || []);
-        this._pvzAll.concat(list);
+        this._pvzAll = [...this._pvzAll, ...list];
         page++;
       } while ((data.total_pages ?? 0) > page);
 
