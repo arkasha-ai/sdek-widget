@@ -42,6 +42,8 @@ export class SdekPvzWidget {
    * @param {Array<Object>}   options.packages         — [{length,width,height,weight}]
    * @param {Function}        options.onChoose         — (mode, tariff, target) => void
    * @param {string}         [options.backendUrl]      — URL sdek-backend.php
+   * @param {boolean}        [options.officeVisibleTab]   — видимость кнопки "До пункта выдачи"
+   * @param {boolean}        [options.doorVisibleTab]     — видимость кнопки "До двери"
    */
   constructor(options = {}) {
     this.defaultLocation = options.defaultLocation || 'Москва';
@@ -49,6 +51,8 @@ export class SdekPvzWidget {
     this.packages        = options.packages        || [];
     this.onChoose        = options.onChoose        || (() => {});
     this.backendUrl      = options.backendUrl      || './sdek-backend.php';
+    this.officeVisible   = options.officeVisibleTab;
+    this.doorVisible     = options.doorVisibleTab;
 
     this._overlay = null;
     this._app     = null;
@@ -91,7 +95,7 @@ export class SdekPvzWidget {
 
       data: () => ({
         // State machine
-        mode:       'office',    // 'office' | 'door'
+        mode:       this.doorVisible && !this.officeVisible ? 'door' : 'office', // 'office' | 'door'
         panel:      'list',      // 'list' | 'detail' | 'none'
         panelOpen:  window.innerWidth > 555,  // на мобильных скрыта по умолчанию
 
@@ -293,6 +297,8 @@ export class SdekPvzWidget {
         children.push(
           h(SegmentedControl, {
             modelValue: this.mode,
+            officeVisible: self.officeVisible,
+            doorVisible: self.doorVisible,
             'onUpdate:modelValue': this.onModeChange,
             onTogglepanel: this.togglePanel,
             onClose: () => this.close(),
@@ -370,7 +376,28 @@ export class SdekPvzWidget {
           h('div', { class: 'sdwo-map-wrap' }, mapChildren)
         );
 
-        return h('div', { class: 'sdwo-popup' }, children);
+        // 4. Modal Close
+        const closeBtn = h('button', {
+          class: 'sdwo-modal-close',
+          title: 'Закрыть',
+          onClick: () => this.close()
+        }, [
+          h('svg', {
+            width: '20',
+            height: '20',
+            viewBox: '0 0 24 24',
+            fill: 'none',
+            stroke: 'currentColor',
+            'stroke-width': '2',
+            'stroke-linecap': 'round',
+            'stroke-linejoin': 'round'
+          }, [
+            h('line', { x1: '18', y1: '6', x2: '6', y2: '18' }),
+            h('line', { x1: '6', y1: '6', x2: '18', y2: '18' })
+          ])
+        ]);
+
+        return h('div', { class: 'sdwo-popup' }, [...children, closeBtn]);
       },
     });
 
@@ -472,3 +499,4 @@ export class SdekPvzWidget {
     return json;
   }
 }
+

@@ -2,6 +2,7 @@
   <div class="sdwo-segment">
     <div class="sdwo-segment__tabs">
       <button
+        v-if="officeVisible"
         class="sdwo-segment__btn"
         :class="{ 'sdwo-segment__btn--active': modelValue === 'office' }"
         @click="$emit('update:modelValue', 'office')"
@@ -9,6 +10,7 @@
         До пункта выдачи
       </button>
       <button
+        v-if="doorVisible"
         class="sdwo-segment__btn"
         :class="{ 'sdwo-segment__btn--active': modelValue === 'door' }"
         @click="$emit('update:modelValue', 'door')"
@@ -30,6 +32,8 @@
 <script setup>
 defineProps({
   modelValue: { type: String, default: 'office' },
+  officeVisible: { type: Boolean, default: true },
+  doorVisible: { type: Boolean, default: true },
 });
 defineEmits(['update:modelValue', 'togglepanel', 'close']);
 </script>

@@ -43,9 +43,11 @@
 
     function initWidget() {
       console.log('[OK] SdekPvzWidget loaded:', typeof window.SdekPvzWidget);
-      var widget = new window.SdekPvzWidget({
+      const widget = new window.SdekPvzWidget({
         defaultLocation: 'Краснокамск',
         fromLocation:     'Челябинск',
+        officeVisibleTab: false,
+        doorVisibleTab: false,
         packages: [
           { length: 30, width: 20, height: 15, weight: 1000 },
         ],
