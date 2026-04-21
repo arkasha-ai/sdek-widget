@@ -451,13 +451,13 @@ export class SdekPvzWidget {
       const bounds = this._mapRef?.getBounds?.();
       if (bounds) {
         const [minLon, minLat, maxLon, maxLat] = bounds;
-        const visible = list.filter(p => {
+        const visible = this._pvzAll.filter(p => {
           const [la, lo] = p.location || [];
           return lo >= minLon && lo <= maxLon && la >= minLat && la <= maxLat;
         });
         this._vm.list = sortByBounds(visible, bounds);
       } else {
-        this._vm.list = list;
+        this._vm.list = this._pvzAll;
       }
     } catch (err) {
       if (this._vm) this._vm.listError = 'Ошибка загрузки ПВЗ: ' + err.message;
