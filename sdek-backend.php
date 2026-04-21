@@ -36,8 +36,12 @@ header('Access-Control-Allow-Headers: Content-Type, Authorization');
 // Роутер
 // ================================================================
 $action = $_REQUEST['action'] ?? '';
+$cacheDir  = __DIR__ . '/pvz_cache';
 
 try {
+    if (!is_dir($cacheDir)) {
+        @mkdir($cacheDir, 0755, true);
+    }
     $result = match ($action) {
         'suggest'   => handleSuggest(
             $_REQUEST['query'] ?? '',
@@ -103,24 +107,7 @@ function handleSuggest(string $query, ?float $lat = null, ?float $lon = null): a
         }
     }
 
-    $ch = curl_init('https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address');
-    curl_setopt_array($ch, [
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POST           => true,
-        CURLOPT_HTTPHEADER     => [
-            'Content-Type: application/json',
-            'Authorization: Token ' . $token,
-        ],
-        CURLOPT_POSTFIELDS => json_encode([
-            'query'           => $query,
-            'count'           => 8,
-            'locations_boost' => $locationsBoost,
-        ]),
-        CURLOPT_TIMEOUT => 10,
-    ]);
-
-    $resp = curlExecJson($ch);
-    $suggestions = $resp['suggestions'] ?? [];
+    $suggestions = handleSuggestRequest($token, $locationsBoost, $query, $lat, $lon);
 
     $result = [];
     foreach ($suggestions as $s) {
@@ -152,6 +139,45 @@ function handleSuggest(string $query, ?float $lat = null, ?float $lon = null): a
     return ['suggestions' => $result];
 }
 
+function handleSuggestRequest(string $token, array $locationsBoost, string $query, ?float $lat = null, ?float $lon = null): array {
+    global $cacheDir;
+    $cacheMaxSec  = 3600;
+    $cacheKey  = "suggest_".md5("{$query}|{$lat}|{$lon}");
+    $cacheFile = $cacheDir . '/' . $cacheKey . '.json';
+
+    if (file_exists($cacheFile)) {
+        if ((time() - filemtime($cacheFile)) < $cacheMaxSec) {
+            return json_decode(file_get_contents($cacheFile), true);
+        }
+        // remove old cache file
+        if (!unlink($cacheFile)) {
+            echo json_encode(['error' => 'error delete cache file: '.$cacheFile], JSON_UNESCAPED_UNICODE);
+        }
+    }
+
+    $ch = curl_init('https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address');
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_HTTPHEADER     => [
+            'Content-Type: application/json',
+            'Authorization: Token ' . $token,
+        ],
+        CURLOPT_POSTFIELDS => json_encode([
+            'query'           => $query,
+            'count'           => 8,
+            'locations_boost' => $locationsBoost,
+        ]),
+        CURLOPT_TIMEOUT => 10,
+    ]);
+
+    $resp = curlExecJson($ch);
+    $suggestions = $resp['suggestions'] ?? [];
+    file_put_contents($cacheFile, json_encode($suggestions, JSON_UNESCAPED_UNICODE));
+
+    return $suggestions;
+}
+
 /**
  * Обратное геокодирование: координаты → адрес (город/область с kladr_id)
  * Используется для приоритизации поиска по текущему положению карты
@@ -164,6 +190,32 @@ function handleGeolocate(float $lat, float $lon): array {
         return [];
     }
 
+    $d = handleGeolocateRequest($token, $lat, $lon);
+
+    return [
+        'city_kladr_id'   => $d['city_kladr_id']   ?? null,
+        'region_kladr_id' => $d['region_kladr_id'] ?? null,
+        'city'            => $d['city']            ?? null,
+        'region'          => $d['region']          ?? null,
+    ];
+}
+
+function handleGeolocateRequest(string $token, float $lat, float $lon): array
+{
+    global $cacheDir;
+    $cacheMaxSec  = 3600;
+    $cacheKey  = "geolocate_".md5("{$lat}|{$lon}");
+    $cacheFile = $cacheDir . '/' . $cacheKey . '.json';
+
+    if (file_exists($cacheFile)) {
+        if ((time() - filemtime($cacheFile)) < $cacheMaxSec) {
+            return json_decode(file_get_contents($cacheFile), true);
+        }
+        // remove old cache file
+        if (!unlink($cacheFile)) {
+            echo json_encode(['error' => 'error delete cache file: '.$cacheFile], JSON_UNESCAPED_UNICODE);
+        }
+    }
     $ch = curl_init('https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address');
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
@@ -183,15 +235,10 @@ function handleGeolocate(float $lat, float $lon): array {
     if (!is_array($resp) || empty($resp)) {
         return [];
     }
-
     $d = $resp['suggestions'][0]['data'] ?? [];
+    file_put_contents($cacheFile, json_encode($d, JSON_UNESCAPED_UNICODE));
 
-    return [
-        'city_kladr_id'   => $d['city_kladr_id']   ?? null,
-        'region_kladr_id' => $d['region_kladr_id'] ?? null,
-        'city'            => $d['city']            ?? null,
-        'region'          => $d['region']          ?? null,
-    ];
+    return $d;
 }
 
 // ================================================================
@@ -213,6 +260,36 @@ function handleGeocode(string $query): array {
         return geocodeNominatim($query);
     }
 
+    $suggestions = handleGeocodeRequest($token, $query);
+
+    if (!$suggestions) {
+        return geocodeNominatim($query);
+    }
+
+    $d = $suggestions[0]['data'] ?? [];
+    return [
+        'lat'       => $d['geo_lat']    ?? null,
+        'lon'       => $d['geo_lon']    ?? null,
+        'city'      => $d['city']       ?? $d['settlement'] ?? $query,
+        'city_code' => $d['city_kladr_id'] ?? null,
+    ];
+}
+
+function handleGeocodeRequest(string $token, string $query): array {
+    global $cacheDir;
+    $cacheMaxSec  = 3600;
+    $cacheKey  = "geocode_".md5("{$query}");
+    $cacheFile = $cacheDir . '/' . $cacheKey . '.json';
+
+    if (file_exists($cacheFile)) {
+        if ((time() - filemtime($cacheFile)) < $cacheMaxSec) {
+            return json_decode(file_get_contents($cacheFile), true);
+        }
+        // remove old cache file
+        if (!unlink($cacheFile)) {
+            echo json_encode(['error' => 'error delete cache file: '.$cacheFile], JSON_UNESCAPED_UNICODE);
+        }
+    }
     $ch = curl_init('https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address');
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
@@ -231,18 +308,9 @@ function handleGeocode(string $query): array {
 
     $resp = curlExecJson($ch);
     $suggestions = $resp['suggestions'] ?? [];
+    file_put_contents($cacheFile, json_encode($suggestions, JSON_UNESCAPED_UNICODE));
 
-    if (!$suggestions) {
-        return geocodeNominatim($query);
-    }
-
-    $d = $suggestions[0]['data'] ?? [];
-    return [
-        'lat'       => $d['geo_lat']    ?? null,
-        'lon'       => $d['geo_lon']    ?? null,
-        'city'      => $d['city']       ?? $d['settlement'] ?? $query,
-        'city_code' => $d['city_kladr_id'] ?? null,
-    ];
+    return $suggestions;
 }
 
 /**
@@ -332,14 +400,11 @@ function pvzLoadFromCdekAll(string $country): array {
  * Кэш: ключ = md5(country|page|size), TTL 1 час
  */
 function pvzLoadFromCdek(string $country, ?int $page, ?int $size): array {
-    $cacheDir  = __DIR__ . '/pvz_cache';
+    global $cacheDir;
+
     $cacheMax  = 3600;
     $cacheKey  = md5("{$country}|{$page}|{$size}");
     $cacheFile = $cacheDir . '/' . $cacheKey . '.json';
-
-    if (!is_dir($cacheDir)) {
-        @mkdir($cacheDir, 0755, true);
-    }
 
     if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheMax) {
         $dec = json_decode(file_get_contents($cacheFile), true);

@@ -13,7 +13,7 @@
     <div class="sdwo-panel__body">
       <!-- Loading -->
       <template v-if="loading">
-        <div v-for="i in 4" :key="i" class="sdwo-skeleton" />
+        <div v-for="i in 5" :key="i" class="sdwo-skeleton" />
       </template>
 
       <!-- Empty -->
@@ -23,6 +23,7 @@
 
       <!-- Items -->
       <div
+        v-if="!loading"
         v-for="pvz in list"
         :key="pvz.code"
         class="sdwo-pvz-item"

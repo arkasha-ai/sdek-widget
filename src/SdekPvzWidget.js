@@ -174,7 +174,7 @@ export class SdekPvzWidget {
         },
 
         onMarkerSelect(code) {
-          const pvz = self._pvzAll.find(p => p.code == code);
+          const pvz = self._pvzAll.find(p => p.code === code);
           if (pvz) this.selectPvz(pvz);
         },
 

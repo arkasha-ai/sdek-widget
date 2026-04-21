@@ -27,7 +27,7 @@
           v-for="t in tariffs"
           :key="t.tariff_code"
           class="sdwo-tariff"
-          :class="{ 'sdwo-tariff--selected': selectedCode === t.tariff_code }"
+          :class="{ 'sdwo-tariff--selected': selectedTariffCode === t.tariff_code }"
           @click="selectTariff(t)"
         >
           <!-- Checkmark -->
@@ -41,14 +41,14 @@
       </template>
 
       <div v-else-if="error" class="sdwo-panel__err">{{ error }}</div>
-      <div v-else class="sdwo-empty">Нет доступных тарифов</div>
+<!--      <div v-else class="sdwo-empty">Нет доступных тарифов</div>-->
     </div>
 
     <!-- Footer -->
     <div class="sdwo-panel__foot">
       <button
         class="sdwo-btn"
-        :disabled="!selectedCode"
+        :disabled="tariffs.length && !selectedTariffCode"
         @click="handleChoose"
       >
         Выбрать
@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import {ref, watch} from 'vue';
 
 const props = defineProps({
   visible:  { type: Boolean, default: false },
@@ -70,18 +70,18 @@ const props = defineProps({
 
 const emit = defineEmits(['back', 'choose']);
 
-const selectedCode = ref(null);
+const selectedTariffCode = ref(null);
 
 // Сброс выбранного тарифа при смене ПВЗ
-watch(() => props.pvz, () => { selectedCode.value = null; });
+watch(() => props.pvz, () => { selectedTariffCode.value = null; });
 
 // Автовыбор если один тариф
 watch(() => props.tariffs, (list) => {
-  if (list.length === 1) selectedCode.value = list[0].tariff_code;
+  if (list.length === 1) selectedTariffCode.value = list[0].tariff_code;
 }, { immediate: true });
 
 function selectTariff(t) {
-  selectedCode.value = t.tariff_code;
+  selectedTariffCode.value = t.tariff_code;
 }
 
 function formatPrice(v) {
@@ -90,7 +90,7 @@ function formatPrice(v) {
 }
 
 function handleChoose() {
-  const t = props.tariffs.find(t => t.tariff_code === selectedCode.value);
-  if (t && props.pvz) emit('choose', props.pvz, t);
+  const t = props.tariffs.find(t => t.tariff_code === selectedTariffCode.value);
+  if (props.pvz) emit('choose', props.pvz, t);
 }
 </script>
