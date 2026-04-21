@@ -39,6 +39,11 @@ $action = $_REQUEST['action'] ?? '';
 
 try {
     $result = match ($action) {
+        'suggest'   => handleSuggest(
+            $_REQUEST['query'] ?? '',
+            (isset($_REQUEST['lat']) && $_REQUEST['lat'] !== '') ? (float) $_REQUEST['lat'] : null,
+            (isset($_REQUEST['lon']) && $_REQUEST['lon'] !== '') ? (float) $_REQUEST['lon'] : null
+        ),
         'geocode'   => handleGeocode($_REQUEST['query'] ?? ''),
         'pvzlist'   => handlePvzList(
             $_REQUEST['country_code'] ?? 'RU',
@@ -66,6 +71,127 @@ try {
         'error'   => 'Internal server error',
         'detail'  => $e->getMessage(),
     ], JSON_UNESCAPED_UNICODE);
+}
+
+// ================================================================
+// 0. SUGGEST
+// --------
+// Вход:  query — строка поиска, lat/lon — координаты центра карты для приоритизации
+// Выход: { suggestions: [{value, lat, lon, city, city_code, region}] }
+// ================================================================
+function handleSuggest(string $query, ?float $lat = null, ?float $lon = null): array {
+    global $CONFIG;
+
+    if (trim($query) === '') {
+        return ['suggestions' => []];
+    }
+
+    $token = $CONFIG['DADATA_TOKEN'];
+    if (!$token || str_starts_with($token, 'YOUR_')) {
+        return ['suggestions' => []];
+    }
+
+    // Reverse geocode координат карты → city/region с kladr_id для приоритизации
+    $locationsBoost = [['country' => 'Россия']];
+    if ($lat !== null && $lon !== null) {
+        $location = handleGeolocate($lat, $lon);
+        $kladrIds = [];
+        if (!empty($location['city_kladr_id']))   $kladrIds[] = $location['city_kladr_id'];
+        if (!empty($location['region_kladr_id'])) $kladrIds[] = $location['region_kladr_id'];
+        foreach ($kladrIds as $kladrId) {
+            $locationsBoost[] = ['kladr_id' => $kladrId];
+        }
+    }
+
+    $ch = curl_init('https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address');
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_HTTPHEADER     => [
+            'Content-Type: application/json',
+            'Authorization: Token ' . $token,
+        ],
+        CURLOPT_POSTFIELDS => json_encode([
+            'query'           => $query,
+            'count'           => 8,
+            'locations_boost' => $locationsBoost,
+        ]),
+        CURLOPT_TIMEOUT => 10,
+    ]);
+
+    $resp = curlExecJson($ch);
+    $suggestions = $resp['suggestions'] ?? [];
+
+    $result = [];
+    foreach ($suggestions as $s) {
+        $d = $s['data'] ?? [];
+
+        $type = 'city';
+        if (!empty($d['house'])) {
+            $type = 'house';
+        } elseif (!empty($d['street'])) {
+            $type = 'street';
+        } elseif (!empty($d['settlement'])) {
+            $type = 'settlement';
+        }
+
+        $result[] = [
+            'value'     => $s['value'] ?? '',
+            'lat'       => $d['geo_lat']    ?? null,
+            'lon'       => $d['geo_lon']    ?? null,
+            'city'      => $d['city']       ?? $d['settlement'] ?? '',
+            'city_code' => $d['city_kladr_id'] ?? null,
+            'region'    => $d['region'] ?? '',
+            'type'      => $type,
+            'house'     => $d['house'] ?? null,
+            'street'    => $d['street'] ?? null,
+            'settlement'=> $d['settlement'] ?? null,
+        ];
+    }
+
+    return ['suggestions' => $result];
+}
+
+/**
+ * Обратное геокодирование: координаты → адрес (город/область с kladr_id)
+ * Используется для приоритизации поиска по текущему положению карты
+ */
+function handleGeolocate(float $lat, float $lon): array {
+    global $CONFIG;
+
+    $token = $CONFIG['DADATA_TOKEN'];
+    if (!$token || str_starts_with($token, 'YOUR_')) {
+        return [];
+    }
+
+    $ch = curl_init('https://suggestions.dadata.ru/suggestions/api/4_1/rs/geolocate/address');
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST           => true,
+        CURLOPT_HTTPHEADER     => [
+            'Content-Type: application/json',
+            'Authorization: Token ' . $token,
+        ],
+        CURLOPT_POSTFIELDS => json_encode([
+            'lat' => $lat,
+            'lon' => $lon,
+        ]),
+        CURLOPT_TIMEOUT => 10,
+    ]);
+
+    $resp = curlExecJson($ch);
+    if (!is_array($resp) || empty($resp)) {
+        return [];
+    }
+
+    $d = $resp['suggestions'][0]['data'] ?? [];
+
+    return [
+        'city_kladr_id'   => $d['city_kladr_id']   ?? null,
+        'region_kladr_id' => $d['region_kladr_id'] ?? null,
+        'city'            => $d['city']            ?? null,
+        'region'          => $d['region']          ?? null,
+    ];
 }
 
 // ================================================================
