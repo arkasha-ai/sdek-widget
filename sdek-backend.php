@@ -402,13 +402,20 @@ function pvzLoadFromCdekAll(string $country): array {
 function pvzLoadFromCdek(string $country, ?int $page, ?int $size): array {
     global $cacheDir;
 
-    $cacheMax  = 3600;
+    $cacheMax  = 3600 * 2;
     $cacheKey  = md5("{$country}|{$page}|{$size}");
     $cacheFile = $cacheDir . '/' . $cacheKey . '.json';
 
-    if (file_exists($cacheFile) && (time() - filemtime($cacheFile)) < $cacheMax) {
-        $dec = json_decode(file_get_contents($cacheFile), true);
-        if (is_array($dec)) return $dec;
+    if (file_exists($cacheFile)) {
+        if ((time() - filemtime($cacheFile)) < $cacheMax) {
+            $dec = json_decode(file_get_contents($cacheFile), true);
+            if (is_array($dec)) return $dec;
+        } else {
+            // remove old cache file
+            if (!unlink($cacheFile)) {
+                echo json_encode(['error' => 'error delete cache file: ' . $cacheFile], JSON_UNESCAPED_UNICODE);
+            }
+        }
     }
 
     // Запрос к официальному API СДЭК с пагинацией и фильтрами
@@ -567,39 +574,39 @@ function normalizePvz(array $p): array {
 // Выход: { delivery_sum, period_min, period_max, tariff_name, tariff_code }
 // ================================================================
 function handleCalculate(string $fromCity, string $toPvzCode, array $packages): array {
-    global $CONFIG;
 
     if (!$fromCity || !$toPvzCode) {
         throw new InvalidArgumentException('from_city and to_pvz_code are required');
     }
 
-    // --- 1. Определяем city_code города-отправителя ---
+    // --- 1. Определяем city_code города-отправителя и city_code места доставки ---
     $geo = handleGeocode($fromCity);
-    if (empty($geo['city_code'])) {
-        // Пробуем из PVZ по коду
-        $pvzAll = pvzLoadFromCdekAll($geo['country_iso_code'] ?? 'RU');
-        $target = null;
-        foreach ($pvzAll as $p) {
-            if (($p['code'] ?? '') == $toPvzCode) {
-                $target = $p;
-                break;
-            }
-        }
 
-        $fromCode = kladrRegionCode($geo['city'] ?? $fromCity);
-        $toCode   = $target['city_code'] ?? $toPvzCode;
-    } else {
+    // Пробуем из PVZ по коду
+    $pvzAll = pvzLoadFromCdekAll($geo['country_iso_code'] ?? 'RU');
+    $target = null;
+    $fromCode = null; //kladrRegionCode($geo['city'] ?? $fromCity);
+    if (isset($geo['city_code'])) {
         $fromCode = $geo['city_code'];
-        // КЛАДР code для получателя — из PVZ
-        $pvzAll   = pvzLoadFromCdekAll($geo['country_iso_code'] ?? 'RU');
-        $toCode   = null;
-        foreach ($pvzAll as $p) {
-            if (($p['code'] ?? '') == $toPvzCode) {
-                $toCode = $p['city_code'] ?? null;
-                break;
-            }
+    }
+    foreach ($pvzAll as $p) {
+        if (isset($target) && isset($fromCode)) {
+            break;
         }
-        if (!$toCode) $toCode = $toPvzCode;
+        if (($p['code'] ?? '') == $toPvzCode) {
+            $target = $p;
+        }
+        if (!isset($fromCode) && isset($p['location']) && $p['location']['city'] == trim($fromCity)) {
+            $fromCode = $p['location']['city_code'];
+        }
+    }
+    $toCode   = (isset($target) && isset($target['location'])) ? $target['location']['city_code'] : null;
+
+    if (!isset($fromCode) || !isset($toCode)) {
+        return [
+            'error'        => 'Incorrect from or to city code',
+            'tariff_codes' => null,
+        ];
     }
 
     // --- 2. Собираем посылки ---
@@ -618,22 +625,64 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
     if (!$token) {
         return [
             'error'        => 'CDEK authorization failed',
-            'delivery_sum' => null,
-            'period_min'   => null,
-            'period_max'   => null,
-            'tariff_name'  => null,
-            'tariff_code'  => null,
+            'tariff_codes' => null,
         ];
     }
 
     $payload = [
         'type'          => 1,                               // забор груза
-        'date'          => date('Y-m-d\TH:i:sO'),
+        // 'date'          => date('Y-m-d\TH:i:sO'), // текущая по-умолчанию
         'currency'      => 1,                               // рубли
-        'from_location' => ['code' => $fromCode],
-        'to_location'   => ['code' => $toCode],
-        'packages'      => [['items' => $items]],
+        'from_location' => ['code' => $fromCode], // Код населенного пункта СДЭК (city_code)
+        'to_location'   => ['code' => $toCode], // Код населенного пункта СДЭК (city_code)
+        'packages'      => $items,
     ];
+
+    $resp = handleCalculateRequest($token, json_encode($payload));
+    if (isset($resp['tariff_codes'])) {
+        $resp = $resp['tariff_codes'];
+    }
+
+    // tarifflist возвращает массив тарифов — берём первый (самый быстрый/дешёвый)
+    if (is_array($resp)) {
+        $resultTariff = [];
+        foreach ($resp as $tariff) {
+            $resultTariff[] = [
+                'delivery_sum' => $tariff['delivery_sum'] ?? null,
+                'period_min' => $tariff['period_min'] ?? null,
+                'period_max' => $tariff['period_max'] ?? null,
+                'tariff_name' => $tariff['tariff_name'] ?? null,
+                'tariff_code' => $tariff['tariff_code'] ?? null,
+            ];
+            break;
+        }
+        return [
+            'error' => null,
+            'tariff_codes' => $resultTariff
+        ];
+    }
+
+    return [
+        'error' => null,
+        'tariff_codes' => [],
+    ];
+}
+
+function handleCalculateRequest(string $token, string $payload): array {
+    global $cacheDir;
+    $cacheMaxSec  = 3600;
+    $cacheKey  = "calculate_".md5("{$payload}");
+    $cacheFile = $cacheDir . '/' . $cacheKey . '.json';
+
+    if (file_exists($cacheFile)) {
+        if ((time() - filemtime($cacheFile)) < $cacheMaxSec) {
+            return json_decode(file_get_contents($cacheFile), true);
+        }
+        // remove old cache file
+        if (!unlink($cacheFile)) {
+            echo json_encode(['error' => 'error delete cache file: '.$cacheFile], JSON_UNESCAPED_UNICODE);
+        }
+    }
 
     $ch = curl_init('https://api.cdek.ru/v2/calculator/tarifflist');
     curl_setopt_array($ch, [
@@ -643,44 +692,16 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
             'Content-Type: application/json',
             'Authorization: Bearer ' . $token,
         ],
-        CURLOPT_POSTFIELDS => json_encode($payload),
+        CURLOPT_POSTFIELDS => $payload,
         CURLOPT_TIMEOUT    => 15,
     ]);
 
     $resp = curlExecJson($ch);
+    file_put_contents($cacheFile, json_encode($resp, JSON_UNESCAPED_UNICODE));
 
-    // tarifflist возвращает массив тарифов — берём первый (самый быстрый/дешёвый)
-    if (is_array($resp) && isset($resp[0])) {
-        $tariff = $resp[0];
-        return [
-            'delivery_sum' => $tariff['total_sum']      ?? null,
-            'period_min'   => $tariff['period_min']    ?? null,
-            'period_max'   => $tariff['period_max']    ?? null,
-            'tariff_name'  => $tariff['tariff_name']   ?? null,
-            'tariff_code'  => $tariff['tariff_code']   ?? null,
-        ];
-    }
-
-    // одиночный ответ (старый формат /calculator/tariff)
-    if (is_array($resp) && !isset($resp[0])) {
-        return [
-            'delivery_sum' => $resp['total_sum']      ?? null,
-            'period_min'   => $resp['period_min']    ?? null,
-            'period_max'   => $resp['period_max']    ?? null,
-            'tariff_name'  => $resp['tariff_name']   ?? null,
-            'tariff_code'  => $resp['tariff_code']   ?? null,
-        ];
-    }
-
-    return [
-        'error'        => 'Empty response from CDEK',
-        'delivery_sum' => null,
-        'period_min'   => null,
-        'period_max'   => null,
-        'tariff_name'  => null,
-        'tariff_code'  => null,
-    ];
+    return $resp;
 }
+
 
 /**
  * Код региона по КЛАДР (заглушка — первые 2 цифры)

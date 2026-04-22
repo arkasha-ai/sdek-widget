@@ -201,7 +201,7 @@ export class SdekPvzWidget {
             const resp = await self._fetch({
               action:      'calculate',
               from_city:   self.fromLocation,
-              to_pvz_code: pvz.city_code || pvz.code,
+              to_pvz_code: pvz.code,
               packages:    JSON.stringify(self.packages),
             }, { method: 'POST' });
             this.tariffs = resp.tariff_codes || [];

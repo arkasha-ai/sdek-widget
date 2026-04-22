@@ -34,7 +34,7 @@
           <svg class="sdwo-tariff__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           <div class="sdwo-tariff__name">{{ t.tariff_name }}</div>
           <div class="sdwo-tariff__row">
-            <span class="sdwo-tariff__days">{{ t.period_min }}–{{ t.period_max }} дн.</span>
+            <span class="sdwo-tariff__days">{{ t.period_min === t.period_max ? t.period_min : t.period_min +'–' + t.period_max }} дн.</span>
             <span class="sdwo-tariff__price">{{ formatPrice(t.delivery_sum) }} ₽</span>
           </div>
         </div>
