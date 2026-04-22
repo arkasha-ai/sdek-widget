@@ -198,12 +198,14 @@ export class SdekPvzWidget {
           }
 
           try {
-            const resp = await self._fetch({
-              action:      'calculate',
-              from_city:   self.fromLocation,
-              to_pvz_code: pvz.code,
-              packages:    JSON.stringify(self.packages),
-            }, { method: 'POST' });
+            const resp = self.packages.length > 0
+              ? await self._fetch({
+                action: 'calculate',
+                from_city: self.fromLocation,
+                to_pvz_code: pvz.code,
+                packages: JSON.stringify(self.packages),
+              }, {method: 'POST'})
+              : {};
             this.tariffs = resp.tariff_codes || [];
           } catch (err) {
             this.tariffError = err.message;
@@ -252,12 +254,14 @@ export class SdekPvzWidget {
             // Только если точность >= street — запрашиваем тарифы
             if (geo.precision === 'house' || geo.precision === 'street') {
               if (geo.city_code) {
-                const resp = await self._fetch({
-                  action:      'calculate',
-                  from_city:   self.fromLocation,
-                  to_pvz_code: geo.city_code,
-                  packages:    JSON.stringify(self.packages),
-                }, { method: 'POST' });
+                const resp = self.packages.length > 0
+                  ? await self._fetch({
+                    action:      'calculate',
+                    from_city:   self.fromLocation,
+                    to_pvz_code: geo.city_code,
+                    packages:    JSON.stringify(self.packages),
+                  }, { method: 'POST' })
+                  : {};
                 // Фильтруем door-тарифы (delivery_mode 1,3,5,7 — дверь)
                 const doorModes = [1, 3, 5, 7];
                 this.doorTariffs = (resp.tariff_codes || []).filter(

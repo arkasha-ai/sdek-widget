@@ -630,8 +630,8 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
     }
 
     $payload = [
-        'type'          => 1,                               // забор груза
-        // 'date'          => date('Y-m-d\TH:i:sO'), // текущая по-умолчанию
+        'type'          => 1,                               // интернет-магазин
+        'date'          => date('Y-m-d\TH:i:sO'), // текущая по-умолчанию
         'currency'      => 1,                               // рубли
         'from_location' => ['code' => $fromCode], // Код населенного пункта СДЭК (city_code)
         'to_location'   => ['code' => $toCode], // Код населенного пункта СДЭК (city_code)
@@ -647,6 +647,12 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
     if (is_array($resp)) {
         $resultTariff = [];
         foreach ($resp as $tariff) {
+            if (
+                $tariff['delivery_mode'] !== 4  // только склад-склад
+                || str_contains(mb_strtolower($tariff['tariff_name']), 'возврат') // только доставка
+            ) {
+                continue;
+            }
             $resultTariff[] = [
                 'delivery_sum' => $tariff['delivery_sum'] ?? null,
                 'period_min' => $tariff['period_min'] ?? null,
@@ -654,7 +660,6 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
                 'tariff_name' => $tariff['tariff_name'] ?? null,
                 'tariff_code' => $tariff['tariff_code'] ?? null,
             ];
-            break;
         }
         return [
             'error' => null,
