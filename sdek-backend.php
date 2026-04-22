@@ -631,7 +631,7 @@ function handleCalculate(string $fromCity, string $toPvzCode, array $packages): 
 
     $payload = [
         'type'          => 1,                               // интернет-магазин
-        'date'          => date('Y-m-d\TH:i:sO'), // текущая по-умолчанию
+        // 'date'          => date('Y-m-d\TH:i:sO'), // текущая по-умолчанию
         'currency'      => 1,                               // рубли
         'from_location' => ['code' => $fromCode], // Код населенного пункта СДЭК (city_code)
         'to_location'   => ['code' => $toCode], // Код населенного пункта СДЭК (city_code)
